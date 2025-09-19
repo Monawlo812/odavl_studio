@@ -1,0 +1,14 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Run ODAVL Studio Extension",
+      "type": "extensionHost",
+      "request": "launch",
+      "program": "${execPath}",
+      "args": ["--extensionDevelopmentPath=${workspaceFolder}/apps/vscode-ext"],
+      "preLaunchTask": "Build VS Code Extension",
+      "outFiles": ["${workspaceFolder}/apps/vscode-ext/dist/**/*.js"]
+    }
+  ]
+}
