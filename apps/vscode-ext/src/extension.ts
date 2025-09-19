@@ -17,8 +17,28 @@ window.addEventListener('message',e=>{ const m=e.data; if(m?.type==='scanResult'
 </body></html>`;
     panel.webview.onDidReceiveMessage(msg => {
       if (msg?.type === 'scan') {
-        const payload = { tool:'odavl', action:'scan', pass:true, metrics:{ eslint:17, typeErrors:0 }, generatedAt:new Date().toISOString() };
-        panel.webview.postMessage({ type:'scanResult', data: payload });
+        const workspaceRoot = vscode.workspace.workspaceFolders?.[0]?.uri.fsPath;
+        if (!workspaceRoot) {
+          panel.webview.postMessage({ type:'scanResult', data: { pass:false, error:'No workspace folder found' } });
+          return;
+        }
+        
+        const cliPath = `${workspaceRoot}/apps/cli/dist/index.js`;
+        const { spawn } = require('child_process');
+        const child = spawn('node', [cliPath, 'scan'], { cwd: workspaceRoot });
+        
+        let stdout = '';
+        let stderr = '';
+        child.stdout.on('data', (data: any) => stdout += data);
+        child.stderr.on('data', (data: any) => stderr += data);
+        child.on('close', (code: number) => {
+          try {
+            const result = JSON.parse(stdout);
+            panel.webview.postMessage({ type:'scanResult', data: result });
+          } catch (e) {
+            panel.webview.postMessage({ type:'scanResult', data: { pass:false, error:`CLI error (${code}): ${stderr || stdout || 'Unknown error'}` } });
+          }
+        });
       }
     }, undefined, context.subscriptions);
   });
