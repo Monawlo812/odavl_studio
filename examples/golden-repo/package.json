@@ -1,0 +1,1 @@
+{"name":"golden-repo","version":"0.0.0","private":true,"type":"module","scripts":{"build":"tsc -p tsconfig.json","type-check":"tsc --noEmit","lint":"eslint .","format":"prettier -w ."},"dependencies":{"lodash":"4.17.15"}}
