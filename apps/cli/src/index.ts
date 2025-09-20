@@ -246,19 +246,23 @@ if (cmd === 'scan') {
   
   const workspaceRoot = path.resolve(__dirname, '../../..');
   
-  for (let i = 0; i < args.length; i++) {
-    if (args[i] === '--recipe' && i + 1 < args.length) {
-      recipe = args[++i]; // Pre-increment to consume the next argument
-    } else if (args[i] === '--apply') {
-      apply = true;
-    } else if (args[i] === '--validate') {
-      validate = true;
-    } else if (args[i] === '--max-lines' && i + 1 < args.length) {
-      maxLinesPerPatch = parseInt(args[++i], 10) || 40; // Pre-increment to consume the next argument
-    } else if (args[i] === '--max-files' && i + 1 < args.length) {
-      maxFilesTouched = parseInt(args[++i], 10) || 10; // Pre-increment to consume the next argument
-      i += 1;
-    }
+  // Parse arguments functionally without loop counter modification
+  const recipeIndex = args.indexOf('--recipe');
+  if (recipeIndex !== -1 && recipeIndex + 1 < args.length) {
+    recipe = args[recipeIndex + 1];
+  }
+  
+  apply = args.includes('--apply');
+  validate = args.includes('--validate');
+  
+  const maxLinesIndex = args.indexOf('--max-lines');
+  if (maxLinesIndex !== -1 && maxLinesIndex + 1 < args.length) {
+    maxLinesPerPatch = parseInt(args[maxLinesIndex + 1], 10) || 40;
+  }
+  
+  const maxFilesIndex = args.indexOf('--max-files');
+  if (maxFilesIndex !== -1 && maxFilesIndex + 1 < args.length) {
+    maxFilesTouched = parseInt(args[maxFilesIndex + 1], 10) || 10;
   }
   
   // Try to read .odavl.policy.yml for budget overrides (best-effort)
@@ -472,6 +476,31 @@ if (cmd === 'scan') {
     }
   };
 
+  const transformImportLine = (line: string): string => {
+    if (line.includes('require(')) return line;
+    const importRegex = /^(\s*import\s+.*?\s+from\s+['"])(\.\.?\/[^'"]*?)(['"])/;
+    const importMatch = importRegex.exec(line);
+    if (importMatch && !importMatch[2].endsWith('.js')) {
+      return `${importMatch[1]}${importMatch[2]}.js${importMatch[3]}`;
+    }
+    return line;
+  };
+
+  const processEsmHygienePatch = (patch: any, undoSnapshot: any): void => {
+    try {
+      // Backup file before writing
+      undoSnapshot.backupFile(patch.file);
+      
+      const content = readFileSync(patch.file, 'utf8');
+      const lines = content.split('\n');
+      const newLines = lines.map(transformImportLine);
+      writeFileSync(patch.file, newLines.join('\n'));
+    } catch (error) {
+      // Skip files that can't be written
+      console.warn(`CLI: Unable to apply ESM hygiene to ${patch.file}:`, error instanceof Error ? error.message : String(error));
+    }
+  };
+
   const applyEsmHygieneChunks = async (chunks: any[], chunksMetadata: any[]) => {
     let appliedChunk = 0;
     const undoSnapshot = createUndoSnapshot('esm-hygiene');
@@ -480,27 +509,8 @@ if (cmd === 'scan') {
     if (chunks.length > 0) {
       appliedChunk = 1;
       for (const patch of chunks[0]) {
-        try {
-          // Backup file before writing
-          undoSnapshot.backupFile(patch.file);
-          undoEnabled = true;
-          
-          const content = readFileSync(patch.file, 'utf8');
-          const lines = content.split('\n');
-          const newLines = lines.map((line: string) => {
-            if (line.includes('require(')) return line;
-            const importRegex = /^(\s*import\s+.*?\s+from\s+['"])(\.\.?\/[^'"]*?)(['"])/;
-            const importMatch = importRegex.exec(line);
-            if (importMatch && !importMatch[2].endsWith('.js')) {
-              return `${importMatch[1]}${importMatch[2]}.js${importMatch[3]}`;
-            }
-            return line;
-          });
-          writeFileSync(patch.file, newLines.join('\n'));
-        } catch (error) {
-          // Skip files that can't be written
-          console.warn(`CLI: Unable to apply ESM hygiene to ${patch.file}:`, error instanceof Error ? error.message : String(error));
-        }
+        processEsmHygienePatch(patch, undoSnapshot);
+        undoEnabled = true;
       }
       
       // Finalize undo snapshot if any files were backed up
@@ -678,20 +688,12 @@ if (cmd === 'scan') {
   }
 } else if (cmd === 'pr' && process.argv[3] === 'open') {
   const args = process.argv.slice(4);
-  let explain = false;
-  let dryRun = false;
-  let title = '';
+  // Parse arguments functionally
+  const explain = args.includes('--explain');
+  const dryRun = args.includes('--dry-run');
   
-  for (let i = 0; i < args.length; i++) {
-    if (args[i] === '--explain') {
-      explain = true;
-    } else if (args[i] === '--dry-run') {
-      dryRun = true;
-    } else if (args[i] === '--title' && i + 1 < args.length) {
-      title = args[i + 1];
-      i += 1;
-    }
-  }
+  const titleIndex = args.indexOf('--title');
+  let title = (titleIndex !== -1 && titleIndex + 1 < args.length) ? args[titleIndex + 1] : '';
   
   // Check governor for PR creation permission
   if (!dryRun) {
@@ -847,20 +849,13 @@ Evidence:
   }
 } else if (cmd === 'shadow' && process.argv[3] === 'run') {
   const args = process.argv.slice(4);
-  let ref = '';
-  let wait = false;
-  let dryRun = false;
   
-  for (let i = 0; i < args.length; i++) {
-    if (args[i] === '--ref' && i + 1 < args.length) {
-      ref = args[i + 1];
-      i += 1;
-    } else if (args[i] === '--wait') {
-      wait = true;
-    } else if (args[i] === '--dry-run') {
-      dryRun = true;
-    }
-  }
+  // Parse arguments functionally
+  const refIndex = args.indexOf('--ref');
+  let ref = (refIndex !== -1 && refIndex + 1 < args.length) ? args[refIndex + 1] : '';
+  
+  const wait = args.includes('--wait');
+  const dryRun = args.includes('--dry-run');
   
   // Check governor for shadow run permission
   if (!dryRun) {
@@ -989,17 +984,11 @@ Evidence:
   }
 } else if (cmd === 'shadow' && process.argv[3] === 'status') {
   const args = process.argv.slice(4);
-  let ref = '';
-  let watch = false;
+  // Parse arguments functionally
+  const refIndex = args.indexOf('--ref');
+  let ref = (refIndex !== -1 && refIndex + 1 < args.length) ? args[refIndex + 1] : '';
   
-  for (let i = 0; i < args.length; i++) {
-    if (args[i] === '--ref' && i + 1 < args.length) {
-      ref = args[i + 1];
-      i += 1;
-    } else if (args[i] === '--watch') {
-      watch = true;
-    }
-  }
+  const watch = args.includes('--watch');
   
   // Helper to fetch latest run for a ref
   function fetchLatestRun(targetRef: string): any {
@@ -1092,14 +1081,9 @@ Evidence:
 } else if (cmd === 'report' && process.argv[3] === 'telemetry' && process.argv[4] === 'summary') {
   try {
     const args = process.argv.slice(5);
-    let since = '24h';
-    
-    for (let i = 0; i < args.length; i++) {
-      if (args[i] === '--since' && i + 1 < args.length) {
-        since = args[i + 1];
-        i += 1;
-      }
-    }
+    // Parse arguments functionally  
+    const sinceIndex = args.indexOf('--since');
+    let since = (sinceIndex !== -1 && sinceIndex + 1 < args.length) ? args[sinceIndex + 1] : '24h';
     
     // Parse since parameter
     let cutoffTime: Date;
