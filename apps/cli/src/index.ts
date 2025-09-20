@@ -267,6 +267,102 @@ if (cmd === 'scan') {
       stderr: error?.message || 'Unknown error'
     }));
   }
+} else if (cmd === 'shadow' && process.argv[3] === 'run') {
+  const args = process.argv.slice(4);
+  let ref = '';
+  let wait = false;
+  
+  for (let i = 0; i < args.length; i++) {
+    if (args[i] === '--ref' && i + 1 < args.length) {
+      ref = args[i + 1];
+      i += 1;
+    } else if (args[i] === '--wait') {
+      wait = true;
+    }
+  }
+  
+  try {
+    // Verify gh auth and git repo
+    const ghAuthResult = run('gh auth status');
+    if (ghAuthResult.status !== 0) {
+      throw new Error('GitHub CLI not authenticated');
+    }
+    
+    const gitResult = run('git rev-parse --is-inside-work-tree');
+    if (gitResult.status !== 0) {
+      throw new Error('Not in a git repository');
+    }
+    
+    // Determine REF
+    if (!ref) {
+      const headResult = run('git rev-parse --abbrev-ref HEAD');
+      if (headResult.status !== 0) {
+        throw new Error('Cannot determine current branch');
+      }
+      ref = headResult.stdout.trim();
+    }
+    
+    // Ensure upstream exists
+    const upstreamResult = run(`git rev-parse --symbolic-full-name --abbrev-ref --quiet @{u}`);
+    if (upstreamResult.status !== 0) {
+      const pushResult = run('git push -u origin HEAD');
+      if (pushResult.status !== 0) {
+        throw new Error(`Failed to push upstream: ${pushResult.stderr}`);
+      }
+    }
+    
+    // Trigger workflow
+    const workflowResult = run(`gh workflow run ci.yml -r ${ref}`);
+    if (workflowResult.status !== 0) {
+      throw new Error(`Failed to trigger workflow: ${workflowResult.stderr}`);
+    }
+    
+    // Brief pause to let workflow start
+    const start = Date.now();
+    while (Date.now() - start < 2000) { /* wait */ }
+    
+    // Discover latest run for REF
+    let runResult = run(`gh run list --branch ${ref} --limit 1 --json databaseId,url,status,conclusion,headBranch,headSha,displayTitle -q .[0]`);
+    if (runResult.status !== 0) {
+      throw new Error(`Failed to get run info: ${runResult.stderr}`);
+    }
+    
+    let runInfo = JSON.parse(runResult.stdout.trim());
+    
+    // If wait requested, watch the run
+    if (wait && runInfo.databaseId) {
+      run(`gh run watch ${runInfo.databaseId}`);
+      // Re-fetch final status
+      runResult = run(`gh run list --branch ${ref} --limit 1 --json databaseId,url,status,conclusion,headBranch,headSha,displayTitle -q .[0]`);
+      if (runResult.status === 0) {
+        runInfo = JSON.parse(runResult.stdout.trim());
+      }
+    }
+    
+    const result = {
+      tool: 'odavl',
+      action: 'shadow',
+      subaction: 'run',
+      ref,
+      pass: runInfo.conclusion === 'success' || runInfo.status === 'queued' || runInfo.status === 'in_progress',
+      url: runInfo.url || '',
+      status: runInfo.status || 'unknown',
+      conclusion: runInfo.conclusion || null,
+      stdout: workflowResult.stdout,
+      stderr: workflowResult.stderr
+    };
+    
+    console.log(JSON.stringify(result));
+  } catch (error: any) {
+    console.log(JSON.stringify({
+      tool: 'odavl',
+      action: 'shadow',
+      subaction: 'run',
+      ref: ref || 'unknown',
+      pass: false,
+      stderr: error?.message || 'Unknown error'
+    }));
+  }
 } else {
   console.log('Usage: odavl <command>');
   console.log('Commands:');
@@ -274,4 +370,5 @@ if (cmd === 'scan') {
   console.log('  heal           Fix code issues (--recipe remove-unused, --apply)');
   console.log('  branch create  Create a new git branch');
   console.log('  pr open        Open a pull request (--explain, --dry-run, --title)');
+  console.log('  shadow run     Trigger CI workflow (--ref <branch>, --wait)');
 }
