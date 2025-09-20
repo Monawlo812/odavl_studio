@@ -22,14 +22,10 @@ jobs:
           cache: 'pnpm'
           cache-dependency-path: '**/pnpm-lock.yaml'
       - name: Install
-        working-directory: odavl_studio
         run: pnpm install
       - name: Build (workspace)
-        working-directory: odavl_studio
         run: pnpm -w build || true
       - name: Lint (golden-repo)
-        working-directory: odavl_studio
         run: pnpm --filter golden-repo exec eslint . -f stylish || true
       - name: Type-check (workspace)
-        working-directory: odavl_studio
         run: pnpm -w run -r type-check || true
