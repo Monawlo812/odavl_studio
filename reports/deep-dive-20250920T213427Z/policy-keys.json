@@ -1,0 +1,10 @@
+{
+  "found": true,
+  "raw": "# ODAVL Policy Configuration Sample\r\n# Copy to .governor/config.json and adapt to JSON format\r\n\r\ngovernor:\r\n  prsPerDay: 5\r\n  ciMinutesPerHour: 60\r\n  maxConcurrentShadows: 3\r\n  waves:\r\n    - window: \"22:00-06:00\"\r\n      maxPrs: 3\r\n\r\nstudio:\r\n  telemetry: anonymized  # Options: on|anonymized|off",
+  "governor": {
+    "prsPerDay": 5,
+    "ciMinutesPerHour": 60,
+    "maxConcurrentShadows": 3
+  },
+  "telemetry": "anonymized"
+}

@@ -1,0 +1,52 @@
+{
+  "workspaceConfig": "packages:\r\n  - \"apps/*\"\r\n  - \"packages/*\"\r\n  - \"examples/*\"",
+  "turboTasks": {
+    "build": {},
+    "lint": {},
+    "test": {}
+  },
+  "packages": [
+    {
+      "name": "@odavl/cli",
+      "path": "apps/cli",
+      "version": "0.0.0",
+      "private": true
+    },
+    {
+      "name": "@odavl/vscode-ext",
+      "path": "apps/vscode-ext",
+      "version": "0.0.0",
+      "private": true
+    },
+    {
+      "name": "@odavl/codemods",
+      "path": "packages/codemods",
+      "version": "0.0.0",
+      "private": true
+    },
+    {
+      "name": "@odavl/core",
+      "path": "packages/core",
+      "version": "0.0.0",
+      "private": true
+    },
+    {
+      "name": "@odavl/policy",
+      "path": "packages/policy",
+      "version": "0.0.0",
+      "private": true
+    },
+    {
+      "name": "@odavl/reporters",
+      "path": "packages/reporters",
+      "version": "0.0.0",
+      "private": true
+    },
+    {
+      "name": "golden-repo",
+      "path": "examples/golden-repo",
+      "version": "0.0.0",
+      "private": true
+    }
+  ]
+}

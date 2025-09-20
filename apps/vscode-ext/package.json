@@ -1,7 +1,7 @@
 {
   "name": "@odavl/vscode-ext",
   "displayName": "ODAVL Studio",
-  "version": "0.0.0",
+  "version": "0.3.0",
   "private": true,
   "publisher": "odavl",
   "engines": {

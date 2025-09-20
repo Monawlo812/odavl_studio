@@ -1,0 +1,19 @@
+{
+  "ok": true,
+  "code": 0,
+  "stdout": "{\"tool\":\"odavl\",\"action\":\"shadow\",\"subaction\":\"run\",\"ref\":\"odavl/e2e-2025-09-20T23-18-47-967Z\",\"pass\":false,\"url\":\"https://github.com/Monawlo812/odavl_studio/actions/runs/17886037121\",\"status\":\"completed\",\"conclusion\":\"failure\",\"stdout\":\"\",\"stderr\":\"\"}\n",
+  "stderr": "",
+  "cmd": "node apps/cli/dist/index.js shadow run --wait",
+  "parsed": {
+    "tool": "odavl",
+    "action": "shadow",
+    "subaction": "run",
+    "ref": "odavl/e2e-2025-09-20T23-18-47-967Z",
+    "pass": false,
+    "url": "https://github.com/Monawlo812/odavl_studio/actions/runs/17886037121",
+    "status": "completed",
+    "conclusion": "failure",
+    "stdout": "",
+    "stderr": ""
+  }
+}

@@ -1,6 +1,6 @@
 {
   "name": "@odavl/cli",
-  "version": "0.0.0",
+  "version": "0.3.0",
   "private": true,
   "type": "module",
   "bin": {
@@ -10,8 +10,8 @@
     "build": "tsc -p tsconfig.json"
   },
   "dependencies": {
-    "@odavl/codemods": "workspace:*",
-    "@odavl/policy": "workspace:*"
+    "@odavl/codemods": "^0.3.0",
+    "@odavl/policy": "^0.3.0"
   },
   "devDependencies": {
     "@types/node": "^20"

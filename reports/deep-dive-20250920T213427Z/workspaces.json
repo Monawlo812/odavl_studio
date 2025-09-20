@@ -1,0 +1,50 @@
+{
+  "hasPnpmWorkspace": true,
+  "hasTurbo": true,
+  "packages": [
+    {
+      "name": "@odavl/cli",
+      "path": "apps/cli",
+      "version": "0.0.0"
+    },
+    {
+      "name": "@odavl/vscode-ext",
+      "path": "apps/vscode-ext",
+      "version": "0.0.0"
+    },
+    {
+      "name": "@odavl/codemods",
+      "path": "packages/codemods",
+      "version": "0.0.0"
+    },
+    {
+      "name": "@odavl/core",
+      "path": "packages/core",
+      "version": "0.0.0"
+    },
+    {
+      "name": "@odavl/policy",
+      "path": "packages/policy",
+      "version": "0.0.0"
+    },
+    {
+      "name": "@odavl/reporters",
+      "path": "packages/reporters",
+      "version": "0.0.0"
+    },
+    {
+      "name": "golden-repo",
+      "path": "examples/golden-repo",
+      "version": "0.0.0"
+    }
+  ],
+  "pnpmWorkspaceContent": "packages:\r\n  - \"apps/*\"\r\n  - \"packages/*\"\r\n  - \"examples/*\"",
+  "turboContent": {
+    "$schema": "https://turbo.build/schema.json",
+    "tasks": {
+      "build": {},
+      "lint": {},
+      "test": {}
+    }
+  }
+}

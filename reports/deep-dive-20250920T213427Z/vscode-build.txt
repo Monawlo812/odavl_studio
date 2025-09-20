@@ -1,0 +1,4 @@
+﻿
+> @odavl/vscode-ext@0.0.0 build C:\Users\sabou\odavl_studio\apps\vscode-ext
+> tsc -p tsconfig.json
+

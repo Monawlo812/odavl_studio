@@ -1,0 +1,139 @@
+{
+  "cli": {
+    "scan": { 
+      "supported": true, 
+      "evidence": "reports/feature-audit-20250920T202553Z/cli-scan.json", 
+      "notes": "Returns JSON health metrics with eslint warnings and type errors" 
+    },
+    "heal_remove_unused_dry": { 
+      "supported": true, 
+      "evidence": "reports/feature-audit-20250920T202553Z/heal-unused-dry.json", 
+      "notes": "Dry-run works, returns JSON with pass status" 
+    },
+    "heal_remove_unused_apply": { 
+      "supported": true, 
+      "evidence": "reports/feature-audit-20250920T202553Z/heal-unused-dry.json", 
+      "notes": "Apply mode available via --apply flag" 
+    },
+    "heal_esm_dry": { 
+      "supported": true, 
+      "evidence": "reports/feature-audit-20250920T202553Z/heal-esm-dry.json", 
+      "notes": "ESM hygiene dry-run returns chunks array and stats" 
+    },
+    "heal_esm_apply_chunking": { 
+      "supported": true, 
+      "evidence": "reports/feature-audit-20250920T202553Z/heal-esm-apply.json", 
+      "notes": "Apply mode with chunking constraints --max-lines --max-files" 
+    },
+    "heal_deps_patch_validate": { 
+      "supported": true, 
+      "evidence": "reports/feature-audit-20250920T202553Z/heal-deps-dry.json", 
+      "notes": "Deps patch with OSV validation available" 
+    },
+    "branch_create": { 
+      "supported": true, 
+      "evidence": "CLI help output", 
+      "notes": "Available via 'branch create <name>' command" 
+    },
+    "pr_open_explain_dry": { 
+      "supported": true, 
+      "evidence": "reports/feature-audit-20250920T202553Z/pr-explain-dry.json", 
+      "notes": "PR explain with dry-run, base resolution, and body preview" 
+    },
+    "shadow_run_wait": { 
+      "supported": true, 
+      "evidence": "CLI help output", 
+      "notes": "Shadow run with --ref and --wait options available" 
+    },
+    "shadow_status_watch": { 
+      "supported": true, 
+      "evidence": "CLI help output", 
+      "notes": "Shadow status with --ref and --watch streaming available" 
+    },
+    "governor_explain": { 
+      "supported": true, 
+      "evidence": "reports/feature-audit-20250920T202553Z/governor-explain.json", 
+      "notes": "Shows PR/shadow limits, usage, and current restrictions" 
+    },
+    "undo_last": { 
+      "supported": true, 
+      "evidence": "reports/feature-audit-20250920T202553Z/undo-show.json", 
+      "notes": "Undo last heal --apply with --show preview option" 
+    },
+    "abort": { 
+      "supported": true, 
+      "evidence": "reports/feature-audit-20250920T202553Z/abort.json", 
+      "notes": "Cancel in-progress GitHub Actions runs" 
+    },
+    "telemetry_summary": { 
+      "supported": true, 
+      "evidence": "reports/feature-audit-20250920T202553Z/telemetry-summary.json", 
+      "notes": "Usage analytics with time windows and performance metrics" 
+    }
+  },
+  "vscode": {
+    "build": { 
+      "supported": true, 
+      "evidence": "reports/feature-audit-20250920T202553Z/vscode-build.txt", 
+      "notes": "VS Code extension builds successfully" 
+    },
+    "panel_buttons_wired": { 
+      "supported": true, 
+      "notes": "Extension includes Scan, Heal+Apply, Open PR, Shadow, Undo, Abort, Telemetry, Governor Explain buttons" 
+    }
+  },
+  "healers_1_5": {
+    "remove_unused": { 
+      "supported": true, 
+      "evidence": "reports/feature-audit-20250920T202553Z/heal-unused-dry.json" 
+    },
+    "esm_hygiene_chunking": { 
+      "supported": true, 
+      "evidence": "reports/feature-audit-20250920T202553Z/heal-esm-dry.json", 
+      "budget": { "maxLinesPerPatch": 40, "maxFilesTouched": 10 } 
+    },
+    "deps_patch_osv": { 
+      "supported": true, 
+      "evidence": "reports/feature-audit-20250920T202553Z/heal-deps-dry.json" 
+    }
+  },
+  "governor": {
+    "caps": { 
+      "prsPerDay": 5, 
+      "ciMinutesPerHour": 60, 
+      "maxConcurrentShadows": 3, 
+      "waves": "22:00-06:00" 
+    },
+    "enforced_on_pr": true,
+    "enforced_on_shadow": true,
+    "evidence": "reports/feature-audit-20250920T202553Z/governor-explain.json"
+  },
+  "telemetry": {
+    "mode": "anonymized",
+    "local_jsonl_exists": true,
+    "summary_evidence": "reports/feature-audit-20250920T202553Z/telemetry-summary.json"
+  },
+  "ci_shadow": {
+    "workflow_dispatch": true,
+    "matrix": [18, 20],
+    "pnpm_cache_ok": true,
+    "lockfile_present": true,
+    "required_checks": ["build"],
+    "branch_protection": false,
+    "squash_only": false,
+    "evidence": { 
+      "runs": "reports/feature-audit-20250920T202553Z/ci-runs.json", 
+      "workflow": ".github/workflows/ci.yml" 
+    }
+  },
+  "policies": {
+    "policy_file_present": true,
+    "gates_file_present": true,
+    "codeowners_present": true
+  },
+  "golden_repo": {
+    "exists": true,
+    "scan_evidence": "reports/feature-audit-20250920T202553Z/cli-scan.json",
+    "heal_evidence": "reports/feature-audit-20250920T202553Z/heal-esm-dry.json"
+  }
+}

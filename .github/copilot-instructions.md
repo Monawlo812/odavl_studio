@@ -1,110 +1,162 @@
+````instructions
 # ODAVL Studio - AI Coding Agent Instructions
 
 ## Project Overview
-ODAVL Studio is a bootstrap monorepo using **pnpm workspaces** and **Turborepo** designed to host:
-- VS Code extension
-- CLI tools  
-- Core packages
-- Infrastructure components
+ODAVL Studio is an **automated development governance platform** using pnpm workspaces and Turborepo. It provides CLI-driven code healing, CI governance, and risk-budgeted automation workflows.
 
-This is currently a bootstrap setup - the workspace directories (`apps/`, `packages/`, `examples/`) are defined but not yet created.
+**Core Purpose**: Automated code maintenance with safety guardrails via the "Governor" policy system and chunked healing to prevent large-scale breakage.
 
-## Monorepo Architecture
+## Architecture & Components
 
 ### Workspace Structure
 ```
 odavl_studio/
-├── apps/          # Applications (VS Code extension, CLI)
-├── packages/      # Shared libraries and core packages
-├── examples/      # Example implementations
-├── pnpm-workspace.yaml  # Workspace configuration
-└── turbo.json     # Build pipeline configuration
+├── apps/
+│   ├── cli/                 # Main ODAVL CLI tool (@odavl/cli)
+│   └── vscode-ext/          # VS Code extension integration
+├── packages/
+│   ├── codemods/           # Automated code transformations
+│   ├── policy/             # Governor system for rate limiting
+│   ├── core/               # Shared utilities
+│   └── reporters/          # Output formatters
+├── examples/golden-repo/   # Test target for healing
+├── reports/                # Telemetry, logs, and undo snapshots
+└── .odavl.policy.yml       # Configuration file
 ```
 
-### Package Management
-- **pnpm workspaces**: Manages dependencies across packages with efficient disk usage
-- **Workspace packages** defined in `pnpm-workspace.yaml` include `apps/*`, `packages/*`, `examples/*`
-- No root `package.json` yet - each workspace will have its own
+### Key Systems
 
-## Build System & Workflows
+**CLI Tool (`apps/cli`)**: Main entry point with commands:
+- `scan` - Analyze codebase health (ESLint, TypeScript errors)
+- `heal` - Apply automated fixes with risk budgets and chunking
+- `shadow run/status` - Trigger and monitor CI workflows  
+- `pr open` - Create PRs with evidence sections
+- `governor explain` - Check rate limiting status
+- `undo last` - Revert recent changes with snapshot system
 
-### Turborepo Pipeline
-Current `turbo.json` defines basic pipeline tasks:
-- `build`: Compile/bundle packages
-- `lint`: Code quality checks  
-- `test`: Run test suites
+**Governor (`packages/policy`)**: Rate limiting system that prevents resource exhaustion:
+- PR creation limits (daily quotas)
+- CI runtime budgets (minutes per hour)
+- Wave windows for time-based scheduling (e.g., `"22:00-06:00"` for overnight automation)
+- Configuration via `.odavl.policy.yml`
 
-**Key Commands** (when workspace packages exist):
+**Codemods (`packages/codemods`)**: Automated code transformations:
+- `esmHygiene` - Add `.js` extensions to ESM imports
+- `depsPatchMinor` - Upgrade dependencies with OSV security awareness
+- Risk-budgeted chunking to limit blast radius
+
+## Critical Workflows
+
+### Healing System Architecture
+The heal command implements **chunked execution** with risk budgets:
+
 ```bash
-# Install dependencies across all workspaces
+# Dry-run to see planned changes
+node apps/cli/dist/index.js heal --recipe esm-hygiene --dry-run --max-lines 40 --max-files 10
+
+# Apply only first chunk (safety-first approach)
+node apps/cli/dist/index.js heal --recipe esm-hygiene --apply --max-files 5
+```
+
+**Risk Budget Parameters**:
+- `--max-lines N` - Maximum total diff lines per chunk
+- `--max-files N` - Maximum files touched per chunk
+- Configurable via `.odavl.policy.yml` under `maxLinesPerPatch`/`maxFilesTouched`
+
+**Undo System**: Automatic snapshots before applying changes:
+- Backups stored in `reports/undo/<timestamp>/`
+- Stack tracking in `reports/undo/stack.json`
+- Protected paths (security/, *.spec.*, public-api/) automatically skipped
+
+### Governor Policy System
+Configuration in `.odavl.policy.yml` (see `odavl.policy.yml.sample`):
+
+```yaml
+governor:
+  prsPerDay: 5                    # Daily PR creation limit
+  ciMinutesPerHour: 60           # CI runtime budget
+  maxConcurrentShadows: 3        # Parallel CI runs
+  waves:
+    - window: "22:00-06:00"      # Overnight window for automation
+      maxPrs: 3
+studio:
+  telemetry: off                 # on|anonymized|off
+```
+
+## Development Patterns
+
+### CLI Command Structure
+All CLI commands return **structured JSON output** for integration:
+```javascript
+{
+  "tool": "odavl",
+  "action": "heal", 
+  "recipe": "esm-hygiene",
+  "mode": "dry-run",
+  "pass": true,
+  "chunks": [...],           // Planned work chunks
+  "stats": { "files": 5, "lines": 120 },
+  "validators": { ... }      // Optional validation results
+}
+```
+
+### VS Code Extension Integration
+The extension (`apps/vscode-ext`) provides a webview panel that:
+- Calls CLI commands via `child_process.spawn`
+- Displays telemetry mode from policy configuration
+- Provides scan/heal/reports buttons
+- Respects workspace-relative CLI path: `apps/cli/dist/index.js`
+
+### Build & Package Management
+```bash
+# Install dependencies (from root)
 pnpm install
 
-# Run builds for all packages
+# Build all packages
 pnpm turbo build
 
-# Run specific task
-pnpm turbo lint
-pnpm turbo test
+# Build specific package
+pnpm --filter @odavl/cli run build
 
-# Run task for specific package
-pnpm turbo build --filter=package-name
+# Run CLI from development build
+node apps/cli/dist/index.js <command>
 ```
 
-## Development Conventions
+### Telemetry & Reporting
+- **Optional telemetry** via policy configuration (`studio.telemetry`)
+- Local logging to `reports/telemetry.log.jsonl`
+- Usage analytics via `report telemetry summary --since 24h`
+- No source code captured - only metrics and durations
 
-### Code Standards
-- **Indentation**: 2 spaces (`.editorconfig`)
-- **Line endings**: LF
-- **Charset**: UTF-8
-- **Final newline**: Required
+## Integration Points
 
-### File Patterns to Ignore
-Based on `.gitignore`:
-- `node_modules/`, `dist/`, `coverage/`
-- `pnpm-lock.yaml` (managed by pnpm)
-- Environment files (`.env`)
-- Log files (`*.log`)
+### GitHub CLI Dependencies
+Many commands require `gh` CLI for GitHub API integration:
+- `pr open` - Creates PRs with evidence sections
+- `shadow run` - Triggers workflow_dispatch events
+- `governor explain` - Queries current PR/CI usage
 
-## Getting Started Workflows
+### File System Conventions
+- **Configuration**: `.odavl.policy.yml` in workspace root
+- **Reports**: All output logs and snapshots in `reports/`
+- **Protected paths**: Automatic skipping of `security/`, `*.spec.*`, `public-api/`
+- **TypeScript**: All packages use ES modules (`"type": "module"`)
 
-### Creating New Packages
-When adding packages to this monorepo:
+## Common Debugging Patterns
 
-1. **Create workspace directory**:
-   ```bash
-   mkdir apps/my-app  # or packages/my-package
-   ```
+**Heal Command Issues**:
+1. Check `.odavl.policy.yml` for budget limits
+2. Verify protected path exclusions aren't over-broad
+3. Use `--dry-run` to preview before `--apply`
+4. Check `reports/undo/stack.json` for recent changes
 
-2. **Initialize package.json** with workspace references:
-   ```json
-   {
-     "name": "@odavl/my-package",
-     "dependencies": {
-       "@odavl/core": "workspace:*"
-     }
-   }
-   ```
+**Governor Blocks**:
+1. Run `governor explain` to see current limits/usage
+2. Check wave window configuration for time restrictions
+3. Verify GitHub CLI authentication: `gh auth status`
 
-3. **Install dependencies** from root:
-   ```bash
-   pnpm install
-   ```
-
-### VS Code Extension Development
-As this will host a VS Code extension, expect:
-- TypeScript configuration for extension API
-- Extension manifest (`package.json` with `engines.vscode`)
-- Build pipeline for `.vsix` packaging
-
-## Current State
-This is a **fresh bootstrap setup**. When working with this codebase:
-- Workspace directories need to be created first
-- Root `package.json` may need to be added for shared tooling
-- Turborepo pipeline will need expansion as packages are added
-- Consider adding shared tooling packages (ESLint config, TypeScript config)
-
-## Key Integration Points
-- **pnpm**: Manages cross-package dependencies and hoisting
-- **Turborepo**: Orchestrates builds and caching across packages  
-- **VS Code**: Target platform for extension development
-- Future CLI tools will likely share core packages with the extension
+**VS Code Extension**:
+1. Ensure CLI is built: `pnpm --filter @odavl/cli run build`
+2. Check workspace root detection in extension activation
+3. Verify CLI path resolution: `apps/cli/dist/index.js`
+````

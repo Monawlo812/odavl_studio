@@ -2,8 +2,39 @@
 
 # ODAVL Studio
 
-Bootstrap monorepo with pnpm workspaces and Turborepo.
-This repo will host the VS Code extension, CLI, core packages, and infra.
+**Automated Development Governance Platform** - Enterprise-grade code healing with policy-driven safety guardrails.
+
+> Start here: **[docs/landing.md](docs/landing.md)** — value, screenshots, and a 60-second Quickstart.
+
+## Features
+
+🔧 **Automated Code Healing** - ESM hygiene, dependency updates, unused code removal  
+📊 **Risk-Budgeted Execution** - Chunked operations with configurable limits  
+🛡️ **Governor System** - Rate limiting for PRs and CI resource usage  
+🔄 **Shadow CI** - Triggered workflows with live status monitoring  
+💾 **Safety Systems** - Automatic undo snapshots and protected paths  
+🎯 **VS Code Integration** - WebView panel with one-click operations  
+
+## Quickstart (60s)
+
+```bash
+# 1. Install dependencies
+pnpm install
+
+# 2. Build CLI
+pnpm --filter @odavl/cli run build
+
+# 3. Run health scan
+node apps/cli/dist/index.js scan
+
+# 4. Try healing (dry-run)
+node apps/cli/dist/index.js heal --recipe esm-hygiene --dry-run
+```
+
+**VS Code**: Install extension and use `ODAVL Studio: Open Panel` command.
+
+📖 **Documentation**: [Overview](docs/overview.md) | [Quickstart](docs/quickstart.md) | [FAQ](docs/faq.md)  
+📊 **Reports**: Check `reports/` for analysis artifacts and logs
 
 ## Healers 1.5
 
@@ -47,3 +78,13 @@ ODAVL collects usage analytics to improve the tool. Configure via `.odavl.policy
 studio:
   telemetry: off  # Change to 'on' or 'anonymized' to enable
 ```
+
+## Media
+
+Recording guide: `docs/media/README.md`
+
+Placeholders (replace with real screenshots/GIFs):
+- [`docs/media/scan.png`](docs/media/scan.png)
+- [`docs/media/heal.png`](docs/media/heal.png)  
+- [`docs/media/shadow.png`](docs/media/shadow.png)
+- [`docs/media/pr.png`](docs/media/pr.png)
