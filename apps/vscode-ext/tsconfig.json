@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 {"compilerOptions":{"target":"ES2020","module":"commonjs","moduleResolution":"node","strict":true,"skipLibCheck":true,"outDir":"dist","rootDir":"src","esModuleInterop":true,"lib":["ES2020"]},"include":["src"]}
+=======
+{"compilerOptions":{"target":"ES2020","module":"commonjs","moduleResolution":"node","strict":true,"skipLibCheck":true,"outDir":"dist","rootDir":"src","esModuleInterop":true,"lib":["ES2020"],"types":["node","vscode"]},"include":["src"]}
+>>>>>>> 2f52f83be1f7d671946596a5de23440ec38f1014
