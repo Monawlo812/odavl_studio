@@ -106,6 +106,29 @@ function getScanMetrics(): any {
   return { eslint: 17, typeErrors: 0 };
 }
 
+// Helper for stable JSON output with sorted keys
+function stableJson(obj: any): string {
+  return JSON.stringify(obj, Object.keys(obj).sort());
+}
+
+// Helper for normalizing notes to human-friendly messages
+function normalizeNotes(chunks: any[], appliedChunk?: number, pendingChunks?: number): string[] | undefined {
+  const notes: string[] = [];
+  
+  if (chunks.length > 1) {
+    if (appliedChunk && appliedChunk > 0) {
+      notes.push(`Applied chunk ${appliedChunk}/${chunks.length}`);
+      if (pendingChunks && pendingChunks > 0) {
+        notes.push(`Pending chunks: ${pendingChunks}`);
+      }
+    } else {
+      notes.push(`${chunks.length} chunks planned due to risk budget`);
+    }
+  }
+  
+  return notes.length > 0 ? notes : undefined;
+}
+
 const cmd = process.argv[2] ?? 'help';
 
 if (cmd === 'scan') {
@@ -267,7 +290,7 @@ if (cmd === 'scan') {
         child.stderr?.on('data', (data) => { stderr += data.toString(); });
         
         child.on('close', (code) => {
-          const result = {
+          const result = addValidators({
             tool: 'odavl',
             action: 'heal',
             recipe: 'remove-unused',
@@ -275,8 +298,8 @@ if (cmd === 'scan') {
             pass: code === 0,
             stdout,
             stderr
-          };
-          console.log(JSON.stringify(addValidators(result)));
+          });
+          console.log(stableJson(result));
         });
       } else if (recipe === 'esm-hygiene') {
         // ESM Hygiene codemod with chunking
@@ -302,14 +325,15 @@ if (cmd === 'scan') {
         
         if (mode === 'dry-run') {
           // Return all chunks metadata in dry-run
-          console.log(JSON.stringify(addValidators({
+          const result = addValidators({
             pass: true,
             recipe,
             mode,
             chunks: chunksMetadata,
             stats: totalStats,
-            notes: chunks.length > 1 ? [`${chunks.length} chunks planned due to risk budget`] : undefined
-          })));
+            notes: normalizeNotes(chunks)
+          });
+          console.log(stableJson(result));
         } else if (mode === 'apply') {
           // Apply only the first chunk
           let appliedChunk = 0;
@@ -335,7 +359,7 @@ if (cmd === 'scan') {
           }
           
           const pendingChunks = chunks.length - 1;
-          console.log(JSON.stringify(addValidators({
+          const result = addValidators({
             pass: true,
             recipe,
             mode,
@@ -346,8 +370,9 @@ if (cmd === 'scan') {
               files: appliedChunk > 0 ? chunks[0].length : 0,
               lines: appliedChunk > 0 ? chunks[0].reduce((sum, patch) => sum + estimatePatchLines(patch), 0) : 0
             },
-            notes: pendingChunks > 0 ? [`Applied chunk 1 of ${chunks.length}. Run again to apply remaining chunks.`] : undefined
-          })));
+            notes: normalizeNotes(chunks, appliedChunk, pendingChunks > 0 ? pendingChunks : undefined)
+          });
+          console.log(stableJson(result));
         }
       } else if (recipe === 'deps-patch') {
         // Dependencies patch/minor upgrade
@@ -377,35 +402,38 @@ if (cmd === 'scan') {
           }
         }
         
-        console.log(JSON.stringify(addValidators({
+        const result = addValidators({
           pass: true,
           recipe,
           mode,
           changes: upgradeResult.changes,
           stats: { files: upgradeResult.changes.length, lines: 0 }
-        })));
+        });
+        console.log(stableJson(result));
       } else {
-        console.log(JSON.stringify(addValidators({ 
+        const result = addValidators({ 
           pass: false, 
           recipe,
           mode,
           notes: [`Unsupported recipe: ${recipe}`] 
-        })));
+        });
+        console.log(stableJson(result));
         process.exit(1);
       }
     } catch (error: any) {
-      console.log(JSON.stringify(addValidators({
+      const result = addValidators({
         pass: false,
         recipe,
         mode,
         notes: [error?.message || 'Unknown error']
-      })));
+      });
+      console.log(stableJson(result));
     }
   };
   
   // Execute heal command
   executeHeal().then(() => {
-    console.error('Stage W2-2H done.');
+    console.error('Stage W2-2K done.');
   });
 } else if (cmd === 'branch' && process.argv[3] === 'create') {
   // Parse branch create command
