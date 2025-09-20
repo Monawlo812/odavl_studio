@@ -1,12 +1,39 @@
 #!/usr/bin/env node
 // ODAVL CLI placeholder
 import { spawn, spawnSync, execSync } from 'child_process';
-import { readFileSync } from 'fs';
+import { readFileSync, writeFileSync, readdirSync, statSync } from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { esmHygiene, depsPatchMinor } from '@odavl/codemods';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+
+// Helper function to find JavaScript/TypeScript files
+function findJsTsFiles(rootDir: string): string[] {
+  const files: string[] = [];
+  
+  function traverse(dir: string): void {
+    try {
+      const items = readdirSync(dir);
+      for (const item of items) {
+        const fullPath = path.join(dir, item);
+        const stat = statSync(fullPath);
+        
+        if (stat.isDirectory() && !item.startsWith('.') && item !== 'node_modules') {
+          traverse(fullPath);
+        } else if (stat.isFile() && /\.(js|ts|jsx|tsx)$/.test(item)) {
+          files.push(fullPath);
+        }
+      }
+    } catch (error) {
+      // Skip directories we can't read
+    }
+  }
+  
+  traverse(rootDir);
+  return files;
+}
 
 // Helper for running commands synchronously
 function run(cmd: string) {
@@ -91,10 +118,38 @@ if (cmd === 'scan') {
   };
   console.log(JSON.stringify(out));
 } else if (cmd === 'heal') {
+  // Helper function to run validation commands
+  const runCmd = (cmd: string, args: string[] = []): { ok: boolean; code: number } => {
+    try {
+      const result = spawnSync(cmd, args, { 
+        cwd: path.resolve(__dirname, '../../..'), 
+        timeout: 30000,
+        shell: true 
+      });
+      return { ok: result.status === 0, code: result.status || 0 };
+    } catch {
+      return { ok: false, code: 1 };
+    }
+  };
+
+  // Helper function to add validators to result
+  const addValidators = (result: any) => {
+    if (validate) {
+      // Run type-check
+      const typecheck = runCmd('pnpm', ['-w', '-r', 'run', 'type-check']) || runCmd('pnpm', ['exec', 'tsc', '--noEmit']);
+      // Run lint
+      const lint = runCmd('pnpm', ['-w', '-r', 'run', 'lint']);
+      
+      result.validators = { typecheck, lint };
+    }
+    return result;
+  };
+
   // Parse heal command arguments
   const args = process.argv.slice(3);
   let recipe = 'remove-unused';
   let apply = false;
+  let validate = false;
   
   for (let i = 0; i < args.length; i++) {
     if (args[i] === '--recipe' && i + 1 < args.length) {
@@ -102,47 +157,150 @@ if (cmd === 'scan') {
       i += 1;
     } else if (args[i] === '--apply') {
       apply = true;
+    } else if (args[i] === '--validate') {
+      validate = true;
     }
   }
   
-  if (recipe !== 'remove-unused') {
-    console.log(JSON.stringify({ pass: false, error: 'unsupported recipe' }));
-    process.exit(1);
-  }
-  
-  // Build eslint command
   const workspaceRoot = path.resolve(__dirname, '../../..');
-  const eslintCmd = process.platform === 'win32' ? 'pnpm.cmd' : 'pnpm';
-  const eslintArgs = ['--filter', 'golden-repo', 'exec', 'eslint', '.'];
-  if (apply) {
-    eslintArgs.push('--fix');
-  } else {
-    eslintArgs.push('--fix-dry-run');
-  }
+  const mode = apply ? 'apply' : 'dry-run';
   
-  // Spawn eslint command
-  const child = spawn(eslintCmd, eslintArgs, { 
-    cwd: workspaceRoot, 
-    stdio: 'pipe',
-    shell: true
-  });
-  let stdout = '';
-  let stderr = '';
+  const executeHeal = async () => {
+    try {
+      if (recipe === 'remove-unused') {
+        // Keep existing ESLint functionality
+        const eslintCmd = process.platform === 'win32' ? 'pnpm.cmd' : 'pnpm';
+        const eslintArgs = ['--filter', 'golden-repo', 'exec', 'eslint', '.'];
+        if (apply) {
+          eslintArgs.push('--fix');
+        } else {
+          eslintArgs.push('--fix-dry-run');
+        }
+        
+        const child = spawn(eslintCmd, eslintArgs, { 
+          cwd: workspaceRoot, 
+          stdio: 'pipe',
+          shell: true
+        });
+        let stdout = '';
+        let stderr = '';
+        
+        child.stdout?.on('data', (data) => { stdout += data.toString(); });
+        child.stderr?.on('data', (data) => { stderr += data.toString(); });
+        
+        child.on('close', (code) => {
+          const result = {
+            tool: 'odavl',
+            action: 'heal',
+            recipe: 'remove-unused',
+            mode,
+            pass: code === 0,
+            stdout,
+            stderr
+          };
+          console.log(JSON.stringify(addValidators(result)));
+        });
+      } else if (recipe === 'esm-hygiene') {
+        // ESM Hygiene codemod
+        const candidateFiles = findJsTsFiles(workspaceRoot);
+        const patchSet = await esmHygiene(candidateFiles);
+        
+        // Apply risk limits
+        if (patchSet.patches.length > 10 || patchSet.patches.some((p: any) => p.diff.split('\n').length > 40)) {
+          console.log(JSON.stringify(addValidators({
+            pass: false,
+            recipe,
+            mode,
+            notes: ['Risk budget exceeded - too many files or lines to change']
+          })));
+          return;
+        }
+        
+        if (apply && patchSet.patches.length > 0) {
+          // Apply patches (write files)
+          for (const patch of patchSet.patches) {
+            try {
+              const content = readFileSync(patch.file, 'utf8');
+              const lines = content.split('\n');
+              const newLines = lines.map((line: string) => {
+                if (line.includes('require(')) return line;
+                const importMatch = line.match(/^(\s*import\s+.*?\s+from\s+['"])(\.\.?\/[^'"]*?)(['"])/);
+                if (importMatch && !importMatch[2].endsWith('.js')) {
+                  return `${importMatch[1]}${importMatch[2]}.js${importMatch[3]}`;
+                }
+                return line;
+              });
+              writeFileSync(patch.file, newLines.join('\n'));
+            } catch (error) {
+              // Skip files that can't be written
+            }
+          }
+        }
+        
+        console.log(JSON.stringify(addValidators({
+          pass: true,
+          recipe,
+          mode,
+          patches: patchSet.patches,
+          stats: { files: patchSet.patches.length, lines: patchSet.totalChanges }
+        })));
+      } else if (recipe === 'deps-patch') {
+        // Dependencies patch/minor upgrade
+        const upgradeResult = await depsPatchMinor(workspaceRoot);
+        
+        if (apply && upgradeResult.changes.length > 0) {
+          // Apply changes to package.json files
+          for (const change of upgradeResult.changes) {
+            try {
+              const content = readFileSync(change.path, 'utf8');
+              const pkg = JSON.parse(content);
+              
+              // Update the dependency version
+              if (pkg.dependencies && pkg.dependencies[change.name]) {
+                pkg.dependencies[change.name] = change.to;
+              }
+              if (pkg.devDependencies && pkg.devDependencies[change.name]) {
+                pkg.devDependencies[change.name] = change.to;
+              }
+              
+              // Preserve formatting by using existing indentation
+              const newContent = JSON.stringify(pkg, null, 2) + '\n';
+              writeFileSync(change.path, newContent);
+            } catch (error) {
+              // Skip files that can't be updated
+            }
+          }
+        }
+        
+        console.log(JSON.stringify(addValidators({
+          pass: true,
+          recipe,
+          mode,
+          changes: upgradeResult.changes,
+          stats: { files: upgradeResult.changes.length, lines: 0 }
+        })));
+      } else {
+        console.log(JSON.stringify(addValidators({ 
+          pass: false, 
+          recipe,
+          mode,
+          notes: [`Unsupported recipe: ${recipe}`] 
+        })));
+        process.exit(1);
+      }
+    } catch (error: any) {
+      console.log(JSON.stringify(addValidators({
+        pass: false,
+        recipe,
+        mode,
+        notes: [error?.message || 'Unknown error']
+      })));
+    }
+  };
   
-  child.stdout?.on('data', (data) => { stdout += data.toString(); });
-  child.stderr?.on('data', (data) => { stderr += data.toString(); });
-  
-  child.on('close', (code) => {
-    const result = {
-      tool: 'odavl',
-      action: 'heal',
-      recipe: 'remove-unused',
-      mode: apply ? 'apply' : 'dry-run',
-      pass: code === 0,
-      stdout,
-      stderr
-    };
-    console.log(JSON.stringify(result));
+  // Execute heal command
+  executeHeal().then(() => {
+    console.error('Stage W2-2E done.');
   });
 } else if (cmd === 'branch' && process.argv[3] === 'create') {
   // Parse branch create command

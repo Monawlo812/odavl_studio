@@ -16,6 +16,10 @@ importers:
         version: 5.9.2
 
   apps/cli:
+    dependencies:
+      '@odavl/codemods':
+        specifier: workspace:*
+        version: link:../../packages/codemods
     devDependencies:
       '@types/node':
         specifier: ^20
@@ -58,7 +62,14 @@ importers:
         specifier: ^5.9.2
         version: 5.9.2
 
-  packages/codemods: {}
+  packages/codemods:
+    devDependencies:
+      '@types/node':
+        specifier: ^20.0.0
+        version: 20.19.17
+      typescript:
+        specifier: ^5.0.0
+        version: 5.9.2
 
   packages/core: {}
 
