@@ -792,6 +792,71 @@ Evidence:
       stderr: error?.message || 'Unknown error'
     }));
   }
+} else if (cmd === 'shadow' && process.argv[3] === 'status') {
+  const args = process.argv.slice(4);
+  let ref = '';
+  let watch = false;
+  
+  for (let i = 0; i < args.length; i++) {
+    if (args[i] === '--ref' && i + 1 < args.length) {
+      ref = args[i + 1];
+      i += 1;
+    } else if (args[i] === '--watch') {
+      watch = true;
+    }
+  }
+  
+  // Helper to fetch latest run for a ref
+  function fetchLatestRun(targetRef: string): any {
+    try {
+      const result = execSync(`gh run list --limit 1 --json url,headBranch,status,conclusion,workflowName,createdAt,updatedAt,headSha --branch ${targetRef}`, { encoding: 'utf8' });
+      const runs = JSON.parse(result);
+      return Array.isArray(runs) && runs[0] ? runs[0] : null;
+    } catch {
+      return null;
+    }
+  }
+  
+  // Determine ref if not provided
+  if (!ref) {
+    try {
+      const result = execSync('git rev-parse --abbrev-ref HEAD', { encoding: 'utf8' });
+      ref = result.trim();
+    } catch {
+      ref = 'HEAD';
+    }
+  }
+  
+  // Output function
+  function outputStatus(run: any) {
+    const output = {
+      pass: run ? run.conclusion === 'success' : false,
+      action: 'shadow-status',
+      ref,
+      run: run || { url: null, status: 'not_found', conclusion: null, workflowName: null, headSha: null, createdAt: null, updatedAt: null }
+    };
+    console.log(JSON.stringify(output));
+  }
+  
+  // Single-shot or watch mode
+  if (watch) {
+    const poll = () => {
+      const run = fetchLatestRun(ref);
+      outputStatus(run);
+      
+      if (run && ['success', 'failure', 'cancelled'].includes(run.conclusion)) {
+        console.error('Stage W2-4H done.');
+        return;
+      }
+      
+      setTimeout(poll, 5000);
+    };
+    poll();
+  } else {
+    const run = fetchLatestRun(ref);
+    outputStatus(run);
+    console.error('Stage W2-4H done.');
+  }
 } else if (cmd === 'governor' && process.argv[3] === 'explain') {
   try {
     const config = readGovernorConfig(process.cwd());
@@ -837,5 +902,6 @@ Evidence:
   console.log('  branch create  Create a new git branch');
   console.log('  pr open        Open a pull request (--explain, --dry-run, --title)');
   console.log('  shadow run     Trigger CI workflow (--ref <branch>, --wait, --dry-run)');
+  console.log('  shadow status  Check CI workflow status (--ref <branch>, --watch)');
   console.log('  governor explain  Show current governor status for PR and shadow operations');
 }
