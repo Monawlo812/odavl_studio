@@ -43,17 +43,21 @@ export function readGovernorConfig(root: string): GovernorCfg {
     const cfg: GovernorCfg = { ...defaults };
 
     // Simple regex-based YAML parsing for governor section
-    const governorMatch = content.match(/governor:\s*\n((?:\s+\w+:.*\n?)*)/);
+    const governorRegex = /governor:\s*\n((?:\s+\w+:.*\n?)*)/;
+    const governorMatch = governorRegex.exec(content);
     if (governorMatch) {
       const governorSection = governorMatch[1];
       
-      const prsMatch = governorSection.match(/prsPerDay:\s*(\d+)/);
+      const prsRegex = /prsPerDay:\s*(\d+)/;
+      const prsMatch = prsRegex.exec(governorSection);
       if (prsMatch) cfg.prsPerDay = parseInt(prsMatch[1], 10);
       
-      const ciMatch = governorSection.match(/ciMinutesPerHour:\s*(\d+)/);
+      const ciRegex = /ciMinutesPerHour:\s*(\d+)/;
+      const ciMatch = ciRegex.exec(governorSection);
       if (ciMatch) cfg.ciMinutesPerHour = parseInt(ciMatch[1], 10);
       
-      const shadowsMatch = governorSection.match(/maxConcurrentShadows:\s*(\d+)/);
+      const shadowsRegex = /maxConcurrentShadows:\s*(\d+)/;
+      const shadowsMatch = shadowsRegex.exec(governorSection);
       if (shadowsMatch) cfg.maxConcurrentShadows = parseInt(shadowsMatch[1], 10);
     }
 
@@ -81,7 +85,7 @@ export function currentUsage(root: string): GovernorUsage {
     const today = new Date().toISOString().split('T')[0];
     
     usage.openPrsToday = prs.filter((pr: any) => 
-      pr.createdAt && pr.createdAt.startsWith(today)
+      pr.createdAt?.startsWith(today)
     ).length;
 
     // Count shadows (CI runs) in progress
@@ -113,7 +117,8 @@ export function currentUsage(root: string): GovernorUsage {
 export function parseWindow(str: string): {startMinutes: number, endMinutes: number} | null {
   if (!str || typeof str !== 'string') return null;
   
-  const match = str.match(/^(\d{1,2}):(\d{2})-(\d{1,2}):(\d{2})$/);
+  const windowRegex = /^(\d{1,2}):(\d{2})-(\d{1,2}):(\d{2})$/;
+  const match = windowRegex.exec(str);
   if (!match) return null;
   
   const [, startH, startM, endH, endM] = match;
@@ -223,3 +228,4 @@ function updateLedger(root: string, usage: GovernorUsage): void {
     // Best-effort: ignore ledger failures
   }
 }
+
