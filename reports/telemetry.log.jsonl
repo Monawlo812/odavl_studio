@@ -9,3 +9,8 @@
 {"ts":"2025-09-20T18:06:58.052Z","kind":"heal","durMs":21,"ok":true,"recipe":"esm-hygiene"}
 {"ts":"2025-09-20T18:07:23.292Z","kind":"heal","durMs":17,"ok":true,"recipe":"remove-unused"}
 {"ts":"2025-09-20T18:07:37.870Z","kind":"heal","durMs":18,"ok":true,"recipe":"remove-unused"}
+{"ts":"2025-09-20T19:18:58.843Z","kind":"scan","durMs":6,"ok":true,"eslintCount":17,"typeErrors":0}
+{"ts":"2025-09-20T19:19:07.614Z","kind":"heal","durMs":16,"ok":true,"recipe":"remove-unused"}
+{"ts":"2025-09-20T19:19:16.440Z","kind":"heal","durMs":23,"ok":true,"recipe":"esm-hygiene"}
+{"ts":"2025-09-20T19:19:26.697Z","kind":"heal","durMs":5282,"ok":true,"recipe":"deps-patch"}
+{"ts":"2025-09-20T19:21:37.951Z","kind":"heal","durMs":16,"ok":true,"recipe":"esm-hygiene"}

@@ -40,5 +40,17 @@
     "openPrsToday": 13,
     "shadowsInProgress": 0,
     "estCiMinsHour": 0
+  },
+  {
+    "timestamp": "2025-09-20T19:00:44.704Z",
+    "openPrsToday": 14,
+    "shadowsInProgress": 0,
+    "estCiMinsHour": 0
+  },
+  {
+    "timestamp": "2025-09-20T19:21:06.835Z",
+    "openPrsToday": 14,
+    "shadowsInProgress": 0,
+    "estCiMinsHour": 0
   }
 ]
