@@ -211,10 +211,27 @@ if (cmd === 'scan') {
       const shortstatResult = run(`git diff --shortstat origin/${base}...${head}`);
       const lastCommitResult = run('git log -1 --pretty=%s');
       
+      // Evidence section: changed files, diff stats, and workflow run
+      const changedFilesResult = run(`git diff --name-only origin/${base}..HEAD`);
+      const changedFiles = changedFilesResult.stdout.trim().split('\n').filter(f => f).slice(0, 10);
+      const diffStatResult = run(`git diff --shortstat origin/${base}..HEAD`);
+      const workflowRunResult = run(`gh run list --branch ${head} --limit 1 --json url -q '.[0].url'`);
+      const workflowUrl = (workflowRunResult.status === 0 && workflowRunResult.stdout.trim()) 
+        ? workflowRunResult.stdout.trim() 
+        : 'No workflow run found';
+      
       body = `**What**: ${files.join(', ')}${files.length > 5 ? '...' : ''}
 **Changes**: ${shortstatResult.stdout.trim()}
 **Last commit**: ${lastCommitResult.stdout.trim()}
-**Note**: CI will run on this PR to validate changes.`;
+**Note**: CI will run on this PR to validate changes.
+
+## Evidence
+**Top changed files** (vs origin/${base}):
+${changedFiles.map(f => `- ${f}`).join('\n')}${changedFiles.length >= 10 ? '\n- ...' : ''}
+
+**Diff stats**: ${diffStatResult.stdout.trim() || 'No changes detected'}
+
+**Latest workflow run**: ${workflowUrl}`;
     }
     
     if (dryRun) {
