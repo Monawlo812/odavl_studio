@@ -28,5 +28,11 @@
     "openPrsToday": 9,
     "shadowsInProgress": 0,
     "estCiMinsHour": 0
+  },
+  {
+    "timestamp": "2025-09-20T16:55:13.994Z",
+    "openPrsToday": 11,
+    "shadowsInProgress": 0,
+    "estCiMinsHour": 0
   }
 ]
