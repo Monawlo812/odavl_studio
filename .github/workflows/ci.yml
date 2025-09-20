@@ -20,7 +20,7 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
           cache: 'pnpm'
-          cache-dependency-path: odavl_studio/pnpm-lock.yaml
+          cache-dependency-path: '**/pnpm-lock.yaml'
       - name: Install
         working-directory: odavl_studio
         run: pnpm install
