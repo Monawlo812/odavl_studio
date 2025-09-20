@@ -506,12 +506,21 @@ if (cmd === 'scan') {
     const decision = decide('pr', config, usage);
     
     if (decision.blocked) {
+      let reasonKey = "prs_per_day_limit";
+      if (decision.reason === "outside_wave_window") {
+        reasonKey = "outside_wave_window";
+      }
+      
       console.log(JSON.stringify({
-        tool: 'odavl',
-        action: 'pr',
-        subaction: 'open',
         pass: false,
-        stderr: `Governor blocked PR creation: ${decision.reason}`
+        action: 'pr',
+        governor: {
+          blocked: true,
+          reason: reasonKey,
+          limits: config,
+          usage,
+          nextWindow: (decision as any).nextWindow
+        }
       }));
       process.exit(1);
     }
@@ -665,12 +674,23 @@ Evidence:
     const decision = decide('shadow', config, usage);
     
     if (decision.blocked) {
+      let reasonKey = "shadow_concurrency";
+      if (decision.reason === "outside_wave_window") {
+        reasonKey = "outside_wave_window";
+      } else if (decision.reason?.includes("CI time limit")) {
+        reasonKey = "ci_time_limit";
+      }
+      
       console.log(JSON.stringify({
-        tool: 'odavl',
-        action: 'shadow',
-        subaction: 'run',
         pass: false,
-        stderr: `Governor blocked shadow run: ${decision.reason}`
+        action: 'shadow',
+        governor: {
+          blocked: true,
+          reason: reasonKey,
+          limits: config,
+          usage,
+          nextWindow: (decision as any).nextWindow
+        }
       }));
       process.exit(1);
     }
@@ -772,6 +792,43 @@ Evidence:
       stderr: error?.message || 'Unknown error'
     }));
   }
+} else if (cmd === 'governor' && process.argv[3] === 'explain') {
+  try {
+    const config = readGovernorConfig(process.cwd());
+    const usage = currentUsage(process.cwd());
+    
+    // Check both PR and shadow decisions
+    const prDecision = decide('pr', config, usage);
+    const shadowDecision = decide('shadow', config, usage);
+    
+    const prResult = {
+      action: 'pr',
+      allowedNow: !prDecision.blocked,
+      reason: prDecision.reason,
+      nextWindow: (prDecision as any).nextWindow,
+      limits: config,
+      usage
+    };
+    
+    const shadowResult = {
+      action: 'shadow', 
+      allowedNow: !shadowDecision.blocked,
+      reason: shadowDecision.reason,
+      nextWindow: (shadowDecision as any).nextWindow,
+      limits: config,
+      usage
+    };
+    
+    console.log(JSON.stringify({ pr: prResult, shadow: shadowResult }));
+  } catch (error: any) {
+    console.log(JSON.stringify({
+      tool: 'odavl',
+      action: 'governor',
+      subaction: 'explain',
+      pass: false,
+      stderr: error?.message || 'Unknown error'
+    }));
+  }
 } else {
   console.log('Usage: odavl <command>');
   console.log('Commands:');
@@ -780,4 +837,5 @@ Evidence:
   console.log('  branch create  Create a new git branch');
   console.log('  pr open        Open a pull request (--explain, --dry-run, --title)');
   console.log('  shadow run     Trigger CI workflow (--ref <branch>, --wait, --dry-run)');
+  console.log('  governor explain  Show current governor status for PR and shadow operations');
 }

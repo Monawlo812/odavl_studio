@@ -39,11 +39,71 @@ export function activate(context: vscode.ExtensionContext){
         }else if(msg?.type==='openpr'){
           const cli=path.join(root,'apps','cli','dist','index.js'); const args=[cli,'pr','open','--explain']; if(msg?.title) args.push('--title',String(msg.title)); if(msg?.dry) args.push('--dry-run');
           const child=spawn(process.execPath,args,{cwd:root,shell:process.platform==='win32'}); let out='',err=''; child.stdout.on('data',d=>out+=d); child.stderr.on('data',d=>err+=d);
-          child.on('close',()=>{ try{ panel.webview.postMessage({type:'prResult',data:JSON.parse(out.trim())}); }catch{ panel.webview.postMessage({type:'prResult',data:{pass:false,raw:out,stderr:err}});} });
+          child.on('close',async ()=>{ 
+            try{ 
+              const result = JSON.parse(out.trim());
+              if (result.governor?.blocked) {
+                let friendlyMessage = "PR creation blocked.";
+                if (result.governor.reason === 'outside_wave_window') {
+                  friendlyMessage = "Outside scheduled wave window.";
+                } else if (result.governor.reason === 'prs_per_day_limit') {
+                  friendlyMessage = "Daily PR cap reached.";
+                }
+                if (result.governor.nextWindow) {
+                  friendlyMessage += ` Next window: ${result.governor.nextWindow}`;
+                }
+                const action = await vscode.window.showWarningMessage(friendlyMessage, "Explain");
+                if (action === "Explain") {
+                  const explainChild = spawn(process.execPath, [cli, 'governor', 'explain'], {cwd:root,shell:process.platform==='win32'});
+                  let explainOut = ''; explainChild.stdout.on('data', d => explainOut += d);
+                  explainChild.on('close', () => {
+                    try {
+                      panel.webview.postMessage({type:'prResult',data:JSON.parse(explainOut.trim())});
+                    } catch {
+                      panel.webview.postMessage({type:'prResult',data:{governor_explain:explainOut}});
+                    }
+                  });
+                }
+              } else {
+                panel.webview.postMessage({type:'prResult',data:result}); 
+              }
+            }catch{ panel.webview.postMessage({type:'prResult',data:{pass:false,raw:out,stderr:err}});} 
+          });
         }else if(msg?.type==='shadow'){
           const cli=path.join(root,'apps','cli','dist','index.js'); const args=[cli,'shadow','run'];
           const child=spawn(process.execPath,args,{cwd:root,shell:process.platform==='win32'}); let out='',err=''; child.stdout.on('data',d=>out+=d); child.stderr.on('data',d=>err+=d);
-          child.on('close',()=>{ try{ panel.webview.postMessage({type:'shadowResult',data:JSON.parse(out.trim())}); }catch{ panel.webview.postMessage({type:'shadowResult',data:{pass:false,raw:out,stderr:err}});} });
+          child.on('close',async ()=>{ 
+            try{ 
+              const result = JSON.parse(out.trim());
+              if (result.governor?.blocked) {
+                let friendlyMessage = "Shadow run blocked.";
+                if (result.governor.reason === 'outside_wave_window') {
+                  friendlyMessage = "Outside scheduled wave window.";
+                } else if (result.governor.reason === 'shadow_concurrency') {
+                  friendlyMessage = "Too many shadows running.";
+                } else if (result.governor.reason === 'ci_time_limit') {
+                  friendlyMessage = "CI time budget exceeded.";
+                }
+                if (result.governor.nextWindow) {
+                  friendlyMessage += ` Next window: ${result.governor.nextWindow}`;
+                }
+                const action = await vscode.window.showWarningMessage(friendlyMessage, "Explain");
+                if (action === "Explain") {
+                  const explainChild = spawn(process.execPath, [cli, 'governor', 'explain'], {cwd:root,shell:process.platform==='win32'});
+                  let explainOut = ''; explainChild.stdout.on('data', d => explainOut += d);
+                  explainChild.on('close', () => {
+                    try {
+                      panel.webview.postMessage({type:'shadowResult',data:JSON.parse(explainOut.trim())});
+                    } catch {
+                      panel.webview.postMessage({type:'shadowResult',data:{governor_explain:explainOut}});
+                    }
+                  });
+                }
+              } else {
+                panel.webview.postMessage({type:'shadowResult',data:result}); 
+              }
+            }catch{ panel.webview.postMessage({type:'shadowResult',data:{pass:false,raw:out,stderr:err}});} 
+          });
         }
       }catch(e:any){ panel.webview.postMessage({type:'error',error:String(e?.message||e)}); }
     },undefined,context.subscriptions);

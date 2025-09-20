@@ -6,6 +6,10 @@ export interface GovernorCfg {
   prsPerDay?: number;
   ciMinutesPerHour?: number;
   maxConcurrentShadows?: number;
+  waves?: Array<{
+    window?: string; // "HH:MM-HH:MM" format
+    maxPrs?: number;
+  }>;
 }
 
 export interface GovernorUsage {
@@ -105,6 +109,44 @@ export function currentUsage(root: string): GovernorUsage {
   return usage;
 }
 
+// Wave window helpers
+export function parseWindow(str: string): {startMinutes: number, endMinutes: number} | null {
+  if (!str || typeof str !== 'string') return null;
+  
+  const match = str.match(/^(\d{1,2}):(\d{2})-(\d{1,2}):(\d{2})$/);
+  if (!match) return null;
+  
+  const [, startH, startM, endH, endM] = match;
+  const startMinutes = parseInt(startH) * 60 + parseInt(startM);
+  const endMinutes = parseInt(endH) * 60 + parseInt(endM);
+  
+  return { startMinutes, endMinutes };
+}
+
+export function isWithin(nowLocalMinutes: number, win: {startMinutes: number, endMinutes: number}): boolean {
+  const { startMinutes, endMinutes } = win;
+  
+  if (startMinutes <= endMinutes) {
+    // Same day window: 09:00-17:00
+    return nowLocalMinutes >= startMinutes && nowLocalMinutes <= endMinutes;
+  } else {
+    // Overnight window: 22:00-06:00
+    return nowLocalMinutes >= startMinutes || nowLocalMinutes <= endMinutes;
+  }
+}
+
+export function nextWaveStart(nowLocalMinutes: number, win: {startMinutes: number, endMinutes: number}): number {
+  const { startMinutes } = win;
+  
+  if (nowLocalMinutes < startMinutes) {
+    // Next start is today
+    return startMinutes;
+  } else {
+    // Next start is tomorrow
+    return startMinutes + 1440; // +24 hours in minutes
+  }
+}
+
 // Decision logic for governor actions
 export function decide(
   kind: "pr" | "shadow", 
@@ -116,6 +158,29 @@ export function decide(
     limits: cfg,
     usage
   };
+
+  // Check wave window if configured
+  const wave = cfg.waves?.[0];
+  const window = wave?.window ? parseWindow(wave.window) : null;
+  
+  if (window) {
+    const now = new Date();
+    const nowLocalMinutes = now.getHours() * 60 + now.getMinutes();
+    const inWindow = isWithin(nowLocalMinutes, window);
+    
+    if (!inWindow && kind === "pr" && (cfg.prsPerDay || 0) > 0) {
+      // Block PRs outside wave window when PR limits are set
+      const nextStart = nextWaveStart(nowLocalMinutes, window);
+      const nextHour = Math.floor((nextStart % 1440) / 60);
+      const nextMin = (nextStart % 1440) % 60;
+      const nextWindow = `${nextHour.toString().padStart(2, '0')}:${nextMin.toString().padStart(2, '0')}`;
+      
+      decision.blocked = true;
+      decision.reason = "outside_wave_window";
+      (decision as any).nextWindow = nextWindow;
+      return decision;
+    }
+  }
 
   if (kind === "pr") {
     if (usage.openPrsToday >= (cfg.prsPerDay || 2)) {

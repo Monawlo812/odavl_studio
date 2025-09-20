@@ -27,3 +27,9 @@ node apps/cli/dist/index.js heal --recipe esm-hygiene --apply --max-files 5
 - `--validate` - Include type-checking and linting in output
 - `--max-lines <n>` - Risk budget: max lines per chunk (default: 40)
 - `--max-files <n>` - Risk budget: max files per chunk (default: 10)
+
+## Governor
+
+Rate limiting system to prevent CI resource exhaustion. Supports wave windows for time-based PR scheduling.
+
+Wave windows like `"22:00-06:00"` allow overnight PR creation while blocking during business hours, enabling automated workflows during low-activity periods.
