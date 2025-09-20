@@ -53,7 +53,8 @@ function findJsTsFiles(rootDir: string): string[] {
         }
       }
     } catch (error) {
-      // Skip directories we can't read
+      // Skip directories we can't read - log for debugging
+      console.warn(`CLI: Unable to read directory ${dir}:`, error instanceof Error ? error.message : String(error));
     }
   }
   
@@ -134,7 +135,7 @@ function getScanMetrics(): any {
 
 // Helper for stable JSON output with sorted keys
 function stableJson(obj: any): string {
-  return JSON.stringify(obj, Object.keys(obj).sort());
+  return JSON.stringify(obj, Object.keys(obj).sort((a, b) => a.localeCompare(b)));
 }
 
 // Helper to read telemetry mode from policy
@@ -142,7 +143,8 @@ function readTelemetryMode(): 'off' | 'on' | 'anonymized' {
   try {
     const policyPath = path.join(process.cwd(), '.odavl.policy.yml');
     const content = readFileSync(policyPath, 'utf8');
-    const telemetryMatch = content.match(/telemetry:\s*(on|anonymized|off)/);
+    const telemetryRegex = /telemetry:\s*(on|anonymized|off)/;
+    const telemetryMatch = telemetryRegex.exec(content);
     const mode = telemetryMatch ? telemetryMatch[1] : 'off';
     return mode as 'off' | 'on' | 'anonymized';
   } catch {
@@ -246,17 +248,15 @@ if (cmd === 'scan') {
   
   for (let i = 0; i < args.length; i++) {
     if (args[i] === '--recipe' && i + 1 < args.length) {
-      recipe = args[i + 1];
-      i += 1;
+      recipe = args[++i]; // Pre-increment to consume the next argument
     } else if (args[i] === '--apply') {
       apply = true;
     } else if (args[i] === '--validate') {
       validate = true;
     } else if (args[i] === '--max-lines' && i + 1 < args.length) {
-      maxLinesPerPatch = parseInt(args[i + 1], 10) || 40;
-      i += 1;
+      maxLinesPerPatch = parseInt(args[++i], 10) || 40; // Pre-increment to consume the next argument
     } else if (args[i] === '--max-files' && i + 1 < args.length) {
-      maxFilesTouched = parseInt(args[i + 1], 10) || 10;
+      maxFilesTouched = parseInt(args[++i], 10) || 10; // Pre-increment to consume the next argument
       i += 1;
     }
   }
@@ -266,8 +266,10 @@ if (cmd === 'scan') {
     const policyPath = path.join(workspaceRoot, '.odavl.policy.yml');
     const policyContent = readFileSync(policyPath, 'utf8');
     // Simple YAML parsing for our specific keys
-    const maxLinesMatch = policyContent.match(/maxLinesPerPatch:\s*(\d+)/);
-    const maxFilesMatch = policyContent.match(/maxFilesTouched:\s*(\d+)/);
+    const maxLinesRegex = /maxLinesPerPatch:\s*(\d+)/;
+    const maxFilesRegex = /maxFilesTouched:\s*(\d+)/;
+    const maxLinesMatch = maxLinesRegex.exec(policyContent);
+    const maxFilesMatch = maxFilesRegex.exec(policyContent);
     if (maxLinesMatch) maxLinesPerPatch = parseInt(maxLinesMatch[1], 10) || maxLinesPerPatch;
     if (maxFilesMatch) maxFilesTouched = parseInt(maxFilesMatch[1], 10) || maxFilesTouched;
   } catch {
@@ -399,174 +401,192 @@ if (cmd === 'scan') {
     return chunks;
   };
   
+  const executeRemoveUnused = async () => {
+    const eslintCmd = process.platform === 'win32' ? 'pnpm.cmd' : 'pnpm';
+    const eslintArgs = ['--filter', 'golden-repo', 'exec', 'eslint', '.'];
+    if (apply) {
+      eslintArgs.push('--fix');
+    } else {
+      eslintArgs.push('--fix-dry-run');
+    }
+    
+    const child = spawn(eslintCmd, eslintArgs, { 
+      cwd: workspaceRoot, 
+      stdio: 'pipe',
+      shell: true
+    });
+    let stdout = '';
+    let stderr = '';
+    
+    child.stdout?.on('data', (data) => { stdout += data.toString(); });
+    child.stderr?.on('data', (data) => { stderr += data.toString(); });
+    
+    child.on('close', (code) => {
+      const result = addValidators({
+        tool: 'odavl',
+        action: 'heal',
+        recipe: 'remove-unused',
+        mode,
+        pass: code === 0,
+        stdout,
+        stderr
+      });
+      console.log(stableJson(result));
+    });
+  };
+
+  const executeEsmHygiene = async () => {
+    const candidateFiles = findJsTsFiles(workspaceRoot);
+    const patchSet = await esmHygiene(candidateFiles);
+    
+    // Filter out protected paths and chunk the patches
+    const filteredPatches = patchSet.patches.filter((p: any) => !isProtectedPath(p.file));
+    const chunks = chunkPatches(filteredPatches, budget);
+    
+    // Calculate chunks metadata
+    const chunksMetadata = chunks.map((chunk, index) => ({
+      index: index + 1,
+      files: chunk.length,
+      lines: chunk.reduce((sum, patch) => sum + estimatePatchLines(patch), 0),
+      count: chunk.length
+    }));
+    
+    const totalStats = {
+      files: filteredPatches.length,
+      lines: filteredPatches.reduce((sum, patch) => sum + estimatePatchLines(patch), 0)
+    };
+    
+    if (mode === 'dry-run') {
+      // Return all chunks metadata in dry-run
+      const result = addValidators({
+        pass: true,
+        recipe,
+        mode,
+        chunks: chunksMetadata,
+        stats: totalStats,
+        notes: normalizeNotes(chunks)
+      });
+      console.log(stableJson(result));
+    } else if (mode === 'apply') {
+      await applyEsmHygieneChunks(chunks, chunksMetadata);
+    }
+  };
+
+  const applyEsmHygieneChunks = async (chunks: any[], chunksMetadata: any[]) => {
+    let appliedChunk = 0;
+    const undoSnapshot = createUndoSnapshot('esm-hygiene');
+    let undoEnabled = false;
+    
+    if (chunks.length > 0) {
+      appliedChunk = 1;
+      for (const patch of chunks[0]) {
+        try {
+          // Backup file before writing
+          undoSnapshot.backupFile(patch.file);
+          undoEnabled = true;
+          
+          const content = readFileSync(patch.file, 'utf8');
+          const lines = content.split('\n');
+          const newLines = lines.map((line: string) => {
+            if (line.includes('require(')) return line;
+            const importRegex = /^(\s*import\s+.*?\s+from\s+['"])(\.\.?\/[^'"]*?)(['"])/;
+            const importMatch = importRegex.exec(line);
+            if (importMatch && !importMatch[2].endsWith('.js')) {
+              return `${importMatch[1]}${importMatch[2]}.js${importMatch[3]}`;
+            }
+            return line;
+          });
+          writeFileSync(patch.file, newLines.join('\n'));
+        } catch (error) {
+          // Skip files that can't be written
+          console.warn(`CLI: Unable to apply ESM hygiene to ${patch.file}:`, error instanceof Error ? error.message : String(error));
+        }
+      }
+      
+      // Finalize undo snapshot if any files were backed up
+      if (undoEnabled) {
+        undoSnapshot.finalize();
+      }
+    }
+    
+    const pendingChunks = chunks.length - 1;
+    const result = addValidators({
+      pass: true,
+      recipe,
+      mode,
+      chunks: chunksMetadata,
+      appliedChunk,
+      pendingChunks: pendingChunks > 0 ? pendingChunks : undefined,
+      stats: {
+        files: appliedChunk > 0 ? chunks[0].length : 0,
+        lines: appliedChunk > 0 ? chunks[0].reduce((sum: number, patch: any) => sum + estimatePatchLines(patch), 0) : 0
+      },
+      notes: normalizeNotes(chunks, appliedChunk, pendingChunks > 0 ? pendingChunks : undefined)
+    });
+    console.log(stableJson(result));
+  };
+
+  const executeDepsPath = async () => {
+    const upgradeResult = await depsPatchMinor(workspaceRoot);
+    
+    if (apply && upgradeResult.changes.length > 0) {
+      await applyDependencyUpgrades(upgradeResult.changes);
+    }
+    
+    const result = addValidators({
+      pass: true,
+      recipe,
+      mode,
+      changes: upgradeResult.changes,
+      stats: { files: upgradeResult.changes.length, lines: 0 }
+    });
+    console.log(stableJson(result));
+  };
+
+  const applyDependencyUpgrades = async (changes: any[]) => {
+    const undoSnapshot = createUndoSnapshot('deps-patch');
+    let undoEnabled = false;
+    
+    for (const change of changes) {
+      try {
+        // Backup file before writing
+        undoSnapshot.backupFile(change.path);
+        undoEnabled = true;
+        
+        const content = readFileSync(change.path, 'utf8');
+        const pkg = JSON.parse(content);
+        
+        // Update the dependency version
+        if (pkg.dependencies?.[change.name]) {
+          pkg.dependencies[change.name] = change.to;
+        }
+        if (pkg.devDependencies?.[change.name]) {
+          pkg.devDependencies[change.name] = change.to;
+        }
+        
+        // Preserve formatting by using existing indentation
+        const newContent = JSON.stringify(pkg, null, 2) + '\n';
+        writeFileSync(change.path, newContent);
+      } catch (error) {
+        // Skip files that can't be updated
+        console.warn(`CLI: Unable to update dependencies in ${change.path}:`, error instanceof Error ? error.message : String(error));
+      }
+    }
+    
+    // Finalize undo snapshot if any files were backed up
+    if (undoEnabled) {
+      undoSnapshot.finalize();
+    }
+  };
+
   const executeHeal = async () => {
     try {
       if (recipe === 'remove-unused') {
-        // Keep existing ESLint functionality
-        const eslintCmd = process.platform === 'win32' ? 'pnpm.cmd' : 'pnpm';
-        const eslintArgs = ['--filter', 'golden-repo', 'exec', 'eslint', '.'];
-        if (apply) {
-          eslintArgs.push('--fix');
-        } else {
-          eslintArgs.push('--fix-dry-run');
-        }
-        
-        const child = spawn(eslintCmd, eslintArgs, { 
-          cwd: workspaceRoot, 
-          stdio: 'pipe',
-          shell: true
-        });
-        let stdout = '';
-        let stderr = '';
-        
-        child.stdout?.on('data', (data) => { stdout += data.toString(); });
-        child.stderr?.on('data', (data) => { stderr += data.toString(); });
-        
-        child.on('close', (code) => {
-          const result = addValidators({
-            tool: 'odavl',
-            action: 'heal',
-            recipe: 'remove-unused',
-            mode,
-            pass: code === 0,
-            stdout,
-            stderr
-          });
-          console.log(stableJson(result));
-        });
+        await executeRemoveUnused();
       } else if (recipe === 'esm-hygiene') {
-        // ESM Hygiene codemod with chunking
-        const candidateFiles = findJsTsFiles(workspaceRoot);
-        const patchSet = await esmHygiene(candidateFiles);
-        
-        // Filter out protected paths and chunk the patches
-        const filteredPatches = patchSet.patches.filter((p: any) => !isProtectedPath(p.file));
-        const chunks = chunkPatches(filteredPatches, budget);
-        
-        // Calculate chunks metadata
-        const chunksMetadata = chunks.map((chunk, index) => ({
-          index: index + 1,
-          files: chunk.length,
-          lines: chunk.reduce((sum, patch) => sum + estimatePatchLines(patch), 0),
-          count: chunk.length
-        }));
-        
-        const totalStats = {
-          files: filteredPatches.length,
-          lines: filteredPatches.reduce((sum, patch) => sum + estimatePatchLines(patch), 0)
-        };
-        
-        if (mode === 'dry-run') {
-          // Return all chunks metadata in dry-run
-          const result = addValidators({
-            pass: true,
-            recipe,
-            mode,
-            chunks: chunksMetadata,
-            stats: totalStats,
-            notes: normalizeNotes(chunks)
-          });
-          console.log(stableJson(result));
-        } else if (mode === 'apply') {
-          // Apply only the first chunk with undo snapshots
-          let appliedChunk = 0;
-          const undoSnapshot = createUndoSnapshot('esm-hygiene');
-          let undoEnabled = false;
-          
-          if (chunks.length > 0) {
-            appliedChunk = 1;
-            for (const patch of chunks[0]) {
-              try {
-                // Backup file before writing
-                undoSnapshot.backupFile(patch.file);
-                undoEnabled = true;
-                
-                const content = readFileSync(patch.file, 'utf8');
-                const lines = content.split('\n');
-                const newLines = lines.map((line: string) => {
-                  if (line.includes('require(')) return line;
-                  const importMatch = line.match(/^(\s*import\s+.*?\s+from\s+['"])(\.\.?\/[^'"]*?)(['"])/);
-                  if (importMatch && !importMatch[2].endsWith('.js')) {
-                    return `${importMatch[1]}${importMatch[2]}.js${importMatch[3]}`;
-                  }
-                  return line;
-                });
-                writeFileSync(patch.file, newLines.join('\n'));
-              } catch (error) {
-                // Skip files that can't be written
-              }
-            }
-            
-            // Finalize undo snapshot if any files were backed up
-            if (undoEnabled) {
-              undoSnapshot.finalize();
-            }
-          }
-          
-          const pendingChunks = chunks.length - 1;
-          const result = addValidators({
-            pass: true,
-            recipe,
-            mode,
-            chunks: chunksMetadata,
-            appliedChunk,
-            pendingChunks: pendingChunks > 0 ? pendingChunks : undefined,
-            stats: {
-              files: appliedChunk > 0 ? chunks[0].length : 0,
-              lines: appliedChunk > 0 ? chunks[0].reduce((sum, patch) => sum + estimatePatchLines(patch), 0) : 0
-            },
-            notes: normalizeNotes(chunks, appliedChunk, pendingChunks > 0 ? pendingChunks : undefined)
-          });
-          console.log(stableJson(result));
-        }
+        await executeEsmHygiene();
       } else if (recipe === 'deps-patch') {
-        // Dependencies patch/minor upgrade
-        const upgradeResult = await depsPatchMinor(workspaceRoot);
-        
-        if (apply && upgradeResult.changes.length > 0) {
-          // Apply changes to package.json files with undo snapshots
-          const undoSnapshot = createUndoSnapshot('deps-patch');
-          let undoEnabled = false;
-          
-          for (const change of upgradeResult.changes) {
-            try {
-              // Backup file before writing
-              undoSnapshot.backupFile(change.path);
-              undoEnabled = true;
-              
-              const content = readFileSync(change.path, 'utf8');
-              const pkg = JSON.parse(content);
-              
-              // Update the dependency version
-              if (pkg.dependencies && pkg.dependencies[change.name]) {
-                pkg.dependencies[change.name] = change.to;
-              }
-              if (pkg.devDependencies && pkg.devDependencies[change.name]) {
-                pkg.devDependencies[change.name] = change.to;
-              }
-              
-              // Preserve formatting by using existing indentation
-              const newContent = JSON.stringify(pkg, null, 2) + '\n';
-              writeFileSync(change.path, newContent);
-            } catch (error) {
-              // Skip files that can't be updated
-            }
-          }
-          
-          // Finalize undo snapshot if any files were backed up
-          if (undoEnabled) {
-            undoSnapshot.finalize();
-          }
-        }
-        
-        const result = addValidators({
-          pass: true,
-          recipe,
-          mode,
-          changes: upgradeResult.changes,
-          stats: { files: upgradeResult.changes.length, lines: 0 }
-        });
-        console.log(stableJson(result));
+        await executeDepsPath();
       } else {
         const result = addValidators({ 
           pass: false, 
@@ -807,7 +827,8 @@ Evidence:
       };
       
       if (prResult.status === 0) {
-        const urlMatch = prResult.stdout.match(/https:\/\/github\.com\/[^\s]+/);
+        const urlRegex = /https:\/\/github\.com\/[^\s]+/;
+        const urlMatch = urlRegex.exec(prResult.stdout);
         if (urlMatch) {
           result.url = urlMatch[0];
         }
