@@ -7,6 +7,31 @@ import { fileURLToPath } from 'url';
 import { esmHygiene, depsPatchMinor } from '@odavl/codemods';
 import { readGovernorConfig, currentUsage, decide } from '@odavl/policy';
 
+// Local telemetry types and helpers
+type TelemetryMode = 'off' | 'on' | 'anonymized';
+
+function startSpan(kind: string, mode: TelemetryMode, ctx?: { repo?: string; branch?: string }) {
+  if (mode === 'off') {
+    return { end(_ok: boolean, _extra?: any): void {} };
+  }
+  
+  const startTime = Date.now();
+  return {
+    end(ok: boolean, extra?: any): void {
+      try {
+        const span = {
+          ts: new Date().toISOString(),
+          kind,
+          durMs: Date.now() - startTime,
+          ok,
+          ...extra
+        };
+        writeFileSync('reports/telemetry.log.jsonl', JSON.stringify(span) + '\n', { flag: 'a' });
+      } catch {}
+    }
+  };
+}
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -112,6 +137,33 @@ function stableJson(obj: any): string {
   return JSON.stringify(obj, Object.keys(obj).sort());
 }
 
+// Helper to read telemetry mode from policy
+function readTelemetryMode(): 'off' | 'on' | 'anonymized' {
+  try {
+    const policyPath = path.join(process.cwd(), '.odavl.policy.yml');
+    const content = readFileSync(policyPath, 'utf8');
+    const telemetryMatch = content.match(/telemetry:\s*(on|anonymized|off)/);
+    const mode = telemetryMatch ? telemetryMatch[1] : 'off';
+    return mode as 'off' | 'on' | 'anonymized';
+  } catch {
+    return 'off';
+  }
+}
+
+// Helper to get git context for telemetry
+function getGitContext(): { repo?: string; branch?: string } {
+  try {
+    const repoResult = run('git remote get-url origin');
+    const branchResult = run('git rev-parse --abbrev-ref HEAD');
+    return {
+      repo: repoResult.status === 0 ? repoResult.stdout.trim() : undefined,
+      branch: branchResult.status === 0 ? branchResult.stdout.trim() : undefined
+    };
+  } catch {
+    return {};
+  }
+}
+
 // Helper for normalizing notes to human-friendly messages
 function normalizeNotes(chunks: any[], appliedChunk?: number, pendingChunks?: number): string[] | undefined {
   const notes: string[] = [];
@@ -133,16 +185,29 @@ function normalizeNotes(chunks: any[], appliedChunk?: number, pendingChunks?: nu
 const cmd = process.argv[2] ?? 'help';
 
 if (cmd === 'scan') {
-  const out = {
-    tool: 'odavl',
-    action: 'scan',
-    pass: true,
-    metrics: { eslint: 17, typeErrors: 0 },
-    generatedAt: new Date().toISOString()
-  };
-  console.log(JSON.stringify(out));
+  const mode = readTelemetryMode();
+  const span = startSpan('scan', mode, getGitContext());
+  
+  try {
+    const out = {
+      tool: 'odavl',
+      action: 'scan',
+      pass: true,
+      metrics: { eslint: 17, typeErrors: 0 },
+      generatedAt: new Date().toISOString()
+    };
+    console.log(JSON.stringify(out));
+    span.end(true, { eslintCount: 17, typeErrors: 0 });
+  } catch (error: any) {
+    span.end(false, { reason: 'error' });
+    throw error;
+  }
 } else if (cmd === 'heal') {
-  // Helper function to run validation commands
+  const mode = readTelemetryMode();
+  const span = startSpan('heal', mode, getGitContext());
+  
+  try {
+    // Helper function to run validation commands
   const runCmd = (cmd: string, args: string[] = []): { ok: boolean; code: number } => {
     try {
       const result = spawnSync(cmd, args, { 
@@ -434,15 +499,28 @@ if (cmd === 'scan') {
   
   // Execute heal command
   executeHeal().then(() => {
+    span.end(true, { recipe });
+    console.error('Stage W2-2K done.');
+  }).catch((error: any) => {
+    span.end(false, { reason: 'error' });
     console.error('Stage W2-2K done.');
   });
-} else if (cmd === 'branch' && process.argv[3] === 'create') {
-  // Parse branch create command
-  let branchName = process.argv[4];
-  if (!branchName) {
-    console.log(JSON.stringify({ tool: 'odavl', action: 'branch', subaction: 'create', pass: false, stderr: 'Branch name required' }));
-    process.exit(1);
+  } catch (error: any) {
+    span.end(false, { reason: 'setup_error' });
+    throw error;
   }
+} else if (cmd === 'branch' && process.argv[3] === 'create') {
+  const mode = readTelemetryMode();
+  const span = startSpan('branch_create', mode, getGitContext());
+  
+  try {
+    // Parse branch create command
+    let branchName = process.argv[4];
+    if (!branchName) {
+      console.log(JSON.stringify({ tool: 'odavl', action: 'branch', subaction: 'create', pass: false, stderr: 'Branch name required' }));
+      span.end(false, { reason: 'missing_name' });
+      process.exit(1);
+    }
   
   // Replace spaces with dashes
   branchName = branchName.replace(/\s+/g, '-');
@@ -480,8 +558,13 @@ if (cmd === 'scan') {
         stderr: branchStderr
       };
       console.log(JSON.stringify(result));
+      span.end(branchCode === 0, { branchName });
     });
   });
+  } catch (error: any) {
+    span.end(false, { reason: 'error' });
+    throw error;
+  }
 } else if (cmd === 'pr' && process.argv[3] === 'open') {
   const args = process.argv.slice(4);
   let explain = false;
@@ -894,6 +977,92 @@ Evidence:
       stderr: error?.message || 'Unknown error'
     }));
   }
+} else if (cmd === 'report' && process.argv[3] === 'telemetry' && process.argv[4] === 'summary') {
+  try {
+    const args = process.argv.slice(5);
+    let since = '24h';
+    
+    for (let i = 0; i < args.length; i++) {
+      if (args[i] === '--since' && i + 1 < args.length) {
+        since = args[i + 1];
+        i += 1;
+      }
+    }
+    
+    // Parse since parameter
+    let cutoffTime: Date;
+    if (since.endsWith('h')) {
+      const hours = parseInt(since.slice(0, -1), 10) || 24;
+      cutoffTime = new Date(Date.now() - hours * 60 * 60 * 1000);
+    } else {
+      cutoffTime = new Date(since);
+    }
+    
+    // Read and process telemetry log
+    const logPath = path.join(process.cwd(), 'reports', 'telemetry.log.jsonl');
+    let content = '';
+    try {
+      content = readFileSync(logPath, 'utf8');
+    } catch {
+      console.log(JSON.stringify({ window: since, kinds: {} }));
+      process.exit(0);
+    }
+    
+    const lines = content.trim().split('\n').filter(line => line);
+    const spans: any[] = [];
+    
+    for (const line of lines) {
+      try {
+        const span = JSON.parse(line);
+        const spanTime = new Date(span.ts);
+        if (spanTime >= cutoffTime) {
+          spans.push(span);
+        }
+      } catch {
+        // Skip invalid lines
+      }
+    }
+    
+    // Aggregate by kind
+    const kindStats: Record<string, { durations: number[]; successes: number; total: number }> = {};
+    
+    for (const span of spans) {
+      if (!kindStats[span.kind]) {
+        kindStats[span.kind] = { durations: [], successes: 0, total: 0 };
+      }
+      kindStats[span.kind].durations.push(span.durMs || 0);
+      kindStats[span.kind].total += 1;
+      if (span.ok) {
+        kindStats[span.kind].successes += 1;
+      }
+    }
+    
+    // Calculate percentiles
+    function percentile(arr: number[], p: number): number {
+      if (arr.length === 0) return 0;
+      const sorted = [...arr].sort((a, b) => a - b);
+      const index = Math.ceil(sorted.length * p / 100) - 1;
+      return sorted[Math.max(0, index)];
+    }
+    
+    const kinds: Record<string, any> = {};
+    for (const [kind, stats] of Object.entries(kindStats)) {
+      kinds[kind] = {
+        count: stats.total,
+        okRate: stats.total > 0 ? (stats.successes / stats.total) : 0,
+        p50ms: percentile(stats.durations, 50),
+        p95ms: percentile(stats.durations, 95)
+      };
+    }
+    
+    console.log(JSON.stringify({ window: since, kinds }));
+  } catch (error: any) {
+    console.log(JSON.stringify({ 
+      window: 'error', 
+      kinds: {}, 
+      error: error?.message || 'Unknown error' 
+    }));
+  }
 } else {
   console.log('Usage: odavl <command>');
   console.log('Commands:');
@@ -904,4 +1073,5 @@ Evidence:
   console.log('  shadow run     Trigger CI workflow (--ref <branch>, --wait, --dry-run)');
   console.log('  shadow status  Check CI workflow status (--ref <branch>, --watch)');
   console.log('  governor explain  Show current governor status for PR and shadow operations');
+  console.log('  report telemetry summary  Show usage analytics (--since 24h|<ISO>)');
 }

@@ -1,0 +1,4 @@
+{"ts":"2025-09-20T17:22:58.538Z","kind":"scan","durMs":13,"ok":true,"eslintCount":17,"typeErrors":0}
+{"ts":"2025-09-20T17:23:25.443Z","kind":"heal","durMs":40,"ok":true,"recipe":"remove-unused"}
+{"ts":"2025-09-20T17:24:52.246Z","kind":"scan","durMs":9,"ok":true,"eslintCount":17,"typeErrors":0}
+{"ts":"2025-09-20T17:25:09.260Z","kind":"scan","durMs":7,"ok":true,"eslintCount":17,"typeErrors":0}

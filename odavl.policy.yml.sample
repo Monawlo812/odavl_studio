@@ -8,3 +8,6 @@ governor:
   waves:
     - window: "22:00-06:00"
       maxPrs: 3
+
+studio:
+  telemetry: off  # Options: on|anonymized|off
