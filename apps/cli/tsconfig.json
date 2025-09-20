@@ -1,5 +1,1 @@
-<<<<<<< HEAD
-{"compilerOptions":{"target":"ES2020","module":"ESNext","moduleResolution":"Bundler","strict":true,"skipLibCheck":true,"outDir":"dist"}}
-=======
 {"compilerOptions":{"target":"ES2020","module":"ESNext","moduleResolution":"Bundler","strict":true,"skipLibCheck":true,"outDir":"dist","types":["node"]}}
->>>>>>> 2f52f83be1f7d671946596a5de23440ec38f1014
