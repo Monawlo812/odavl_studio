@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - '**'
+defaults:
+  run:
+    working-directory: odavl_studio
 jobs:
   build:
     runs-on: ubuntu-latest
