@@ -2,3 +2,10 @@
 {"ts":"2025-09-20T17:23:25.443Z","kind":"heal","durMs":40,"ok":true,"recipe":"remove-unused"}
 {"ts":"2025-09-20T17:24:52.246Z","kind":"scan","durMs":9,"ok":true,"eslintCount":17,"typeErrors":0}
 {"ts":"2025-09-20T17:25:09.260Z","kind":"scan","durMs":7,"ok":true,"eslintCount":17,"typeErrors":0}
+{"ts":"2025-09-20T17:55:22.481Z","kind":"heal","durMs":21,"ok":true,"recipe":"esm-hygiene"}
+{"ts":"2025-09-20T17:55:50.997Z","kind":"heal","durMs":24,"ok":true,"recipe":"esm-hygiene"}
+{"ts":"2025-09-20T17:56:00.779Z","kind":"heal","durMs":1523,"ok":true,"recipe":"deps-patch"}
+{"ts":"2025-09-20T18:05:13.415Z","kind":"heal","durMs":22,"ok":true,"recipe":"remove-unused"}
+{"ts":"2025-09-20T18:06:58.052Z","kind":"heal","durMs":21,"ok":true,"recipe":"esm-hygiene"}
+{"ts":"2025-09-20T18:07:23.292Z","kind":"heal","durMs":17,"ok":true,"recipe":"remove-unused"}
+{"ts":"2025-09-20T18:07:37.870Z","kind":"heal","durMs":18,"ok":true,"recipe":"remove-unused"}

@@ -1,0 +1,10 @@
+{
+  "timestamp": "2025-09-20T20-07-55",
+  "kind": "heal-apply",
+  "files": [
+    {
+      "path": "undo-test-file.js",
+      "backup": "reports/undo/2025-09-20T20-07-55/undo-test-file.js"
+    }
+  ]
+}

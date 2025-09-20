@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // ODAVL CLI placeholder
 import { spawn, spawnSync, execSync } from 'child_process';
-import { readFileSync, writeFileSync, readdirSync, statSync } from 'fs';
+import { readFileSync, writeFileSync, readdirSync, statSync, existsSync, mkdirSync } from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { esmHygiene, depsPatchMinor } from '@odavl/codemods';
@@ -293,6 +293,73 @@ if (cmd === 'scan') {
            normalizedPath.includes('/public-api/') ||
            normalizedPath.includes('public-api/');
   };
+
+  // Undo snapshot functionality
+  const createUndoSnapshot = (kind: string): { ts: string; backupFile: (filePath: string) => void; finalize: () => void } => {
+    const ts = new Date().toISOString().replace(/[:.]/g, '-');
+    const undoDir = path.join(workspaceRoot, 'reports', 'undo', ts);
+    const backedUpFiles = new Set<string>();
+    const files: string[] = [];
+    
+    const backupFile = (filePath: string) => {
+      if (isProtectedPath(filePath) || backedUpFiles.has(filePath)) return;
+      
+      try {
+        const relativePath = path.relative(workspaceRoot, filePath);
+        const backupPath = path.join(undoDir, relativePath + '.bak');
+        
+        // Ensure backup directory exists
+        const backupDir = path.dirname(backupPath);
+        if (!existsSync(backupDir)) {
+          mkdirSync(backupDir, { recursive: true });
+        }
+        
+        // Copy original file
+        const originalContent = readFileSync(filePath, 'utf8');
+        writeFileSync(backupPath, originalContent);
+        
+        backedUpFiles.add(filePath);
+        files.push(relativePath);
+      } catch {
+        // Skip files that can't be backed up
+      }
+    };
+    
+    const finalize = () => {
+      if (files.length === 0) return;
+      
+      try {
+        const stackPath = path.join(workspaceRoot, 'reports', 'undo', 'stack.json');
+        const stackDir = path.dirname(stackPath);
+        if (!existsSync(stackDir)) {
+          mkdirSync(stackDir, { recursive: true });
+        }
+        
+        let stack: any[] = [];
+        try {
+          const content = readFileSync(stackPath, 'utf8');
+          stack = JSON.parse(content);
+        } catch {
+          // Initialize empty stack if file doesn't exist
+        }
+        
+        const gitContext = getGitContext();
+        const entry = {
+          ts,
+          kind,
+          branch: gitContext.branch || 'unknown',
+          files
+        };
+        
+        stack.push(entry);
+        writeFileSync(stackPath, JSON.stringify(stack, null, 2));
+      } catch {
+        // Ignore finalization errors
+      }
+    };
+    
+    return { ts, backupFile, finalize };
+  };
   
   const chunkPatches = (patches: any[], budget: { maxLinesPerPatch: number; maxFilesTouched: number }): any[][] => {
     const chunks: any[][] = [];
@@ -401,12 +468,19 @@ if (cmd === 'scan') {
           });
           console.log(stableJson(result));
         } else if (mode === 'apply') {
-          // Apply only the first chunk
+          // Apply only the first chunk with undo snapshots
           let appliedChunk = 0;
+          const undoSnapshot = createUndoSnapshot('esm-hygiene');
+          let undoEnabled = false;
+          
           if (chunks.length > 0) {
             appliedChunk = 1;
             for (const patch of chunks[0]) {
               try {
+                // Backup file before writing
+                undoSnapshot.backupFile(patch.file);
+                undoEnabled = true;
+                
                 const content = readFileSync(patch.file, 'utf8');
                 const lines = content.split('\n');
                 const newLines = lines.map((line: string) => {
@@ -421,6 +495,11 @@ if (cmd === 'scan') {
               } catch (error) {
                 // Skip files that can't be written
               }
+            }
+            
+            // Finalize undo snapshot if any files were backed up
+            if (undoEnabled) {
+              undoSnapshot.finalize();
             }
           }
           
@@ -445,9 +524,16 @@ if (cmd === 'scan') {
         const upgradeResult = await depsPatchMinor(workspaceRoot);
         
         if (apply && upgradeResult.changes.length > 0) {
-          // Apply changes to package.json files
+          // Apply changes to package.json files with undo snapshots
+          const undoSnapshot = createUndoSnapshot('deps-patch');
+          let undoEnabled = false;
+          
           for (const change of upgradeResult.changes) {
             try {
+              // Backup file before writing
+              undoSnapshot.backupFile(change.path);
+              undoEnabled = true;
+              
               const content = readFileSync(change.path, 'utf8');
               const pkg = JSON.parse(content);
               
@@ -465,6 +551,11 @@ if (cmd === 'scan') {
             } catch (error) {
               // Skip files that can't be updated
             }
+          }
+          
+          // Finalize undo snapshot if any files were backed up
+          if (undoEnabled) {
+            undoSnapshot.finalize();
           }
         }
         
@@ -1063,6 +1154,170 @@ Evidence:
       error: error?.message || 'Unknown error' 
     }));
   }
+} else if (cmd === 'undo' && process.argv[3] === 'last') {
+  try {
+    const workspaceRoot = path.resolve(__dirname, '../../..');
+    const stackPath = path.join(workspaceRoot, 'reports', 'undo', 'stack.json');
+    const args = process.argv.slice(4);
+    const showMode = args.includes('--show');
+    
+    // Read the undo stack
+    let stack: any[] = [];
+    try {
+      const content = readFileSync(stackPath, 'utf8');
+      stack = JSON.parse(content);
+    } catch {
+      console.log(JSON.stringify({ pass: false, action: 'undo', error: 'No undo history found' }));
+      process.exit(1);
+    }
+    
+    if (stack.length === 0) {
+      console.log(JSON.stringify({ pass: false, action: 'undo', error: 'Undo stack is empty' }));
+      process.exit(1);
+    }
+    
+    const lastEntry = stack[stack.length - 1];
+    
+    if (showMode) {
+      console.log(JSON.stringify({
+        pass: true,
+        action: 'undo',
+        mode: 'show',
+        files: lastEntry.files,
+        ts: lastEntry.ts,
+        branch: lastEntry.branch,
+        kind: lastEntry.kind
+      }));
+      process.exit(0);
+    }
+    
+    // Restore files from backup
+    let restored = 0;
+    const undoDir = path.join(workspaceRoot, 'reports', 'undo', lastEntry.ts);
+    
+    for (const relativePath of lastEntry.files) {
+      try {
+        const workspacePath = path.join(workspaceRoot, relativePath);
+        const backupPath = path.join(undoDir, relativePath + '.bak');
+        
+        if (existsSync(backupPath)) {
+          const backupContent = readFileSync(backupPath, 'utf8');
+          writeFileSync(workspacePath, backupContent);
+          restored++;
+        }
+      } catch {
+        // Skip files that can't be restored
+      }
+    }
+    
+    // Remove entry from stack (but keep backup folder)
+    stack.pop();
+    writeFileSync(stackPath, JSON.stringify(stack, null, 2));
+    
+    console.log(JSON.stringify({
+      pass: true,
+      action: 'undo',
+      restored,
+      ts: lastEntry.ts,
+      branch: lastEntry.branch,
+      kind: lastEntry.kind
+    }));
+  } catch (error: any) {
+    console.log(JSON.stringify({
+      pass: false,
+      action: 'undo',
+      error: error?.message || 'Unknown error'
+    }));
+  }
+} else if (cmd === 'abort') {
+  try {
+    const workspaceRoot = path.resolve(__dirname, '../../..');
+    
+    // Step 1: Get current branch
+    let currentBranch = '';
+    try {
+      const branchResult = spawnSync('git', ['rev-parse', '--abbrev-ref', 'HEAD'], {
+        cwd: workspaceRoot,
+        encoding: 'utf8',
+        shell: true
+      });
+      currentBranch = branchResult.stdout?.trim() || '';
+    } catch {
+      console.log(JSON.stringify({ pass: false, action: 'abort', error: 'Failed to get current branch' }));
+      process.exit(1);
+    }
+    
+    if (!currentBranch) {
+      console.log(JSON.stringify({ pass: false, action: 'abort', error: 'Could not determine current branch' }));
+      process.exit(1);
+    }
+    
+    // Step 2: List in-progress runs on this branch
+    let runs: any[] = [];
+    try {
+      const runsResult = spawnSync('gh', [
+        'run', 'list', 
+        '--status', 'in_progress',
+        '--json', 'databaseId,headBranch,displayTitle,url',
+        '--branch', currentBranch
+      ], {
+        cwd: workspaceRoot,
+        encoding: 'utf8',
+        shell: true
+      });
+      
+      if (runsResult.status === 0 && runsResult.stdout) {
+        const allRuns = JSON.parse(runsResult.stdout);
+        runs = allRuns.filter((run: any) => run.headBranch === currentBranch);
+      }
+    } catch {
+      // If gh CLI fails, continue with empty runs array
+    }
+    
+    // Step 3: Cancel each run
+    let cancelled = 0;
+    const processedRuns: any[] = [];
+    
+    for (const run of runs) {
+      try {
+        const cancelResult = spawnSync('gh', ['run', 'cancel', run.databaseId.toString()], {
+          cwd: workspaceRoot,
+          shell: true
+        });
+        
+        if (cancelResult.status === 0) {
+          cancelled++;
+        }
+        
+        processedRuns.push({
+          id: run.databaseId,
+          url: run.url,
+          title: run.displayTitle
+        });
+      } catch {
+        // Ignore individual cancel errors but still record the run
+        processedRuns.push({
+          id: run.databaseId,
+          url: run.url,
+          title: run.displayTitle
+        });
+      }
+    }
+    
+    console.log(JSON.stringify({
+      pass: true,
+      action: 'abort',
+      branch: currentBranch,
+      cancelled,
+      runs: processedRuns
+    }));
+  } catch (error: any) {
+    console.log(JSON.stringify({
+      pass: false,
+      action: 'abort',
+      error: error?.message || 'Unknown error'
+    }));
+  }
 } else {
   console.log('Usage: odavl <command>');
   console.log('Commands:');
@@ -1074,4 +1329,6 @@ Evidence:
   console.log('  shadow status  Check CI workflow status (--ref <branch>, --watch)');
   console.log('  governor explain  Show current governor status for PR and shadow operations');
   console.log('  report telemetry summary  Show usage analytics (--since 24h|<ISO>)');
+  console.log('  undo last      Restore files from last heal --apply (--show to preview)');
+  console.log('  abort          Cancel in-progress GitHub Actions runs on current branch');
 }

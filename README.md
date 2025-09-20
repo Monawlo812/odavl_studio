@@ -33,3 +33,17 @@ node apps/cli/dist/index.js heal --recipe esm-hygiene --apply --max-files 5
 Rate limiting system to prevent CI resource exhaustion. Supports wave windows for time-based PR scheduling.
 
 Wave windows like `"22:00-06:00"` allow overnight PR creation while blocking during business hours, enabling automated workflows during low-activity periods.
+
+## Telemetry (opt-in)
+
+ODAVL collects usage analytics to improve the tool. Configure via `.odavl.policy.yml`:
+
+- **Modes**: `off` (default) | `on` | `anonymized`
+- **Local logs**: `reports/telemetry.log.jsonl`
+- **Remote endpoint**: Set `ODAVL_TELEMETRY_ENDPOINT` to POST aggregates (best-effort)
+- **Privacy**: Numbers only - no source code or secrets captured
+
+```yaml
+studio:
+  telemetry: off  # Change to 'on' or 'anonymized' to enable
+```
