@@ -105,6 +105,7 @@ export function currentUsage(root: string): GovernorUsage {
 
   } catch (error) {
     // Best-effort: if GitHub CLI fails, return safe defaults
+    console.warn('Governor: GitHub CLI command failed:', error instanceof Error ? error.message : String(error));
   }
 
   // Update ledger

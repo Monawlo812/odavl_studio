@@ -39,7 +39,8 @@ export async function esmHygiene(files: string[]): Promise<PatchSet> {
         }
         
         // Transform ESM imports: add .js extension to relative paths
-        const importMatch = line.match(/^(\s*import\s+.*?\s+from\s+['"])(\.\.?\/[^'"]*?)(['"])/);
+        const importRegex = /^(\s*import\s+.*?\s+from\s+['"])(\.\.?\/[^'"]*?)(['"])/;
+        const importMatch = importRegex.exec(line);
         if (importMatch && !importMatch[2].endsWith('.js')) {
           hasChanges = true;
           return `${importMatch[1]}${importMatch[2]}.js${importMatch[3]}`;
@@ -60,7 +61,8 @@ export async function esmHygiene(files: string[]): Promise<PatchSet> {
         });
       }
     } catch (error) {
-      // Skip files that can't be read
+      // Log and skip files that can't be read
+      console.warn(`ESM Hygiene: Unable to process file ${file}:`, error instanceof Error ? error.message : String(error));
       continue;
     }
   }

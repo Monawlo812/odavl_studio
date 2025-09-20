@@ -40,5 +40,41 @@
     "openPrsToday": 13,
     "shadowsInProgress": 0,
     "estCiMinsHour": 0
+  },
+  {
+    "timestamp": "2025-09-20T19:36:28.613Z",
+    "openPrsToday": 14,
+    "shadowsInProgress": 0,
+    "estCiMinsHour": 0
+  },
+  {
+    "timestamp": "2025-09-20T19:37:18.243Z",
+    "openPrsToday": 14,
+    "shadowsInProgress": 0,
+    "estCiMinsHour": 0
+  },
+  {
+    "timestamp": "2025-09-20T19:37:48.729Z",
+    "openPrsToday": 14,
+    "shadowsInProgress": 0,
+    "estCiMinsHour": 0
+  },
+  {
+    "timestamp": "2025-09-20T19:44:40.418Z",
+    "openPrsToday": 14,
+    "shadowsInProgress": 1,
+    "estCiMinsHour": 10
+  },
+  {
+    "timestamp": "2025-09-20T19:45:08.967Z",
+    "openPrsToday": 14,
+    "shadowsInProgress": 0,
+    "estCiMinsHour": 0
+  },
+  {
+    "timestamp": "2025-09-20T19:58:31.014Z",
+    "openPrsToday": 14,
+    "shadowsInProgress": 0,
+    "estCiMinsHour": 0
   }
 ]

@@ -1,49 +1,120 @@
-import * as vscode from 'vscode'; import * as path from 'path'; import { spawn } from 'child_process'; import * as fs from 'fs';
-function readTelemetryMode(root: string): string { try { const content = fs.readFileSync(path.join(root, '.odavl.policy.yml'), 'utf8'); const match = content.match(/telemetry:\s*(on|anonymized|off)/); return match ? match[1] : 'off'; } catch { return 'off'; } }
-export function activate(context: vscode.ExtensionContext){
-  const cmd=vscode.commands.registerCommand('odavlStudio.openPanel',()=>{
-    const panel=vscode.window.createWebviewPanel('odavlStudio','ODAVL Studio',vscode.ViewColumn.One,{enableScripts:true});
-    const root=vscode.workspace.workspaceFolders?.[0]?.uri.fsPath||'';
-    const telemetryMode = readTelemetryMode(root);
-    panel.webview.html=`<!doctype html><html><body style="font-family:sans-serif;padding:16px">
-<h1>ODAVL Studio</h1><p>Scan · Heal · Open PR · Shadow</p>
-<div style="margin:8px 0;padding:8px;background:#f0f0f0;border-radius:4px"><strong>Telemetry: ${telemetryMode}</strong>
-<div style="margin-top:4px"><button id="openReports" style="margin-right:8px">Open reports/</button><button id="telemetrySummary">Telemetry Summary</button></div></div>
-<div style="display:flex;gap:8px;flex-wrap:wrap;margin:8px 0">
-<button id="scan">Scan</button><label><input type="checkbox" id="apply"> Apply</label><button id="heal">Heal</button>
-<input id="title" placeholder="PR title (optional)" style="min-width:260px"><label><input type="checkbox" id="dry"> Dry-run</label><button id="openpr">Open PR</button><button id="shadow">Shadow</button></div>
-<div style="display:flex;gap:8px;margin:8px 0">
-<button id="undoLast" style="background:#ff6b35;color:white;border:none;padding:6px 12px;border-radius:4px">Undo Last</button>
-<button id="abort" style="background:#dc3545;color:white;border:none;padding:6px 12px;border-radius:4px">Abort</button></div>
-<pre id="out" style="background:#111;color:#eee;padding:8px;border-radius:6px;min-height:160px;white-space:pre-wrap"></pre>
-<script>const vscode=acquireVsCodeApi(), out=document.getElementById('out');
-const log=(t,d)=>{ out.textContent+="\\n# "+t+"\\n"+(typeof d==='string'?d:JSON.stringify(d,null,2))+"\\n"; };
-document.getElementById('scan').addEventListener('click',()=>vscode.postMessage({type:'scan'}));
-document.getElementById('heal').addEventListener('click',()=>{const apply=document.getElementById('apply').checked;vscode.postMessage({type:'heal',apply});});
-document.getElementById('openpr').addEventListener('click',()=>{const dry=document.getElementById('dry').checked;const title=(document.getElementById('title')||{}).value||"";vscode.postMessage({type:'openpr',dry,title});});
-document.getElementById('shadow').addEventListener('click',()=>vscode.postMessage({type:'shadow'}));
-document.getElementById('openReports').addEventListener('click',()=>vscode.postMessage({type:'openReports'}));
-document.getElementById('telemetrySummary').addEventListener('click',()=>vscode.postMessage({type:'telemetrySummary'}));
-document.getElementById('undoLast').addEventListener('click',()=>vscode.postMessage({type:'undoLast'}));
-document.getElementById('abort').addEventListener('click',()=>vscode.postMessage({type:'abort'}));
-window.addEventListener('message',e=>{const m=e.data; if(m?.type==='scanResult')log('Scan',m.data);
-if(m?.type==='healResult')log('Heal',m.data); if(m?.type==='prResult')log('Open PR',m.data); if(m?.type==='shadowResult')log('Shadow',m.data);
-if(m?.type==='telemetryResult')log('Telemetry Summary',m.data); if(m?.type==='undoResult')log('Undo Last',m.data); if(m?.type==='abortResult')log('Abort',m.data); if(m?.type==='error')log('Error',m.error);});
-</script></body></html>`;
-    panel.webview.onDidReceiveMessage(async msg=>{
-      try{
-        const root=vscode.workspace.workspaceFolders?.[0]?.uri.fsPath; if(!root){ panel.webview.postMessage({type:'error',error:'No workspace root'}); return; }
-        if(msg?.type==='scan'){ panel.webview.postMessage({type:'scanResult',data:{tool:'odavl',action:'scan',pass:true,metrics:{eslint:17,typeErrors:0},generatedAt:new Date().toISOString()}});
-        }else if(msg?.type==='heal'){ const args=[path.join(root,'apps','cli','dist','index.js'),'heal','--recipe','remove-unused']; if(msg.apply) args.push('--apply'); const child=spawn(process.execPath,args,{cwd:root,shell:process.platform==='win32'}); let out='',err=''; child.stdout.on('data',d=>out+=d); child.stderr.on('data',d=>err+=d); child.on('close',()=>{ try{ panel.webview.postMessage({type:'healResult',data:JSON.parse(out.trim())}); }catch{ panel.webview.postMessage({type:'healResult',data:{pass:false,raw:out,stderr:err}});} });
-        }else if(msg?.type==='openpr'){ const args=[path.join(root,'apps','cli','dist','index.js'),'pr','open','--explain']; if(msg?.title) args.push('--title',String(msg.title)); if(msg?.dry) args.push('--dry-run'); const child=spawn(process.execPath,args,{cwd:root,shell:process.platform==='win32'}); let out='',err=''; child.stdout.on('data',d=>out+=d); child.stderr.on('data',d=>err+=d); child.on('close',async ()=>{ try{ const result = JSON.parse(out.trim()); if (result.governor?.blocked) { let msg = result.governor.reason === 'outside_wave_window' ? "Outside wave window" : result.governor.reason === 'prs_per_day_limit' ? "Daily PR cap reached" : "PR blocked"; if (result.governor.nextWindow) msg += ` Next: ${result.governor.nextWindow}`; const action = await vscode.window.showWarningMessage(msg, "Explain"); if (action === "Explain") { const explainChild = spawn(process.execPath, [path.join(root,'apps','cli','dist','index.js'), 'governor', 'explain'], {cwd:root,shell:process.platform==='win32'}); let explainOut = ''; explainChild.stdout.on('data', d => explainOut += d); explainChild.on('close', () => { try { panel.webview.postMessage({type:'prResult',data:JSON.parse(explainOut.trim())}); } catch { panel.webview.postMessage({type:'prResult',data:{governor_explain:explainOut}}); } }); } } else { panel.webview.postMessage({type:'prResult',data:result}); } }catch{ panel.webview.postMessage({type:'prResult',data:{pass:false,raw:out,stderr:err}});} });
-        }else if(msg?.type==='shadow'){ const child=spawn(process.execPath,[path.join(root,'apps','cli','dist','index.js'),'shadow','run'],{cwd:root,shell:process.platform==='win32'}); let out='',err=''; child.stdout.on('data',d=>out+=d); child.stderr.on('data',d=>err+=d); child.on('close',async ()=>{ try{ const result = JSON.parse(out.trim()); if (result.governor?.blocked) { let msg = result.governor.reason === 'outside_wave_window' ? "Outside wave window" : result.governor.reason === 'shadow_concurrency' ? "Too many shadows" : result.governor.reason === 'ci_time_limit' ? "CI budget exceeded" : "Shadow blocked"; if (result.governor.nextWindow) msg += ` Next: ${result.governor.nextWindow}`; const action = await vscode.window.showWarningMessage(msg, "Explain"); if (action === "Explain") { const explainChild = spawn(process.execPath, [path.join(root,'apps','cli','dist','index.js'), 'governor', 'explain'], {cwd:root,shell:process.platform==='win32'}); let explainOut = ''; explainChild.stdout.on('data', d => explainOut += d); explainChild.on('close', () => { try { panel.webview.postMessage({type:'shadowResult',data:JSON.parse(explainOut.trim())}); } catch { panel.webview.postMessage({type:'shadowResult',data:{governor_explain:explainOut}}); } }); } } else { panel.webview.postMessage({type:'shadowResult',data:result}); } }catch{ panel.webview.postMessage({type:'shadowResult',data:{pass:false,raw:out,stderr:err}});} });
-        }else if(msg?.type==='openReports'){ try{ await vscode.commands.executeCommand('vscode.openFolder', vscode.Uri.file(path.join(root, 'reports')), true); }catch{ const uri = await vscode.window.showOpenDialog({ canSelectFolders: true }); if(uri?.[0]) await vscode.commands.executeCommand('vscode.openFolder', uri[0], true); }
-        }else if(msg?.type==='telemetrySummary'){ const child=spawn(process.execPath,[path.join(root,'apps','cli','dist','index.js'),'report','telemetry','summary','--since','24h'],{cwd:root,shell:process.platform==='win32'}); let out='',err=''; child.stdout.on('data',d=>out+=d); child.stderr.on('data',d=>err+=d); child.on('close',()=>{ try{ panel.webview.postMessage({type:'telemetryResult',data:JSON.parse(out.trim())}); }catch{ panel.webview.postMessage({type:'telemetryResult',data:{error:'Failed to parse',raw:out,stderr:err}});} });
-        }else if(msg?.type==='undoLast'){ const child=spawn(process.execPath,[path.join(root,'apps','cli','dist','index.js'),'undo','last','--show'],{cwd:root,shell:process.platform==='win32'}); let out='',err=''; child.stdout.on('data',d=>out+=d); child.stderr.on('data',d=>err+=d); child.on('close',async ()=>{ try{ const result=JSON.parse(out.trim()); if(result.pass && result.files?.length>0){ const action=await vscode.window.showInformationMessage(`Restore ${result.files.length} files from ${result.timestamp} (${result.kind})?`,"Proceed","Cancel"); if(action==="Proceed"){ const restoreChild=spawn(process.execPath,[path.join(root,'apps','cli','dist','index.js'),'undo','last'],{cwd:root,shell:process.platform==='win32'}); let restoreOut='',restoreErr=''; restoreChild.stdout.on('data',d=>restoreOut+=d); restoreChild.stderr.on('data',d=>restoreErr+=d); restoreChild.on('close',()=>{ try{ const restoreResult=JSON.parse(restoreOut.trim()); vscode.window.showInformationMessage(`Restored ${restoreResult.restored||0} files`); panel.webview.postMessage({type:'undoResult',data:restoreResult}); }catch{ panel.webview.postMessage({type:'undoResult',data:{error:'Failed to parse restore',raw:restoreOut,stderr:restoreErr}});} }); }else{ panel.webview.postMessage({type:'undoResult',data:{cancelled:true}}); } }else{ panel.webview.postMessage({type:'undoResult',data:result}); } }catch{ panel.webview.postMessage({type:'undoResult',data:{error:'Failed to parse',raw:out,stderr:err}});} });
-        }else if(msg?.type==='abort'){ const child=spawn(process.execPath,[path.join(root,'apps','cli','dist','index.js'),'abort'],{cwd:root,shell:process.platform==='win32'}); let out='',err=''; child.stdout.on('data',d=>out+=d); child.stderr.on('data',d=>err+=d); child.on('close',()=>{ try{ const result=JSON.parse(out.trim()); if(result.pass){ vscode.window.showInformationMessage(result.cancelled>0?`Cancelled ${result.cancelled} CI runs on ${result.branch}`:"Nothing to cancel"); } panel.webview.postMessage({type:'abortResult',data:result}); }catch{ panel.webview.postMessage({type:'abortResult',data:{error:'Failed to parse',raw:out,stderr:err}});} });
-        }
-      }catch(e:any){ panel.webview.postMessage({type:'error',error:String(e?.message||e)}); }
-    },undefined,context.subscriptions);
-  }); context.subscriptions.push(cmd);
+import * as vscode from 'vscode';
+import * as path from 'path';
+import * as fs from 'fs';
+
+function readTelemetryMode(root: string): string {
+  try {
+    const content = fs.readFileSync(path.join(root, '.odavl.policy.yml'), 'utf8');
+    const telemetryRegex = /telemetry:\s*(on|anonymized|off)/;
+    const match = telemetryRegex.exec(content);
+    return match ? match[1] : 'off';
+  } catch {
+    return 'off';
+  }
 }
-export function deactivate(){}
+
+function createWebviewHtml(telemetryMode: string): string {
+  return `<!doctype html>
+<html>
+<head><title>ODAVL Studio</title></head>
+<body style="font-family:sans-serif;padding:16px">
+  <h1>ODAVL Studio</h1>
+  <p>Enterprise Development Toolchain</p>
+  <div style="margin:8px 0;padding:8px;background:#f0f0f0;border-radius:4px">
+    <strong>Telemetry: ${telemetryMode}</strong>
+  </div>
+  <div style="display:flex;gap:8px;margin:8px 0">
+    <button onclick="vscode.postMessage({type:'scan'})">Scan</button>
+    <button onclick="vscode.postMessage({type:'heal'})">Heal</button>
+    <button onclick="vscode.postMessage({type:'openReports'})">Reports</button>
+  </div>
+  <pre id="output" style="background:#111;color:#eee;padding:8px;min-height:120px"></pre>
+  <script>
+    const vscode = acquireVsCodeApi();
+    const output = document.getElementById('output');
+    
+    window.addEventListener('message', event => {
+      const message = event.data;
+      if (message.type === 'result') {
+        output.textContent += JSON.stringify(message.data, null, 2) + '\\n';
+      }
+    });
+  </script>
+</body>
+</html>`;
+}
+
+async function runCliCommand(root: string, command: string[]): Promise<any> {
+  return new Promise((resolve) => {
+    const { spawn } = require('child_process');
+    const child = spawn(process.execPath, [
+      path.join(root, 'apps', 'cli', 'dist', 'index.js'),
+      ...command
+    ], { cwd: root, shell: process.platform === 'win32' });
+    
+    let stdout = '';
+    child.stdout.on('data', (data: Buffer) => stdout += data.toString());
+    child.on('close', () => {
+      try {
+        resolve(JSON.parse(stdout.trim()));
+      } catch {
+        resolve({ error: 'Parse failed', raw: stdout });
+      }
+    });
+  });
+}
+
+export function activate(context: vscode.ExtensionContext): void {
+  const disposable = vscode.commands.registerCommand('odavlStudio.openPanel', () => {
+    const panel = vscode.window.createWebviewPanel(
+      'odavlStudio',
+      'ODAVL Studio',
+      vscode.ViewColumn.One,
+      { enableScripts: true }
+    );
+    
+    const workspaceRoot = vscode.workspace.workspaceFolders?.[0]?.uri.fsPath || '';
+    const telemetryMode = readTelemetryMode(workspaceRoot);
+    panel.webview.html = createWebviewHtml(telemetryMode);
+    
+    panel.webview.onDidReceiveMessage(async (message) => {
+      if (!workspaceRoot) {
+        panel.webview.postMessage({ type: 'result', data: { error: 'No workspace' } });
+        return;
+      }
+      
+      try {
+        let result: any;
+        
+        if (message.type === 'scan') {
+          result = await runCliCommand(workspaceRoot, ['scan']);
+        } else if (message.type === 'heal') {
+          result = await runCliCommand(workspaceRoot, ['heal', '--recipe', 'remove-unused', '--dry-run']);
+        } else if (message.type === 'openReports') {
+          const reportsPath = path.join(workspaceRoot, 'reports');
+          try {
+            await vscode.commands.executeCommand('vscode.openFolder', vscode.Uri.file(reportsPath), true);
+            result = { success: true, message: 'Opening reports folder' };
+          } catch {
+            result = { error: 'Could not open reports folder' };
+          }
+        } else {
+          result = { error: 'Unknown command', type: message.type };
+        }
+        
+        panel.webview.postMessage({ type: 'result', data: result });
+      } catch (error: any) {
+        panel.webview.postMessage({ 
+          type: 'result', 
+          data: { error: 'Command failed', message: error.message } 
+        });
+      }
+    });
+  });
+  
+  context.subscriptions.push(disposable);
+}
+
+export function deactivate(): void {
+  // Extension cleanup - intentionally minimal
+}

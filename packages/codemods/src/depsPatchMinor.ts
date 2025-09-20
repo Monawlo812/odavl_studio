@@ -14,58 +14,82 @@ export async function depsPatchMinor(root: string): Promise<{ changes: Array<{pa
   const changes: Array<{path: string; name: string; from: string; to: string; reason?: string}> = [];
   
   try {
-    // Get OSV security recommendations (best-effort)
     const osvSafe = await getOsvSafeVersions(root);
-    
-    // Get outdated packages
-    const outdatedOutput = execSync('pnpm outdated --json', { 
-      cwd: root, encoding: 'utf8', timeout: 10000, stdio: 'pipe'
-    });
-    const outdatedData = JSON.parse(outdatedOutput);
-    
-    // Find and process package.json files
+    const outdatedData = await getOutdatedPackages(root);
     const packagePaths = await findPackageJsonFiles(root);
     
     for (const pkgPath of packagePaths) {
-      const pkg = JSON.parse(readFileSync(pkgPath, 'utf8'));
-      
-      for (const section of ['dependencies', 'devDependencies']) {
-        if (!pkg[section]) continue;
-        
-        for (const [name, currentRange] of Object.entries(pkg[section])) {
-          const outdatedInfo = outdatedData[name];
-          if (!outdatedInfo) continue;
-          
-          const { current, latest } = outdatedInfo;
-          const osvVersion = osvSafe[name];
-          
-          // Prefer OSV safe version if within same major, otherwise use latest
-          let targetVersion = latest;
-          let reason = 'outdated';
-          
-          if (osvVersion && isWithinSameMajor(current, osvVersion)) {
-            targetVersion = osvVersion;
-            reason = 'osv';
-          }
-          
-          // Only suggest patch/minor upgrades within same major version
-          if (isPatchOrMinorUpgrade(current, targetVersion, currentRange as string)) {
-            changes.push({
-              path: pkgPath,
-              name,
-              from: currentRange as string,
-              to: updateVersionRange(currentRange as string, targetVersion),
-              reason
-            });
-          }
-        }
-      }
+      const packageChanges = processPackageFile(pkgPath, outdatedData, osvSafe);
+      changes.push(...packageChanges);
     }
   } catch {
     // Best-effort: return empty changes if anything fails
   }
   
   return { changes };
+}
+
+async function getOutdatedPackages(root: string): Promise<any> {
+  const outdatedOutput = execSync('pnpm outdated --json', { 
+    cwd: root, encoding: 'utf8', timeout: 10000, stdio: 'pipe'
+  });
+  return JSON.parse(outdatedOutput);
+}
+
+function processPackageFile(
+  pkgPath: string, 
+  outdatedData: any, 
+  osvSafe: {[key: string]: string}
+): Array<{path: string; name: string; from: string; to: string; reason?: string}> {
+  const changes: Array<{path: string; name: string; from: string; to: string; reason?: string}> = [];
+  const pkg = JSON.parse(readFileSync(pkgPath, 'utf8'));
+  
+  for (const section of ['dependencies', 'devDependencies']) {
+    if (!pkg[section]) continue;
+    
+    const sectionChanges = processDependencySection(pkg[section], outdatedData, osvSafe, pkgPath);
+    changes.push(...sectionChanges);
+  }
+  
+  return changes;
+}
+
+function processDependencySection(
+  dependencies: {[key: string]: string}, 
+  outdatedData: any, 
+  osvSafe: {[key: string]: string}, 
+  pkgPath: string
+): Array<{path: string; name: string; from: string; to: string; reason?: string}> {
+  const changes: Array<{path: string; name: string; from: string; to: string; reason?: string}> = [];
+  
+  for (const [name, currentRange] of Object.entries(dependencies)) {
+    const outdatedInfo = outdatedData[name];
+    if (!outdatedInfo) continue;
+    
+    const { current, latest } = outdatedInfo;
+    const { targetVersion, reason } = determineTargetVersion(current, latest, osvSafe[name]);
+    
+    if (isPatchOrMinorUpgrade(current, targetVersion, currentRange)) {
+      changes.push({
+        path: pkgPath,
+        name,
+        from: currentRange,
+        to: updateVersionRange(currentRange, targetVersion),
+        reason
+      });
+    }
+  }
+  
+  return changes;
+}
+
+function determineTargetVersion(current: string, latest: string, osvVersion?: string): { targetVersion: string; reason: string } {
+  // Prefer OSV safe version if within same major, otherwise use latest
+  if (osvVersion && isWithinSameMajor(current, osvVersion)) {
+    return { targetVersion: osvVersion, reason: 'osv' };
+  }
+  
+  return { targetVersion: latest, reason: 'outdated' };
 }
 
 async function getOsvSafeVersions(root: string): Promise<{[pkgName: string]: string}> {
@@ -113,7 +137,8 @@ async function findPackageJsonFiles(root: string): Promise<string[]> {
   
   try {
     const workspaceConfig = readFileSync(join(root, 'pnpm-workspace.yaml'), 'utf8');
-    const workspaceMatch = workspaceConfig.match(/packages:\s*\n((?:\s*-\s*.+\n)*)/);
+    const workspaceRegex = /packages:\s*\n((?:\s*-\s*.+\n)*)/;
+    const workspaceMatch = workspaceRegex.exec(workspaceConfig);
     
     if (workspaceMatch) {
       const globs = workspaceMatch[1].split('\n')

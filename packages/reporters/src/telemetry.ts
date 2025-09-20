@@ -50,7 +50,7 @@ async function sendToEndpoint(span: TelemetrySpan): Promise<void> {
     const endpoint = process.env.ODAVL_TELEMETRY_ENDPOINT;
     if (!endpoint) return;
 
-    const response = await fetch(endpoint, {
+    await fetch(endpoint, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(span)
@@ -59,6 +59,37 @@ async function sendToEndpoint(span: TelemetrySpan): Promise<void> {
     // Best-effort, ignore response
   } catch {
     // Ignore all errors
+  }
+}
+
+function createBaseSpan(ts: string, kind: string, durMs: number, ok: boolean): TelemetrySpan {
+  return { ts, kind, durMs, ok };
+}
+
+function addContextToSpan(span: TelemetrySpan, mode: TelemetryMode, ctx?: SpanContext): void {
+  if (!ctx) return;
+  
+  if (mode === "on") {
+    if (ctx.repo) span.repoHash = ctx.repo;
+    if (ctx.branch) span.branchHash = ctx.branch;
+  } else if (mode === "anonymized") {
+    if (ctx.repo) span.repoHash = hash(ctx.repo);
+    if (ctx.branch) span.branchHash = hash(ctx.branch);
+  }
+}
+
+function addExtraToSpan(span: TelemetrySpan, extra?: Record<string, any>): void {
+  if (!extra) return;
+  
+  const filteredExtra: Record<string, string | number> = {};
+  for (const [key, value] of Object.entries(extra)) {
+    if (typeof value === 'string' || typeof value === 'number') {
+      filteredExtra[key] = value;
+    }
+  }
+  
+  if (Object.keys(filteredExtra).length > 0) {
+    span.extra = filteredExtra;
   }
 }
 
@@ -77,40 +108,13 @@ export function startSpan(kind: string, mode: TelemetryMode, ctx?: SpanContext) 
   return {
     end(ok: boolean, extra?: Record<string, any>): void {
       const durMs = Date.now() - startTime;
+      const span = createBaseSpan(ts, kind, durMs, ok);
       
-      const span: TelemetrySpan = {
-        ts,
-        kind,
-        durMs,
-        ok
-      };
-
-      // Add context based on mode
-      if (mode === "on" && ctx) {
-        if (ctx.repo) span.repoHash = ctx.repo;
-        if (ctx.branch) span.branchHash = ctx.branch;
-      } else if (mode === "anonymized" && ctx) {
-        if (ctx.repo) span.repoHash = hash(ctx.repo);
-        if (ctx.branch) span.branchHash = hash(ctx.branch);
-      }
-
-      // Add extra data (filter to numbers/strings only)
-      if (extra) {
-        const filteredExtra: Record<string, string | number> = {};
-        for (const [key, value] of Object.entries(extra)) {
-          if (typeof value === 'string' || typeof value === 'number') {
-            filteredExtra[key] = value;
-          }
-        }
-        if (Object.keys(filteredExtra).length > 0) {
-          span.extra = filteredExtra;
-        }
-      }
-
-      // Write to local log
+      addContextToSpan(span, mode, ctx);
+      addExtraToSpan(span, extra);
+      
       writeToLog(span);
-
-      // Send to endpoint if configured
+      
       if (process.env.ODAVL_TELEMETRY_ENDPOINT) {
         sendToEndpoint(span).catch(() => {}); // Fire and forget
       }
