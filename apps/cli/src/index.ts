@@ -72,9 +72,56 @@ if (cmd === 'scan') {
     };
     console.log(JSON.stringify(result));
   });
+} else if (cmd === 'branch' && process.argv[3] === 'create') {
+  // Parse branch create command
+  let branchName = process.argv[4];
+  if (!branchName) {
+    console.log(JSON.stringify({ tool: 'odavl', action: 'branch', subaction: 'create', pass: false, stderr: 'Branch name required' }));
+    process.exit(1);
+  }
+  
+  // Replace spaces with dashes
+  branchName = branchName.replace(/\s+/g, '-');
+  
+  // Step 1: Verify git repo
+  const gitCheck = spawn('git', ['rev-parse', '--is-inside-work-tree'], { stdio: 'pipe', shell: true });
+  let gitStdout = '';
+  let gitStderr = '';
+  
+  gitCheck.stdout?.on('data', (data) => { gitStdout += data.toString(); });
+  gitCheck.stderr?.on('data', (data) => { gitStderr += data.toString(); });
+  
+  gitCheck.on('close', (code) => {
+    if (code !== 0) {
+      console.log(JSON.stringify({ tool: 'odavl', action: 'branch', subaction: 'create', name: branchName, pass: false, stderr: 'Not in a git repository' }));
+      return;
+    }
+    
+    // Step 2: Create branch
+    const branchCreate = spawn('git', ['checkout', '-b', branchName], { stdio: 'pipe', shell: true });
+    let branchStdout = '';
+    let branchStderr = '';
+    
+    branchCreate.stdout?.on('data', (data) => { branchStdout += data.toString(); });
+    branchCreate.stderr?.on('data', (data) => { branchStderr += data.toString(); });
+    
+    branchCreate.on('close', (branchCode) => {
+      const result = {
+        tool: 'odavl',
+        action: 'branch',
+        subaction: 'create',
+        name: branchName,
+        pass: branchCode === 0,
+        stdout: branchStdout,
+        stderr: branchStderr
+      };
+      console.log(JSON.stringify(result));
+    });
+  });
 } else {
   console.log('Usage: odavl <command>');
   console.log('Commands:');
-  console.log('  scan   Outputs placeholder HealthSnapshot JSON');
-  console.log('  heal   Fix code issues (--recipe remove-unused, --apply)');
+  console.log('  scan           Outputs placeholder HealthSnapshot JSON');
+  console.log('  heal           Fix code issues (--recipe remove-unused, --apply)');
+  console.log('  branch create  Create a new git branch');
 }
