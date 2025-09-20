@@ -150,6 +150,10 @@ if (cmd === 'scan') {
   let recipe = 'remove-unused';
   let apply = false;
   let validate = false;
+  let maxLinesPerPatch = 40;
+  let maxFilesTouched = 10;
+  
+  const workspaceRoot = path.resolve(__dirname, '../../..');
   
   for (let i = 0; i < args.length; i++) {
     if (args[i] === '--recipe' && i + 1 < args.length) {
@@ -159,11 +163,85 @@ if (cmd === 'scan') {
       apply = true;
     } else if (args[i] === '--validate') {
       validate = true;
+    } else if (args[i] === '--max-lines' && i + 1 < args.length) {
+      maxLinesPerPatch = parseInt(args[i + 1], 10) || 40;
+      i += 1;
+    } else if (args[i] === '--max-files' && i + 1 < args.length) {
+      maxFilesTouched = parseInt(args[i + 1], 10) || 10;
+      i += 1;
     }
   }
   
-  const workspaceRoot = path.resolve(__dirname, '../../..');
+  // Try to read .odavl.policy.yml for budget overrides (best-effort)
+  try {
+    const policyPath = path.join(workspaceRoot, '.odavl.policy.yml');
+    const policyContent = readFileSync(policyPath, 'utf8');
+    // Simple YAML parsing for our specific keys
+    const maxLinesMatch = policyContent.match(/maxLinesPerPatch:\s*(\d+)/);
+    const maxFilesMatch = policyContent.match(/maxFilesTouched:\s*(\d+)/);
+    if (maxLinesMatch) maxLinesPerPatch = parseInt(maxLinesMatch[1], 10) || maxLinesPerPatch;
+    if (maxFilesMatch) maxFilesTouched = parseInt(maxFilesMatch[1], 10) || maxFilesTouched;
+  } catch {
+    // Ignore errors - policy file is optional
+  }
+  
+  const budget = { maxLinesPerPatch, maxFilesTouched };
   const mode = apply ? 'apply' : 'dry-run';
+  
+  // Helper functions for chunking
+  const estimatePatchLines = (patch: any): number => {
+    if (patch.diff) {
+      const lines = patch.diff.split('\n');
+      return lines.filter((line: string) => line.startsWith('+') || line.startsWith('-')).length;
+    }
+    return 0;
+  };
+  
+  const isProtectedPath = (filePath: string): boolean => {
+    const normalizedPath = filePath.replace(/\\/g, '/');
+    return normalizedPath.includes('/security/') || 
+           normalizedPath.includes('.spec.') ||
+           normalizedPath.includes('/public-api/') ||
+           normalizedPath.includes('public-api/');
+  };
+  
+  const chunkPatches = (patches: any[], budget: { maxLinesPerPatch: number; maxFilesTouched: number }): any[][] => {
+    const chunks: any[][] = [];
+    let currentChunk: any[] = [];
+    let currentLines = 0;
+    
+    for (const patch of patches) {
+      // Skip protected paths
+      if (isProtectedPath(patch.file)) {
+        continue;
+      }
+      
+      const patchLines = estimatePatchLines(patch);
+      
+      // Check if adding this patch would exceed limits
+      if (currentChunk.length > 0 && 
+          (currentChunk.length + 1 > budget.maxFilesTouched || 
+           currentLines + patchLines > budget.maxLinesPerPatch)) {
+        // Start new chunk
+        chunks.push(currentChunk);
+        currentChunk = [];
+        currentLines = 0;
+      }
+      
+      // Add patch to current chunk if it doesn't exceed limits by itself
+      if (patchLines <= budget.maxLinesPerPatch) {
+        currentChunk.push(patch);
+        currentLines += patchLines;
+      }
+    }
+    
+    // Add final chunk if not empty
+    if (currentChunk.length > 0) {
+      chunks.push(currentChunk);
+    }
+    
+    return chunks;
+  };
   
   const executeHeal = async () => {
     try {
@@ -201,49 +279,76 @@ if (cmd === 'scan') {
           console.log(JSON.stringify(addValidators(result)));
         });
       } else if (recipe === 'esm-hygiene') {
-        // ESM Hygiene codemod
+        // ESM Hygiene codemod with chunking
         const candidateFiles = findJsTsFiles(workspaceRoot);
         const patchSet = await esmHygiene(candidateFiles);
         
-        // Apply risk limits
-        if (patchSet.patches.length > 10 || patchSet.patches.some((p: any) => p.diff.split('\n').length > 40)) {
+        // Filter out protected paths and chunk the patches
+        const filteredPatches = patchSet.patches.filter((p: any) => !isProtectedPath(p.file));
+        const chunks = chunkPatches(filteredPatches, budget);
+        
+        // Calculate chunks metadata
+        const chunksMetadata = chunks.map((chunk, index) => ({
+          index: index + 1,
+          files: chunk.length,
+          lines: chunk.reduce((sum, patch) => sum + estimatePatchLines(patch), 0),
+          count: chunk.length
+        }));
+        
+        const totalStats = {
+          files: filteredPatches.length,
+          lines: filteredPatches.reduce((sum, patch) => sum + estimatePatchLines(patch), 0)
+        };
+        
+        if (mode === 'dry-run') {
+          // Return all chunks metadata in dry-run
           console.log(JSON.stringify(addValidators({
-            pass: false,
+            pass: true,
             recipe,
             mode,
-            notes: ['Risk budget exceeded - too many files or lines to change']
+            chunks: chunksMetadata,
+            stats: totalStats,
+            notes: chunks.length > 1 ? [`${chunks.length} chunks planned due to risk budget`] : undefined
           })));
-          return;
-        }
-        
-        if (apply && patchSet.patches.length > 0) {
-          // Apply patches (write files)
-          for (const patch of patchSet.patches) {
-            try {
-              const content = readFileSync(patch.file, 'utf8');
-              const lines = content.split('\n');
-              const newLines = lines.map((line: string) => {
-                if (line.includes('require(')) return line;
-                const importMatch = line.match(/^(\s*import\s+.*?\s+from\s+['"])(\.\.?\/[^'"]*?)(['"])/);
-                if (importMatch && !importMatch[2].endsWith('.js')) {
-                  return `${importMatch[1]}${importMatch[2]}.js${importMatch[3]}`;
-                }
-                return line;
-              });
-              writeFileSync(patch.file, newLines.join('\n'));
-            } catch (error) {
-              // Skip files that can't be written
+        } else if (mode === 'apply') {
+          // Apply only the first chunk
+          let appliedChunk = 0;
+          if (chunks.length > 0) {
+            appliedChunk = 1;
+            for (const patch of chunks[0]) {
+              try {
+                const content = readFileSync(patch.file, 'utf8');
+                const lines = content.split('\n');
+                const newLines = lines.map((line: string) => {
+                  if (line.includes('require(')) return line;
+                  const importMatch = line.match(/^(\s*import\s+.*?\s+from\s+['"])(\.\.?\/[^'"]*?)(['"])/);
+                  if (importMatch && !importMatch[2].endsWith('.js')) {
+                    return `${importMatch[1]}${importMatch[2]}.js${importMatch[3]}`;
+                  }
+                  return line;
+                });
+                writeFileSync(patch.file, newLines.join('\n'));
+              } catch (error) {
+                // Skip files that can't be written
+              }
             }
           }
+          
+          const pendingChunks = chunks.length - 1;
+          console.log(JSON.stringify(addValidators({
+            pass: true,
+            recipe,
+            mode,
+            chunks: chunksMetadata,
+            appliedChunk,
+            pendingChunks: pendingChunks > 0 ? pendingChunks : undefined,
+            stats: {
+              files: appliedChunk > 0 ? chunks[0].length : 0,
+              lines: appliedChunk > 0 ? chunks[0].reduce((sum, patch) => sum + estimatePatchLines(patch), 0) : 0
+            },
+            notes: pendingChunks > 0 ? [`Applied chunk 1 of ${chunks.length}. Run again to apply remaining chunks.`] : undefined
+          })));
         }
-        
-        console.log(JSON.stringify(addValidators({
-          pass: true,
-          recipe,
-          mode,
-          patches: patchSet.patches,
-          stats: { files: patchSet.patches.length, lines: patchSet.totalChanges }
-        })));
       } else if (recipe === 'deps-patch') {
         // Dependencies patch/minor upgrade
         const upgradeResult = await depsPatchMinor(workspaceRoot);
@@ -300,7 +405,7 @@ if (cmd === 'scan') {
   
   // Execute heal command
   executeHeal().then(() => {
-    console.error('Stage W2-2E done.');
+    console.error('Stage W2-2H done.');
   });
 } else if (cmd === 'branch' && process.argv[3] === 'create') {
   // Parse branch create command
