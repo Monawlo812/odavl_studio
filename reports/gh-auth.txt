@@ -1,0 +1,6 @@
+﻿github.com
+  Ô£ô Logged in to github.com account Monawlo812 (keyring)
+  - Active account: true
+  - Git operations protocol: https
+  - Token: gho_************************************
+  - Token scopes: 'gist', 'read:org', 'repo', 'workflow'
