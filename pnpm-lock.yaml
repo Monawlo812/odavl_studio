@@ -20,6 +20,9 @@ importers:
       '@odavl/codemods':
         specifier: workspace:*
         version: link:../../packages/codemods
+      '@odavl/policy':
+        specifier: workspace:*
+        version: link:../../packages/policy
     devDependencies:
       '@types/node':
         specifier: ^20

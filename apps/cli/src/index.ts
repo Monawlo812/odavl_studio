@@ -5,6 +5,7 @@ import { readFileSync, writeFileSync, readdirSync, statSync } from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { esmHygiene, depsPatchMinor } from '@odavl/codemods';
+import { readGovernorConfig, currentUsage, decide } from '@odavl/policy';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -498,6 +499,24 @@ if (cmd === 'scan') {
     }
   }
   
+  // Check governor for PR creation permission
+  if (!dryRun) {
+    const config = readGovernorConfig(process.cwd());
+    const usage = currentUsage(process.cwd());
+    const decision = decide('pr', config, usage);
+    
+    if (decision.blocked) {
+      console.log(JSON.stringify({
+        tool: 'odavl',
+        action: 'pr',
+        subaction: 'open',
+        pass: false,
+        stderr: `Governor blocked PR creation: ${decision.reason}`
+      }));
+      process.exit(1);
+    }
+  }
+  
   try {
     // Get current branch
     const headResult = run('git rev-parse --abbrev-ref HEAD');
@@ -626,6 +645,7 @@ Evidence:
   const args = process.argv.slice(4);
   let ref = '';
   let wait = false;
+  let dryRun = false;
   
   for (let i = 0; i < args.length; i++) {
     if (args[i] === '--ref' && i + 1 < args.length) {
@@ -633,6 +653,26 @@ Evidence:
       i += 1;
     } else if (args[i] === '--wait') {
       wait = true;
+    } else if (args[i] === '--dry-run') {
+      dryRun = true;
+    }
+  }
+  
+  // Check governor for shadow run permission
+  if (!dryRun) {
+    const config = readGovernorConfig(process.cwd());
+    const usage = currentUsage(process.cwd());
+    const decision = decide('shadow', config, usage);
+    
+    if (decision.blocked) {
+      console.log(JSON.stringify({
+        tool: 'odavl',
+        action: 'shadow',
+        subaction: 'run',
+        pass: false,
+        stderr: `Governor blocked shadow run: ${decision.reason}`
+      }));
+      process.exit(1);
     }
   }
   
@@ -664,6 +704,20 @@ Evidence:
       if (pushResult.status !== 0) {
         throw new Error(`Failed to push upstream: ${pushResult.stderr}`);
       }
+    }
+    
+    // Handle dry-run mode
+    if (dryRun) {
+      console.log(JSON.stringify({
+        tool: 'odavl',
+        action: 'shadow',
+        subaction: 'run',
+        ref,
+        pass: true,
+        stdout: 'Dry run - workflow would be triggered',
+        stderr: ''
+      }));
+      process.exit(0);
     }
     
     // Trigger workflow
@@ -725,5 +779,5 @@ Evidence:
   console.log('  heal           Fix code issues (--recipe remove-unused, --apply)');
   console.log('  branch create  Create a new git branch');
   console.log('  pr open        Open a pull request (--explain, --dry-run, --title)');
-  console.log('  shadow run     Trigger CI workflow (--ref <branch>, --wait)');
+  console.log('  shadow run     Trigger CI workflow (--ref <branch>, --wait, --dry-run)');
 }

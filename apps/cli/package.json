@@ -10,7 +10,8 @@
     "build": "tsc -p tsconfig.json"
   },
   "dependencies": {
-    "@odavl/codemods": "workspace:*"
+    "@odavl/codemods": "workspace:*",
+    "@odavl/policy": "workspace:*"
   },
   "devDependencies": {
     "@types/node": "^20"
