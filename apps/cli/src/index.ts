@@ -1,5 +1,54 @@
 #!/usr/bin/env node
 // ODAVL CLI placeholder
+import { spawn, spawnSync } from 'child_process';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Helper for running commands synchronously
+function run(cmd: string) {
+  const [command, ...args] = cmd.split(' ');
+  return spawnSync(command, args, { 
+    encoding: 'utf8', 
+    shell: process.platform === 'win32' 
+  });
+}
+
+// Robust base branch resolver
+function resolveBaseBranch() {
+  // Try GitHub default branch
+  const ghResult = run('gh repo view --json defaultBranchRef -q .defaultBranchRef.name');
+  if (ghResult.status === 0 && ghResult.stdout.trim()) {
+    const defaultBranch = ghResult.stdout.trim();
+    // Verify it exists on origin
+    const remoteCheck = run(`git ls-remote --heads origin ${defaultBranch}`);
+    if (remoteCheck.status === 0 && remoteCheck.stdout.trim()) {
+      // Ensure local tracking
+      const localCheck = run(`git rev-parse --verify ${defaultBranch}`);
+      if (localCheck.status !== 0) {
+        run(`git fetch origin ${defaultBranch}:${defaultBranch}`);
+      }
+      return defaultBranch;
+    }
+  }
+  
+  // Fallback to main, then master
+  for (const branch of ['main', 'master']) {
+    const remoteCheck = run(`git ls-remote --heads origin ${branch}`);
+    if (remoteCheck.status === 0 && remoteCheck.stdout.trim()) {
+      const localCheck = run(`git rev-parse --verify ${branch}`);
+      if (localCheck.status !== 0) {
+        run(`git fetch origin ${branch}:${branch}`);
+      }
+      return branch;
+    }
+  }
+  
+  throw new Error('No base branch found (main/master)');
+}
+
 const cmd = process.argv[2] ?? 'help';
 
 if (cmd === 'scan') {
@@ -11,8 +60,218 @@ if (cmd === 'scan') {
     generatedAt: new Date().toISOString()
   };
   console.log(JSON.stringify(out));
+} else if (cmd === 'heal') {
+  // Parse heal command arguments
+  const args = process.argv.slice(3);
+  let recipe = 'remove-unused';
+  let apply = false;
+  
+  for (let i = 0; i < args.length; i++) {
+    if (args[i] === '--recipe' && i + 1 < args.length) {
+      recipe = args[i + 1];
+      i += 1;
+    } else if (args[i] === '--apply') {
+      apply = true;
+    }
+  }
+  
+  if (recipe !== 'remove-unused') {
+    console.log(JSON.stringify({ pass: false, error: 'unsupported recipe' }));
+    process.exit(1);
+  }
+  
+  // Build eslint command
+  const workspaceRoot = path.resolve(__dirname, '../../..');
+  const eslintCmd = process.platform === 'win32' ? 'pnpm.cmd' : 'pnpm';
+  const eslintArgs = ['--filter', 'golden-repo', 'exec', 'eslint', '.'];
+  if (apply) {
+    eslintArgs.push('--fix');
+  } else {
+    eslintArgs.push('--fix-dry-run');
+  }
+  
+  // Spawn eslint command
+  const child = spawn(eslintCmd, eslintArgs, { 
+    cwd: workspaceRoot, 
+    stdio: 'pipe',
+    shell: true
+  });
+  let stdout = '';
+  let stderr = '';
+  
+  child.stdout?.on('data', (data) => { stdout += data.toString(); });
+  child.stderr?.on('data', (data) => { stderr += data.toString(); });
+  
+  child.on('close', (code) => {
+    const result = {
+      tool: 'odavl',
+      action: 'heal',
+      recipe: 'remove-unused',
+      mode: apply ? 'apply' : 'dry-run',
+      pass: code === 0,
+      stdout,
+      stderr
+    };
+    console.log(JSON.stringify(result));
+  });
+} else if (cmd === 'branch' && process.argv[3] === 'create') {
+  // Parse branch create command
+  let branchName = process.argv[4];
+  if (!branchName) {
+    console.log(JSON.stringify({ tool: 'odavl', action: 'branch', subaction: 'create', pass: false, stderr: 'Branch name required' }));
+    process.exit(1);
+  }
+  
+  // Replace spaces with dashes
+  branchName = branchName.replace(/\s+/g, '-');
+  
+  // Step 1: Verify git repo
+  const gitCheck = spawn('git', ['rev-parse', '--is-inside-work-tree'], { stdio: 'pipe', shell: true });
+  let gitStdout = '';
+  let gitStderr = '';
+  
+  gitCheck.stdout?.on('data', (data) => { gitStdout += data.toString(); });
+  gitCheck.stderr?.on('data', (data) => { gitStderr += data.toString(); });
+  
+  gitCheck.on('close', (code) => {
+    if (code !== 0) {
+      console.log(JSON.stringify({ tool: 'odavl', action: 'branch', subaction: 'create', name: branchName, pass: false, stderr: 'Not in a git repository' }));
+      return;
+    }
+    
+    // Step 2: Create branch
+    const branchCreate = spawn('git', ['checkout', '-b', branchName], { stdio: 'pipe', shell: true });
+    let branchStdout = '';
+    let branchStderr = '';
+    
+    branchCreate.stdout?.on('data', (data) => { branchStdout += data.toString(); });
+    branchCreate.stderr?.on('data', (data) => { branchStderr += data.toString(); });
+    
+    branchCreate.on('close', (branchCode) => {
+      const result = {
+        tool: 'odavl',
+        action: 'branch',
+        subaction: 'create',
+        name: branchName,
+        pass: branchCode === 0,
+        stdout: branchStdout,
+        stderr: branchStderr
+      };
+      console.log(JSON.stringify(result));
+    });
+  });
+} else if (cmd === 'pr' && process.argv[3] === 'open') {
+  const args = process.argv.slice(4);
+  let explain = false;
+  let dryRun = false;
+  let title = '';
+  
+  for (let i = 0; i < args.length; i++) {
+    if (args[i] === '--explain') {
+      explain = true;
+    } else if (args[i] === '--dry-run') {
+      dryRun = true;
+    } else if (args[i] === '--title' && i + 1 < args.length) {
+      title = args[i + 1];
+      i += 1;
+    }
+  }
+  
+  try {
+    // Get current branch
+    const headResult = run('git rev-parse --abbrev-ref HEAD');
+    if (headResult.status !== 0) {
+      throw new Error('Not in a git repository');
+    }
+    const head = headResult.stdout.trim();
+    
+    // Resolve base branch
+    const base = resolveBaseBranch();
+    
+    // Ensure HEAD has upstream
+    const upstreamCheck = run(`git rev-parse --abbrev-ref ${head}@{upstream}`);
+    if (upstreamCheck.status !== 0) {
+      const pushResult = run(`git push -u origin ${head}`);
+      if (pushResult.status !== 0) {
+        throw new Error(`Failed to push ${head}: ${pushResult.stderr}`);
+      }
+    }
+    
+    // Get title if not provided
+    if (!title) {
+      const titleResult = run('git log -1 --pretty=%s');
+      title = titleResult.status === 0 ? titleResult.stdout.trim() : `ODAVL: ${head}`;
+    }
+    
+    let body = '';
+    if (explain) {
+      // Build explain body
+      const diffResult = run(`git diff --name-only origin/${base}...${head}`);
+      const files = diffResult.stdout.trim().split('\n').filter(f => f).slice(0, 5);
+      const shortstatResult = run(`git diff --shortstat origin/${base}...${head}`);
+      const lastCommitResult = run('git log -1 --pretty=%s');
+      
+      body = `**What**: ${files.join(', ')}${files.length > 5 ? '...' : ''}
+**Changes**: ${shortstatResult.stdout.trim()}
+**Last commit**: ${lastCommitResult.stdout.trim()}
+**Note**: CI will run on this PR to validate changes.`;
+    }
+    
+    if (dryRun) {
+      const result = {
+        tool: 'odavl',
+        action: 'pr',
+        subaction: 'open',
+        wouldOpen: true,
+        base,
+        head,
+        title,
+        bodyPreview: body.substring(0, 100) + (body.length > 100 ? '...' : ''),
+        pass: true
+      };
+      console.log(JSON.stringify(result));
+    } else {
+      // Create actual PR
+      const prArgs = ['pr', 'create', '--base', base, '--head', head, '--title', title];
+      if (body) {
+        prArgs.push('--body', body);
+      }
+      
+      const prResult = run(prArgs.join(' '));
+      const result: any = {
+        tool: 'odavl',
+        action: 'pr',
+        subaction: 'open',
+        base,
+        head,
+        pass: prResult.status === 0,
+        stdout: prResult.stdout,
+        stderr: prResult.stderr
+      };
+      
+      if (prResult.status === 0) {
+        const urlMatch = prResult.stdout.match(/https:\/\/github\.com\/[^\s]+/);
+        if (urlMatch) {
+          result.url = urlMatch[0];
+        }
+      }
+      
+      console.log(JSON.stringify(result));
+    }
+  } catch (error: any) {
+    console.log(JSON.stringify({
+      tool: 'odavl',
+      action: 'pr',
+      subaction: 'open',
+      pass: false,
+      stderr: error?.message || 'Unknown error'
+    }));
+  }
 } else {
   console.log('Usage: odavl <command>');
   console.log('Commands:');
-  console.log('  scan   Outputs placeholder HealthSnapshot JSON');
+  console.log('  scan           Outputs placeholder HealthSnapshot JSON');
+  console.log('  heal           Fix code issues (--recipe remove-unused, --apply)');
+  console.log('  branch create  Create a new git branch');
+  console.log('  pr open        Open a pull request (--explain, --dry-run, --title)');
 }
