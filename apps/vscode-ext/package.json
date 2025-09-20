@@ -1,5 +1,1 @@
-<<<<<<< HEAD
-{"name":"@odavl/vscode-ext","displayName":"ODAVL Studio","version":"0.0.0","private":true,"publisher":"odavl","engines":{"vscode":"^1.85.0"},"activationEvents":["onCommand:odavlStudio.openPanel"],"main":"dist/extension.js","contributes":{"commands":[{"command":"odavlStudio.openPanel","title":"ODAVL Studio: Open Panel"}]},"scripts":{"build":"tsc -p tsconfig.json"}}
-=======
 {"name":"@odavl/vscode-ext","displayName":"ODAVL Studio","version":"0.0.0","private":true,"publisher":"odavl","engines":{"vscode":"^1.85.0"},"activationEvents":["onCommand:odavlStudio.openPanel"],"main":"dist/extension.js","contributes":{"commands":[{"command":"odavlStudio.openPanel","title":"ODAVL Studio: Open Panel"}]},"scripts":{"build":"tsc -p tsconfig.json"},"devDependencies":{"@types/vscode":"^1.85.0","@types/node":"^20"}}
->>>>>>> 2f52f83be1f7d671946596a5de23440ec38f1014
