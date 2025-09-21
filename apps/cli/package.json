@@ -3,7 +3,8 @@
   "version": "0.3.0",
   "type": "module",
   "bin": {
-    "odavl-cli": "dist/index.js"
+    "odavl-cli": "dist/index.js",
+    "odavl": "dist/index.js"
   },
   "files": [
     "dist",

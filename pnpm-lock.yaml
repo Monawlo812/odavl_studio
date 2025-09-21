@@ -8,6 +8,9 @@ importers:
 
   .:
     devDependencies:
+      odavl-cli:
+        specifier: workspace:*
+        version: link:apps/cli
       turbo:
         specifier: ^2.5.6
         version: 2.5.6

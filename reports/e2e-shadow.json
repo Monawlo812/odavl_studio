@@ -1,18 +1,18 @@
 {
   "ok": true,
   "code": 0,
-  "stdout": "{\"tool\":\"odavl\",\"action\":\"shadow\",\"subaction\":\"run\",\"ref\":\"odavl/e2e-2025-09-21T12-01-12-690Z\",\"pass\":false,\"url\":\"https://github.com/Monawlo812/odavl_studio/actions/runs/17893319535\",\"status\":\"completed\",\"conclusion\":\"failure\",\"stdout\":\"\",\"stderr\":\"\"}\n",
+  "stdout": "{\"tool\":\"odavl\",\"action\":\"shadow\",\"subaction\":\"run\",\"ref\":\"odavl/e2e-2025-09-21T14-19-52-782Z\",\"pass\":true,\"url\":\"https://github.com/Monawlo812/odavl_studio/actions/runs/17894819300\",\"status\":\"in_progress\",\"conclusion\":null,\"stdout\":\"\",\"stderr\":\"\"}\n",
   "stderr": "",
   "cmd": "node apps/cli/dist/index.js shadow run --wait",
   "parsed": {
     "tool": "odavl",
     "action": "shadow",
     "subaction": "run",
-    "ref": "odavl/e2e-2025-09-21T12-01-12-690Z",
-    "pass": false,
-    "url": "https://github.com/Monawlo812/odavl_studio/actions/runs/17893319535",
-    "status": "completed",
-    "conclusion": "failure",
+    "ref": "odavl/e2e-2025-09-21T14-19-52-782Z",
+    "pass": true,
+    "url": "https://github.com/Monawlo812/odavl_studio/actions/runs/17894819300",
+    "status": "in_progress",
+    "conclusion": null,
     "stdout": "",
     "stderr": ""
   }

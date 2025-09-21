@@ -203,7 +203,7 @@ export function activate(context: vscode.ExtensionContext): void {
         panel.webview.postMessage({ type: 'log', message: `Starting ${cmd}...` });
         
         if (cmd === 'magic') {
-          await vscode.commands.executeCommand('odavl.magic');
+          await vscode.commands.executeCommand('odavl.magic.run');
           panel.webview.postMessage({ type: 'success', message: 'Magic workflow completed!' });
         } else {
           // Run CLI commands via terminal
@@ -219,8 +219,46 @@ export function activate(context: vscode.ExtensionContext): void {
   });
 
   // Register Magic command  
-  const magicCommand = vscode.commands.registerCommand('odavl.magic.run', () => {
-    vscode.window.showInformationMessage('🎩✨ Magic command - coming soon!');
+  const magicCommand = vscode.commands.registerCommand('odavl.magic.run', async () => {
+    const root = getWorkspaceRoot();
+    if (!root) {
+      vscode.window.showErrorMessage('No workspace opened');
+      return;
+    }
+
+    // Show progress with steps
+    await vscode.window.withProgress({
+      location: vscode.ProgressLocation.Notification,
+      title: "✨ Running ODAVL Magic...",
+      cancellable: false
+    }, async (progress) => {
+      try {
+        const cliPath = path.join(root, 'apps', 'cli', 'dist', 'index.js');
+        
+        // Step 1: Scan
+        progress.report({ increment: 20, message: "📊 Scanning codebase..." });
+        let result = await run('node', [cliPath, 'scan', '--json'], root, 30000);
+        if (!result.ok) throw new Error(`Scan failed: ${result.stderr}`);
+        
+        // Step 2: Heal (if needed)
+        progress.report({ increment: 30, message: "🔧 Applying fixes..." });
+        result = await run('node', [cliPath, 'heal', '--recipe', 'esm-hygiene', '--apply', '--max-files', '5'], root, 45000);
+        if (!result.ok) console.log(`Heal warning: ${result.stderr}`); // Non-critical
+        
+        // Step 3: Shadow run
+        progress.report({ increment: 30, message: "☁️ Running shadow CI..." });
+        result = await run('node', [cliPath, 'shadow', 'run', '--json'], root, 60000);
+        if (!result.ok) console.log(`Shadow warning: ${result.stderr}`); // Non-critical
+        
+        // Step 4: Generate reports
+        progress.report({ increment: 20, message: "📝 Generating reports..." });
+        await run('node', [cliPath, 'report', 'health', '--since', '1h'], root, 15000);
+        
+        vscode.window.showInformationMessage('✨ Magic completed! Check reports/ folder for results.');
+      } catch (error) {
+        vscode.window.showErrorMessage(`Magic failed: ${error}`);
+      }
+    });
   });
 
   context.subscriptions.push(controlCenterCommand, magicCommand);
