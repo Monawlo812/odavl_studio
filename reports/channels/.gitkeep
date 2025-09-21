@@ -1,0 +1,9 @@
+# Channels Directory
+
+This directory contains reports and artifacts from all ODAVL Studio access channels:
+
+- **launcher/**: Web launcher API call results and logs
+- **vscode/**: VS Code extension operation outputs  
+- **CI/**: GitHub App and CI integration reports
+
+Each channel maintains separate report namespaces while using the same CLI core.

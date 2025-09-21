@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ODAVL Studio Launcher</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+        }
+        .header h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            backdrop-filter: blur(10px);
+        }
+        .status-card {
+            grid-column: 1 / -1;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 20px;
+            text-align: center;
+        }
+        .status-item h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+        .controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        .btn {
+            padding: 15px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+        }
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .btn-scan { background: #4CAF50; color: white; }
+        .btn-heal { background: #FF9800; color: white; }
+        .btn-shadow { background: #2196F3; color: white; }
+        .btn-pr { background: #9C27B0; color: white; }
+        .btn-magic { background: linear-gradient(45deg, #FF6B6B, #4ECDC4); color: white; }
+        .btn-status { background: #607D8B; color: white; }
+        .logs {
+            height: 300px;
+            background: #1e1e1e;
+            color: #f8f8f2;
+            border-radius: 8px;
+            padding: 15px;
+            overflow-y: auto;
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            font-size: 13px;
+            line-height: 1.4;
+        }
+        .logs::-webkit-scrollbar {
+            width: 8px;
+        }
+        .logs::-webkit-scrollbar-track {
+            background: #2e2e2e;
+        }
+        .logs::-webkit-scrollbar-thumb {
+            background: #555;
+            border-radius: 4px;
+        }
+        .loading {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 ODAVL Studio</h1>
+            <p>Zero-Terminal Automated Development Governance</p>
+        </div>
+        
+        <div class="main-grid">
+            <div class="card">
+                <h2>🎛️ Controls</h2>
+                <div class="controls">
+                    <button class="btn btn-scan" onclick="runCommand('scan')">
+                        📊 Scan
+                    </button>
+                    <button class="btn btn-heal" onclick="runCommand('heal')">
+                        🔧 Heal
+                    </button>
+                    <button class="btn btn-shadow" onclick="runCommand('shadow')">
+                        ☁️ Shadow
+                    </button>
+                    <button class="btn btn-pr" onclick="runCommand('pr')">
+                        📝 PR
+                    </button>
+                    <button class="btn btn-magic" onclick="runCommand('magic')">
+                        ✨ Magic
+                    </button>
+                    <button class="btn btn-status" onclick="runCommand('status')">
+                        📊 Status
+                    </button>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h2>📊 Status</h2>
+                <div class="status-card">
+                    <div class="status-item">
+                        <h3>Governor</h3>
+                        <div id="governor-status">-</div>
+                    </div>
+                    <div class="status-item">
+                        <h3>Telemetry</h3>
+                        <div id="telemetry-status">-</div>
+                    </div>
+                    <div class="status-item">
+                        <h3>Last Run</h3>
+                        <div id="last-run">-</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card">
+            <h2>📝 Real-time Logs</h2>
+            <div id="logs" class="logs">
+                Connecting to ODAVL launcher...
+            </div>
+        </div>
+    </div>
+    
+    <div class="loading" id="loading">
+        <div class="spinner"></div>
+    </div>
+    
+    <script>
+        let eventSource;
+        const logs = document.getElementById('logs');
+        const loading = document.getElementById('loading');
+        
+        // Connect to SSE for real-time logs
+        function connectLogs() {
+            eventSource = new EventSource('/api/logs/stream');
+            
+            eventSource.onmessage = function(event) {
+                const data = JSON.parse(event.data);
+                appendLog(data.message, data.type === 'connected' ? 'info' : 'log');
+            };
+            
+            eventSource.onerror = function() {
+                appendLog('❌ Log connection lost. Reconnecting...', 'error');
+                setTimeout(connectLogs, 3000);
+            };
+        }
+        
+        function appendLog(message, type = 'log') {
+            const timestamp = new Date().toLocaleTimeString();
+            const color = type === 'error' ? '#ff6b6b' : type === 'info' ? '#4ecdc4' : '#f8f8f2';
+            logs.innerHTML += `<div style="color: ${color}">[${timestamp}] ${message}</div>`;
+            logs.scrollTop = logs.scrollHeight;
+        }
+        
+        async function runCommand(cmd) {
+            const buttons = document.querySelectorAll('.btn');
+            buttons.forEach(btn => btn.disabled = true);
+            loading.style.display = 'flex';
+            
+            try {
+                appendLog(`🚀 Running ${cmd} command...`, 'info');
+                const response = await fetch(`/api/${cmd}`, { method: 'POST' });
+                const result = await response.json();
+                
+                if (result.success) {
+                    appendLog(`✅ ${cmd} completed successfully!`, 'info');
+                    document.getElementById('last-run').textContent = cmd;
+                } else {
+                    appendLog(`❌ ${cmd} failed: ${result.error || 'Unknown error'}`, 'error');
+                }
+                
+                // Update status if this was a status command
+                if (cmd === 'status' && result.success) {
+                    try {
+                        const status = JSON.parse(result.output);
+                        document.getElementById('governor-status').textContent = status.governor?.state || 'unknown';
+                        document.getElementById('telemetry-status').textContent = status.telemetry?.mode || 'unknown';
+                    } catch (e) {
+                        console.log('Could not parse status output');
+                    }
+                }
+                
+            } catch (error) {
+                appendLog(`❌ ${cmd} request failed: ${error.message}`, 'error');
+            } finally {
+                buttons.forEach(btn => btn.disabled = false);
+                loading.style.display = 'none';
+            }
+        }
+        
+        // Auto-connect on load and get initial status
+        connectLogs();
+        setTimeout(() => runCommand('status'), 1000);
+    </script>
+</body>
+</html>
