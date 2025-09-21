@@ -199,6 +199,7 @@ export function activate(context: vscode.ExtensionContext): void {
     // Handle messages from webview
     panel.webview.onDidReceiveMessage(async (message) => {
       const { cmd } = message;
+      const workspaceRoot = getWorkspaceRoot();
       try {
         panel.webview.postMessage({ type: 'log', message: `Starting ${cmd}...` });
         
@@ -206,11 +207,20 @@ export function activate(context: vscode.ExtensionContext): void {
           await vscode.commands.executeCommand('odavl.magic.run');
           panel.webview.postMessage({ type: 'success', message: 'Magic workflow completed!' });
         } else {
-          // Run CLI commands via terminal
+          // Run CLI commands via terminal and save reports
+          const timestamp = Date.now();
+          const reportFile = `vscode-${cmd}-${timestamp}.json`;
+          const reportPath = workspaceRoot ? path.join(workspaceRoot, 'reports', 'vscode', reportFile) : reportFile;
+          
           const terminal = vscode.window.createTerminal('ODAVL');
-          terminal.sendText(`pnpm -w odavl ${cmd}`);
+          if (workspaceRoot) {
+            terminal.sendText(`pnpm -w odavl ${cmd} --json > "${reportPath}"`);
+          } else {
+            terminal.sendText(`pnpm -w odavl ${cmd}`);
+          }
           terminal.show();
-          panel.webview.postMessage({ type: 'success', message: `${cmd} command executed!` });
+          
+          panel.webview.postMessage({ type: 'success', message: `${cmd} command executed! Report: ${reportFile}` });
         }
       } catch (error) {
         panel.webview.postMessage({ type: 'error', message: `Failed: ${error}` });
@@ -254,7 +264,19 @@ export function activate(context: vscode.ExtensionContext): void {
         progress.report({ increment: 20, message: "📝 Generating reports..." });
         await run('node', [cliPath, 'report', 'health', '--since', '1h'], root, 15000);
         
-        vscode.window.showInformationMessage('✨ Magic completed! Check reports/ folder for results.');
+        // Save Magic workflow summary
+        const magicReport = {
+          timestamp: new Date().toISOString(),
+          workflow: 'magic',
+          steps: ['scan', 'heal', 'shadow', 'reports'],
+          success: true,
+          duration_ms: 0 // Simplified for now
+        };
+        
+        const reportPath = path.join(root, 'reports', 'vscode', `magic-${Date.now()}.json`);
+        await vscode.workspace.fs.writeFile(vscode.Uri.file(reportPath), Buffer.from(JSON.stringify(magicReport, null, 2)));
+        
+        vscode.window.showInformationMessage('✨ Magic completed! Check reports/vscode/ folder for results.');
       } catch (error) {
         vscode.window.showErrorMessage(`Magic failed: ${error}`);
       }

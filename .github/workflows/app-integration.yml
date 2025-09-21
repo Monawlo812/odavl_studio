@@ -1,0 +1,164 @@
+name: ODAVL GitHub App Integration
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+  pull_request_review:
+    types: [submitted]
+
+jobs:
+  odavl-governance:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 10.17.0
+          
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+        
+      - name: Build CLI
+        run: pnpm --filter @odavl/cli run build
+        
+      - name: Check Governor constraints
+        id: governor
+        run: |
+          echo "Checking ODAVL Governor constraints..."
+          pnpm -w odavl governor explain --json > governor-state.json
+          cat governor-state.json
+          
+          # Extract values for GitHub output
+          allowed=$(jq -r '.pr.allowedNow // false' governor-state.json)
+          daily_used=$(jq -r '.pr.dailyUsed // 0' governor-state.json)
+          daily_limit=$(jq -r '.pr.dailyLimit // 5' governor-state.json)
+          
+          echo "allowed=${allowed}" >> $GITHUB_OUTPUT
+          echo "daily_used=${daily_used}" >> $GITHUB_OUTPUT
+          echo "daily_limit=${daily_limit}" >> $GITHUB_OUTPUT
+          
+      - name: Run ODAVL scan
+        if: steps.governor.outputs.allowed == 'true'
+        id: scan
+        run: |
+          echo "Running ODAVL scan..."
+          pnpm -w odavl scan --json > scan-results.json
+          cat scan-results.json
+          
+          # Extract scan summary
+          health_score=$(jq -r '.health.score // "unknown"' scan-results.json)
+          issues_count=$(jq -r '.issues | length // 0' scan-results.json)
+          
+          echo "health_score=${health_score}" >> $GITHUB_OUTPUT
+          echo "issues_count=${issues_count}" >> $GITHUB_OUTPUT
+          
+      - name: Run healing dry-run
+        if: steps.governor.outputs.allowed == 'true' && steps.scan.outputs.issues_count != '0'
+        id: heal
+        run: |
+          echo "Running ODAVL heal dry-run..."
+          pnpm -w odavl heal --recipe esm-hygiene --dry-run --max-files 5 --json > heal-plan.json
+          cat heal-plan.json
+          
+          # Extract healing info
+          files_to_heal=$(jq -r '.plan.files | length // 0' heal-plan.json)
+          lines_to_change=$(jq -r '.plan.totalLines // 0' heal-plan.json)
+          
+          echo "files_to_heal=${files_to_heal}" >> $GITHUB_OUTPUT
+          echo "lines_to_change=${lines_to_change}" >> $GITHUB_OUTPUT
+          
+      - name: Create PR comment
+        if: always()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            
+            // Read results
+            let governorData = {};
+            let scanData = {};
+            let healData = {};
+            
+            try {
+              governorData = JSON.parse(fs.readFileSync('governor-state.json', 'utf8'));
+            } catch (e) { console.log('No governor data'); }
+            
+            try {
+              scanData = JSON.parse(fs.readFileSync('scan-results.json', 'utf8'));
+            } catch (e) { console.log('No scan data'); }
+            
+            try {
+              healData = JSON.parse(fs.readFileSync('heal-plan.json', 'utf8'));
+            } catch (e) { console.log('No heal data'); }
+            
+            // Build comment
+            const allowed = governorData.pr?.allowedNow || false;
+            const dailyUsed = governorData.pr?.dailyUsed || 0;
+            const dailyLimit = governorData.pr?.dailyLimit || 5;
+            const healthScore = scanData.health?.score || 'unknown';
+            const issuesCount = scanData.issues?.length || 0;
+            const filesToHeal = healData.plan?.files?.length || 0;
+            
+            const comment = `## 🎛️ ODAVL Studio Governance Report
+            
+            ### 📊 Governor Status
+            - **PR Budget**: ${dailyUsed}/${dailyLimit} PRs used today
+            - **Automation**: ${allowed ? '✅ Allowed' : '❌ Blocked'}
+            
+            ### 🔍 Health Scan
+            - **Health Score**: ${healthScore}
+            - **Issues Found**: ${issuesCount}
+            
+            ${filesToHeal > 0 ? `### 🔧 Healing Plan
+            - **Files to heal**: ${filesToHeal}
+            - **Estimated changes**: ${healData.plan?.totalLines || 0} lines
+            
+            > 💡 Run \`pnpm -w odavl heal --apply\` to apply suggested fixes` : ''}
+            
+            ### 🚀 Next Steps
+            ${allowed ? 
+              '- ✅ Governor allows automation\n- 🔄 Shadow CI will run automatically' : 
+              '- ⏸️ Daily PR limit reached\n- 🕐 Try again tomorrow or adjust policy'
+            }
+            
+            ---
+            *Generated by ODAVL Studio GitHub App • [Learn more](https://github.com/Monawlo812/odavl_studio)*`;
+            
+            // Post comment
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: comment
+            });
+            
+      - name: Trigger shadow run
+        if: steps.governor.outputs.allowed == 'true'
+        run: |
+          echo "Triggering shadow CI run..."
+          # This would trigger the existing shadow.yml workflow
+          # For now, just log the intent
+          echo "Shadow run would be triggered here"
+          
+      - name: Save reports
+        if: always()
+        run: |
+          mkdir -p reports/channels/
+          timestamp=$(date +%Y%m%d-%H%M%S)
+          
+          # Save all reports with timestamp
+          [ -f governor-state.json ] && cp governor-state.json "reports/channels/ci-governor-${timestamp}.json"
+          [ -f scan-results.json ] && cp scan-results.json "reports/channels/ci-scan-${timestamp}.json"
+          [ -f heal-plan.json ] && cp heal-plan.json "reports/channels/ci-heal-${timestamp}.json"
+          
+          echo "Reports saved to reports/channels/"

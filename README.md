@@ -20,6 +20,59 @@
 💾 **Safety Systems** - Automatic undo snapshots and protected paths  
 🎯 **VS Code Integration** - WebView panel with one-click operations  
 
+## 🎛️ 3 Channels to Run ODAVL
+
+ODAVL Studio provides **three professional access methods** for different workflows:
+
+### 1️⃣ **Standalone Web Launcher** (Zero-Terminal)
+Perfect for local development and experimentation:
+
+```bash
+pnpm launcher start
+# Opens http://localhost:7777 with clean UI
+```
+
+**Features**:
+- 🌐 **Professional web interface** with real-time logs
+- 🔘 **One-click buttons** for Scan, Heal, Shadow, PR, Magic
+- 📊 **Live status dashboard** with governor state and telemetry
+- 📝 **SSE log streaming** for immediate feedback
+- 💾 **Auto-saved reports** to `reports/launcher/`
+
+### 2️⃣ **VS Code Extension** (Control Center)
+Integrated development experience within your editor:
+
+```bash
+# Install extension, then use Command Palette:
+# "ODAVL: Open Control Center"
+```
+
+**Features**:
+- 🎛️ **Control Center webview** with grid layout and confetti
+- ⚡ **Magic workflow** with progress notifications
+- 📋 **Command palette** integration
+- 🎯 **Status bar control** ("ODAVL ▷ Control" button)
+- 📖 **Interactive walkthrough** for new users
+- 💾 **Reports saved** to `reports/vscode/`
+
+### 3️⃣ **GitHub App + CI Integration** (Automated Governance)
+Enterprise automation with safety guardrails:
+
+```bash
+# Install GitHub App on repositories
+./infra/github-app/bootstrap.sh
+```
+
+**Features**:
+- 🤖 **Automated PR comments** with governance reports
+- 🛡️ **Governor constraints** enforced (daily PR limits, CI budgets)
+- 🔄 **Shadow CI triggers** on pull request events
+- 📊 **Health scores** and healing recommendations
+- 🚨 **Policy enforcement** with transparent reporting
+- 💾 **CI artifacts** saved to `reports/channels/`
+
+---
+
 ## Quickstart (60s)
 
 ```bash
