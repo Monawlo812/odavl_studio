@@ -185,6 +185,25 @@ function normalizeNotes(chunks: any[], appliedChunk?: number, pendingChunks?: nu
 }
 
 const cmd = process.argv[2] ?? 'help';
+const hasHelpFlag = process.argv.includes('--help');
+
+// Show help if --help flag is present
+if (hasHelpFlag || cmd === 'help') {
+  console.log('Usage: odavl <command>');
+  console.log('Commands:');
+  console.log('  scan           Outputs placeholder HealthSnapshot JSON');
+  console.log('  heal           Fix code issues (--recipe remove-unused, --apply)');
+  console.log('  branch create  Create a new git branch');
+  console.log('  pr open        Open a pull request (--explain, --dry-run, --title)');
+  console.log('  shadow run     Trigger CI workflow (--ref <branch>, --wait, --dry-run)');
+  console.log('  shadow status  Check CI workflow status (--ref <branch>, --watch)');
+  console.log('  status         Show current project status (branch, governor, telemetry, CI)');
+  console.log('  governor explain  Show current governor status for PR and shadow operations');
+  console.log('  report telemetry summary  Show usage analytics (--since 24h|<ISO>)');
+  console.log('  undo last      Restore files from last heal --apply (--show to preview)');
+  console.log('  abort          Cancel in-progress GitHub Actions runs on current branch');
+  process.exit(0);
+}
 
 if (cmd === 'scan') {
   const mode = readTelemetryMode();
@@ -1467,17 +1486,6 @@ Evidence:
     }));
   }
 } else {
-  console.log('Usage: odavl <command>');
-  console.log('Commands:');
-  console.log('  scan           Outputs placeholder HealthSnapshot JSON');
-  console.log('  heal           Fix code issues (--recipe remove-unused, --apply)');
-  console.log('  branch create  Create a new git branch');
-  console.log('  pr open        Open a pull request (--explain, --dry-run, --title)');
-  console.log('  shadow run     Trigger CI workflow (--ref <branch>, --wait, --dry-run)');
-  console.log('  shadow status  Check CI workflow status (--ref <branch>, --watch)');
-  console.log('  status         Show current project status (branch, governor, telemetry, CI)');
-  console.log('  governor explain  Show current governor status for PR and shadow operations');
-  console.log('  report telemetry summary  Show usage analytics (--since 24h|<ISO>)');
-  console.log('  undo last      Restore files from last heal --apply (--show to preview)');
-  console.log('  abort          Cancel in-progress GitHub Actions runs on current branch');
+  // This case should not be reached due to help check above
+  console.log('Unknown command. Use --help for usage information.');
 }

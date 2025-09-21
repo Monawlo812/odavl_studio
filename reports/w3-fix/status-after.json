@@ -1,0 +1,23 @@
+{
+  "ts": "2025-09-21T13:19:36.865Z",
+  "branch": "odavl/w3-fix-20250921",
+  "governor": {
+    "prsPerDay": 5,
+    "ciMinutesPerHour": 60,
+    "maxConcurrentShadows": 3,
+    "state": "allowed"
+  },
+  "telemetry": {
+    "enabled": true,
+    "mode": "anonymized",
+    "last24h": {"runs": 45, "prs": 0}
+  },
+  "ci": {
+    "openPRs": 17,
+    "lastRuns": [
+      {"status": "completed", "conclusion": "failure"},
+      {"status": "completed", "conclusion": "failure"}, 
+      {"status": "completed", "conclusion": "failure"}
+    ]
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "governor": {
+    "prsPerDay": 5,
+    "ciMinutesPerHour": 60,
+    "maxConcurrentShadows": 3,
+    "waves": [
+      {
+        "window": "22:00-06:00",
+        "maxPrs": 3
+      }
+    ]
+  },
+  "studio": {
+    "telemetry": "anonymized"
+  }
+}

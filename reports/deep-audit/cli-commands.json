@@ -1,0 +1,63 @@
+{
+  "timestamp": "2025-09-21T15:07:00Z",
+  "cli_commands": {
+    "total_commands": 11,
+    "main_help": "Usage: odavl <command>",
+    "commands": [
+      {
+        "name": "scan",
+        "description": "Outputs placeholder HealthSnapshot JSON",
+        "functionality": "eslint and typescript error detection",
+        "output": "json_structured"
+      },
+      {
+        "name": "heal", 
+        "description": "Fix code issues (--recipe remove-unused, --apply)",
+        "recipes": ["esm-hygiene", "remove-unused"],
+        "modes": ["dry-run", "apply"],
+        "flags": ["--recipe", "--apply", "--dry-run", "--max-lines", "--max-files"]
+      },
+      {
+        "name": "branch create",
+        "description": "Create a new git branch"
+      },
+      {
+        "name": "pr open",
+        "description": "Open a pull request (--explain, --dry-run, --title)",
+        "flags": ["--explain", "--dry-run", "--title"]
+      },
+      {
+        "name": "shadow run",
+        "description": "Trigger CI workflow (--ref <branch>, --wait, --dry-run)",
+        "flags": ["--ref", "--wait", "--dry-run"]
+      },
+      {
+        "name": "shadow status",
+        "description": "Check CI workflow status (--ref <branch>, --watch)",
+        "flags": ["--ref", "--watch"]
+      },
+      {
+        "name": "status",
+        "description": "Show current project status (branch, governor, telemetry, CI)"
+      },
+      {
+        "name": "governor explain",
+        "description": "Show current governor status for PR and shadow operations"
+      },
+      {
+        "name": "report telemetry summary",
+        "description": "Show usage analytics (--since 24h|<ISO>)",
+        "flags": ["--since"]
+      },
+      {
+        "name": "undo last",
+        "description": "Restore files from last heal --apply (--show to preview)",
+        "flags": ["--show"]
+      },
+      {
+        "name": "abort",
+        "description": "Cancel in-progress GitHub Actions runs on current branch"
+      }
+    ]
+  }
+}

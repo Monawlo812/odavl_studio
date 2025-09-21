@@ -38,3 +38,8 @@
 {"ts":"2025-09-21T11:53:28.841Z","kind":"heal","durMs":27,"ok":true,"recipe":"remove-unused"}
 {"ts":"2025-09-21T12:01:13.653Z","kind":"scan","durMs":4,"ok":true,"eslintCount":17,"typeErrors":0}
 {"ts":"2025-09-21T12:01:14.057Z","kind":"heal","durMs":24,"ok":true,"recipe":"remove-unused"}
+{"ts":"2025-09-21T13:05:04.120Z","kind":"scan","durMs":9,"ok":true,"eslintCount":17,"typeErrors":0}
+{"ts":"2025-09-21T13:05:31.164Z","kind":"heal","durMs":31,"ok":true,"recipe":"esm-hygiene"}
+{"ts":"2025-09-21T13:06:15.148Z","kind":"scan","durMs":6,"ok":true,"eslintCount":17,"typeErrors":0}
+{"ts":"2025-09-21T13:06:28.596Z","kind":"heal","durMs":24,"ok":true,"recipe":"remove-unused"}
+{"ts":"2025-09-21T13:15:08.838Z","kind":"scan","durMs":4,"ok":true,"eslintCount":17,"typeErrors":0}

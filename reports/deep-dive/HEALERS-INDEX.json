@@ -1,0 +1,56 @@
+[
+  {
+    "id": "esm-hygiene",
+    "version": "1.0.0",
+    "scope": "code",
+    "description": "Ensures explicit \".js\" extensions in ESM imports",
+    "guards": {
+      "maxLines": 40,
+      "maxFiles": 10,
+      "protected": ["/security/", ".spec.", "/public-api/"]
+    },
+    "verify": {
+      "typecheck": false,
+      "tests": false,
+      "build": false,
+      "perf": false
+    },
+    "rationale": "Transforms relative imports (./x -> ./x.js, ../x -> ../x.js). Skips require() statements and protected paths. Idempotent and safe textual transformations only."
+  },
+  {
+    "id": "deps-patch-minor",
+    "version": "1.0.0", 
+    "scope": "deps",
+    "description": "Dependencies patch/minor upgrade with OSV security integration",
+    "guards": {
+      "maxLines": null,
+      "maxFiles": null,
+      "protected": []
+    },
+    "verify": {
+      "typecheck": false,
+      "tests": false,
+      "build": false,
+      "perf": false
+    },
+    "rationale": "Uses pnpm outdated --json to find upgrades. Uses OSV scanner for security recommendations (best-effort). Suggests only patch/minor upgrades (respects ^ and ~). Dry-run by default."
+  },
+  {
+    "id": "remove-unused",
+    "version": "1.0.0",
+    "scope": "code",
+    "description": "Remove unused imports and variables (ESLint-based)",
+    "guards": {
+      "maxLines": null,
+      "maxFiles": null,
+      "protected": []
+    },
+    "verify": {
+      "typecheck": false,
+      "tests": false,
+      "build": false,
+      "perf": false
+    },
+    "rationale": "Currently implemented via pnpm --filter golden-repo exec eslint . --fix. Targets unused-imports/no-unused-imports and unused-imports/no-unused-vars rules."
+  }
+]

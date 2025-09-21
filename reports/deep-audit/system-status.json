@@ -1,0 +1,31 @@
+{
+  "timestamp": "2025-09-21T15:08:00Z",
+  "system_status": {
+    "branch": "odavl/w3-deep-audit-20250921",
+    "governor": {
+      "prsPerDay": 5,
+      "ciMinutesPerHour": 60,
+      "maxConcurrentShadows": 3,
+      "state": "allowed"
+    },
+    "telemetry": {
+      "enabled": true,
+      "mode": "anonymized",
+      "last24h": {"runs": 44, "prs": 0}
+    },
+    "ci": {
+      "openPRs": 17,
+      "lastRuns": [
+        {"status": "completed", "conclusion": "failure"},
+        {"status": "completed", "conclusion": "failure"},
+        {"status": "completed", "conclusion": "failure"}
+      ]
+    }
+  },
+  "file_inventory": {
+    "total_tracked_files": 4048,
+    "source_files_main": 1169,
+    "coverage": "apps, packages, examples, reports",
+    "file_types": ["ts", "js", "json", "md", "yml", "yaml"]
+  }
+}

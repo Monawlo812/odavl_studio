@@ -1,0 +1,22 @@
+{
+  "timestamp": "2025-09-21T15:05:00Z",
+  "build_status": {
+    "overall": "partial_success",
+    "cli": "success",
+    "vscode_ext": "success", 
+    "policy": "success",
+    "codemods": "success",
+    "golden_repo": "failed_encoding_issue",
+    "core_packages": "operational"
+  },
+  "cli_functionality": {
+    "scan_test": "success",
+    "output_format": "valid_json",
+    "eslint_detection": 17,
+    "type_errors": 0,
+    "response_time": "<2s"
+  },
+  "errors": {
+    "golden_repo": "TS1127: Invalid character (encoding issue in example.ts line 5)"
+  }
+}
