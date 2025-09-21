@@ -180,35 +180,41 @@ export function activate(context: vscode.ExtensionContext): void {
   context.subscriptions.push(disposable);
 
   // Register Control Center command
-  const controlCenterCommand = vscode.commands.registerCommand('odavl.controlCenter.open', () => {
-    const panel = vscode.window.createWebviewPanel('odavlControlCenter', 'ODAVL Control Center', vscode.ViewColumn.One, { enableScripts: true });
-    
-    // Set HTML content (placeholder for now)
-    panel.webview.html = `<!DOCTYPE html>
-<html><head><title>ODAVL Control Center</title></head>
-<body style="font-family:sans-serif;padding:20px">
-  <h1>🎛️ ODAVL Control Center</h1>
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:20px 0">
-    <button onclick="runAction('scan')" style="padding:20px;font-size:16px;background:#007ACC;color:white;border:none;border-radius:8px;cursor:pointer">📊 Scan/Heal</button>
-    <button onclick="runAction('shadow')" style="padding:20px;font-size:16px;background:#28A745;color:white;border:none;border-radius:8px;cursor:pointer">☁️ Run Shadow</button>
-    <button onclick="runAction('pr')" style="padding:20px;font-size:16px;background:#DC3545;color:white;border:none;border-radius:8px;cursor:pointer">📝 Open PR</button>
-    <button onclick="runAction('magic')" style="padding:20px;font-size:16px;background:#6F42C1;color:white;border:none;border-radius:8px;cursor:pointer">✨ Magic</button>
-  </div>
-  <pre id="log" style="background:#f8f9fa;padding:12px;border-radius:4px;height:200px;overflow-y:auto;font-size:12px"></pre>
-  <script>
-    const vscode = acquireVsCodeApi();
-    function runAction(cmd) { vscode.postMessage({ cmd }); }
-    window.addEventListener('message', event => {
-      const log = document.getElementById('log');
-      log.textContent += event.data.message + '\\n';
-      log.scrollTop = log.scrollHeight;
-    });
-  </script>
-</body></html>`;
+  const controlCenterCommand = vscode.commands.registerCommand('odavl.controlCenter.open', async () => {
+    const panel = vscode.window.createWebviewPanel(
+      'odavlControlCenter',
+      'ODAVL Control Center',
+      vscode.ViewColumn.One,
+      {
+        enableScripts: true,
+        localResourceRoots: [vscode.Uri.joinPath(context.extensionUri, 'media')]
+      }
+    );
 
+    // Load external HTML file
+    const htmlPath = vscode.Uri.joinPath(context.extensionUri, 'media', 'control-center.html');
+    const html = await vscode.workspace.fs.readFile(htmlPath);
+    panel.webview.html = html.toString();
+
+    // Handle messages from webview
     panel.webview.onDidReceiveMessage(async (message) => {
-      panel.webview.postMessage({ message: `Running ${message.cmd}...` });
-      // Placeholder - full implementation in next batch
+      const { cmd } = message;
+      try {
+        panel.webview.postMessage({ type: 'log', message: `Starting ${cmd}...` });
+        
+        if (cmd === 'magic') {
+          await vscode.commands.executeCommand('odavl.magic');
+          panel.webview.postMessage({ type: 'success', message: 'Magic workflow completed!' });
+        } else {
+          // Run CLI commands via terminal
+          const terminal = vscode.window.createTerminal('ODAVL');
+          terminal.sendText(`pnpm -w odavl ${cmd}`);
+          terminal.show();
+          panel.webview.postMessage({ type: 'success', message: `${cmd} command executed!` });
+        }
+      } catch (error) {
+        panel.webview.postMessage({ type: 'error', message: `Failed: ${error}` });
+      }
     });
   });
 
