@@ -25,11 +25,9 @@ RUN pnpm turbo build --filter=@odavl/cli
 # Production image
 FROM node:20-alpine
 
-# Install git (required for CLI operations)
-RUN apk add --no-cache git
-
-# Create non-root user
-RUN addgroup -g 1001 -S odavl && \
+# Install git and create non-root user
+RUN apk add --no-cache git && \
+    addgroup -g 1001 -S odavl && \
     adduser -S odavl -u 1001
 
 # Set working directory

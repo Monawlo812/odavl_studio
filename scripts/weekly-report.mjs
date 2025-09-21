@@ -13,8 +13,13 @@ async function scanReportsDirectory() {
     const files = await readdir('./reports');
     return files.filter(f => f.endsWith('.json'));
   } catch (error) {
-    console.warn('Reports directory not found, creating empty summary');
-    return [];
+    // Reports directory doesn't exist yet - return empty array for new installations
+    if (error.code === 'ENOENT') {
+      console.warn('Reports directory not found, creating empty summary');
+      return [];
+    }
+    // Re-throw unexpected errors
+    throw error;
   }
 }
 
@@ -28,14 +33,31 @@ async function readJsonFile(filepath) {
   }
 }
 
+function extractE2EKPIs(data) {
+  return {
+    e2eTests: data.stats.totalTests || 0,
+    e2ePassed: data.stats.passedTests || 0,
+    e2eFailed: data.stats.failedTests || 0
+  };
+}
+
+function extractGovernorKPIs(data) {
+  if (!data.entries || !Array.isArray(data.entries)) return {};
+  
+  return {
+    prsCreated: data.entries.filter(e => e.action === 'pr_create').length,
+    ciMinutesUsed: data.entries
+      .filter(e => e.action === 'ci_run')
+      .reduce((sum, e) => sum + (e.minutes || 0), 0)
+  };
+}
+
 function extractKPIs(data, filename) {
   const kpis = {};
   
   // E2E test results
   if (filename.startsWith('e2e-') && data.stats) {
-    kpis.e2eTests = data.stats.totalTests || 0;
-    kpis.e2ePassed = data.stats.passedTests || 0;
-    kpis.e2eFailed = data.stats.failedTests || 0;
+    Object.assign(kpis, extractE2EKPIs(data));
   }
   
   // Wave 3 status
@@ -62,19 +84,13 @@ function extractKPIs(data, filename) {
   }
   
   // Governor ledger
-  if (filename === 'governor_ledger.json' && data.entries && Array.isArray(data.entries)) {
-    kpis.prsCreated = data.entries.filter(e => e.action === 'pr_create').length;
-    kpis.ciMinutesUsed = data.entries
-      .filter(e => e.action === 'ci_run')
-      .reduce((sum, e) => sum + (e.minutes || 0), 0);
+  if (filename === 'governor_ledger.json') {
+    Object.assign(kpis, extractGovernorKPIs(data));
   }
   
   // Test telemetry data
-  if (filename === 'test-telemetry.json' && data.entries && Array.isArray(data.entries)) {
-    kpis.prsCreated = data.entries.filter(e => e.action === 'pr_create').length;
-    kpis.ciMinutesUsed = data.entries
-      .filter(e => e.action === 'ci_run')
-      .reduce((sum, e) => sum + (e.minutes || 0), 0);
+  if (filename === 'test-telemetry.json') {
+    Object.assign(kpis, extractGovernorKPIs(data));
   }
   
   return kpis;
