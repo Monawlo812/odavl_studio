@@ -1,13 +1,20 @@
 {
-  "name": "@odavl/cli",
+  "name": "odavl-cli",
   "version": "0.3.0",
-  "private": true,
   "type": "module",
   "bin": {
-    "odavl": "dist/index.js"
+    "odavl-cli": "dist/index.js"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=18"
   },
   "scripts": {
-    "build": "tsc -p tsconfig.json"
+    "build": "tsc -p tsconfig.json",
+    "prepublishOnly": "pnpm run build"
   },
   "dependencies": {
     "@odavl/codemods": "^0.3.0",

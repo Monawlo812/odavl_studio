@@ -1,13 +1,30 @@
 {
-  "name": "@odavl/vscode-ext",
+  "name": "odavl-studio",
   "displayName": "ODAVL Studio",
+  "description": "Automated development governance with code healing and CI management",
   "version": "0.3.0",
-  "private": true,
   "publisher": "odavl",
+  "categories": ["Other", "Linters"],
+  "galleryBanner": {
+    "color": "#1e3a8a",
+    "theme": "dark"
+  },
+  "icon": "assets/icon.png",
   "engines": {
     "vscode": "^1.85.0"
   },
+  "activationEvents": [
+    "onStartupFinished"
+  ],
   "main": "dist/extension.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Monawlo812/odavl_studio.git"
+  },
+  "homepage": "https://github.com/Monawlo812/odavl_studio",
+  "bugs": {
+    "url": "https://github.com/Monawlo812/odavl_studio/issues"
+  },
   "contributes": {
     "commands": [
       {

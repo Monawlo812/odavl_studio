@@ -1,0 +1,152 @@
+{
+  "timestamp": "2025-09-20T23:28:25.741Z",
+  "filesChecked": 7,
+  "totalLinks": 14,
+  "brokenLinks": [],
+  "validLinks": [
+    "README.md: docs/landing.md",
+    "README.md: docs/overview.md",
+    "README.md: docs/quickstart.md",
+    "README.md: docs/faq.md",
+    "README.md: docs/media/scan.png",
+    "README.md: docs/media/heal.png",
+    "README.md: docs/media/shadow.png",
+    "README.md: docs/media/pr.png",
+    "docs/landing.md: ./media/scan.png",
+    "docs/landing.md: ./media/pr.png",
+    "docs/landing.md: ./quickstart.md",
+    "docs/landing.md: ./overview.md",
+    "docs/landing.md: ./faq.md"
+  ],
+  "details": {
+    "README.md": {
+      "linkCount": 9,
+      "links": [
+        {
+          "text": "![CI",
+          "path": "https://github.com/Monawlo812/odavl_studio/actions/workflows/ci.yml/badge.svg",
+          "type": "external",
+          "status": "skipped"
+        },
+        {
+          "text": "docs/landing.md",
+          "path": "docs/landing.md",
+          "resolved": "docs\\landing.md",
+          "type": "local",
+          "status": "valid"
+        },
+        {
+          "text": "Overview",
+          "path": "docs/overview.md",
+          "resolved": "docs\\overview.md",
+          "type": "local",
+          "status": "valid"
+        },
+        {
+          "text": "Quickstart",
+          "path": "docs/quickstart.md",
+          "resolved": "docs\\quickstart.md",
+          "type": "local",
+          "status": "valid"
+        },
+        {
+          "text": "FAQ",
+          "path": "docs/faq.md",
+          "resolved": "docs\\faq.md",
+          "type": "local",
+          "status": "valid"
+        },
+        {
+          "text": "`docs/media/scan.png`",
+          "path": "docs/media/scan.png",
+          "resolved": "docs\\media\\scan.png",
+          "type": "local",
+          "status": "valid"
+        },
+        {
+          "text": "`docs/media/heal.png`",
+          "path": "docs/media/heal.png",
+          "resolved": "docs\\media\\heal.png",
+          "type": "local",
+          "status": "valid"
+        },
+        {
+          "text": "`docs/media/shadow.png`",
+          "path": "docs/media/shadow.png",
+          "resolved": "docs\\media\\shadow.png",
+          "type": "local",
+          "status": "valid"
+        },
+        {
+          "text": "`docs/media/pr.png`",
+          "path": "docs/media/pr.png",
+          "resolved": "docs\\media\\pr.png",
+          "type": "local",
+          "status": "valid"
+        }
+      ]
+    },
+    "docs/overview.md": {
+      "linkCount": 0,
+      "links": []
+    },
+    "docs/quickstart.md": {
+      "linkCount": 0,
+      "links": []
+    },
+    "docs/faq.md": {
+      "linkCount": 0,
+      "links": []
+    },
+    "docs/landing.md": {
+      "linkCount": 5,
+      "links": [
+        {
+          "text": "Scan",
+          "path": "./media/scan.png",
+          "resolved": "docs\\media\\scan.png",
+          "type": "local",
+          "status": "valid"
+        },
+        {
+          "text": "PR",
+          "path": "./media/pr.png",
+          "resolved": "docs\\media\\pr.png",
+          "type": "local",
+          "status": "valid"
+        },
+        {
+          "text": "docs/quickstart.md",
+          "path": "./quickstart.md",
+          "resolved": "docs\\quickstart.md",
+          "type": "local",
+          "status": "valid"
+        },
+        {
+          "text": "docs/overview.md",
+          "path": "./overview.md",
+          "resolved": "docs\\overview.md",
+          "type": "local",
+          "status": "valid"
+        },
+        {
+          "text": "FAQ",
+          "path": "./faq.md",
+          "resolved": "docs\\faq.md",
+          "type": "local",
+          "status": "valid"
+        }
+      ]
+    },
+    "docs/design-partner-playbook.md": {
+      "linkCount": 0,
+      "links": []
+    },
+    "docs/media/README.md": {
+      "linkCount": 0,
+      "links": []
+    }
+  },
+  "brokenCount": 0,
+  "validCount": 13
+}

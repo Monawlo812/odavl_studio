@@ -1,10 +1,15 @@
 [![CI](https://github.com/Monawlo812/odavl_studio/actions/workflows/ci.yml/badge.svg)](https://github.com/Monawlo812/odavl_studio/actions/workflows/ci.yml)
+[![Docs](https://img.shields.io/badge/docs-GitHub%20Pages-blue)](https://monawlo812.github.io/odavl_studio/)
+[![Docker](https://img.shields.io/badge/docker-ghcr.io-blue)](https://github.com/Monawlo812/odavl_studio/pkgs/container/odavl-studio)
+[![Version](https://img.shields.io/badge/version-0.3.0-green)](https://github.com/Monawlo812/odavl_studio/releases)
+[![npm](https://img.shields.io/npm/v/odavl-cli)](https://www.npmjs.com/package/odavl-cli)
 
 # ODAVL Studio
 
 **Automated Development Governance Platform** - Enterprise-grade code healing with policy-driven safety guardrails.
 
-> Start here: **[docs/landing.md](docs/landing.md)** — value, screenshots, and a 60-second Quickstart.
+> Start here: **[docs/landing.md](docs/landing.md)** — value, screenshots, and a 60-second Quickstart.  
+> **[📖 Documentation Site](https://monawlo812.github.io/odavl_studio/)** — Complete guides and API reference
 
 ## Features
 
@@ -31,9 +36,9 @@ node apps/cli/dist/index.js scan
 node apps/cli/dist/index.js heal --recipe esm-hygiene --dry-run
 ```
 
-**VS Code**: Install extension and use `ODAVL Studio: Open Panel` command.
+**VS Code**: Install extension ([Marketplace](https://marketplace.visualstudio.com/items?itemName=odavl.odavl-studio)) and use `ODAVL Studio: Open Panel` command.
 
-📖 **Documentation**: [Overview](docs/overview.md) | [Quickstart](docs/quickstart.md) | [FAQ](docs/faq.md)  
+📖 **Documentation**: [Overview](docs/overview.md) | [Quickstart](docs/quickstart.md) | [FAQ](docs/faq.md) | [📖 Docs Site](https://monawlo812.github.io/odavl_studio/)  
 📊 **Reports**: Check `reports/` for analysis artifacts and logs
 
 ## Healers 1.5
@@ -88,3 +93,9 @@ Placeholders (replace with real screenshots/GIFs):
 - [`docs/media/heal.png`](docs/media/heal.png)  
 - [`docs/media/shadow.png`](docs/media/shadow.png)
 - [`docs/media/pr.png`](docs/media/pr.png)
+
+## Support & Onboarding
+
+- **[Support Channels](SUPPORT.md)** - Get help and report issues
+- **[Partner Onboarding](.github/ISSUE_TEMPLATE/onboarding.md)** - Design partner setup checklist
+- **[Design Partner Playbook](docs/design-partner-playbook.md)** - Early adopter guide

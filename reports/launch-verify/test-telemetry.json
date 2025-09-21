@@ -1,0 +1,10 @@
+{
+  "tool": "odavl",
+  "action": "weekly-test",
+  "timestamp": "2025-01-21T20:00:00Z",
+  "entries": [
+    {"action": "pr_create", "timestamp": "2025-01-21T19:00:00Z"},
+    {"action": "ci_run", "minutes": 15, "timestamp": "2025-01-21T19:30:00Z"},
+    {"action": "heal", "files": 5, "timestamp": "2025-01-21T20:00:00Z"}
+  ]
+}

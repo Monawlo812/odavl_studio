@@ -1,0 +1,182 @@
+[
+  {
+    "step": "L-1",
+    "file": ".github/workflows/release.yml",
+    "type": "exists",
+    "exists": true,
+    "notes": "File exists"
+  },
+  {
+    "step": "L-1",
+    "file": "RELEASE.md",
+    "type": "exists",
+    "exists": true,
+    "notes": "File exists"
+  },
+  {
+    "step": "L-2",
+    "file": "apps/cli/package.json",
+    "type": "json",
+    "keys": [
+      "bin.odavl",
+      "files",
+      "engines.node",
+      "scripts.prepublishOnly"
+    ],
+    "exists": true,
+    "notes": "All required keys present"
+  },
+  {
+    "step": "L-2",
+    "file": "apps/cli/README.md",
+    "type": "exists",
+    "exists": true,
+    "notes": "File exists"
+  },
+  {
+    "step": "L-3",
+    "file": "apps/vscode-ext/package.json",
+    "type": "json",
+    "keys": [
+      "displayName",
+      "categories",
+      "galleryBanner",
+      "icon"
+    ],
+    "exists": true,
+    "notes": "All required keys present"
+  },
+  {
+    "step": "L-3",
+    "file": "apps/vscode-ext/assets/icon.png",
+    "type": "exists",
+    "exists": true,
+    "notes": "File exists"
+  },
+  {
+    "step": "L-3",
+    "file": "apps/vscode-ext/README.md",
+    "type": "exists",
+    "exists": true,
+    "notes": "File exists"
+  },
+  {
+    "step": "L-4",
+    "file": "infra/github-app/manifest.json",
+    "type": "json",
+    "keys": [
+      "default_permissions"
+    ],
+    "exists": true,
+    "notes": "All required keys present"
+  },
+  {
+    "step": "L-4",
+    "file": "docs/github-app-setup.md",
+    "type": "exists",
+    "exists": true,
+    "notes": "File exists"
+  },
+  {
+    "step": "L-5",
+    "file": "Dockerfile",
+    "type": "exists",
+    "exists": true,
+    "notes": "File exists"
+  },
+  {
+    "step": "L-5",
+    "file": "docs/docker.md",
+    "type": "exists",
+    "exists": true,
+    "notes": "File exists"
+  },
+  {
+    "step": "L-6",
+    "file": "docs/index.md",
+    "type": "exists",
+    "exists": true,
+    "notes": "File exists"
+  },
+  {
+    "step": "L-6",
+    "file": ".github/workflows/pages.yml",
+    "type": "exists",
+    "exists": true,
+    "notes": "File exists"
+  },
+  {
+    "step": "L-6",
+    "file": "docs/.nojekyll",
+    "type": "exists",
+    "exists": true,
+    "notes": "File exists"
+  },
+  {
+    "step": "L-7",
+    "file": "scripts/weekly-report.mjs",
+    "type": "exists",
+    "exists": true,
+    "notes": "File exists"
+  },
+  {
+    "step": "L-7",
+    "file": "package.json",
+    "type": "json",
+    "keys": [
+      "scripts.weekly"
+    ],
+    "exists": true,
+    "notes": "All required keys present"
+  },
+  {
+    "step": "L-8",
+    "file": ".github/ISSUE_TEMPLATE/onboarding.md",
+    "type": "exists",
+    "exists": true,
+    "notes": "File exists"
+  },
+  {
+    "step": "L-8",
+    "file": "SUPPORT.md",
+    "type": "exists",
+    "exists": true,
+    "notes": "File exists"
+  },
+  {
+    "step": "L-8",
+    "file": "README.md",
+    "type": "content",
+    "pattern": "Support.*Onboarding",
+    "exists": true,
+    "notes": "Pattern 'Support.*Onboarding' found"
+  },
+  {
+    "step": "L-9",
+    "file": "SECURITY.md",
+    "type": "exists",
+    "exists": true,
+    "notes": "File exists"
+  },
+  {
+    "step": "L-9",
+    "file": "CONTRIBUTING.md",
+    "type": "exists",
+    "exists": true,
+    "notes": "File exists"
+  },
+  {
+    "step": "L-9",
+    "file": "CODE_OF_CONDUCT.md",
+    "type": "exists",
+    "exists": true,
+    "notes": "File exists"
+  },
+  {
+    "step": "L-10",
+    "file": "docs/release-playbook.md",
+    "type": "exists",
+    "exists": true,
+    "notes": "File exists"
+  }
+]

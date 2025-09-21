@@ -1,0 +1,47 @@
+{
+  "ts": "2025-09-21T12:07:00+01:00",
+  "branch": "odavl/launch-20250921",
+  "cli": {
+    "built": true,
+    "statusOk": false,
+    "status": {}
+  },
+  "e2e": {
+    "artifacts": {
+      "scan": true,
+      "heal": true,
+      "shadow": false,
+      "pr": false
+    },
+    "log": "reports/go-report/e2e.log"
+  },
+  "vscode": {
+    "built": true,
+    "statusBarPresent": true,
+    "identifier": "odavl.odavl-studio",
+    "marketplace": "not_published"
+  },
+  "npm": {
+    "pkg": "odavl-cli",
+    "publishedVersion": "0.3.0"
+  },
+  "docker": {
+    "imagePresent": "unknown"
+  },
+  "github": {
+    "latestReleasesCount": 0,
+    "lastRunsCount": 5,
+    "pagesEnabled": "unknown"
+  },
+  "files": {
+    "e2eScript": true,
+    "releaseWorkflow": true,
+    "pagesWorkflow": true,
+    "docsIndex": true,
+    "dockerfile": true,
+    "githubAppManifest": true,
+    "changelog": true,
+    "policyConfig": true,
+    "gatesConfig": false
+  }
+}

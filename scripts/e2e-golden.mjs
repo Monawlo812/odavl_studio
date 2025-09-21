@@ -83,17 +83,7 @@ function wrapOutput(result) {
   }
 }
 
-async function main() {
-  const timestamp = new Date().toISOString().replace(/[:.]/g, '-').replace(/\.\d{3}Z$/, 'Z');
-  const branchName = `odavl/e2e-${timestamp}`;
-  
-  console.error('🚀 ODAVL E2E Test Suite Starting...');
-  console.error(`Timestamp: ${timestamp}`);
-  
-  const results = {};
-  const savedFiles = [];
-  
-  // Step 1: Build CLI
+async function buildCli() {
   console.error('📦 Step 1: Building CLI...');
   const buildResult = await run('pnpm --filter @odavl/cli run build', { timeout: 60000 });
   if (!buildResult.ok) {
@@ -101,44 +91,50 @@ async function main() {
   } else {
     console.error('✅ CLI build complete');
   }
-  
-  // Step 2: Run scan
+  return buildResult;
+}
+
+async function runScan(results, savedFiles) {
   console.error('🔍 Step 2: Running scan...');
   const scanResult = await run('node apps/cli/dist/index.js scan');
   const wrappedScan = wrapOutput(scanResult);
   results.scan = wrappedScan;
   const scanFile = saveResult('e2e-scan.json', wrappedScan);
   if (scanFile) savedFiles.push(scanFile);
-  
+
   if (scanResult.ok) {
     console.error('✅ Scan complete');
   } else {
     console.error(`❌ Scan failed: ${scanResult.error}`);
   }
-  
-  // Step 3: Run heal dry-run
+  return scanResult;
+}
+
+async function runHeal(results, savedFiles) {
   console.error('🔧 Step 3: Running heal dry-run...');
   const healResult = await run('node apps/cli/dist/index.js heal --recipe remove-unused --dry-run');
   const wrappedHeal = wrapOutput(healResult);
   results.heal = wrappedHeal;
   const healFile = saveResult('e2e-heal-dry.json', wrappedHeal);
   if (healFile) savedFiles.push(healFile);
-  
+
   if (healResult.ok) {
     console.error('✅ Heal dry-run complete');
   } else {
     console.error(`❌ Heal dry-run failed: ${healResult.error}`);
   }
-  
-  // Step 4: Create temp branch
+  return healResult;
+}
+
+async function createTempBranch(branchName) {
   console.error(`🌿 Step 4: Creating temp branch ${branchName}...`);
   const branchResult = await run(`git checkout -b ${branchName}`);
   let branchCreated = false;
-  
+
   if (branchResult.ok) {
     console.error('✅ Temp branch created');
     branchCreated = true;
-    
+
     // Try to push upstream (ignore failures - no remote is OK)
     const pushResult = await run(`git push -u origin ${branchName}`);
     if (pushResult.ok) {
@@ -149,36 +145,42 @@ async function main() {
   } else {
     console.error(`❌ Branch creation failed: ${branchResult.error}`);
   }
-  
-  // Step 5: Run shadow with wait
+  return branchCreated;
+}
+
+async function runShadow(results, savedFiles) {
   console.error('🌙 Step 5: Running shadow run --wait...');
   const shadowResult = await run('node apps/cli/dist/index.js shadow run --wait', { timeout: 180000 }); // 3 minutes
   const wrappedShadow = wrapOutput(shadowResult);
   results.shadow = wrappedShadow;
   const shadowFile = saveResult('e2e-shadow.json', wrappedShadow);
   if (shadowFile) savedFiles.push(shadowFile);
-  
+
   if (shadowResult.ok) {
     console.error('✅ Shadow run complete');
   } else {
     console.error(`❌ Shadow run failed: ${shadowResult.error}`);
   }
-  
-  // Step 6: Run PR dry-run
+  return shadowResult;
+}
+
+async function runPr(results, savedFiles) {
   console.error('📝 Step 6: Running PR dry-run...');
   const prResult = await run('node apps/cli/dist/index.js pr open --explain --dry-run --title "E2E Probe"');
   const wrappedPr = wrapOutput(prResult);
   results.pr = wrappedPr;
   const prFile = saveResult('e2e-pr-dry.json', wrappedPr);
   if (prFile) savedFiles.push(prFile);
-  
+
   if (prResult.ok) {
     console.error('✅ PR dry-run complete');
   } else {
     console.error(`❌ PR dry-run failed: ${prResult.error}`);
   }
-  
-  // Cleanup: Switch back to original branch if we created a temp one
+  return prResult;
+}
+
+async function cleanupBranch(branchCreated) {
   if (branchCreated) {
     console.error('🧹 Cleaning up: switching back to original branch...');
     const checkoutResult = await run('git checkout -');
@@ -188,22 +190,21 @@ async function main() {
       console.error('⚠️  Could not switch back to original branch');
     }
   }
-  
-  // Final summary
+}
+
+function printSummary(timestamp, savedFiles, steps) {
   console.error('\n📊 E2E Test Suite Complete!');
   console.error(`🕒 Timestamp: ${timestamp}`);
   console.error(`📁 Artifacts saved (${savedFiles.length}/4):`);
   savedFiles.forEach(file => {
     console.error(`   - ${file}`);
   });
-  
-  // Calculate success rate
-  const steps = [buildResult, scanResult, healResult, shadowResult, prResult];
+
   const successful = steps.filter(r => r.ok).length;
   const total = steps.length;
-  
+
   console.error(`✨ Success rate: ${successful}/${total} steps (${Math.round(successful/total*100)}%)`);
-  
+
   if (successful === total) {
     console.error('🎉 All steps completed successfully!');
   } else if (successful >= total * 0.6) {
@@ -211,8 +212,29 @@ async function main() {
   } else {
     console.error('❌ Multiple failures detected - check logs above');
   }
-  
-  // Always exit 0 as requested
+}
+
+async function main() {
+  const timestamp = new Date().toISOString().replace(/[:.]/g, '-').replace(/\.\d{3}Z$/, 'Z');
+  const branchName = `odavl/e2e-${timestamp}`;
+
+  console.error('🚀 ODAVL E2E Test Suite Starting...');
+  console.error(`Timestamp: ${timestamp}`);
+
+  const results = {};
+  const savedFiles = [];
+
+  const buildResult = await buildCli();
+  const scanResult = await runScan(results, savedFiles);
+  const healResult = await runHeal(results, savedFiles);
+  const branchCreated = await createTempBranch(branchName);
+  const shadowResult = await runShadow(results, savedFiles);
+  const prResult = await runPr(results, savedFiles);
+
+  await cleanupBranch(branchCreated);
+
+  printSummary(timestamp, savedFiles, [buildResult, scanResult, healResult, shadowResult, prResult]);
+
   process.exit(0);
 }
 
