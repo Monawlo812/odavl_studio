@@ -1,0 +1,40 @@
+name: Java CI (W5)
+on:
+  push:
+    branches: [ "odavl/**" ]
+  pull_request:
+    branches: [ "**" ]
+
+jobs:
+  java:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix: { jdk: [ "17", "21" ] }
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: ${{ matrix.jdk }}
+      - name: Detect & Test
+        id: test
+        shell: bash
+        run: |
+          set -e
+          TOOL=none; OUT=ok
+          if [ -f pom.xml ]; then
+            TOOL=maven
+            mvn -q -DskipTests=false test || OUT=fail
+            mvn -q -DskipTests=true checkstyle:checkstyle spotbugs:spotbugs || true
+          elif [ -f gradlew ] || [ -f build.gradle ]; then
+            TOOL=gradle
+            ( [ -f gradlew ] && ./gradlew test -q ) || gradle test -q || OUT=fail
+            ( [ -f gradlew ] && ./gradlew checkstyleMain spotbugsMain -q ) || true
+          fi
+          LINT=$(grep -Ri -c "violation" . 2>/dev/null || echo 0)
+          echo "{\"jdk\":\"${{ matrix.jdk }}\",\"tool\":\"$TOOL\",\"testFailures\":$([ "$OUT" = fail ] && echo 1 || echo 0),\"lintWarnings\":$LINT}" > summary.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: reports-w5-java-${{ matrix.jdk }}
+          path: summary.json
