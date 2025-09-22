@@ -13,3 +13,6 @@ js:
 python:
 	ruff:        { deltaMax: 0 }
 	tests:       { failuresMaxDelta: 0 }
+go:
+  lint:  { deltaMax: 0 }
+  tests: { failuresMax: 0 }
