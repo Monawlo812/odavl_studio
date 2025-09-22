@@ -16,3 +16,6 @@ python:
 go:
   lint:  { deltaMax: 0 }
   tests: { failuresMax: 0 }
+java:
+	lint:  { deltaMax: 0 }
+	tests: { failuresMax: 0 }
