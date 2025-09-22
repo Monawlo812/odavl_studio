@@ -106,7 +106,7 @@ pnpm odavl pr open
 **VS Code**: Install extension ([Marketplace](https://marketplace.visualstudio.com/items?itemName=odavl.odavl-studio)) and use `ODAVL Studio: Open Panel` command.
 
 
-📖 **Documentation**: [Overview](docs/overview.md) | [Quickstart](docs/quickstart.md) | [FAQ](docs/faq.md) | [📖 Docs Site](https://monawlo812.github.io/odavl_studio/)
+📖 **Documentation**: [Overview](docs/overview.md) | [Quickstart](docs/quickstart.md) | [FAQ](docs/faq.md) | [MVP Launch Guide](docs/mvp-launch-guide.md) | [📖 Docs Site](https://monawlo812.github.io/odavl_studio/)
 📊 **Reports**: Check `reports/` for analysis artifacts and logs
 
 ## Policy & Gates
