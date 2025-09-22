@@ -4,7 +4,10 @@
   "description": "Automated development governance with code healing and CI management",
   "version": "0.4.0",
   "publisher": "odavl",
-  "categories": ["Other", "Linters"],
+  "categories": [
+    "Other",
+    "Linters"
+  ],
   "galleryBanner": {
     "color": "#1e3a8a",
     "theme": "dark"
@@ -14,7 +17,8 @@
     "vscode": "^1.85.0"
   },
   "activationEvents": [
-    "onStartupFinished"
+    "onStartupFinished",
+    "onCommand:odavl.scanHeal"
   ],
   "main": "dist/extension.js",
   "repository": {
@@ -62,6 +66,10 @@
       {
         "command": "odavl.debug.showIconStatus",
         "title": "ODAVL: Debug — Show Icon Status"
+      },
+      {
+        "command": "odavl.scanHeal",
+        "title": "ODAVL: Scan/Heal Panel"
       }
     ],
     "menus": {
@@ -115,7 +123,7 @@
             "title": "Run Shadow CI",
             "description": "Test changes in isolated CI environment\n[Run Magic](command:odavl.magic.run)",
             "media": {
-              "image": "media/shadow.png", 
+              "image": "media/shadow.png",
               "altText": "ODAVL shadow CI workflow"
             }
           },
@@ -125,7 +133,7 @@
             "description": "Create evidence-based PRs with governance reports\n[View Reports](command:vscode.openFolder)",
             "media": {
               "image": "media/pr.png",
-              "altText": "ODAVL PR creation workflow" 
+              "altText": "ODAVL PR creation workflow"
             }
           }
         ]
@@ -133,8 +141,7 @@
     ]
   },
   "scripts": {
-    "build": "tsc -p tsconfig.json",
-    "icon:validate": "node ./scripts/validate-icon.js"
+    "build": "tsc -p tsconfig.json"
   },
   "devDependencies": {
     "@types/vscode": "^1.85.0",

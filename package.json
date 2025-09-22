@@ -23,6 +23,7 @@
     "verify": "node ./apps/cli/bin/odavl.js verify --report reports/verify.json || echo \"{}\""
     ,"build:cli": "tsc -p apps/cli/tsconfig.json"
     ,"typecheck": "tsc -p . --noEmit"
+    ,"studio:build": "pnpm --filter @odavl/vscode-ext build"
   },
   "devDependencies": {
     "@cyclonedx/cyclonedx-library": "^9.0.0",
