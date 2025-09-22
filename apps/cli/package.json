@@ -18,8 +18,8 @@
     "prepublishOnly": "pnpm run build"
   },
   "dependencies": {
-    "@odavl/codemods": "^0.4.0",
-    "@odavl/policy": "^0.4.0"
+    "@odavl/codemods": "workspace:*",
+    "@odavl/policy": "workspace:*"
   },
   "devDependencies": {
     "@types/node": "^20"
