@@ -1,10 +1,9 @@
 {
-  "name": "odavl-cli",
-  "version": "0.4.0",
+  "name": "@odavl/cli",
+  "version": "0.1.0",
   "type": "module",
   "bin": {
-    "odavl-cli": "dist/index.js",
-    "odavl": "dist/index.js"
+    "odavl": "bin/odavl.js"
   },
   "files": [
     "dist",

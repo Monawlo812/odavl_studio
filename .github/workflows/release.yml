@@ -3,75 +3,42 @@ name: Release
 on:
   push:
     tags:
-      - 'v*'
+      - 'v*.*.*'
 
 jobs:
-  release:
+  build-and-release:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
-      pull-requests: read
-    
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          fetch-depth: 0
-      
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+          node-version: 20
+      - name: Install pnpm
+        run: npm install -g pnpm@8
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Build CLI
+        run: pnpm --filter @odavl/cli run build
+      - name: Pack CLI
+        run: cd apps/cli && npm pack
+      - name: Upload CLI artifact
+        uses: actions/upload-artifact@v4
         with:
-          node-version: '22'
-          cache: 'npm'
-      
-      - name: Extract tag version
-        id: version
-        run: echo "version=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
-      
-      - name: Extract changelog section
-        id: changelog
-        run: |
-          if [ -f "CHANGELOG.md" ]; then
-            # Extract latest version section from CHANGELOG.md
-            awk '/^## \[/ { if (count++ > 0) exit } count > 0' CHANGELOG.md > latest_changes.md
-            if [ -s latest_changes.md ]; then
-              echo "changes_file=latest_changes.md" >> $GITHUB_OUTPUT
-            else
-              echo "No changelog entries found for this release" > latest_changes.md
-              echo "changes_file=latest_changes.md" >> $GITHUB_OUTPUT
-            fi
-          else
-            echo "Release ${{ steps.version.outputs.version }}" > latest_changes.md
-            echo "changes_file=latest_changes.md" >> $GITHUB_OUTPUT
-          fi
-      
-      - name: Check for QA Report
-        id: qa_report
-        run: |
-          if [ -f "reports/Wave3-QA-Report.md" ]; then
-            echo "qa_exists=true" >> $GITHUB_OUTPUT
-            echo "qa_file=reports/Wave3-QA-Report.md" >> $GITHUB_OUTPUT
-          else
-            echo "qa_exists=false" >> $GITHUB_OUTPUT
-          fi
-      
-      - name: Create GitHub Release
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
+          name: odavl-cli-tarball
+          path: apps/cli/odavl-cli-*.tgz
           # Base release command
           RELEASE_CMD="gh release create ${{ steps.version.outputs.version }} \
             --title \"ODAVL Studio ${{ steps.version.outputs.version }}\" \
             --notes-file ${{ steps.changelog.outputs.changes_file }}"
-          
+
           # Add QA report if it exists
           if [ "${{ steps.qa_report.outputs.qa_exists }}" = "true" ]; then
             RELEASE_CMD="$RELEASE_CMD ${{ steps.qa_report.outputs.qa_file }}"
           fi
-          
+
           # Execute release creation
           eval $RELEASE_CMD
-      
+
       - name: Release Summary
         run: |
           echo "🚀 Release ${{ steps.version.outputs.version }} created successfully!"
