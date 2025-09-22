@@ -1,13 +1,26 @@
-# ODAVL Policy Configuration Sample
-# Copy to .governor/config.json and adapt to JSON format
-
 governor:
-  prsPerDay: 5
-  ciMinutesPerHour: 60
-  maxConcurrentShadows: 3
-  waves:
-    - window: "22:00-06:00"
-      maxPrs: 3
-
 studio:
-  telemetry: anonymized  # Options: on|anonymized|off
+autonomy: 1
+riskBudget:
+  maxLinesPerPatch: 40
+  maxPatchesPerRun: 3
+  maxFilesTouched: 10
+  tokensPerDay: 8
+protected:
+  - "**/security/**"
+  - "**/*.spec.*"
+  - "**/public-api/**"
+bans:
+  lockfiles:
+    - "yarn.lock"
+    - "package-lock.json"
+  deepImports:
+    - "**/internal/**"
+shadow:
+  matrix:
+    - node18
+    - node20
+governor:
+  prsPerDay: 2
+  ciMinutesPerHour: 30
+  maxConcurrentShadows: 2
