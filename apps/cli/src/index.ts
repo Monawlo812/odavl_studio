@@ -241,38 +241,30 @@ if (cmd === 'scan') {
   let input: any = {};
   try {
     input = JSON.parse(inputArg);
-  } catch (e) {
+  } catch {
     input = {};
     process.stderr.write('[WARN] Could not parse --input as JSON, using {}\n');
   }
-  let runWorkflow: any;
-  try {
-    ({ runWorkflow } = require('@odavl/orchestrator'));
-  } catch {}
+  let runWorkflow;
+  try { ({ runWorkflow } = require('@odavl/orchestrator')); } catch {}
   const ts = new Date().toISOString();
   const invoked = { wf: wfName };
-  let ok = false, result: any = null;
-  (async () => {
-    if (typeof runWorkflow === 'function') {
-      try {
-        result = await runWorkflow(wfName, input);
-        ok = true;
-      } catch (e) {
-        result = { error: (typeof e === 'object' && e && 'message' in e) ? (e as any).message : String(e) };
-      }
-    } else {
-      result = { error: 'orchestrator not available — build/install @odavl/orchestrator' };
-      process.stderr.write('orchestrator not available — build/install @odavl/orchestrator\n');
-    }
-    const out = { ok, invoked, input, ts, result };
-    const outStr = JSON.stringify(out);
-    console.log(outStr);
-    // Save to reports/runs/run-<timestamp>.json
-    const runsDir = path.join('reports', 'runs');
-    if (!existsSync(runsDir)) mkdirSync(runsDir, { recursive: true });
-    const fname = path.join(runsDir, `run-${ts.replace(/[:.]/g, '-')}.json`);
-    writeFileSync(fname, outStr + '\n');
-  })();
+  let ok = false;
+  if (typeof runWorkflow === 'function') {
+    try {
+      runWorkflow(wfName, input);
+      ok = true;
+    } catch {}
+  } else {
+    process.stderr.write('orchestrator not available — build/install @odavl/orchestrator\n');
+  }
+  const out = { ok, invoked, input, ts };
+  const outStr = JSON.stringify(out);
+  console.log(outStr);
+  const runsDir = path.join('reports', 'runs');
+  if (!existsSync(runsDir)) mkdirSync(runsDir, { recursive: true });
+  const fname = path.join(runsDir, `run-${ts.replace(/[:.]/g, '-')}.json`);
+  writeFileSync(fname, outStr + '\n');
   const mode = readTelemetryMode();
   const span = startSpan('heal', mode, getGitContext());
   
@@ -1303,7 +1295,7 @@ Evidence:
     }));
   }
 } else if (cmd === 'status') {
-  // Polyglot/CI status snapshot (compact, best-effort)
+  // Polyglot/CI status snapshot (compact, best-effort, ≤80 lines)
   const workspaceRoot = path.resolve(__dirname, '../../..');
   function sh(cmd: string, args: string[], timeoutMs = 15000) {
     try {
@@ -1311,25 +1303,34 @@ Evidence:
       return { ok: r.status === 0, code: r.status ?? 1, out: r.stdout || '', err: r.stderr || '' };
     } catch (e) { return { ok: false, code: 1, out: '', err: String(e && (e as any).message || e) }; }
   }
+  function readJSON(pattern: string|RegExp): any {
+    try {
+      const dir = path.join(workspaceRoot, 'reports');
+      if (!existsSync(dir)) return undefined;
+      const re = typeof pattern === 'string' ? new RegExp(pattern) : pattern;
+      const files = readdirSync(dir).filter(f => re.exec(f));
+      if (!files.length) return undefined;
+      const sorted = files.slice().sort((a, b) => b.localeCompare(a));
+      return JSON.parse(readFileSync(path.join(dir, sorted[0]), 'utf8'));
+    } catch { return undefined; }
+  }
   const result: any = { ts: new Date().toISOString() };
   // Branch
   let branch = sh('git', ['rev-parse', '--abbrev-ref', 'HEAD']);
   result.branch = branch.ok ? branch.out.trim() : 'unknown';
-  // Packs.js quick probe
+  // Packs.js
   let hasJs = false, jsSignals: any = {};
   let nodeV = sh('node', ['-v']);
   if (nodeV.ok) {
     hasJs = true;
-    // Try to read package.json for signals
     try {
       const pkgPath = path.join(workspaceRoot, 'package.json');
       if (existsSync(pkgPath)) {
-        JSON.parse(readFileSync(pkgPath, 'utf8'));
-        jsSignals = { eslintDelta: undefined, typeErrorsDelta: undefined, buildMsDelta: undefined, bundleKbDelta: undefined, shadowPass: undefined };
+        jsSignals = { ...readJSON('^e2e-js-.*\\.json$') };
       }
     } catch {}
   }
-  // Packs.python quick probe
+  // Packs.python
   let hasPy = false, pySignals: any = {};
   function findPy(root: string): boolean {
     try {
@@ -1348,7 +1349,7 @@ Evidence:
     let ruffV = sh('ruff', ['--version']);
     sh('pytest', ['--version']);
     sh('python', ['--version']);
-    pySignals = { ruff: ruffV.ok ? true : undefined, tests: { failures: undefined }, shadowPass: undefined };
+  pySignals = { ...readJSON('^python/scan-.*\\.json$'), ruff: ruffV.ok ? true : undefined };
   }
   result.packs = {};
   if (hasJs) result.packs.js = jsSignals;
@@ -1360,13 +1361,13 @@ Evidence:
     try { result.governor = JSON.parse(gov.out); } catch {}
   }
   // Telemetry
-  let mode = process.env.ODAVL_TELEMETRY || readTelemetryMode?.() || 'off';
+  let mode = process.env.ODAVL_TELEMETRY || (typeof readTelemetryMode === 'function' ? readTelemetryMode() : 'off') || 'off';
   result.telemetry = { mode };
   // CI summary
   result.ci = { openPRs: undefined, lastRuns: [], note: '' };
   let pr = sh('gh', ['pr', 'list', '--state', 'open', '--json', 'number,title,headRefName,baseRefName,url']);
   if (pr.ok && pr.out) {
-    try { const arr = JSON.parse(pr.out); result.ci.openPRs = Array.isArray(arr) ? arr.length : undefined; } catch { result.ci.note += 'pr-parse-fail; '; }
+    try { const arr = JSON.parse(pr.out); result.ci.openPRs = Array.isArray(arr) ? arr.length : undefined; result.ci.top = (arr||[]).slice(0,3).map((x:any)=>x.headRefName); } catch { result.ci.note += 'pr-parse-fail; '; }
   } else { result.ci.note += 'gh-missing; '; }
   let runs = sh('gh', ['run', 'list', '--limit', '5', '--json', 'status,conclusion,htmlUrl,createdAt']);
   if (runs.ok && runs.out) {
@@ -1374,9 +1375,7 @@ Evidence:
   }
   // Save to reports/w4-status.json
   try {
-    if (!existsSync('reports')) {
-      mkdirSync('reports');
-    }
+    if (!existsSync('reports')) mkdirSync('reports');
     writeFileSync('reports/w4-status.json', JSON.stringify(result));
   } catch {}
   // Output

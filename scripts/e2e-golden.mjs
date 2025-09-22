@@ -227,14 +227,38 @@ async function main() {
   const buildResult = await buildCli();
   const scanResult = await runScan(results, savedFiles);
   const healResult = await runHeal(results, savedFiles);
+
+  // --- PYTHON PACK E2E ---
+  let pyScan, pyHeal;
+  const pyDist = 'packages/packs/python/dist/index.js';
+  if (existsSync(pyDist)) {
+    // Scan
+    pyScan = await run(`node -e "import('./${pyDist}').then(m=>m.scan().then(r=>console.log(JSON.stringify(r))))"`);
+    let pyScanObj = { ok: pyScan.ok, out: pyScan.stdout, err: pyScan.stderr };
+    try { pyScanObj = { ...pyScanObj, parsed: JSON.parse(pyScan.stdout) }; } catch {}
+    saveResult('e2e-py-scan.json', pyScanObj);
+    // Heal dry-run
+    pyHeal = await run(`node -e "import('./${pyDist}').then(m=>m.heal({dryRun:true}).then(r=>console.log(JSON.stringify(r))))"`);
+    let pyHealObj = { ok: pyHeal.ok, out: pyHeal.stdout, err: pyHeal.stderr };
+    try { pyHealObj = { ...pyHealObj, parsed: JSON.parse(pyHeal.stdout) }; } catch {}
+    saveResult('e2e-py-heal-dry.json', pyHealObj);
+  } else {
+    saveResult('e2e-py-scan.json', { ok: false, note: 'python pack not built' });
+    saveResult('e2e-py-heal-dry.json', { ok: false, note: 'python pack not built' });
+  }
+
   const branchCreated = await createTempBranch(branchName);
   const shadowResult = await runShadow(results, savedFiles);
   const prResult = await runPr(results, savedFiles);
 
   await cleanupBranch(branchCreated);
 
-  printSummary(timestamp, savedFiles, [buildResult, scanResult, healResult, shadowResult, prResult]);
+  // Compose summary JSON
+  const summary = { ok: true, note: 'e2e done', ts: timestamp };
+  saveResult('e2e-summary.json', summary);
 
+  printSummary(timestamp, savedFiles, [buildResult, scanResult, healResult, shadowResult, prResult]);
+  console.log("E2E (JS+PY) finished");
   process.exit(0);
 }
 

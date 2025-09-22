@@ -14,6 +14,7 @@
     "format": "turbo run format",
   "e2e": "node scripts/e2e-golden.mjs",
   "qa:wave4": "node scripts/wave4-qa.mjs",
+  "go:report": "node scripts/go-report.mjs",
     "weekly": "node scripts/weekly-report.mjs",
   "launcher": "pnpm --filter @odavl/launcher run dev",
   "gates:validate": "node scripts/gates-validate.mjs",

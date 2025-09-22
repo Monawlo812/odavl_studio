@@ -3,12 +3,8 @@ export type PyScan = { ruff?: number; tests?: { failures?: number }; vulns?: num
 export async function scan(): Promise<PyScan> {
   let ruff: number | undefined = undefined;
   let ruffNote = '';
-  let failures: number | undefined = undefined;
-  let testNote = '';
-  let vulns: number | undefined = undefined;
-  let vulnNote = '';
-  // Ruff (or flake8 fallback)
-  let ruffRes = execJson(['ruff', '--output-format=json', '.']);
+  // Try ruff
+  const ruffRes = execJson(['ruff', '--output-format=json', '.']);
   if (ruffRes.ok) {
     try {
       const parsed = JSON.parse(ruffRes.stdout);
@@ -16,7 +12,7 @@ export async function scan(): Promise<PyScan> {
     } catch { ruff = undefined; ruffNote = 'ruff output parse error'; }
   } else {
     // Try flake8 as fallback
-    let flake = execJson(['flake8', '.']);
+    const flake = execJson(['flake8', '.']);
     if (flake.ok) {
       ruff = flake.stdout.split('\n').filter(Boolean).length;
       ruffNote = 'ruff missing, used flake8';
@@ -26,7 +22,9 @@ export async function scan(): Promise<PyScan> {
     }
   }
   // Pytest
-  let pyRes = execJson(['pytest', '-q', '--maxfail=1']);
+  let failures: number | undefined = undefined;
+  let testNote = '';
+  const pyRes = execJson(['pytest', '-q', '--maxfail=1']);
   if (pyRes.ok) {
     failures = 0;
   } else if (pyRes.code !== 1 && pyRes.stderr.includes('not found')) {
@@ -34,12 +32,12 @@ export async function scan(): Promise<PyScan> {
     testNote = 'pytest missing';
   } else {
     failures = 1;
-    // Try to parse failures from output
-    const failMatch = /==+ FAILURES ==+/i.test(pyRes.stdout) || /==+ FAILURES ==+/i.test(pyRes.stderr);
-    if (!failMatch && pyRes.stdout.includes('no tests ran')) failures = 0;
+    if (pyRes.stdout.includes('no tests ran')) failures = 0;
   }
   // pip-audit
-  let paRes = execJson(['pip-audit', '-f', 'json']);
+  let vulns: number | undefined = undefined;
+  let vulnNote = '';
+  const paRes = execJson(['pip-audit', '-f', 'json']);
   if (paRes.ok) {
     try {
       const parsed = JSON.parse(paRes.stdout);
@@ -50,7 +48,7 @@ export async function scan(): Promise<PyScan> {
     vulnNote = 'pip-audit missing';
   }
   let notes = [ruffNote, testNote, vulnNote].filter(Boolean).join('; ');
-  return { ruff, tests: { failures }, vulns, note: notes ? 'python.scan ok | ' + notes : 'python.scan ok' };
+  return { ruff, tests: { failures }, vulns, note: 'python.scan ok' + (notes ? ' | ' + notes : '') };
 }
 export type PyHealResult = {
   dryRun: boolean;
@@ -70,9 +68,8 @@ export async function heal(opts: { dryRun?: boolean; maxFiles?: number; maxLines
   let notes: string[] = [];
   // A) Ruff unused imports
   let unusedFiles = 0, unusedLines = 0, unusedNote = '';
-  let ruff = execJson(['ruff', '--fix-dry-run', '--exit-zero-even-if-changed', '.']);
+  const ruff = execJson(['ruff', '--fix-dry-run', '--exit-zero-even-if-changed', '.']);
   if (ruff.ok) {
-    // Count lines like "Fixed ..." or "would fix"
     const lines = ruff.stdout.split('\n');
     unusedFiles = lines.filter(l => /would fix|Fixed/.test(l)).length;
     unusedLines = unusedFiles; // Approximate: 1 line per file
@@ -83,7 +80,7 @@ export async function heal(opts: { dryRun?: boolean; maxFiles?: number; maxLines
   }
   // B) Black format check
   let fmtFiles = 0, fmtLines = 0, fmtNote = '';
-  let black = execJson(['black', '--check', '.']);
+  const black = execJson(['black', '--check', '.']);
   if (!black.ok) {
     // Try to estimate files needing format
     const match = black.stdout.match(/would reformat (.+)/g);
@@ -92,7 +89,7 @@ export async function heal(opts: { dryRun?: boolean; maxFiles?: number; maxLines
   }
   // C) pip list outdated
   let depCandidates = 0, depNote = '';
-  let pip = execJson(['pip', 'list', '--outdated', '--format=json']);
+  const pip = execJson(['pip', 'list', '--outdated', '--format=json']);
   if (pip.ok) {
     try {
       const parsed = JSON.parse(pip.stdout);
