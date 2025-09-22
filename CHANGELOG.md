@@ -5,6 +5,15 @@
 # - Expanded `odavl status` (polyglot) + Dual-lang E2E
 # - QA report under `reports/Wave4-QA-Report.md`
 # Changelog
+
+## 0.5.0 — Wave 5 (Polyglot II & Intelligence)
+- New Packs: Go (lint/test/vuln, dry-run heal proposals) & Java (maven/gradle, dry-run heals).
+- ProofTwin Lite (preview): contract test snippets + preview verify runner.
+- Mutation Gate (preview): selective analyzer with opt-in.
+- Planner: Risk Tokens v2 + ablation artifact.
+- Polyglot E2E aggregator, QA & FinalCheck artifacts.
+- Docs for Go/Java packs; compact CI matrices.
+
 All notable changes to this project will be documented in this file.
 
 ## [0.3.0] - 2025-09-21

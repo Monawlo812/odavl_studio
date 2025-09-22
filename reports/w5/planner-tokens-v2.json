@@ -1,0 +1,1 @@
+{"stage":"W5-E.0","samples":[{"tokens":12,"base":10,"k":{"k1":5,"k2":8,"k3":1,"k4":3},"input":{"coveragePct":0.75,"flakeRate":0.05,"rollbacks30d":0,"repoSizeFactor":0.3,"base":10}}],"_stub":true}

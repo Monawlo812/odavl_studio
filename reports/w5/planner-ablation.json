@@ -1,0 +1,1 @@
+{"input":{"items":[{"id":"a","score":8,"risk":2,"recipeTrust":1},{"id":"b","score":7,"risk":1,"recipeTrust":0},{"id":"c","score":6,"risk":3,"recipeTrust":2}],"ctx":{"coveragePct":0.75,"flakeRate":0.05,"rollbacks30d":0,"repoSizeFactor":0.3,"base":10}},"beforeOrder":["a","b","c"],"afterOrder":["a","b","c"],"tokens":12,"_stub":true}
