@@ -12,13 +12,17 @@
     "lint": "turbo run lint",
     "test": "turbo run test",
     "format": "turbo run format",
-    "e2e": "node scripts/e2e-golden.mjs",
+  "e2e": "node scripts/e2e-golden.mjs",
+  "qa:wave4": "node scripts/wave4-qa.mjs",
     "weekly": "node scripts/weekly-report.mjs",
-    "launcher": "pnpm --filter @odavl/launcher run dev"
+  "launcher": "pnpm --filter @odavl/launcher run dev",
+  "gates:validate": "node scripts/gates-validate.mjs",
+  "verify:unify": "node scripts/verify-unify.mjs"
   },
   "devDependencies": {
-    "odavl-cli": "workspace:*",
+    "odavl-cli": "^0.4.0",
     "turbo": "^2.5.6",
     "typescript": "^5.9.2"
-  }
+  },
+  "version": "0.4.0"
 }

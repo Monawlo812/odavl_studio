@@ -1,0 +1,19 @@
+{
+  "timestamp": "2025-09-21T17:04:54.227Z",
+  "ok": true,
+  "errors": [],
+  "warnings": [],
+  "checks": {
+    "packageParsed": true,
+    "containerExists": true,
+    "containerHasIcon": true,
+    "controlViewExists": true,
+    "commandsCount": 4,
+    "iconLightExists": true,
+    "iconDarkExists": true,
+    "iconLightValid": true,
+    "iconDarkValid": true,
+    "activationEventsOk": true,
+    "validateScriptExists": true
+  }
+}

@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 
 import { readFileSync, writeFileSync, existsSync } from 'fs';
-import { join } from 'path';
 
 const checks = [
   // L-1: Release workflow
@@ -48,6 +47,32 @@ const checks = [
   { step: 'L-10', file: 'docs/release-playbook.md', type: 'exists' }
 ];
 
+function checkKeyPath(data, keyPath) {
+  const keys = keyPath.split('.');
+  let current = data;
+  
+  for (const key of keys) {
+    if (current && typeof current === 'object' && key in current) {
+      current = current[key];
+    } else {
+      return false;
+    }
+  }
+  return true;
+}
+
+function checkJsonKeys(data, keys) {
+  const missingKeys = [];
+  
+  for (const keyPath of keys) {
+    if (!checkKeyPath(data, keyPath)) {
+      missingKeys.push(keyPath);
+    }
+  }
+  
+  return missingKeys;
+}
+
 function checkFile(check) {
   try {
     const filePath = check.file;
@@ -65,26 +90,7 @@ function checkFile(check) {
     if (check.type === 'json') {
       try {
         const data = JSON.parse(content);
-        const missingKeys = [];
-        
-        for (const keyPath of check.keys) {
-          const keys = keyPath.split('.');
-          let current = data;
-          let found = true;
-          
-          for (const key of keys) {
-            if (current && typeof current === 'object' && key in current) {
-              current = current[key];
-            } else {
-              found = false;
-              break;
-            }
-          }
-          
-          if (!found) {
-            missingKeys.push(keyPath);
-          }
-        }
+        const missingKeys = checkJsonKeys(data, check.keys);
         
         if (missingKeys.length > 0) {
           return { ...check, exists: true, notes: `Missing keys: ${missingKeys.join(', ')}` };

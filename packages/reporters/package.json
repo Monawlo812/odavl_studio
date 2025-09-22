@@ -1,1 +1,1 @@
-{"name":"@odavl/reporters","version":"0.3.0","private":true,"type":"module","devDependencies":{"@types/node":"^18.0.0","typescript":"^5.0.0"}}
+{"name":"@odavl/reporters","version":"0.4.0","private":true,"type":"module","devDependencies":{"@types/node":"^18.0.0","typescript":"^5.0.0"}}

@@ -1,6 +1,6 @@
 {
   "name": "odavl-cli",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "type": "module",
   "bin": {
     "odavl-cli": "dist/index.js",
@@ -18,8 +18,8 @@
     "prepublishOnly": "pnpm run build"
   },
   "dependencies": {
-    "@odavl/codemods": "workspace:*",
-    "@odavl/policy": "workspace:*"
+    "@odavl/codemods": "^0.4.0",
+    "@odavl/policy": "^0.4.0"
   },
   "devDependencies": {
     "@types/node": "^20"

@@ -220,7 +220,12 @@
         
         function appendLog(message, type = 'log') {
             const timestamp = new Date().toLocaleTimeString();
-            const color = type === 'error' ? '#ff6b6b' : type === 'info' ? '#4ecdc4' : '#f8f8f2';
+            let color = '#f8f8f2'; // default
+            if (type === 'error') {
+                color = '#ff6b6b';
+            } else if (type === 'info') {
+                color = '#4ecdc4';
+            }
             logs.innerHTML += `<div style="color: ${color}">[${timestamp}] ${message}</div>`;
             logs.scrollTop = logs.scrollHeight;
         }
@@ -248,8 +253,11 @@
                         const status = JSON.parse(result.output);
                         document.getElementById('governor-status').textContent = status.governor?.state || 'unknown';
                         document.getElementById('telemetry-status').textContent = status.telemetry?.mode || 'unknown';
-                    } catch (e) {
-                        console.log('Could not parse status output');
+                    } catch (parseError) {
+                        appendLog(`Could not parse status output: ${parseError.message}`, 'error');
+                        // Set fallback values when parsing fails
+                        document.getElementById('governor-status').textContent = 'parse-error';
+                        document.getElementById('telemetry-status').textContent = 'parse-error';
                     }
                 }
                 

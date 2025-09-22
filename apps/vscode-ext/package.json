@@ -2,7 +2,7 @@
   "name": "odavl-studio",
   "displayName": "ODAVL Studio",
   "description": "Automated development governance with code healing and CI management",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "publisher": "odavl",
   "categories": ["Other", "Linters"],
   "galleryBanner": {
@@ -26,6 +26,25 @@
     "url": "https://github.com/Monawlo812/odavl_studio/issues"
   },
   "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "odavlControl",
+          "title": "ODAVL",
+          "icon": "media/odavl-icon-light.svg"
+        }
+      ]
+    },
+    "views": {
+      "odavlControl": [
+        {
+          "id": "odavl.control.center",
+          "name": "Control Center",
+          "type": "webview",
+          "icon": "$(gear)"
+        }
+      ]
+    },
     "commands": [
       {
         "command": "odavlStudio.openPanel",
@@ -37,16 +56,34 @@
       },
       {
         "command": "odavl.magic.run",
-        "title": "ODAVL: Magic (One-Click)"
+        "title": "ODAVL: Magic (One-Click)",
+        "icon": "$(rocket)"
+      },
+      {
+        "command": "odavl.debug.showIconStatus",
+        "title": "ODAVL: Debug — Show Icon Status"
       }
     ],
     "menus": {
+      "view/title": [
+        {
+          "command": "odavl.magic.run",
+          "when": "view == odavl.control.center",
+          "group": "navigation@1"
+        }
+      ],
       "commandPalette": [
         {
-          "command": "odavl.controlCenter.open"
+          "command": "odavl.controlCenter.open",
+          "when": "true"
         },
         {
-          "command": "odavl.magic.run"
+          "command": "odavl.magic.run",
+          "when": "true"
+        },
+        {
+          "command": "odavl.debug.showIconStatus",
+          "when": "true"
         }
       ]
     },
@@ -54,7 +91,8 @@
       {
         "command": "odavl.magic.run",
         "key": "ctrl+alt+m",
-        "mac": "cmd+alt+m"
+        "mac": "cmd+alt+m",
+        "when": "true"
       }
     ],
     "walkthroughs": [
@@ -95,7 +133,8 @@
     ]
   },
   "scripts": {
-    "build": "tsc -p tsconfig.json"
+    "build": "tsc -p tsconfig.json",
+    "icon:validate": "node ./scripts/validate-icon.js"
   },
   "devDependencies": {
     "@types/vscode": "^1.85.0",

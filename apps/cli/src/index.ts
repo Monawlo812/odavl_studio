@@ -224,6 +224,55 @@ if (cmd === 'scan') {
     throw error;
   }
 } else if (cmd === 'heal') {
+// --- STAGE W4-A.1: CLI → Orchestrator stub ---
+} else if (cmd === 'run') {
+  // Parse args: --wf <name> [--input <json>]
+  let wfName = '';
+  let inputArg = '{}';
+  const args = process.argv.slice(3);
+  for (let i = 0; i < args.length; ++i) {
+    if (args[i] === '--wf' && i + 1 < args.length) wfName = args[++i];
+    else if (args[i] === '--input' && i + 1 < args.length) inputArg = args[++i];
+  }
+  if (!wfName) {
+    console.error('Missing --wf <name>');
+    process.exit(1);
+  }
+  let input: any = {};
+  try {
+    input = JSON.parse(inputArg);
+  } catch (e) {
+    input = {};
+    process.stderr.write('[WARN] Could not parse --input as JSON, using {}\n');
+  }
+  let runWorkflow: any;
+  try {
+    ({ runWorkflow } = require('@odavl/orchestrator'));
+  } catch {}
+  const ts = new Date().toISOString();
+  const invoked = { wf: wfName };
+  let ok = false, result: any = null;
+  (async () => {
+    if (typeof runWorkflow === 'function') {
+      try {
+        result = await runWorkflow(wfName, input);
+        ok = true;
+      } catch (e) {
+        result = { error: (typeof e === 'object' && e && 'message' in e) ? (e as any).message : String(e) };
+      }
+    } else {
+      result = { error: 'orchestrator not available — build/install @odavl/orchestrator' };
+      process.stderr.write('orchestrator not available — build/install @odavl/orchestrator\n');
+    }
+    const out = { ok, invoked, input, ts, result };
+    const outStr = JSON.stringify(out);
+    console.log(outStr);
+    // Save to reports/runs/run-<timestamp>.json
+    const runsDir = path.join('reports', 'runs');
+    if (!existsSync(runsDir)) mkdirSync(runsDir, { recursive: true });
+    const fname = path.join(runsDir, `run-${ts.replace(/[:.]/g, '-')}.json`);
+    writeFileSync(fname, outStr + '\n');
+  })();
   const mode = readTelemetryMode();
   const span = startSpan('heal', mode, getGitContext());
   
@@ -1254,149 +1303,88 @@ Evidence:
     }));
   }
 } else if (cmd === 'status') {
-  try {
-    const workspaceRoot = path.resolve(__dirname, '../../..');
-    const result: any = { ts: new Date().toISOString() };
-    
-    // Get current branch
+  // Polyglot/CI status snapshot (compact, best-effort)
+  const workspaceRoot = path.resolve(__dirname, '../../..');
+  function sh(cmd: string, args: string[], timeoutMs = 15000) {
     try {
-      const branchResult = spawnSync('git', ['rev-parse', '--abbrev-ref', 'HEAD'], {
-        cwd: workspaceRoot,
-        encoding: 'utf8',
-        shell: true,
-        timeout: 5000
-      });
-      result.branch = branchResult.status === 0 ? branchResult.stdout?.trim() || 'unknown' : 'unknown';
-    } catch {
-      result.branch = 'unknown';
-    }
-    
-    // Get governor info by calling existing subcommand
-    result.governor = {};
-    try {
-      const governorResult = spawnSync('node', [path.join(__dirname, 'index.js'), 'governor', 'explain', '--json'], {
-        cwd: workspaceRoot,
-        encoding: 'utf8',
-        shell: true,
-        timeout: 10000
-      });
-      
-      if (governorResult.status === 0 && governorResult.stdout) {
-        const governorData = JSON.parse(governorResult.stdout);
-        if (governorData.pr?.limits) {
-          const limits = governorData.pr.limits;
-          result.governor.prsPerDay = limits.prsPerDay;
-          result.governor.ciMinutesPerHour = limits.ciMinutesPerHour;
-          result.governor.maxConcurrentShadows = limits.maxConcurrentShadows;
-        }
-        result.governor.state = governorData.pr?.allowedNow ? 'allowed' : 'blocked';
-      }
-    } catch {
-      // Fallback to reading config directly
-      try {
-        const config = readGovernorConfig(workspaceRoot);
-        result.governor.prsPerDay = config.prsPerDay;
-        result.governor.ciMinutesPerHour = config.ciMinutesPerHour;
-        result.governor.maxConcurrentShadows = config.maxConcurrentShadows;
-      } catch {
-        // Keep empty governor object
-      }
-    }
-    
-    // Get telemetry info
-    result.telemetry = {};
-    try {
-      const mode = readTelemetryMode();
-      result.telemetry.enabled = mode !== 'off';
-      result.telemetry.mode = mode;
-      
-      // Try to get last 24h metrics from telemetry log
-      const logPath = path.join(workspaceRoot, 'reports', 'telemetry.log.jsonl');
-      try {
-        const content = readFileSync(logPath, 'utf8');
-        const cutoff = new Date(Date.now() - 24 * 60 * 60 * 1000);
-        const lines = content.trim().split('\n').filter(line => line);
-        let runs = 0;
-        let prs = 0;
-        
-        for (const line of lines) {
-          try {
-            const span = JSON.parse(line);
-            const spanTime = new Date(span.ts);
-            if (spanTime >= cutoff) {
-              if (span.kind === 'scan' || span.kind === 'heal' || span.kind === 'shadow_run') runs++;
-              if (span.kind === 'pr_open') prs++;
-            }
-          } catch {
-            // Skip invalid lines
-          }
-        }
-        
-        if (runs > 0 || prs > 0) {
-          result.telemetry.last24h = { runs, prs };
-        }
-      } catch {
-        // No telemetry file or error reading it
-      }
-    } catch {
-      result.telemetry.enabled = false;
-      result.telemetry.mode = 'off';
-    }
-    
-    // Get CI info
-    result.ci = { openPRs: 0, lastRuns: [] };
-    try {
-      // Get open PRs count
-      const prResult = spawnSync('gh', ['pr', 'list', '--state', 'open', '--json', 'number'], {
-        cwd: workspaceRoot,
-        encoding: 'utf8',
-        shell: true,
-        timeout: 10000
-      });
-      
-      if (prResult.status === 0 && prResult.stdout) {
-        const prs = JSON.parse(prResult.stdout);
-        result.ci.openPRs = Array.isArray(prs) ? prs.length : 0;
-      }
-      
-      // Get last 3 workflow runs
-      const runResult = spawnSync('gh', ['run', 'list', '--limit', '3', '--json', 'url,status,conclusion'], {
-        cwd: workspaceRoot,
-        encoding: 'utf8',
-        shell: true,
-        timeout: 10000
-      });
-      
-      if (runResult.status === 0 && runResult.stdout) {
-        const runs = JSON.parse(runResult.stdout);
-        if (Array.isArray(runs)) {
-          result.ci.lastRuns = runs.map((run: any) => ({
-            status: run.status || 'unknown',
-            conclusion: run.conclusion || null,
-            url: run.url || ''
-          }));
-        }
-      }
-    } catch {
-      // Keep default CI values if gh commands fail
-    }
-    
-    // Output JSON to stdout and friendly summary to stderr
-    console.log(JSON.stringify(result));
-    console.error(`odavl status: branch=${result.branch}, openPRs=${result.ci.openPRs}, runs=${result.ci.lastRuns.length}`);
-  } catch (error: any) {
-    const errorResult = {
-      ts: new Date().toISOString(),
-      branch: 'unknown',
-      governor: {},
-      telemetry: { enabled: false, mode: 'off' as const },
-      ci: { openPRs: 0, lastRuns: [] },
-      error: error?.message || 'Unknown error'
-    };
-    console.log(JSON.stringify(errorResult));
-    console.error(`odavl status: error - ${error?.message || 'Unknown error'}`);
+      const r = spawnSync(cmd, args, { cwd: workspaceRoot, encoding: 'utf8', shell: true, timeout: timeoutMs });
+      return { ok: r.status === 0, code: r.status ?? 1, out: r.stdout || '', err: r.stderr || '' };
+    } catch (e) { return { ok: false, code: 1, out: '', err: String(e && (e as any).message || e) }; }
   }
-} else if (cmd === 'abort') {
+  const result: any = { ts: new Date().toISOString() };
+  // Branch
+  let branch = sh('git', ['rev-parse', '--abbrev-ref', 'HEAD']);
+  result.branch = branch.ok ? branch.out.trim() : 'unknown';
+  // Packs.js quick probe
+  let hasJs = false, jsSignals: any = {};
+  let nodeV = sh('node', ['-v']);
+  if (nodeV.ok) {
+    hasJs = true;
+    // Try to read package.json for signals
+    try {
+      const pkgPath = path.join(workspaceRoot, 'package.json');
+      if (existsSync(pkgPath)) {
+        JSON.parse(readFileSync(pkgPath, 'utf8'));
+        jsSignals = { eslintDelta: undefined, typeErrorsDelta: undefined, buildMsDelta: undefined, bundleKbDelta: undefined, shadowPass: undefined };
+      }
+    } catch {}
+  }
+  // Packs.python quick probe
+  let hasPy = false, pySignals: any = {};
+  function findPy(root: string): boolean {
+    try {
+      for (const f of readdirSync(root)) {
+        if (f === 'node_modules' || f.startsWith('.')) continue;
+        const p = path.join(root, f);
+        const stat = statSync(p);
+        if (stat.isDirectory() && findPy(p)) return true;
+        if (stat.isFile() && f.endsWith('.py')) return true;
+      }
+    } catch {}
+    return false;
+  }
+  hasPy = findPy(workspaceRoot);
+  if (hasPy) {
+    let ruffV = sh('ruff', ['--version']);
+    sh('pytest', ['--version']);
+    sh('python', ['--version']);
+    pySignals = { ruff: ruffV.ok ? true : undefined, tests: { failures: undefined }, shadowPass: undefined };
+  }
+  result.packs = {};
+  if (hasJs) result.packs.js = jsSignals;
+  if (hasPy) result.packs.python = pySignals;
+  // Governor
+  result.governor = { note: 'not-available' };
+  let gov = sh('node', [path.join(__dirname, 'index.js'), 'governor', 'explain', '--json']);
+  if (gov.ok && gov.out) {
+    try { result.governor = JSON.parse(gov.out); } catch {}
+  }
+  // Telemetry
+  let mode = process.env.ODAVL_TELEMETRY || readTelemetryMode?.() || 'off';
+  result.telemetry = { mode };
+  // CI summary
+  result.ci = { openPRs: undefined, lastRuns: [], note: '' };
+  let pr = sh('gh', ['pr', 'list', '--state', 'open', '--json', 'number,title,headRefName,baseRefName,url']);
+  if (pr.ok && pr.out) {
+    try { const arr = JSON.parse(pr.out); result.ci.openPRs = Array.isArray(arr) ? arr.length : undefined; } catch { result.ci.note += 'pr-parse-fail; '; }
+  } else { result.ci.note += 'gh-missing; '; }
+  let runs = sh('gh', ['run', 'list', '--limit', '5', '--json', 'status,conclusion,htmlUrl,createdAt']);
+  if (runs.ok && runs.out) {
+    try { result.ci.lastRuns = JSON.parse(runs.out).slice(0, 5).map((r: any) => ({ status: r.status, conclusion: r.conclusion, url: r.htmlUrl })); } catch { result.ci.note += 'run-parse-fail; '; }
+  }
+  // Save to reports/w4-status.json
+  try {
+    if (!existsSync('reports')) {
+      mkdirSync('reports');
+    }
+    writeFileSync('reports/w4-status.json', JSON.stringify(result));
+  } catch {}
+  // Output
+  console.log(JSON.stringify(result));
+  console.error(`ODAVL status: ${result.branch} | packs[js:${hasJs}] [py:${hasPy}] | ci:${result.ci.openPRs||0} PRs`);
+}
+
+else if (cmd === 'abort') {
   try {
     const workspaceRoot = path.resolve(__dirname, '../../..');
     

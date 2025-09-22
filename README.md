@@ -18,6 +18,7 @@
 🛡️ **Governor System** - Rate limiting for PRs and CI resource usage  
 🔄 **Shadow CI** - Triggered workflows with live status monitoring  
 💾 **Safety Systems** - Automatic undo snapshots and protected paths  
+🎯 **Activity Bar icon** - Click ODAVL icon in left sidebar for instant access  
 🎯 **VS Code Integration** - WebView panel with one-click operations  
 
 ## 🎛️ 3 Channels to Run ODAVL
@@ -52,6 +53,7 @@ Integrated development experience within your editor:
 - ⚡ **Magic workflow** with progress notifications
 - 📋 **Command palette** integration
 - 🎯 **Status bar control** ("ODAVL ▷ Control" button)
+- 🎯 **Activity Bar icon** - Click ODAVL icon in left sidebar for instant access
 - 📖 **Interactive walkthrough** for new users
 - 💾 **Reports saved** to `reports/vscode/`
 

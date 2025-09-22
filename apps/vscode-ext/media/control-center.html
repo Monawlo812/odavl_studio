@@ -149,7 +149,7 @@
         
         // Listen for messages from extension
         window.addEventListener('message', event => {
-            const { type, message, success } = event.data;
+            const { type, message } = event.data;
             
             if (type === 'log') {
                 appendLog(message);
