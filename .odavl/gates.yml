@@ -1,3 +1,7 @@
+# mutation gate is opt-in per repo/path
+mutation:
+enabled: false
+score: { threshold: 40 }
 contracts:
 mustPass: true
 typeErrors:  { deltaMax: 0 }
