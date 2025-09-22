@@ -1,3 +1,5 @@
+contracts:
+mustPass: true
 typeErrors:  { deltaMax: 0 }
 eslint:     { deltaMax: 0 }
 bundleKB:   { deltaMax: 10 }
