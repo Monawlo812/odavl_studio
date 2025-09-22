@@ -1,0 +1,5 @@
+{
+  "stage": "W5-C.1",
+  "howToUse": "import { previewContractsForChanges } from 'packages/validators/auto'; previewContractsForChanges(['./examples/validators/js-samples/sample.js'], [{ fnPath: './examples/validators/js-samples/sample.js', inputsShape: {name:'Mo'}, outputsShape: {msg:''}, critical: true }])",
+  "outputs": "previews written under reports/w5/contracts/*.preview.test.js (no real test files touched)"
+}
