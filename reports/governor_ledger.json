@@ -1,17 +1,5 @@
 [
   {
-    "timestamp": "2025-09-21T16:10:48.039Z",
-    "openPrsToday": 1,
-    "shadowsInProgress": 0,
-    "estCiMinsHour": 0
-  },
-  {
-    "timestamp": "2025-09-21T16:11:17.842Z",
-    "openPrsToday": 1,
-    "shadowsInProgress": 0,
-    "estCiMinsHour": 0
-  },
-  {
     "timestamp": "2025-09-21T16:11:48.158Z",
     "openPrsToday": 1,
     "shadowsInProgress": 0,
@@ -139,6 +127,18 @@
   },
   {
     "timestamp": "2025-09-21T16:22:17.823Z",
+    "openPrsToday": 1,
+    "shadowsInProgress": 0,
+    "estCiMinsHour": 0
+  },
+  {
+    "timestamp": "2025-09-22T13:04:55.021Z",
+    "openPrsToday": 1,
+    "shadowsInProgress": 0,
+    "estCiMinsHour": 0
+  },
+  {
+    "timestamp": "2025-09-22T13:05:21.257Z",
     "openPrsToday": 1,
     "shadowsInProgress": 0,
     "estCiMinsHour": 0

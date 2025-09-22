@@ -1,0 +1,14 @@
+{
+  "ok": true,
+  "present": {
+    "w4-status.json": false,
+    "e2e-js-scan.json": false,
+    "e2e-js-heal-dry.json": false,
+    "e2e-py-scan.json": true,
+    "e2e-py-heal-dry.json": true,
+    "e2e-shadow.json": true,
+    "e2e-pr-dry.json": true
+  },
+  "verify": null,
+  "ts": "2025-09-22T13:06:20.723Z"
+}

@@ -1,7 +1,7 @@
 {
   "ok": true,
   "code": 0,
-  "stdout": "{\"tool\":\"odavl\",\"action\":\"pr\",\"subaction\":\"open\",\"wouldOpen\":true,\"base\":\"odavl/bootstrap-20250919\",\"head\":\"odavl/e2e-2025-09-21T14-19-52-782Z\",\"title\":\"E2E Probe\",\"bodyPreview\":\"**What**: Automated cleanup / maintenance\\n**Why**: Reduce warnings and keep CI healthy\\n\\n**Files**: $...\",\"pass\":true}\n",
+  "stdout": "{\"tool\":\"odavl\",\"action\":\"pr\",\"subaction\":\"open\",\"wouldOpen\":true,\"base\":\"odavl/bootstrap-20250919\",\"head\":\"odavl/e2e-2025-09-22T13-05-13-345Z\",\"title\":\"E2E Probe\",\"bodyPreview\":\"**What**: Automated cleanup / maintenance\\n**Why**: Reduce warnings and keep CI healthy\\n\\n**Files**: $...\",\"pass\":true}\n",
   "stderr": "",
   "cmd": "node apps/cli/dist/index.js pr open --explain --dry-run --title \"E2E Probe\"",
   "parsed": {
@@ -10,7 +10,7 @@
     "subaction": "open",
     "wouldOpen": true,
     "base": "odavl/bootstrap-20250919",
-    "head": "odavl/e2e-2025-09-21T14-19-52-782Z",
+    "head": "odavl/e2e-2025-09-22T13-05-13-345Z",
     "title": "E2E Probe",
     "bodyPreview": "**What**: Automated cleanup / maintenance\n**Why**: Reduce warnings and keep CI healthy\n\n**Files**: $...",
     "pass": true
