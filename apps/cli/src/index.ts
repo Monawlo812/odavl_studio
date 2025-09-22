@@ -277,6 +277,22 @@ if (cmd === "scan") {
     throw error;
   }
 } else if (cmd === "heal") {
+  // --- MVP Stage E: wire remove-unused codemod ---
+  const args = process.argv.slice(3);
+  let recipe = "remove-unused";
+  let apply = false;
+  const recipeIndex = args.indexOf("--recipe");
+  if (recipeIndex !== -1 && recipeIndex + 1 < args.length) {
+    recipe = args[recipeIndex + 1];
+  }
+  apply = args.includes("--apply");
+  if (recipe === "remove-unused") {
+    // Call codemod placeholder (no-op)
+    const { removeUnusedImports } = require("../../../packages/codemods/remove-unused-imports");
+    const result = removeUnusedImports("examples/codemod-fixture.ts");
+    console.log(JSON.stringify({ tool: "odavl", action: "heal", recipe, mode: apply ? "apply" : "dry-run", result }));
+    process.exit(0);
+  }
   // --- STAGE W4-A.1: CLI → Orchestrator stub ---
 } else if (cmd === "run") {
   // Parse args: --wf <name> [--input <json>]
