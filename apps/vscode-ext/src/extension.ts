@@ -330,6 +330,7 @@ export async function activate(
     }
   };
 
+
   // Register WebviewViewProvider for Activity Bar
   const provider = new OdavlControlCenterProvider(context.extensionUri);
   context.subscriptions.push(
@@ -338,6 +339,13 @@ export async function activate(
       provider,
     ),
   );
+
+  // register immune clinic
+  // prettier-ignore
+  try { var { openImmuneClinic } = require('./immuneClinic'); } catch {}
+  if (openImmuneClinic) {
+    context.subscriptions.push(vscode.commands.registerCommand('odavl.immuneClinic.open',()=>openImmuneClinic(context)));
+  }
 
   // Auto-reveal Activity Bar container on activation
   try {
