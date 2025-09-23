@@ -1,7 +1,14 @@
 // CLI: odavl demo
 import { execSync } from 'child_process';
+import { enforceRbac } from '../../../../packages/policy/src/rbac.js';
+import type { RbacRole } from '../../../../packages/policy/src/rbac.schema.js';
+const USER_ROLE = (process.env.ODAVL_ROLE || 'admin') as RbacRole;
 
 export function runDemo() {
+  if (!enforceRbac('scan.run', USER_ROLE)) {
+    console.error('RBAC: You are not authorized to run scan.');
+    process.exit(1);
+  }
   try {
     console.log('Running demo smoke on examples/demo...');
     execSync('node ../../dist/index.js scan examples/demo', { stdio: 'inherit' });

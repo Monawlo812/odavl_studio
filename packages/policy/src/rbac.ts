@@ -8,9 +8,10 @@ export function loadRbacConfig(path = 'odavl.rbac.yml'): RbacConfig {
   return yaml.load(raw) as RbacConfig;
 }
 
-export function enforceRbac(action: RbacAction, role: RbacRole): boolean {
-  // Minimal stub: always allow admin, else deny
-  if (role === 'admin') return true;
-  // Real logic will be added in next batch
-  return false;
+export function enforceRbac(action: RbacAction, role: RbacRole, configPath = 'odavl.rbac.yml'): boolean {
+  const config = loadRbacConfig(configPath);
+  const roleDef = config.roles.find(r => r.name === role);
+  if (!roleDef) return false;
+  if (roleDef.allow.includes('*')) return true;
+  return roleDef.allow.includes(action);
 }

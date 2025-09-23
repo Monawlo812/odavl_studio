@@ -50,11 +50,16 @@ jobs:
 
       - name: Create GitHub Release
         run: |
-          RELEASE_CMD="gh release create ${{ steps.version.outputs.version }} --title 'ODAVL Studio ${{ steps.version.outputs.version }}' --notes-file ${{ steps.changelog.outputs.changes_file }}"
           if [ "${{ steps.qa_report.outputs.qa_exists }}" = "true" ]; then
-            RELEASE_CMD="$RELEASE_CMD ${{ steps.qa_report.outputs.qa_file }}"
+            gh release create "${{ steps.version.outputs.version }}" \
+              --title "ODAVL Studio ${{ steps.version.outputs.version }}" \
+              --notes-file "${{ steps.changelog.outputs.changes_file }}" \
+              "${{ steps.qa_report.outputs.qa_file }}"
+          else
+            gh release create "${{ steps.version.outputs.version }}" \
+              --title "ODAVL Studio ${{ steps.version.outputs.version }}" \
+              --notes-file "${{ steps.changelog.outputs.changes_file }}"
           fi
-          eval $RELEASE_CMD
 
       - name: Release Summary
         run: |
