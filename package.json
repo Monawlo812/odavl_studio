@@ -48,6 +48,8 @@
   "odavl:immune:escalate": "node scripts/immune/escalate.mjs"
   ,
   "odavl:immune:metrics": "node scripts/immune/metrics.mjs"
+  ,
+  "odavl:immune:heatmap": "node scripts/immune/heatmap.mjs"
   },
   "devDependencies": {
     "@cyclonedx/cyclonedx-library": "^9.0.0",
