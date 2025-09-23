@@ -20,10 +20,10 @@
     "gates:validate": "node scripts/gates-validate.mjs",
     "verify:unify": "node scripts/verify-unify.mjs",
     "status": "node ./apps/cli/bin/odavl.js status --json > reports/metrics.json || echo \"{}\"",
-    "verify": "node ./apps/cli/bin/odavl.js verify --report reports/verify.json || echo \"{}\""
-    ,"build:cli": "tsc -p apps/cli/tsconfig.json"
-    ,"typecheck": "tsc -p . --noEmit"
-    ,"studio:build": "pnpm --filter @odavl/vscode-ext build"
+  "verify": "node ./apps/cli/bin/odavl.js verify --report reports/verify.json || echo \"{}\"",
+  "build:cli": "tsc -p apps/cli/tsconfig.json",
+  "typecheck": "tsc -p . --noEmit",
+  "studio:build": "pnpm --filter @odavl/vscode-ext build"
   },
   "devDependencies": {
     "@cyclonedx/cyclonedx-library": "^9.0.0",
@@ -40,7 +40,6 @@
     "jest": "^30.1.3",
     "knip": "^5.64.0",
     "lockfile-lint": "^4.14.1",
-    "odavl-cli": "workspace:*",
     "prettier": "^3.6.2",
     "semgrep": "^0.0.1",
     "ts-jest": "^29.4.4",

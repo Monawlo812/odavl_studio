@@ -9,7 +9,19 @@
   },
   "cli": {
     "built": true,
-    "commands": ["scan", "heal", "branch create", "pr open", "shadow run", "shadow status", "status", "governor explain", "report telemetry summary", "undo last", "abort"],
+    "commands": [
+      "scan",
+      "heal",
+      "branch create",
+      "pr open",
+      "shadow run",
+      "shadow status",
+      "status",
+      "governor explain",
+      "report telemetry summary",
+      "undo last",
+      "abort"
+    ],
     "statusOk": false
   },
   "healers": {
@@ -18,20 +30,39 @@
       {
         "id": "esm-hygiene",
         "scope": "code",
-        "guards": {"maxLines": 40, "maxFiles": 10, "protected": ["/security/", ".spec.", "/public-api/"]},
-        "verify": {"typecheck": false, "tests": false, "build": false, "perf": false}
+        "guards": {
+          "maxLines": 40,
+          "maxFiles": 10,
+          "protected": ["/security/", ".spec.", "/public-api/"]
+        },
+        "verify": {
+          "typecheck": false,
+          "tests": false,
+          "build": false,
+          "perf": false
+        }
       },
       {
         "id": "deps-patch-minor",
-        "scope": "deps", 
-        "guards": {"maxLines": null, "maxFiles": null, "protected": []},
-        "verify": {"typecheck": false, "tests": false, "build": false, "perf": false}
+        "scope": "deps",
+        "guards": { "maxLines": null, "maxFiles": null, "protected": [] },
+        "verify": {
+          "typecheck": false,
+          "tests": false,
+          "build": false,
+          "perf": false
+        }
       },
       {
         "id": "remove-unused",
         "scope": "code",
-        "guards": {"maxLines": null, "maxFiles": null, "protected": []},
-        "verify": {"typecheck": false, "tests": false, "build": false, "perf": false}
+        "guards": { "maxLines": null, "maxFiles": null, "protected": [] },
+        "verify": {
+          "typecheck": false,
+          "tests": false,
+          "build": false,
+          "perf": false
+        }
       }
     ]
   },
@@ -40,17 +71,17 @@
       "prsPerDay": 5,
       "ciMinutesPerHour": 60,
       "maxConcurrentShadows": 3,
-      "waves": [{"window": "22:00-06:00", "maxPrs": 3}]
+      "waves": [{ "window": "22:00-06:00", "maxPrs": 3 }]
     },
-    "studio": {"telemetry": "anonymized"}
+    "studio": { "telemetry": "anonymized" }
   },
   "gates": {
-    "typeErrors": {"deltaMax": 0},
-    "eslint": {"deltaMax": 0}, 
-    "bundleKB": {"deltaMax": 10},
-    "buildMs": {"deltaPctMax": 5},
-    "shadow": {"mustPass": true},
-    "policy": {"violationsMax": 0}
+    "typeErrors": { "deltaMax": 0 },
+    "eslint": { "deltaMax": 0 },
+    "bundleKB": { "deltaMax": 10 },
+    "buildMs": { "deltaPctMax": 5 },
+    "shadow": { "mustPass": true },
+    "policy": { "violationsMax": 0 }
   },
   "ci": {
     "workflows": [
@@ -60,13 +91,13 @@
         "matrix": ["node: 18,20"]
       },
       {
-        "name": "Release", 
+        "name": "Release",
         "on": ["workflow_dispatch"],
         "matrix": []
       },
       {
         "name": "Pages",
-        "on": ["push", "workflow_dispatch"], 
+        "on": ["push", "workflow_dispatch"],
         "matrix": []
       }
     ]
@@ -92,8 +123,18 @@
     "broken": 0
   },
   "gitWaves": {
-    "wave1": ["CLI bootstrap", "VS Code extension", "GitHub integration", "Docker setup"],
-    "wave2": ["Governor system", "Protected paths", "Healers implementation", "Telemetry"]
+    "wave1": [
+      "CLI bootstrap",
+      "VS Code extension",
+      "GitHub integration",
+      "Docker setup"
+    ],
+    "wave2": [
+      "Governor system",
+      "Protected paths",
+      "Healers implementation",
+      "Telemetry"
+    ]
   },
   "security": {
     "available": false,

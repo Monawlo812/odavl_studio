@@ -15,7 +15,7 @@
 - [x] pnpm run e2e (JS+PY) → reports/e2e-scan.json, e2e-heal-dry.json, e2e-py-scan.json, e2e-py-heal-dry.json — ✅
 - [x] pnpm run qa:wave4 → reports/Wave4-QA-Report.md, w4-qa-summary.json — ✅
 - [x] All package.json versions = 0.4.0 — ✅
-- [x] Internal @odavl/* deps use ^0.4.0 — ✅
+- [x] Internal @odavl/\* deps use ^0.4.0 — ✅
 - [x] CHANGELOG.md has [0.4.0] section — ✅
 - [x] .github/workflows/shadow.yml includes Node+Python jobs — ✅
 

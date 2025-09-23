@@ -1,1 +1,6 @@
-{ "stage":"W5-A.5", "updated":[".odavl/gates.yml"], "created":["docs/go-pack.md"], "notes":"Added Go gates + docs." }
+{
+  "stage": "W5-A.5",
+  "updated": [".odavl/gates.yml"],
+  "created": ["docs/go-pack.md"],
+  "notes": "Added Go gates + docs."
+}

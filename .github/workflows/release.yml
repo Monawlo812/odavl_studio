@@ -26,17 +26,34 @@ jobs:
         with:
           name: odavl-cli-tarball
           path: apps/cli/odavl-cli-*.tgz
-          # Base release command
-          RELEASE_CMD="gh release create ${{ steps.version.outputs.version }} \
-            --title \"ODAVL Studio ${{ steps.version.outputs.version }}\" \
-            --notes-file ${{ steps.changelog.outputs.changes_file }}"
 
-          # Add QA report if it exists
+      - name: Get Version
+        id: version
+        run: echo "version=$(node -p 'require(\"./apps/cli/package.json\").version')" >> $GITHUB_OUTPUT
+
+      - name: Generate Changelog
+        id: changelog
+        run: |
+          echo "changes_file=CHANGELOG.md" >> $GITHUB_OUTPUT
+          # Optionally generate or update CHANGELOG.md here
+
+      - name: Generate QA Report
+        id: qa_report
+        run: |
+          if [ -f QA_REPORT.md ]; then
+            echo "qa_exists=true" >> $GITHUB_OUTPUT
+            echo "qa_file=QA_REPORT.md" >> $GITHUB_OUTPUT
+          else
+            echo "qa_exists=false" >> $GITHUB_OUTPUT
+            echo "qa_file=" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Create GitHub Release
+        run: |
+          RELEASE_CMD="gh release create ${{ steps.version.outputs.version }} --title 'ODAVL Studio ${{ steps.version.outputs.version }}' --notes-file ${{ steps.changelog.outputs.changes_file }}"
           if [ "${{ steps.qa_report.outputs.qa_exists }}" = "true" ]; then
             RELEASE_CMD="$RELEASE_CMD ${{ steps.qa_report.outputs.qa_file }}"
           fi
-
-          # Execute release creation
           eval $RELEASE_CMD
 
       - name: Release Summary

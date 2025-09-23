@@ -1,14 +1,16 @@
 # Media & Recording Guide (Wave 3)
 
 Required shots (replace placeholders):
-1) **Scan** panel + diffs  
-2) **Heal** (apply or dry-run)
-3) **Shadow** checks passing
-4) **Open PR** with template + metrics
+
+1. **Scan** panel + diffs
+2. **Heal** (apply or dry-run)
+3. **Shadow** checks passing
+4. **Open PR** with template + metrics
 
 ## Record → GIF (quick)
 
 **macOS**
+
 - Press **Shift+Cmd+5** (record region → .mov)
 - Or QuickTime → New Screen Recording
 - Convert:
@@ -18,13 +20,16 @@ Required shots (replace placeholders):
   ```
 
 **Windows**
-- Win+Alt+R (Xbox Game Bar) أو ShareX → MP4  
+
+- Win+Alt+R (Xbox Game Bar) أو ShareX → MP4
 - ثم ffmpeg كما أعلاه
 
 **Linux**
+
 - OBS أو Peek → MP4/GIF مباشر
 
 ## Tips
+
 - 5–10s لكل لقطة، عرض 1280px، < 5MB
 - أخفِ المحتوى الحساس، واجهة نظيفة
 - اسم الملف: `docs/media/wave3-<shot>.gif`

@@ -27,7 +27,7 @@
   },
   {
     "name": "Pages",
-    "file": ".github/workflows/pages.yml", 
+    "file": ".github/workflows/pages.yml",
     "triggers": ["push", "workflow_dispatch"],
     "matrix": null,
     "steps": ["unknown - file not analyzed"],

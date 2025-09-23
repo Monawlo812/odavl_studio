@@ -19,11 +19,13 @@ This guide walks through creating and configuring a GitHub App for ODAVL Studio 
 ## Step 2: Configure App Details
 
 ### Basic Information
+
 - **App name**: `ODAVL Studio`
 - **Description**: `Automated development governance with code healing and CI management`
 - **Homepage URL**: `https://github.com/Monawlo812/odavl_studio`
 
 ### Webhook Configuration
+
 - **Webhook URL**: Your deployed ODAVL Studio webhook endpoint
 - **Webhook secret**: Generate a secure secret for webhook validation
 
@@ -34,12 +36,14 @@ This guide walks through creating and configuring a GitHub App for ODAVL Studio 
 The app requires minimal permissions for governance operations:
 
 ### Repository Permissions
+
 - **Contents**: `Read` - Access repository files for scanning
 - **Pull requests**: `Write` - Create and update PRs with healing results
 - **Checks**: `Write` - Report code health status via check runs
 - **Statuses**: `Write` - Update commit status for CI integration
 
 ### Subscribe to Events
+
 - `pull_request` - Monitor PR creation and updates
 - `check_suite` - Respond to CI check completions
 - `workflow_run` - Track GitHub Actions workflow results
@@ -49,6 +53,7 @@ The app requires minimal permissions for governance operations:
 ## Step 4: Installation Scope
 
 ### Recommended: Selected Repositories
+
 For security and control, install only on specific repositories:
 
 1. Choose "Selected repositories"
@@ -58,6 +63,7 @@ For security and control, install only on specific repositories:
 ![Repository Selection](../media/github-app-repos.png)
 
 ### Organization-wide (Advanced)
+
 Only for mature deployments with established governance policies.
 
 ## Step 5: Generate Credentials
@@ -106,11 +112,13 @@ odavl github webhook test
 ## Troubleshooting
 
 ### Permission Denied Errors
+
 - Verify app installation on target repositories
 - Check permission levels match requirements
 - Confirm private key is valid and accessible
 
 ### Webhook Delivery Failures
+
 - Validate webhook URL is accessible via HTTPS
 - Check webhook secret matches configuration
 - Review firewall rules for GitHub webhook IPs
@@ -118,5 +126,6 @@ odavl github webhook test
 ## Support
 
 For additional help:
+
 - [GitHub Apps Documentation](https://docs.github.com/en/developers/apps)
 - [ODAVL Studio Issues](https://github.com/Monawlo812/odavl_studio/issues)

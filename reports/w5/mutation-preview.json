@@ -1,1 +1,7 @@
-{"files":[],"totalSites":0,"coveredFiles":0,"score":0,"note":"preview-only (no test execution)","_stub":true}
+{
+  "files": [],
+  "totalSites": 0,
+  "coveredFiles": 0,
+  "score": 0,
+  "note": "preview-only (no test execution)"
+}

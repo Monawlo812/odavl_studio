@@ -1,54 +1,76 @@
-import { execJson } from './shell';
-export type PyScan = { ruff?: number; tests?: { failures?: number }; vulns?: number; note: string };
+import { execJson } from "./shell";
+export type PyScan = {
+  ruff?: number;
+  tests?: { failures?: number };
+  vulns?: number;
+  note: string;
+};
 export async function scan(): Promise<PyScan> {
-  let ruff: number | undefined = undefined;
-  let ruffNote = '';
-  // Try ruff
-  const ruffRes = execJson(['ruff', '--output-format=json', '.']);
-  if (ruffRes.ok) {
-    try {
-      const parsed = JSON.parse(ruffRes.stdout);
-      ruff = Array.isArray(parsed) ? parsed.length : undefined;
-    } catch { ruff = undefined; ruffNote = 'ruff output parse error'; }
-  } else {
-    // Try flake8 as fallback
-    const flake = execJson(['flake8', '.']);
-    if (flake.ok) {
-      ruff = flake.stdout.split('\n').filter(Boolean).length;
-      ruffNote = 'ruff missing, used flake8';
+  // Helper to run a linter and parse count
+  function getLintCount(
+    cmd: string[],
+    fallbackCmd?: string[],
+  ): { count?: number; note: string } {
+    const res = execJson(cmd);
+    if (res.ok) {
+      try {
+        const parsed = JSON.parse(res.stdout);
+        return {
+          count: Array.isArray(parsed) ? parsed.length : undefined,
+          note: "",
+        };
+      } catch {
+        return { count: undefined, note: `${cmd[0]} output parse error` };
+      }
+    } else if (fallbackCmd) {
+      const fallback = execJson(fallbackCmd);
+      if (fallback.ok) {
+        return {
+          count: fallback.stdout.split("\n").filter(Boolean).length,
+          note: `${cmd[0]} missing, used ${fallbackCmd[0]}`,
+        };
+      } else {
+        return {
+          count: undefined,
+          note: `${cmd[0]}/${fallbackCmd[0]} missing`,
+        };
+      }
     } else {
-      ruff = undefined;
-      ruffNote = 'ruff/flake8 missing';
+      return { count: undefined, note: `${cmd[0]} missing` };
     }
   }
+
+  // Ruff or flake8
+  const { count: ruff, note: ruffNote } = getLintCount(
+    ["ruff", "--output-format=json", "."],
+    ["flake8", "."],
+  );
+
   // Pytest
-  let failures: number | undefined = undefined;
-  let testNote = '';
-  const pyRes = execJson(['pytest', '-q', '--maxfail=1']);
-  if (pyRes.ok) {
-    failures = 0;
-  } else if (pyRes.code !== 1 && pyRes.stderr.includes('not found')) {
-    failures = undefined;
-    testNote = 'pytest missing';
-  } else {
-    failures = 1;
-    if (pyRes.stdout.includes('no tests ran')) failures = 0;
+  function getTestFailures(): { failures?: number; note: string } {
+    const pyRes = execJson(["pytest", "-q", "--maxfail=1"]);
+    if (pyRes.ok) return { failures: 0, note: "" };
+    if (pyRes.code !== 1 && pyRes.stderr.includes("not found"))
+      return { failures: undefined, note: "pytest missing" };
+    if (pyRes.stdout.includes("no tests ran")) return { failures: 0, note: "" };
+    return { failures: 1, note: "" };
   }
+  const { failures, note: testNote } = getTestFailures();
+
   // pip-audit
-  let vulns: number | undefined = undefined;
-  let vulnNote = '';
-  const paRes = execJson(['pip-audit', '-f', 'json']);
-  if (paRes.ok) {
-    try {
-      const parsed = JSON.parse(paRes.stdout);
-      vulns = Array.isArray(parsed) ? parsed.length : undefined;
-    } catch { vulns = undefined; vulnNote = 'pip-audit output parse error'; }
-  } else {
-    vulns = undefined;
-    vulnNote = 'pip-audit missing';
-  }
-  let notes = [ruffNote, testNote, vulnNote].filter(Boolean).join('; ');
-  return { ruff, tests: { failures }, vulns, note: 'python.scan ok' + (notes ? ' | ' + notes : '') };
+  const { count: vulns, note: vulnNote } = getLintCount([
+    "pip-audit",
+    "-f",
+    "json",
+  ]);
+
+  let notes = [ruffNote, testNote, vulnNote].filter(Boolean).join("; ");
+  return {
+    ruff,
+    tests: { failures },
+    vulns,
+    note: "python.scan ok" + (notes ? " | " + notes : ""),
+  };
 }
 export type PyHealResult = {
   dryRun: boolean;
@@ -61,60 +83,95 @@ export type PyHealResult = {
   guards?: { maxFiles: number; maxLines: number; guardHit: boolean };
   note: string;
 };
-export async function heal(opts: { dryRun?: boolean; maxFiles?: number; maxLines?: number } = {}): Promise<PyHealResult> {
-  const dryRun = opts.dryRun !== false;
-  const maxFiles = typeof opts.maxFiles === 'number' ? opts.maxFiles : 10;
-  const maxLines = typeof opts.maxLines === 'number' ? opts.maxLines : 40;
+export async function heal(
+  opts: { dryRun?: boolean; maxFiles?: number; maxLines?: number } = {},
+): Promise<PyHealResult> {
+  const maxFiles = typeof opts.maxFiles === "number" ? opts.maxFiles : 10;
+  const maxLines = typeof opts.maxLines === "number" ? opts.maxLines : 40;
   let notes: string[] = [];
-  // A) Ruff unused imports
-  let unusedFiles = 0, unusedLines = 0, unusedNote = '';
-  const ruff = execJson(['ruff', '--fix-dry-run', '--exit-zero-even-if-changed', '.']);
-  if (ruff.ok) {
-    const lines = ruff.stdout.split('\n');
-    unusedFiles = lines.filter(l => /would fix|Fixed/.test(l)).length;
-    unusedLines = unusedFiles; // Approximate: 1 line per file
-    if (unusedFiles === 0 && ruff.stdout && ruff.stdout.includes('No changes')) unusedNote = 'no unused imports';
-  } else {
-    unusedNote = 'ruff missing';
-    notes.push('ruff missing');
+
+  // Helper for ruff unused imports
+  function getUnusedImports() {
+    const ruff = execJson([
+      "ruff",
+      "--fix-dry-run",
+      "--exit-zero-even-if-changed",
+      ".",
+    ]);
+    if (ruff.ok) {
+      const lines = ruff.stdout.split("\n");
+      const unusedFiles = lines.filter((l) => /would fix|Fixed/.test(l)).length;
+      const unusedLines = unusedFiles; // Approximate: 1 line per file
+      let unusedNote = "";
+      if (unusedFiles === 0 && ruff.stdout?.includes("No changes"))
+        unusedNote = "no unused imports";
+      return { unusedFiles, unusedLines, unusedNote };
+    } else {
+      return { unusedFiles: 0, unusedLines: 0, unusedNote: "ruff missing" };
+    }
   }
-  // B) Black format check
-  let fmtFiles = 0, fmtLines = 0, fmtNote = '';
-  const black = execJson(['black', '--check', '.']);
-  if (!black.ok) {
-    // Try to estimate files needing format
-    const match = black.stdout.match(/would reformat (.+)/g);
-    fmtFiles = match ? match.length : 1;
-    fmtNote = 'format needed';
+
+  // Helper for black format
+  function getFormatCheck() {
+    const black = execJson(["black", "--check", "."]);
+    if (!black.ok) {
+      const match = black.stdout.match(/would reformat (.+)/g);
+      return {
+        fmtFiles: match ? match.length : 1,
+        fmtLines: 0,
+        fmtNote: "format needed",
+      };
+    }
+    return { fmtFiles: 0, fmtLines: 0, fmtNote: "" };
   }
-  // C) pip list outdated
-  let depCandidates = 0, depNote = '';
-  const pip = execJson(['pip', 'list', '--outdated', '--format=json']);
-  if (pip.ok) {
-    try {
-      const parsed = JSON.parse(pip.stdout);
-      depCandidates = Array.isArray(parsed) ? parsed.length : 0;
-    } catch { depNote = 'pip list parse error'; }
-  } else {
-    depNote = 'pip missing';
-    notes.push('pip missing');
+
+  // Helper for pip outdated
+  function getDepCandidates() {
+    const pip = execJson(["pip", "list", "--outdated", "--format=json"]);
+    if (pip.ok) {
+      try {
+        const parsed = JSON.parse(pip.stdout);
+        return {
+          depCandidates: Array.isArray(parsed) ? parsed.length : 0,
+          depNote: "",
+        };
+      } catch {
+        return { depCandidates: 0, depNote: "pip list parse error" };
+      }
+    } else {
+      return { depCandidates: 0, depNote: "pip missing" };
+    }
   }
+
+  const { unusedFiles, unusedLines, unusedNote } = getUnusedImports();
+  if (unusedNote === "ruff missing") notes.push("ruff missing");
+  const { fmtFiles, fmtLines, fmtNote } = getFormatCheck();
+  const { depCandidates, depNote } = getDepCandidates();
+  if (depNote === "pip missing") notes.push("pip missing");
+
   // Guard logic
   const totalFiles = unusedFiles + fmtFiles + depCandidates;
   const totalLines = unusedLines + fmtLines;
   const guardHit = totalFiles > maxFiles || totalLines > maxLines;
-  let guardNote = '';
-  if (guardHit) guardNote = 'guard hit: would split into waves';
+  let guardNote = "";
+  if (guardHit) guardNote = "guard hit: would split into waves";
+
   // Compose result
   return {
     dryRun: true,
     changes: { files: totalFiles, lines: totalLines },
     actions: {
-      unusedImports: { files: unusedFiles, lines: unusedLines, note: unusedNote },
+      unusedImports: {
+        files: unusedFiles,
+        lines: unusedLines,
+        note: unusedNote,
+      },
       format: { files: fmtFiles, lines: fmtLines, note: fmtNote },
-      deps: { candidates: depCandidates, note: depNote }
+      deps: { candidates: depCandidates, note: depNote },
     },
     guards: { maxFiles, maxLines, guardHit },
-    note: [notes.join('; '), guardNote].filter(Boolean).join(' | ') || 'python.heal dry-run ok'
+    note:
+      [notes.join("; "), guardNote].filter(Boolean).join(" | ") ||
+      "python.heal dry-run ok",
   };
 }

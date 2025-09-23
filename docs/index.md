@@ -24,15 +24,18 @@ Welcome to the ODAVL Studio documentation site. ODAVL Studio is an automated dev
 ## 📦 Installation
 
 ### npm (CLI)
+
 ```bash
 npm install -g @odavl/cli
 odavl scan
 ```
 
 ### VS Code Extension
+
 Install from the VS Code Marketplace or build from source.
 
 ### Docker
+
 ```bash
 docker build -t odavl-studio .
 docker run --rm -v "$(pwd):/workspace:ro" odavl-studio
@@ -62,4 +65,4 @@ ODAVL Studio is open source. See the repository for licensing details.
 
 ---
 
-*Built with ❤️ for automated development governance*
+_Built with ❤️ for automated development governance_

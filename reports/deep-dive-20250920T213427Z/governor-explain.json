@@ -1,1 +1,23 @@
-﻿{"pr":{"action":"pr","allowedNow":false,"reason":"PR limit reached: 14/5 per day","limits":{"prsPerDay":5,"ciMinutesPerHour":60,"maxConcurrentShadows":3},"usage":{"openPrsToday":14,"shadowsInProgress":0,"estCiMinsHour":0}},"shadow":{"action":"shadow","allowedNow":true,"limits":{"prsPerDay":5,"ciMinutesPerHour":60,"maxConcurrentShadows":3},"usage":{"openPrsToday":14,"shadowsInProgress":0,"estCiMinsHour":0}}}
+﻿{
+  "pr": {
+    "action": "pr",
+    "allowedNow": false,
+    "reason": "PR limit reached: 14/5 per day",
+    "limits": {
+      "prsPerDay": 5,
+      "ciMinutesPerHour": 60,
+      "maxConcurrentShadows": 3
+    },
+    "usage": { "openPrsToday": 14, "shadowsInProgress": 0, "estCiMinsHour": 0 }
+  },
+  "shadow": {
+    "action": "shadow",
+    "allowedNow": true,
+    "limits": {
+      "prsPerDay": 5,
+      "ciMinutesPerHour": 60,
+      "maxConcurrentShadows": 3
+    },
+    "usage": { "openPrsToday": 14, "shadowsInProgress": 0, "estCiMinsHour": 0 }
+  }
+}

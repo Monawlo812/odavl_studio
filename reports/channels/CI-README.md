@@ -44,18 +44,22 @@ Each PR gets a governance report comment with:
 ## 🎛️ ODAVL Studio Governance Report
 
 ### 📊 Governor Status
+
 - PR Budget: 2/5 PRs used today
 - Automation: ✅ Allowed
 
-### 🔍 Health Scan  
+### 🔍 Health Scan
+
 - Health Score: 8.5/10
 - Issues Found: 3
 
 ### 🔧 Healing Plan
+
 - Files to heal: 2
 - Estimated changes: 15 lines
 
 ### 🚀 Next Steps
+
 - ✅ Governor allows automation
 - 🔄 Shadow CI will run automatically
 ```
@@ -63,6 +67,7 @@ Each PR gets a governance report comment with:
 ### 🚀 Installation Steps
 
 1. **Create the GitHub App**:
+
    ```bash
    ./infra/github-app/bootstrap.sh
    ```
@@ -98,7 +103,7 @@ governor:
 ### 🚨 Error Handling
 
 - **Governor blocks**: PR comment explains limit reached, retry timing
-- **Scan failures**: Graceful degradation with manual intervention guidance  
+- **Scan failures**: Graceful degradation with manual intervention guidance
 - **Webhook failures**: Retry logic and notification systems
 - **Rate limiting**: Respect GitHub API limits with exponential backoff
 

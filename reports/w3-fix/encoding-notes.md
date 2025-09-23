@@ -1,6 +1,7 @@
 Encoding Fix Applied:
 
 FILES CHANGED:
+
 1. examples/golden-repo/src/example.ts - RECREATED as UTF-8
    - Removed corrupted binary file
    - Created clean TypeScript example with proper UTF-8 encoding
@@ -16,6 +17,7 @@ FILES CHANGED:
    - Consistent formatting standards in place
 
 BEFORE/AFTER:
+
 - BEFORE: File detected as binary, caused "Invalid character" TS errors
 - AFTER: Clean UTF-8 text file, should compile successfully
 

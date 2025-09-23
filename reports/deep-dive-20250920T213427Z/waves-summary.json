@@ -3,17 +3,13 @@
     "status": "complete",
     "capabilities": [
       "Monorepo architecture with pnpm workspaces",
-      "CLI foundation with basic command structure", 
+      "CLI foundation with basic command structure",
       "VS Code extension skeleton",
       "Package structure (apps/, packages/, examples/)",
       "CI/CD scaffold with GitHub Actions",
       "Golden repository test target"
     ],
-    "evidence": [
-      "workspaces.json",
-      "ci.yml", 
-      "cli-commands.json"
-    ]
+    "evidence": ["workspaces.json", "ci.yml", "cli-commands.json"]
   },
   "wave2": {
     "status": "complete",
@@ -29,7 +25,7 @@
     "evidence": [
       "governor-explain.json",
       "heal-esm-dry.json",
-      "shadow-status.json", 
+      "shadow-status.json",
       "undo-show.json",
       "telemetry-summary.json",
       "vscode-ui.json",

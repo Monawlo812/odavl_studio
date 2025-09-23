@@ -23,13 +23,14 @@ Thank you for your interest in contributing! This guide outlines our development
 The following paths are automatically excluded from automated changes and require manual review:
 
 - `security/` - Security-related configuration
-- `*.spec.*` - Test files and specifications  
+- `*.spec.*` - Test files and specifications
 - `public-api/` - Public API definitions
 - `.github/workflows/` - CI/CD pipelines
 
 ### Code Style
 
 #### Commit Messages
+
 ```
 type(scope): brief description
 
@@ -37,11 +38,12 @@ Detailed explanation if needed
 
 Examples:
 feat(cli): add weekly telemetry summary command
-fix(governor): handle rate limit edge case  
+fix(governor): handle rate limit edge case
 docs(readme): update installation instructions
 ```
 
 #### TypeScript Standards
+
 - Use strict mode and explicit types
 - Prefer composition over inheritance
 - Include JSDoc for public APIs
@@ -50,11 +52,13 @@ docs(readme): update installation instructions
 ### Testing Requirements
 
 #### Unit Tests
+
 - Test new functionality with appropriate coverage
 - Mock external dependencies (GitHub API, file system)
 - Include edge cases and error conditions
 
 #### E2E Tests
+
 - Update `scripts/e2e-golden.mjs` for CLI changes
 - Ensure tests pass in clean environment
 - Document any new test artifacts in `reports/`
@@ -81,6 +85,7 @@ docs(readme): update installation instructions
 ## Development Environment
 
 ### Local Testing
+
 ```bash
 # Test CLI commands locally
 node apps/cli/dist/index.js scan
@@ -92,6 +97,7 @@ cd examples/golden-repo
 ```
 
 ### VS Code Extension Development
+
 ```bash
 # Build extension
 pnpm --filter @odavl/vscode-ext run build

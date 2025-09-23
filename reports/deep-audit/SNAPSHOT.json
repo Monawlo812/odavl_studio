@@ -9,7 +9,7 @@
   "system_snapshot": {
     "toolchain": {
       "node": "v22.19.0",
-      "pnpm": "10.17.0", 
+      "pnpm": "10.17.0",
       "git": "2.50.1.windows.1",
       "gh": "2.79.0",
       "platform": "Windows"
@@ -30,7 +30,7 @@
     "functionality": {
       "cli_commands": 11,
       "cli_scan": "working",
-      "cli_heal": "working", 
+      "cli_heal": "working",
       "governor": "operational",
       "e2e_tests": "passing"
     },

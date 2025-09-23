@@ -1,1 +1,8 @@
-﻿{"changes":[],"mode":"dry-run","pass":true,"recipe":"deps-patch","stats":{},"validators":{}}
+﻿{
+  "changes": [],
+  "mode": "dry-run",
+  "pass": true,
+  "recipe": "deps-patch",
+  "stats": {},
+  "validators": {}
+}

@@ -19,7 +19,7 @@
   },
   {
     "id": "deps-patch-minor",
-    "version": "1.0.0", 
+    "version": "1.0.0",
     "scope": "deps",
     "description": "Dependencies patch/minor upgrade with OSV security integration",
     "guards": {

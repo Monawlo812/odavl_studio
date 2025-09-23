@@ -2,6 +2,7 @@
 try {
   require('../dist/index.js');
 } catch (e) {
-  console.log('ODAVL CLI: build missing. Run `pnpm build` or see README.');
-  process.exit(0);
+  // eslint-disable-next-line no-console
+  console.error(e);
+  process.exit(1);
 }

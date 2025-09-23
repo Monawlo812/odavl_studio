@@ -17,12 +17,7 @@
     "step": "L-2",
     "file": "apps/cli/package.json",
     "type": "json",
-    "keys": [
-      "bin.odavl",
-      "files",
-      "engines.node",
-      "scripts.prepublishOnly"
-    ],
+    "keys": ["bin.odavl", "files", "engines.node", "scripts.prepublishOnly"],
     "exists": true,
     "notes": "All required keys present"
   },
@@ -37,12 +32,7 @@
     "step": "L-3",
     "file": "apps/vscode-ext/package.json",
     "type": "json",
-    "keys": [
-      "displayName",
-      "categories",
-      "galleryBanner",
-      "icon"
-    ],
+    "keys": ["displayName", "categories", "galleryBanner", "icon"],
     "exists": true,
     "notes": "All required keys present"
   },
@@ -64,9 +54,7 @@
     "step": "L-4",
     "file": "infra/github-app/manifest.json",
     "type": "json",
-    "keys": [
-      "default_permissions"
-    ],
+    "keys": ["default_permissions"],
     "exists": true,
     "notes": "All required keys present"
   },
@@ -123,9 +111,7 @@
     "step": "L-7",
     "file": "package.json",
     "type": "json",
-    "keys": [
-      "scripts.weekly"
-    ],
+    "keys": ["scripts.weekly"],
     "exists": true,
     "notes": "All required keys present"
   },

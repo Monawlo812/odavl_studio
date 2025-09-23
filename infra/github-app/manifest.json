@@ -6,9 +6,7 @@
     "url": "https://your-domain.com/api/webhooks/github"
   },
   "redirect_url": "https://your-domain.com/auth/github/callback",
-  "callback_urls": [
-    "https://your-domain.com/auth/github/callback"
-  ],
+  "callback_urls": ["https://your-domain.com/auth/github/callback"],
   "setup_url": "https://github.com/Monawlo812/odavl_studio/blob/main/docs/github-app-setup.md",
   "public": false,
   "default_permissions": {
@@ -17,9 +15,5 @@
     "checks": "write",
     "statuses": "write"
   },
-  "default_events": [
-    "pull_request",
-    "check_suite",
-    "workflow_run"
-  ]
+  "default_events": ["pull_request", "check_suite", "workflow_run"]
 }

@@ -49,7 +49,7 @@ docker run --rm \
 Create `docker-compose.yml`:
 
 ```yaml
-version: '3.8'
+version: "3.8"
 
 services:
   odavl:
@@ -60,7 +60,7 @@ services:
     environment:
       - GITHUB_TOKEN=${GITHUB_TOKEN}
     command: ["node", "apps/cli/dist/index.js", "scan"]
-    
+
   odavl-heal:
     build: .
     volumes:
@@ -68,11 +68,20 @@ services:
       - ./reports:/app/reports:rw
     environment:
       - GITHUB_TOKEN=${GITHUB_TOKEN}
-    command: ["node", "apps/cli/dist/index.js", "heal", "--recipe", "esm-hygiene", "--dry-run"]
+    command:
+      [
+        "node",
+        "apps/cli/dist/index.js",
+        "heal",
+        "--recipe",
+        "esm-hygiene",
+        "--dry-run",
+      ]
     profiles: ["heal"]
 ```
 
 Usage:
+
 ```bash
 # Run scan service
 docker-compose up odavl

@@ -5,7 +5,9 @@ const { spawnSync } = require("node:child_process");
 
 const DIR = "reports/w5/contracts";
 let files = [];
-try { files = readdirSync(DIR).filter(f => f.endsWith(".preview.test.js")); } catch {}
+try {
+  files = readdirSync(DIR).filter((f) => f.endsWith(".preview.test.js"));
+} catch {}
 const results = [];
 for (const f of files) {
   const p = join(DIR, f);
@@ -14,11 +16,14 @@ for (const f of files) {
 }
 const report = {
   total: results.length,
-  passed: results.filter(x => x.status === "pass").length,
-  failed: results.filter(x => x.status === "fail").length,
-  files: results
+  passed: results.filter((x) => x.status === "pass").length,
+  failed: results.filter((x) => x.status === "fail").length,
+  files: results,
 };
 mkdirSync("reports/w5", { recursive: true });
-writeFileSync("reports/w5/contracts-report.json", JSON.stringify(report, null, 2));
+writeFileSync(
+  "reports/w5/contracts-report.json",
+  JSON.stringify(report, null, 2),
+);
 console.log(JSON.stringify(report));
 process.exit(0); // preview mode never fails the pipeline

@@ -1,1 +1,16 @@
-{"compilerOptions":{"target":"ES2020","module":"commonjs","moduleResolution":"node","strict":true,"skipLibCheck":true,"outDir":"dist","rootDir":"src","esModuleInterop":true,"lib":["ES2020"],"types":["node","vscode"]},"include":["src"]}
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "strict": true,
+    "skipLibCheck": true,
+    "outDir": "dist",
+    "rootDir": "src",
+    "esModuleInterop": true,
+    "lib": ["ES2020"],
+    "types": ["node", "vscode"],
+    "jsx": "react-jsx"
+  },
+  "include": ["src"]
+}

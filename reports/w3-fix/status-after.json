@@ -10,14 +10,14 @@
   "telemetry": {
     "enabled": true,
     "mode": "anonymized",
-    "last24h": {"runs": 45, "prs": 0}
+    "last24h": { "runs": 45, "prs": 0 }
   },
   "ci": {
     "openPRs": 17,
     "lastRuns": [
-      {"status": "completed", "conclusion": "failure"},
-      {"status": "completed", "conclusion": "failure"}, 
-      {"status": "completed", "conclusion": "failure"}
+      { "status": "completed", "conclusion": "failure" },
+      { "status": "completed", "conclusion": "failure" },
+      { "status": "completed", "conclusion": "failure" }
     ]
   }
 }

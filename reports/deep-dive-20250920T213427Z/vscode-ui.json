@@ -1,14 +1,5 @@
 {
-  "buttons": [
-    "scan",
-    "heal",
-    "openReports"
-  ],
-  "webviewMessages": [
-    "result",
-    "scan",
-    "heal",
-    "openReports"
-  ],
+  "buttons": ["scan", "heal", "openReports"],
+  "webviewMessages": ["result", "scan", "heal", "openReports"],
   "excerpt": "import * as vscode from 'vscode';\r\nimport * as path from 'path';\r\nimport * as fs from 'fs';\r\n\r\nfunction readTelemetryMode(root: string): string {\r\n  try {\r\n    const content = fs.readFileSync(path.join(root, '.odavl.policy.yml'), 'utf8');\r\n    const telemetryRegex = /telemetry:\\s*(on|anonymized|off)/;\r\n    const match = telemetryRegex.exec(content);\r\n    return match ? match[1] : 'off';\r\n  } catch {\r\n    return 'off';\r\n  }\r\n}\r\n\r\nfunction createWebviewHtml(telemetryMode: string): string {\r\n  return `<!doctype html>\r\n<html>\r\n<head><title>ODAVL Studio</title></head>\r\n<body style=\"font-family:sans-serif;padding:16px\">\r\n  <h1>ODAVL Studio</h1>\r\n  <p>Enterprise Development Toolchain</p>\r\n  <div style=\"margin:8px 0;padding:8px;background:#f0f0f0;border-radius:4px\">\r\n    <strong>Telemetry: ${telemetryMode}</strong>\r\n  </div>\r\n  <div style=\"display:flex;gap:8px;margin:8px 0\">\r\n    <button onclick=\"vscode.postMessage({type:'scan'})\">Scan</button>\r\n    <button onclick=\"vscode.postMessage({type:'heal'})\">Heal</button>\r\n    <button onclick=\"vscode.postMessage({type:'openReports'})\">Reports</button>\r\n  </div>\r\n  <pre id=\"output\" style=\"background:#111;color:#eee;padding:8px;min-height:120px\"></pre>\r\n  <script>\r\n    const vscode = acquireVsCodeApi();\r\n    const output = document.getElementById('output');\r\n    \r\n    window.addEventListener('message', event => {\r\n      const message = event.data;\r\n      if (message.type === 'result') {\r\n        output.textContent += JSON.stringify(message.data, null, 2) + '\\\\n';\r\n      }\r\n    });\r\n  </script>\r\n</body>\r\n</html>`;\r\n}\r\n\r\nasync function runCliCommand(root: string, command: string[]): Promise<any> {\r\n  return new Promise((resolve) => {\r\n    const { spawn } = require('child_process');\r\n    const child = spawn(process.execPath, [\r"
 }

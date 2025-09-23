@@ -2,7 +2,7 @@
 
 ## Prerequisites
 
-- Node.js 18+ 
+- Node.js 18+
 - pnpm 9+
 - Git
 
@@ -24,16 +24,18 @@ pnpm --filter @odavl/cli run build
 ## Basic Operations
 
 ### Health Scan
+
 ```bash
 node apps/cli/dist/index.js scan
 ```
 
 ### Code Healing (Dry-Run)
+
 ```bash
 # ESM import fixes
 node apps/cli/dist/index.js heal --recipe esm-hygiene --dry-run
 
-# Dependency updates  
+# Dependency updates
 node apps/cli/dist/index.js heal --recipe deps-patch --dry-run
 
 # Remove unused code
@@ -41,6 +43,7 @@ node apps/cli/dist/index.js heal --recipe remove-unused --dry-run
 ```
 
 ### CI Operations
+
 ```bash
 # Trigger workflow
 node apps/cli/dist/index.js shadow run --dry-run
@@ -50,6 +53,7 @@ node apps/cli/dist/index.js shadow status
 ```
 
 ### PR Management
+
 ```bash
 # Create PR with evidence
 node apps/cli/dist/index.js pr open --explain --dry-run

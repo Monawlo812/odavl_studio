@@ -7,7 +7,7 @@
     "url": "https://github.com/Monawlo812/odavl_studio/actions/runs/17893487446"
   },
   {
-    "conclusion": "failure", 
+    "conclusion": "failure",
     "databaseId": 17893319535,
     "headBranch": "odavl/e2e-2025-09-21T12-01-12-690Z",
     "status": "completed",
@@ -16,7 +16,7 @@
   {
     "conclusion": "failure",
     "databaseId": 17893318908,
-    "headBranch": "odavl/e2e-2025-09-21T12-01-12-690Z", 
+    "headBranch": "odavl/e2e-2025-09-21T12-01-12-690Z",
     "status": "completed",
     "url": "https://github.com/Monawlo812/odavl_studio/actions/runs/17893318908"
   },
@@ -24,7 +24,7 @@
     "conclusion": "failure",
     "databaseId": 17893262536,
     "headBranch": "odavl/launch-20250921",
-    "status": "completed", 
+    "status": "completed",
     "url": "https://github.com/Monawlo812/odavl_studio/actions/runs/17893262536"
   },
   {

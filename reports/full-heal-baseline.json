@@ -1,0 +1,16 @@
+{
+  "js": { "eslint": "not-run", "tsc": "not-run" },
+  "py": { "ruff": "not-run", "tests": "not-run" },
+  "go": { "lint": "not-run", "tests": "not-run" },
+  "java": { "lint": "not-run", "tests": "not-run" },
+  "security": { "osv": "not-run" },
+  "scripts": {
+    "e2e-polyglot": "ok",
+    "compute-tokens": "ok",
+    "planner-ablation": "ok",
+    "mutation-preview": "ok",
+    "verify-contracts": "ok",
+    "w5-finalize": "ok"
+  },
+  "note": "Most language tools not available in this environment; only Node.js scripts ran."
+}

@@ -1,1 +1,9 @@
-﻿{"action":"heal","mode":"dry-run","pass":false,"recipe":"remove-unused","stderr":"","stdout":"\nC:\\Users\\sabou\\odavl_studio\\examples\\golden-repo\\src\\example.ts\n  5:3  error  Parsing error: Invalid character\n\nÔ£û 1 problem (1 error, 0 warnings)\n\nundefined\nC:\\Users\\sabou\\odavl_studio\\examples\\golden-repo:\r\nÔÇëERR_PNPM_RECURSIVE_EXEC_FIRST_FAILÔÇë Command \"eslint\" not found\n","tool":"odavl"}
+﻿{
+  "action": "heal",
+  "mode": "dry-run",
+  "pass": false,
+  "recipe": "remove-unused",
+  "stderr": "",
+  "stdout": "\nC:\\Users\\sabou\\odavl_studio\\examples\\golden-repo\\src\\example.ts\n  5:3  error  Parsing error: Invalid character\n\nÔ£û 1 problem (1 error, 0 warnings)\n\nundefined\nC:\\Users\\sabou\\odavl_studio\\examples\\golden-repo:\r\nÔÇëERR_PNPM_RECURSIVE_EXEC_FIRST_FAILÔÇë Command \"eslint\" not found\n",
+  "tool": "odavl"
+}

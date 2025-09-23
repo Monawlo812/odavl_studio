@@ -1,0 +1,49 @@
+{
+  "project": "ODAVL Studio",
+  "versioning": "0.4.0 (Waves 1–5 complete)",
+  "branches": ["main", "odavl/finalcheck2-20250922", "odavl/bootstrap-20250922"],
+  "waves_done": [1,2,3,4,5],
+  "waves_remaining": [6,7,8,9],
+  "components": ["CLI", "VS Code Extension", "n8n", "Shadow CI"],
+  "policies": ".odavl.policy.yml",
+  "gates": ".odavl/gates.yml",
+  "ci": {
+    "workflows": ["ci.yml", "release.yml", "pages.yml"],
+    "matrix": {"node": [18,20]},
+    "shadow": true
+  },
+  "capabilities": [
+    "scan", "heal", "status", "verify", "pr open", "shadow run", "undo", "esm-hygiene", "remove-unused", "deps-patch-minor"
+  ],
+  "evidence_files": [
+    "reports/deep-dive/SNAPSHOT.json",
+    "reports/deep-dive/POLICY.json",
+    "reports/deep-dive/GATES.json",
+    "reports/deep-dive/HEALERS-INDEX.json",
+    "reports/Wave4-FinalCheck.md",
+    "reports/w4-finalcheck.json",
+    "CHANGELOG.md"
+  ],
+  "risks": [
+    "Weak/absent tests in some packs",
+    "Telemetry not fully wired",
+    "Some scripts stubbed or partial",
+    "Ownership docs light"
+  ],
+  "score": {
+    "architecture": 2,
+    "governance": 2,
+    "ci": 2,
+    "docs": 1.5,
+    "mvp": 1.5,
+    "total": 9
+  },
+  "best_feature": "Shadow CI + Policy/Gate Safety Net",
+  "next_actions": [
+    "Harden verify/status scripts and add missing tests",
+    "Wire telemetry and document privacy modes",
+    "Run golden-repo E2E and snapshot results",
+    "Prepare public release PR and polish docs",
+    "Tune risk/gate deltas and enforce in PR flow"
+  ]
+}

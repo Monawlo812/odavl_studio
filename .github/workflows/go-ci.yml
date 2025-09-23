@@ -1,16 +1,16 @@
 name: Go CI (W5)
 on:
   push:
-    branches: [ "odavl/**" ]
+    branches: ["odavl/**"]
   pull_request:
-    branches: [ "**" ]
+    branches: ["**"]
 
 jobs:
   go:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        go: [ "1.22.x", "1.23.x" ]
+        go: ["1.22.x", "1.23.x"]
     steps:
       - uses: actions/checkout@v4
       - name: Setup Go

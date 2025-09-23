@@ -1,1 +1,25 @@
-{"name":"golden-repo","version":"0.3.0","private":true,"type":"module","scripts":{"build":"tsc -p tsconfig.json","type-check":"tsc --noEmit","lint":"eslint .","format":"prettier -w ."},"dependencies":{"lodash":"4.17.15"},"devDependencies":{"@eslint/js":"^9.36.0","@typescript-eslint/eslint-plugin":"^8.44.0","@typescript-eslint/parser":"^8.44.0","eslint":"^9.36.0","eslint-plugin-unused-imports":"^4.2.0","prettier":"^3.6.2","typescript":"^5.9.2"}}
+{
+  "name": "golden-repo",
+  "version": "0.3.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "type-check": "tsc --noEmit",
+    "lint": "eslint .",
+    "format": "prettier -w .",
+    "test": "jest --config jest.config.cjs"
+  },
+  "dependencies": {
+    "lodash": "4.17.15"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.36.0",
+    "@typescript-eslint/eslint-plugin": "^8.44.0",
+    "@typescript-eslint/parser": "^8.44.0",
+    "eslint": "^9.36.0",
+    "eslint-plugin-unused-imports": "^4.2.0",
+    "prettier": "^3.6.2",
+    "typescript": "^5.9.2"
+  }
+}

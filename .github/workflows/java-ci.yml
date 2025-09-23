@@ -1,15 +1,15 @@
 name: Java CI (W5)
 on:
   push:
-    branches: [ "odavl/**" ]
+    branches: ["odavl/**"]
   pull_request:
-    branches: [ "**" ]
+    branches: ["**"]
 
 jobs:
   java:
     runs-on: ubuntu-latest
     strategy:
-      matrix: { jdk: [ "17", "21" ] }
+      matrix: { jdk: ["17", "21"] }
     steps:
       - uses: actions/checkout@v4
       - name: Setup Java

@@ -1,0 +1,14 @@
+version: 1
+roles:
+  - name: viewer
+    allow: [ "report.read" ]
+  - name: runner
+    allow: [ "scan.run", "heal.run", "shadow.run" ]
+  - name: reviewer
+    allow: [ "pr.open", "waiver.create" ]
+  - name: admin
+    allow: [ "*" ]
+scopes:
+  - type: repo
+    id: default
+    protectedPaths: ["**/security/**","**/*.spec.*","**/public-api/**"]

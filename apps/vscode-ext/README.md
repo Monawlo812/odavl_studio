@@ -20,6 +20,7 @@ Access via Command Palette (`Ctrl+Shift+P`):
 ## Status Bar Integration
 
 The extension adds status indicators to VS Code's status bar:
+
 - **Governor Status**: Shows current policy state (allowed/blocked)
 - **Telemetry Mode**: Displays current telemetry setting (on/off/anonymized)
 
@@ -63,13 +64,17 @@ studio:
 ## Installation
 
 ### From VS Code Marketplace
+
 Search for "ODAVL Studio" in the Extensions view (`Ctrl+Shift+X`) or install via:
+
 ```
 ext install odavl.odavl-studio
 ```
 
 ### From Package
+
 Download the latest `.vsix` from [Releases](https://github.com/Monawlo812/odavl_studio/releases) and install:
+
 ```bash
 code --install-extension odavl-studio-0.3.0.vsix
 ```

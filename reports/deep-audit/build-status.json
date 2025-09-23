@@ -3,7 +3,7 @@
   "build_status": {
     "overall": "partial_success",
     "cli": "success",
-    "vscode_ext": "success", 
+    "vscode_ext": "success",
     "policy": "success",
     "codemods": "success",
     "golden_repo": "failed_encoding_issue",

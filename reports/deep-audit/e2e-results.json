@@ -4,7 +4,7 @@
     "scan_command": {
       "status": "success",
       "output": "valid_json",
-      "metrics": {"eslint": 17, "typeErrors": 0}
+      "metrics": { "eslint": 17, "typeErrors": 0 }
     },
     "heal_dry_run": {
       "status": "success",
@@ -14,7 +14,7 @@
       "chunks": "none_found"
     },
     "governor_explain": {
-      "status": "success", 
+      "status": "success",
       "output": "valid_json",
       "pr_allowed": true,
       "shadow_allowed": true,

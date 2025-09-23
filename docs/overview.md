@@ -32,4 +32,4 @@ ODAVL Studio is an **automated development governance platform** that enables sa
 **VS Code**: `@odavl/vscode-ext` - Developer UI integration  
 **Codemods**: `@odavl/codemods` - Code transformation engine  
 **Policy**: `@odavl/policy` - Governor rate limiting system  
-**Reports**: `reports/` - Telemetry, logs, and undo snapshots  
+**Reports**: `reports/` - Telemetry, logs, and undo snapshots

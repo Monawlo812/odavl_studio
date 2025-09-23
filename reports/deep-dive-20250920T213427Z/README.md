@@ -2,7 +2,7 @@
 
 **Analysis ID**: deep-dive-20250920T213427Z  
 **Generated**: 2025-09-20 21:34:27 UTC  
-**Repository**: odavl_studio  
+**Repository**: odavl_studio
 
 ## Summary
 
@@ -14,13 +14,13 @@ Complete evidence-backed analysis of ODAVL Studio automated development governan
 ✅ **Comprehensive CLI**: 8 main commands with structured JSON output  
 ✅ **Advanced Safety**: Risk budgets, governor limits, undo system  
 ✅ **VS Code Integration**: WebView panel with live CLI integration  
-✅ **Enterprise Ready**: Policy-driven governance, telemetry, CI/Shadow workflows  
+✅ **Enterprise Ready**: Policy-driven governance, telemetry, CI/Shadow workflows
 
 ## Evidence Archive
 
 **Total Files Generated**: 39  
 **Location**: `reports/deep-dive-20250920T213427Z/`  
-**Completeness**: 100% of specified data points captured  
+**Completeness**: 100% of specified data points captured
 
 ## Core Files
 

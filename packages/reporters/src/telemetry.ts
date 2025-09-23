@@ -1,6 +1,6 @@
-import { createHash } from 'crypto';
-import { writeFileSync, mkdirSync, existsSync } from 'fs';
-import { join } from 'path';
+import { createHash } from "crypto";
+import { writeFileSync, mkdirSync, existsSync } from "fs";
+import { join } from "path";
 
 export type TelemetryMode = "off" | "on" | "anonymized";
 
@@ -20,12 +20,12 @@ interface SpanContext {
 }
 
 function hash(input: string): string {
-  return createHash('sha256').update(input).digest('hex').slice(0, 16);
+  return createHash("sha256").update(input).digest("hex").slice(0, 16);
 }
 
 function ensureReportsDir(): void {
   try {
-    const reportsPath = join(process.cwd(), 'reports');
+    const reportsPath = join(process.cwd(), "reports");
     if (!existsSync(reportsPath)) {
       mkdirSync(reportsPath, { recursive: true });
     }
@@ -37,9 +37,9 @@ function ensureReportsDir(): void {
 function writeToLog(span: TelemetrySpan): void {
   try {
     ensureReportsDir();
-    const logPath = join(process.cwd(), 'reports', 'telemetry.log.jsonl');
-    const line = JSON.stringify(span) + '\n';
-    writeFileSync(logPath, line, { flag: 'a' });
+    const logPath = join(process.cwd(), "reports", "telemetry.log.jsonl");
+    const line = JSON.stringify(span) + "\n";
+    writeFileSync(logPath, line, { flag: "a" });
   } catch {
     // Never throw
   }
@@ -51,24 +51,33 @@ async function sendToEndpoint(span: TelemetrySpan): Promise<void> {
     if (!endpoint) return;
 
     await fetch(endpoint, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(span)
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(span),
     });
-    
+
     // Best-effort, ignore response
   } catch {
     // Ignore all errors
   }
 }
 
-function createBaseSpan(ts: string, kind: string, durMs: number, ok: boolean): TelemetrySpan {
+function createBaseSpan(
+  ts: string,
+  kind: string,
+  durMs: number,
+  ok: boolean,
+): TelemetrySpan {
   return { ts, kind, durMs, ok };
 }
 
-function addContextToSpan(span: TelemetrySpan, mode: TelemetryMode, ctx?: SpanContext): void {
+function addContextToSpan(
+  span: TelemetrySpan,
+  mode: TelemetryMode,
+  ctx?: SpanContext,
+): void {
   if (!ctx) return;
-  
+
   if (mode === "on") {
     if (ctx.repo) span.repoHash = ctx.repo;
     if (ctx.branch) span.branchHash = ctx.branch;
@@ -78,27 +87,34 @@ function addContextToSpan(span: TelemetrySpan, mode: TelemetryMode, ctx?: SpanCo
   }
 }
 
-function addExtraToSpan(span: TelemetrySpan, extra?: Record<string, any>): void {
+function addExtraToSpan(
+  span: TelemetrySpan,
+  extra?: Record<string, any>,
+): void {
   if (!extra) return;
-  
+
   const filteredExtra: Record<string, string | number> = {};
   for (const [key, value] of Object.entries(extra)) {
-    if (typeof value === 'string' || typeof value === 'number') {
+    if (typeof value === "string" || typeof value === "number") {
       filteredExtra[key] = value;
     }
   }
-  
+
   if (Object.keys(filteredExtra).length > 0) {
     span.extra = filteredExtra;
   }
 }
 
-export function startSpan(kind: string, mode: TelemetryMode, ctx?: SpanContext) {
+export function startSpan(
+  kind: string,
+  mode: TelemetryMode,
+  ctx?: SpanContext,
+) {
   if (mode === "off") {
     return {
       end(_ok: boolean, _extra?: Record<string, any>): void {
         // No-op for off mode
-      }
+      },
     };
   }
 
@@ -109,15 +125,15 @@ export function startSpan(kind: string, mode: TelemetryMode, ctx?: SpanContext) 
     end(ok: boolean, extra?: Record<string, any>): void {
       const durMs = Date.now() - startTime;
       const span = createBaseSpan(ts, kind, durMs, ok);
-      
+
       addContextToSpan(span, mode, ctx);
       addExtraToSpan(span, extra);
-      
+
       writeToLog(span);
-      
+
       if (process.env.ODAVL_TELEMETRY_ENDPOINT) {
         sendToEndpoint(span).catch(() => {}); // Fire and forget
       }
-    }
+    },
   };
 }

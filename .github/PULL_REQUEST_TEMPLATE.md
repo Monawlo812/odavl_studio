@@ -1,32 +1,16 @@
-# PR: What / Why / Risk / Verify / Metrics
+Title:
 
-## What
-<!-- Brief summary + key files touched -->
+What:
 
-## Why
-<!-- Problem this fixes / references -->
+Why:
 
-## Risk
-- Lines: <!-- e.g., 32 --> | Files: <!-- e.g., 9 --> | Protected: 0 | Tokens: <!-- e.g., 2 -->
-- Risk Class: Low | Waivers (if any): <!-- id + expiry -->
+Risk:
 
-## Verify
-- tsc: ✅/❌ | tests: ✅/❌ | build: ✅/❌ | shadow: ✅/❌ (matrix: <!-- e.g., node18,node20 -->)
-- Gates: Types ✅ | ESLint ✅ | Bundle ✅ | Build ✅ | Policy ✅ | Shadow ✅
+Verify:
 
-## Metrics (Δ)
-- ESLint: <!-- -17 --> | TypeErrors: <!-- 0 --> | Build(ms): <!-- -500 --> | Bundle(KB): <!-- -4 -->
+Metrics:
 
-## Attestation
-- Link: <!-- cosign/sigstore or reports path -->
+Attestation:
 
-## Repro
-```bash
-pnpm i && pnpm odavl report show --last
-```
+Notes:
 
-## Checklist
-- [ ] Follows .odavl.policy.yml
-- [ ] No protected paths touched
-- [ ] Adds/updates docs if needed
-- [ ] Linked issues

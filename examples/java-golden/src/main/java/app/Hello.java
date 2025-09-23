@@ -1,8 +1,11 @@
 package app;
 
-import java.util.List; // unused on purpose
+
 
 public class Hello {
-  public static String greet() { return "hello"; }
-  public static void main(String[] args) { System.out.println(greet()); }
+  private static final String GREETING = "hello";
+  private static final java.util.logging.Logger LOGGER = java.util.logging.Logger.getLogger(Hello.class.getName());
+  public static void main(String[] args) {
+    LOGGER.info(GREETING);
+  }
 }

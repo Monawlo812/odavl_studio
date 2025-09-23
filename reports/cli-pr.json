@@ -1,1 +1,11 @@
-﻿{"tool":"odavl","action":"pr","subaction":"open","wouldOpen":true,"base":"odavl/bootstrap-20250919","head":"odavl/cli-pr-evidence-20250920","title":"ODAVL Audit Dry-Run","bodyPreview":"**What**: .github/workflows/ci.yml, .gitignore, README.md, apps/cli/package.json, apps/cli/src/index...","pass":true}
+﻿{
+  "tool": "odavl",
+  "action": "pr",
+  "subaction": "open",
+  "wouldOpen": true,
+  "base": "odavl/bootstrap-20250919",
+  "head": "odavl/cli-pr-evidence-20250920",
+  "title": "ODAVL Audit Dry-Run",
+  "bodyPreview": "**What**: .github/workflows/ci.yml, .gitignore, README.md, apps/cli/package.json, apps/cli/src/index...",
+  "pass": true
+}

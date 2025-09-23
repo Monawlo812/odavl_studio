@@ -1,0 +1,22 @@
+{
+  "tiers": [
+    {
+      "name": "Free",
+      "features": ["Scan", "Heal (dry-run)", "Reports"],
+      "limits": { "repos": 1, "runsPerMonth": 100 },
+      "sla": "Community"
+    },
+    {
+      "name": "Pro",
+      "features": ["All Free", "PR", "Shadow", "Undo"],
+      "limits": { "repos": 5, "runsPerMonth": 2000 },
+      "sla": "99.5%"
+    },
+    {
+      "name": "Enterprise",
+      "features": ["All Pro", "Org", "Policy", "Audit"],
+      "limits": { "repos": "unlimited", "runsPerMonth": "unlimited" },
+      "sla": "99.9%"
+    }
+  ]
+}

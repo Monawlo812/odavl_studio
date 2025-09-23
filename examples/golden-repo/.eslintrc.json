@@ -1,0 +1,13 @@
+{
+  "env": {
+    "jest/globals": true
+  },
+  "plugins": ["jest"],
+  "extends": ["plugin:jest/recommended"],
+  "overrides": [
+    {
+      "files": ["jest.config.js", "jest.config.cjs"],
+      "rules": { "no-undef": "off" }
+    }
+  ]
+}

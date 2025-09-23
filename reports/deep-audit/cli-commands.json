@@ -11,11 +11,17 @@
         "output": "json_structured"
       },
       {
-        "name": "heal", 
+        "name": "heal",
         "description": "Fix code issues (--recipe remove-unused, --apply)",
         "recipes": ["esm-hygiene", "remove-unused"],
         "modes": ["dry-run", "apply"],
-        "flags": ["--recipe", "--apply", "--dry-run", "--max-lines", "--max-files"]
+        "flags": [
+          "--recipe",
+          "--apply",
+          "--dry-run",
+          "--max-lines",
+          "--max-files"
+        ]
       },
       {
         "name": "branch create",

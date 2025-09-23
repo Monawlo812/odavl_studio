@@ -17,8 +17,6 @@
     "vscode": "^1.85.0"
   },
   "activationEvents": [
-    "onStartupFinished",
-    "onCommand:odavl.scanHeal"
   ],
   "main": "dist/extension.js",
   "repository": {
@@ -145,6 +143,12 @@
   },
   "devDependencies": {
     "@types/vscode": "^1.85.0",
-    "@types/node": "^20"
+    "@types/node": "^20",
+    "@types/react": "^18.2.47",
+    "@types/react-dom": "^18.2.17"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   }
 }

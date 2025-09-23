@@ -21,17 +21,20 @@ labels: ["partner", "onboarding"]
 ## Setup Phase
 
 ### 1. Permissions & Access
+
 - [ ] GitHub App installed with required permissions
 - [ ] Repository access granted to ODAVL Studio
 - [ ] Team members added to partner workspace
 
 ### 2. Configuration
+
 - [ ] `.odavl.policy.yml` created with initial settings
 - [ ] Governor limits configured (PRs/day, CI minutes)
 - [ ] Wave windows defined for automation timing
 - [ ] Telemetry preference set (on/off/anonymized)
 
 ### 3. CI Integration
+
 - [ ] GitHub Actions workflows validated
 - [ ] Shadow workflow triggers configured
 - [ ] Branch protection rules reviewed
@@ -40,11 +43,13 @@ labels: ["partner", "onboarding"]
 ## Genesis Run
 
 ### 4. First Scan
+
 - [ ] Initial codebase scan completed
 - [ ] Baseline metrics captured (ESLint, TypeScript errors)
 - [ ] Health report reviewed with partner
 
 ### 5. First Heal
+
 - [ ] Test healing recipe selected (esm-hygiene recommended)
 - [ ] Dry-run executed and reviewed
 - [ ] First automated PR created with safety limits
@@ -53,12 +58,14 @@ labels: ["partner", "onboarding"]
 ## Monitoring Setup
 
 ### 6. KPI Baseline
+
 - [ ] Weekly telemetry summary configured
 - [ ] Success metrics defined with partner
 - [ ] Escalation thresholds established
 - [ ] Reporting cadence agreed upon
 
 ### 7. Documentation
+
 - [ ] Partner-specific runbook created
 - [ ] Team training materials provided
 - [ ] Support channels established
