@@ -30,6 +30,8 @@
   "odavl:immune:status": "node scripts/immune/sensors.mjs"
   ,
   "odavl:immune:triage": "node scripts/immune/triage.mjs"
+  ,
+  "odavl:immune:triage:verify": "node scripts/immune/triage-verify.mjs"
   },
   "devDependencies": {
     "@cyclonedx/cyclonedx-library": "^9.0.0",
