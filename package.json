@@ -37,6 +37,8 @@
   ,
   "odavl:immune:heal:eslint": "node scripts/immune/heal.mjs eslint",
   "odavl:immune:heal:plan": "node scripts/immune/heal.mjs plan"
+  ,
+  "odavl:immune:ab:suggest": "node scripts/immune/antibodies.mjs suggest"
   },
   "devDependencies": {
     "@cyclonedx/cyclonedx-library": "^9.0.0",
