@@ -26,6 +26,8 @@
   "studio:build": "pnpm --filter @odavl/vscode-ext build"
   ,
   "odavl:immune:p0": "node scripts/immune/p0-attest.mjs"
+  ,
+  "odavl:immune:status": "node scripts/immune/sensors.mjs"
   },
   "devDependencies": {
     "@cyclonedx/cyclonedx-library": "^9.0.0",
