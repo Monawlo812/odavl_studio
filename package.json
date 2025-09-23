@@ -32,6 +32,8 @@
   "odavl:immune:triage": "node scripts/immune/triage.mjs"
   ,
   "odavl:immune:triage:verify": "node scripts/immune/triage-verify.mjs"
+  ,
+  "odavl:immune:vaccinate:dry": "node scripts/immune/vaccines-dry.mjs"
   },
   "devDependencies": {
     "@cyclonedx/cyclonedx-library": "^9.0.0",
