@@ -41,6 +41,9 @@
   "odavl:immune:ab:suggest": "node scripts/immune/antibodies.mjs suggest"
   ,
   "odavl:immune:ab:apply": "node scripts/immune/antibodies-apply.mjs --id=eslint-no-unused-vars-001 --dry"
+  ,
+  "odavl:immune:verify": "node scripts/immune/verify.mjs",
+  "odavl:immune:undo":   "node scripts/immune/undo.mjs"
   },
   "devDependencies": {
     "@cyclonedx/cyclonedx-library": "^9.0.0",
