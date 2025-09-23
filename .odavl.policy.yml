@@ -1,3 +1,19 @@
+risk_budget:
+  daily_tokens: 3
+  per_batch_max_changes: 40
+  per_batch_max_files: 10
+self_heal:
+  enable: true
+  allow_autofix: [eslint, prettier]
+  allowed_dep_upgrades: [patch, minor]
+  require_shadow_ci_pass: true
+vaccines:
+  enable: true
+  deny_apis: ["legacyX.*", "fs.promises.readdirSync"]
+  enforce_ts: ["noImplicitAny", "noUnusedLocals"]
+antibodies:
+  enable: true
+  similarity_threshold: 0.82
 
 governor:
   prsPerDay: 2
