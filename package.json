@@ -46,6 +46,8 @@
   "odavl:immune:undo":   "node scripts/immune/undo.mjs"
   ,
   "odavl:immune:escalate": "node scripts/immune/escalate.mjs"
+  ,
+  "odavl:immune:metrics": "node scripts/immune/metrics.mjs"
   },
   "devDependencies": {
     "@cyclonedx/cyclonedx-library": "^9.0.0",
