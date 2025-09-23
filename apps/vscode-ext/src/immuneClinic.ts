@@ -13,6 +13,9 @@ export function openImmuneClinic(context:vscode.ExtensionContext){
   <h2>Healers</h2><p>coming soon (last heal report)</p>
   <h2>Verify &amp; Undo</h2><p>coming soon</p>
   <h2>Escalation</h2><p>coming soon (SUMMARY.md)</p>
+  <h2>Digital Twin</h2>
+  <button onclick="vscode.postMessage({cmd:'twin'})">Run Twin</button>
+  <pre>${(() => {try{return fs.readFileSync(path.join(vscode.workspace.rootPath||'','reports/immune/twin-comparison.json'),'utf8')}catch{return 'no twin yet'}})().replace(/</g,'&lt;')}</pre>
   <script>
     const vscode=acquireVsCodeApi();
     window.addEventListener('message',e=>{document.body.innerHTML=e.data.html});
@@ -23,6 +26,9 @@ export function openImmuneClinic(context:vscode.ExtensionContext){
   panel.webview.onDidReceiveMessage(msg=>{
     if(msg.cmd==='scan'){
       try{execSync('pnpm -w run odavl:immune:metrics',{stdio:'ignore'});}catch{}
+      update();
+    } else if(msg.cmd==='twin'){
+      try{execSync('pnpm -w run odavl:immune:twin',{stdio:'ignore'});}catch{}
       update();
     }
   },undefined,context.subscriptions);
