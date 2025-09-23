@@ -28,6 +28,8 @@
   "odavl:immune:p0": "node scripts/immune/p0-attest.mjs"
   ,
   "odavl:immune:status": "node scripts/immune/sensors.mjs"
+  ,
+  "odavl:immune:triage": "node scripts/immune/triage.mjs"
   },
   "devDependencies": {
     "@cyclonedx/cyclonedx-library": "^9.0.0",
