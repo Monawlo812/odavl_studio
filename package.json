@@ -24,6 +24,8 @@
   "build:cli": "tsc -p apps/cli/tsconfig.json",
   "typecheck": "tsc -p . --noEmit",
   "studio:build": "pnpm --filter @odavl/vscode-ext build"
+  ,
+  "odavl:immune:p0": "node scripts/immune/p0-attest.mjs"
   },
   "devDependencies": {
     "@cyclonedx/cyclonedx-library": "^9.0.0",
