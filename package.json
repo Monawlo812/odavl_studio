@@ -54,6 +54,18 @@
   "odavl:immune:twin": "node scripts/immune/twin.mjs"
   ,
   "odavl:immune:finalcheck": "node scripts/immune/final-check.mjs"
+  ,
+  "odavl:immune:problems": "node scripts/immune/problems.mjs"
+  ,
+  "odavl:problems:scan": "node scripts/immune/problems/scan.mjs"
+  ,
+  "odavl:problems:plan": "node scripts/immune/problems/plan.mjs"
+  ,
+  "odavl:problems:apply": "node scripts/immune/problems/apply.mjs"
+  ,
+  "odavl:problems:escalate": "node scripts/immune/problems/escalate.mjs"
+  ,
+  "odavl:problems:run": "node scripts/immune/problems/run.mjs"
   },
   "devDependencies": {
     "@cyclonedx/cyclonedx-library": "^9.0.0",
