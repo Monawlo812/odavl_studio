@@ -1,0 +1,15 @@
+{
+  "summary": {
+    "kind": "vaccinate-dryrun",
+    "time": "2025-09-23T22:33:32.172Z",
+    "totals": {
+      "files": 0,
+      "hits": 0
+    },
+    "rules": [
+      "replace-legacyX",
+      "ban-api"
+    ]
+  },
+  "findings": []
+}

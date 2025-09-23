@@ -1,0 +1,10 @@
+{
+  "kind": "p0-policy-attestation",
+  "time": "2025-09-23T22:23:58.520Z",
+  "policy_exists": true,
+  "gates_exists": true,
+  "policy_keys_present": true,
+  "gates_rules_present": true,
+  "protected_paths_ok": true,
+  "limits_ok": true
+}
