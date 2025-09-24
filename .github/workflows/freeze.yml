@@ -7,11 +7,34 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: mkdir -p reports
-      - run: node scripts/freeze-audit.mjs
-      - uses: actions/upload-artifact@v4
+
+      - name: Prepare dirs
+        run: mkdir -p reports/evidence reports/shadow reports/executive reports/cleanup
+
+      - name: Generate evidence (shadow, attestation, cleanup, observability, all-in-one, bundle)
+        run: |
+          node scripts/shadow-verify.mjs
+          node scripts/attest.mjs
+          node scripts/kill-list.mjs
+          node scripts/observability.mjs
+          node scripts/synthesize-all-in-one.mjs
+          node scripts/bundle-report.mjs
+
+      - name: Run final audit
+        run: node scripts/freeze-audit.mjs
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
         with:
-          name: final-audit
+          name: final-audit-and-evidence
           path: |
             reports/final-audit.json
             reports/final-audit.md
+            reports/evidence/
+            reports/shadow/
+            reports/executive/
+            reports/cleanup/
+
+      - name: Fail if allPresent is false
+        run: |
+          node -e "const fs=require('fs');const j=JSON.parse(fs.readFileSync('reports/final-audit.json','utf8')); if(!j.allPresent){console.error('Freeze Audit FAILED: allPresent=false'); process.exit(1)} console.log('Freeze Audit OK: allPresent=true')"
