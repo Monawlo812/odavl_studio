@@ -20,8 +20,20 @@ jobs:
           node scripts/synthesize-all-in-one.mjs
           node scripts/bundle-report.mjs
 
+
       - name: Run final audit
         run: node scripts/freeze-audit.mjs
+
+      - name: Show final-audit.json in logs
+        run: cat reports/final-audit.json
+
+      - name: Add final audit to job summary
+        run: |
+          echo "## Final Audit Result" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "```json" >> $GITHUB_STEP_SUMMARY
+          cat reports/final-audit.json >> $GITHUB_STEP_SUMMARY
+          echo "```" >> $GITHUB_STEP_SUMMARY
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
