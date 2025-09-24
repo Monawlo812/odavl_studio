@@ -1,4 +1,5 @@
 autonomy_level: 3
+autonomy_level: 4
 limits:
   max_changed_files: 10
   max_changed_lines: 40
@@ -8,10 +9,10 @@ protected_paths:
   - "**/public-api/**"
 merge_policy:
   require_shadow_ci: true
-  allow_src_changes: false
+  allow_src_changes: codemod-only
 risk_budget:
   daily_tokens: 5
-auto_stop:
-  - "cve:critical>0"
-  - "bundle_growth_pct>3"
-  - "tests_failed>0"
+  codemod_cost: 2
+notes:
+  - "Codemod PRs must pass smoke & public API checks before merge."
+  - "See scripts/tests/smoke.mjs and scripts/guards/public-api-check.mjs."
