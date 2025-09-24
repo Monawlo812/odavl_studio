@@ -90,6 +90,16 @@ jobs:
           cat reports/final-audit.json >> $GITHUB_STEP_SUMMARY
           echo "```" >> $GITHUB_STEP_SUMMARY
 
+        - name: Run learning script
+          run: node scripts/learn/outcomes.mjs
+
+        - name: Upload learning outcomes
+          uses: actions/upload-artifact@v4
+          with:
+            name: learn-outcomes
+            path: reports/learn/*.json
+            if-no-files-found: warn
+
       - name: Write repo status file (final-audit-status.md) and push
         if: github.ref == 'refs/heads/main'
         run: |
