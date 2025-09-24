@@ -1,4 +1,4 @@
-
+[//]: # (selftest auto-merge validation)
 [![CI](https://github.com/Monawlo812/odavl_studio/actions/workflows/ci.yml/badge.svg)](https://github.com/Monawlo812/odavl_studio/actions/workflows/ci.yml)
 [![Docs](https://img.shields.io/badge/docs-GitHub%20Pages-blue)](https://monawlo812.github.io/odavl_studio/)
 [![Docker](https://img.shields.io/badge/docker-ghcr.io-blue)](https://github.com/Monawlo812/odavl_studio/pkgs/container/odavl-studio)
