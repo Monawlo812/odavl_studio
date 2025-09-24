@@ -1,0 +1,16 @@
+name: Freeze Audit
+on:
+  pull_request:
+jobs:
+  freeze:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: mkdir -p reports
+      - run: node scripts/freeze-audit.mjs
+      - uses: actions/upload-artifact@v4
+        with:
+          name: final-audit
+          path: |
+            reports/final-audit.json
+            reports/final-audit.md
