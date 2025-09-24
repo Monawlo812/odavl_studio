@@ -1,0 +1,24 @@
+name: Freeze Security
+on:
+  pull_request:
+jobs:
+  gitleaks:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - name: Secret scan (gitleaks)
+        shell: bash
+        run: |
+          if ! command -v gitleaks >/dev/null 2>&1; then
+            curl -sSL https://raw.githubusercontent.com/gitleaks/gitleaks/master/install.sh | bash -s -- -b /usr/local/bin
+          fi
+          mkdir -p reports
+          gitleaks detect --redact --no-banner --report-path reports/gitleaks.json
+      - name: Upload gitleaks report
+        uses: actions/upload-artifact@v4
+        with:
+          name: gitleaks-report
+          path: reports/gitleaks.json
+          if-no-files-found: warn
