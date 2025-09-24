@@ -1,0 +1,21 @@
+name: Freeze Bundle
+on:
+  pull_request:
+jobs:
+  bundle:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - name: Bundle metric
+        run: |
+          node -v
+          npm -v || true
+          node scripts/metrics/bundle.mjs
+      - name: Upload bundle log
+        uses: actions/upload-artifact@v4
+        with:
+          name: bundle-log
+          path: reports/bundle.log
+          if-no-files-found: error
