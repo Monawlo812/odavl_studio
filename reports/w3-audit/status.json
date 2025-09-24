@@ -1,0 +1,43 @@
+{
+  "timestamp": "2025-09-20T23:29:25.410Z",
+  "valid": true,
+  "errors": [],
+  "data": {
+    "ts": "2025-09-20T23:29:21.659Z",
+    "branch": "odavl/wave3-20250921",
+    "governor": {
+      "prsPerDay": 5,
+      "ciMinutesPerHour": 60,
+      "maxConcurrentShadows": 3,
+      "state": "blocked"
+    },
+    "telemetry": {
+      "enabled": true,
+      "mode": "anonymized",
+      "last24h": {
+        "runs": 32,
+        "prs": 0
+      }
+    },
+    "ci": {
+      "openPRs": 16,
+      "lastRuns": [
+        {
+          "status": "completed",
+          "conclusion": "failure",
+          "url": "https://github.com/Monawlo812/odavl_studio/actions/runs/17886062832"
+        },
+        {
+          "status": "completed",
+          "conclusion": "failure",
+          "url": "https://github.com/Monawlo812/odavl_studio/actions/runs/17886037121"
+        },
+        {
+          "status": "completed",
+          "conclusion": "failure",
+          "url": "https://github.com/Monawlo812/odavl_studio/actions/runs/17886036774"
+        }
+      ]
+    }
+  }
+}

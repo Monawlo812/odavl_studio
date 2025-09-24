@@ -1,0 +1,15 @@
+﻿{"ts":"2025-09-20T23:28:51.625Z","branch":"odavl/wave3-20250921","governor":{"prsPerDay":5,"ciMinutesPerHour":60,"maxConcurrentShadows":3,"state":"blocked"},"telemetry":{"enabled":true,"mode":"anonymized","last24h":{"runs":32,"prs":0}},"ci":{"openPRs":16,"lastRuns":[{"status":"completed","conclusion":"failure","url":"https://github.com/Monawlo812/odavl_studio/actions/runs/17886062832"},{"status":"completed","conclusion":"failure","url":"https://github.com/Monawlo812/odavl_studio/actions/runs/17886037121"},{"status":"completed","conclusion":"failure","url":"https://github.com/Monawlo812/odavl_studio/actions/runs/17886036774"}]}}
+node : odavl status: 
+branch=odavl/wave3-20250921, 
+openPRs=16, runs=3
+In Zeile:1 Zeichen:1
++ node apps/cli/dist/index.js status 
+2>&1 | Out-File -FilePath reports/ ...
++ 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecif 
+   ied: (odavl status: b...nPRs=16, ru  
+  ns=3:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCom 
+   mandError
+ 

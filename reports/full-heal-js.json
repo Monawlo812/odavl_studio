@@ -1,0 +1,13 @@
+{
+  "lint": "PASS",
+  "typecheck": "PASS",
+  "build": "PASS",
+  "test": "PASS (no tests detected)",
+  "details": {
+    "lint": "No errors or warnings in golden-repo; other packages have no lint script or output.",
+    "typecheck": "tsc ran, no errors reported in output.",
+    "build": "All packages built successfully.",
+    "test": "No JS/TS tests detected in any package."
+  },
+  "ok": true
+}

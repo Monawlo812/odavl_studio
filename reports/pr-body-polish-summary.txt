@@ -1,0 +1,39 @@
+PR Body Polish Summary
+====================
+
+✅ Improvements Made:
+
+1. **Added What/Why Section**:
+   - **What**: Automated cleanup / maintenance
+   - **Why**: Reduce warnings and keep CI healthy
+
+2. **Reorganized Content Structure**:
+   - What/Why at the top (clear purpose)
+   - Files renamed to be more specific
+   - All existing sections preserved
+
+3. **Polished Evidence Block**:
+   ```
+   Evidence:
+     ESLint Δ: <number or n/a>
+     Types Δ: <number or n/a>
+     Latest CI: <url or n/a>
+   ```
+   - Added proper indentation (2 spaces)
+   - Clean, consistent formatting
+
+✅ Preserved Content:
+- All existing sections maintained
+- Top changed files listing
+- Diff stats
+- Latest workflow run
+- Last commit information
+- CI validation note
+
+✅ Test Results:
+- Build: ✅ Successful compilation
+- PR dry-run: ✅ Shows improved body preview
+- Scan command: ✅ Still working
+- Format: ✅ Clean, professional appearance
+
+Total changes: ~15 lines (within 40 line constraint)

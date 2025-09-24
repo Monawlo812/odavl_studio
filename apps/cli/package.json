@@ -1,1 +1,26 @@
-{"name":"@odavl/cli","version":"0.0.0","private":true,"type":"module","bin":{"odavl":"dist/index.js"},"scripts":{"build":"tsc -p tsconfig.json"},"devDependencies":{"@types/node":"^20"}}
+{
+  "name": "@odavl/cli",
+  "version": "0.1.0",
+  "type": "module",
+  "bin": {
+    "odavl": "bin/odavl.js"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "prepublishOnly": "pnpm run build"
+  },
+  "dependencies": {
+    "@odavl/codemods": "workspace:*",
+    "@odavl/policy": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^20"
+  }
+}

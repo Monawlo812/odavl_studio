@@ -1,0 +1,14 @@
+CLI Help Behavior Analysis:
+
+MAIN COMMAND: ✅ WORKING
+- `node apps\cli\dist\index.js --help` shows proper help text
+- Lists all 11 commands correctly
+
+SUBCOMMAND HELP: ❌ ISSUE FOUND
+- `node apps\cli\dist\index.js scan --help` executes scan instead of showing help
+- Returns scan results JSON instead of help text
+- This is the CLI help execution issue identified in W3-DEEP-AUDIT
+
+ROOT CAUSE: Subcommand help handlers are executing the command instead of displaying help when --help flag is passed.
+
+NEEDS FIX: apps/cli/src/index.ts - ensure --help flag is handled before action execution

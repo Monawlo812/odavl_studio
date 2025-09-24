@@ -1,0 +1,8 @@
+﻿## odavl/cli-pr-evidence-20250920...origin/odavl/cli-pr-evidence-20250920
+?? reports/final-pr-dryrun.json
+?? reports/final-prs.json
+?? reports/final-shadow.json
+?? reports/git-status.txt
+?? reports/mvp-final-report-20250920-143724.md
+?? reports/toolchain.txt
+?? reports/workspaces.txt

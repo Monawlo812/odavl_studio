@@ -1,0 +1,14 @@
+-r
+> odavl-studio@0.5.0 lint C:\Users\sabou\odavl_studio
+> turbo run lint "-r"
+
+ERROR  unexpected argument '-r' found
+
+tip: to pass '-r' as a value, use '-- -r'
+Usage: turbo.exe run [OPTIONS]
+
+For more information, try '--help'.
+
+ELIFECYCLE Command failed with exit code 1.
+
+Command exited with code 1

@@ -1,0 +1,9 @@
+{
+  "name": "@odavl/orchestrator",
+  "version": "0.4.0",
+  "private": true,
+  "scripts": {
+    "build": "echo build stub",
+    "clean": "echo clean stub"
+  }
+}

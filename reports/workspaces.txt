@@ -1,0 +1,7 @@
+﻿Legend: production dependency, optional only, dev only
+
+odavl-studio C:\Users\sabou\odavl_studio (PRIVATE)
+
+devDependencies:
+turbo 2.5.6
+typescript 5.9.2

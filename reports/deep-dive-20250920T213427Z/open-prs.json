@@ -1,0 +1,122 @@
+﻿[
+  {
+    "baseRefName": "odavl/bootstrap-20250919",
+    "createdAt": "2025-09-20T18:15:44Z",
+    "headRefName": "odavl/undo-abort-20250920",
+    "number": 20,
+    "title": "UX: Undo & Abort",
+    "url": "https://github.com/Monawlo812/odavl_studio/pull/20"
+  },
+  {
+    "baseRefName": "odavl/bootstrap-20250919",
+    "createdAt": "2025-09-20T17:32:45Z",
+    "headRefName": "odavl/telemetry-20250920",
+    "number": 19,
+    "title": "Telemetry (opt-in)",
+    "url": "https://github.com/Monawlo812/odavl_studio/pull/19"
+  },
+  {
+    "baseRefName": "odavl/bootstrap-20250919",
+    "createdAt": "2025-09-20T16:56:54Z",
+    "headRefName": "odavl/shadow-ux-20250920",
+    "number": 18,
+    "title": "Shadow UX  live status & retry",
+    "url": "https://github.com/Monawlo812/odavl_studio/pull/18"
+  },
+  {
+    "baseRefName": "odavl/bootstrap-20250919",
+    "createdAt": "2025-09-20T16:50:32Z",
+    "headRefName": "odavl/repo-hardening-20250920",
+    "number": 17,
+    "title": "Repo hardening baseline",
+    "url": "https://github.com/Monawlo812/odavl_studio/pull/17"
+  },
+  {
+    "baseRefName": "odavl/bootstrap-20250919",
+    "createdAt": "2025-09-20T16:40:09Z",
+    "headRefName": "odavl/governor-ux-20250920",
+    "number": 16,
+    "title": "Gov UX + Waves",
+    "url": "https://github.com/Monawlo812/odavl_studio/pull/16"
+  },
+  {
+    "baseRefName": "odavl/bootstrap-20250919",
+    "createdAt": "2025-09-20T16:19:55Z",
+    "headRefName": "odavl/governor-20250920",
+    "number": 15,
+    "title": "Gov: PR/day & CI minutes (baseline)",
+    "url": "https://github.com/Monawlo812/odavl_studio/pull/15"
+  },
+  {
+    "baseRefName": "odavl/bootstrap-20250919",
+    "createdAt": "2025-09-20T15:15:59Z",
+    "headRefName": "odavl/heal-chunking-20250920",
+    "number": 14,
+    "title": "Healers 1.5  Risk budget & chunking",
+    "url": "https://github.com/Monawlo812/odavl_studio/pull/14"
+  },
+  {
+    "baseRefName": "odavl/bootstrap-20250919",
+    "createdAt": "2025-09-20T14:43:23Z",
+    "headRefName": "odavl/healers15-20250920",
+    "number": 13,
+    "title": "Healers 1.5 (deps/esm)",
+    "url": "https://github.com/Monawlo812/odavl_studio/pull/13"
+  },
+  {
+    "baseRefName": "odavl/bootstrap-20250919",
+    "createdAt": "2025-09-20T14:04:43Z",
+    "headRefName": "odavl/evidence-20250920",
+    "number": 12,
+    "title": "CLI: PR Evidence++",
+    "url": "https://github.com/Monawlo812/odavl_studio/pull/12"
+  },
+  {
+    "baseRefName": "odavl/bootstrap-20250919",
+    "createdAt": "2025-09-20T13:00:08Z",
+    "headRefName": "odavl/system-fixes-20250920-145841",
+    "number": 11,
+    "title": "CRITICAL: System fixes for MVP",
+    "url": "https://github.com/Monawlo812/odavl_studio/pull/11"
+  },
+  {
+    "baseRefName": "odavl/bootstrap-20250919",
+    "createdAt": "2025-09-20T12:29:27Z",
+    "headRefName": "odavl/cli-pr-evidence-20250920",
+    "number": 10,
+    "title": "CLI: PR Evidence in `pr open --explain`",
+    "url": "https://github.com/Monawlo812/odavl_studio/pull/10"
+  },
+  {
+    "baseRefName": "odavl/bootstrap-20250919",
+    "createdAt": "2025-09-20T12:17:23Z",
+    "headRefName": "odavl/vscode-shadow-wire-20250920",
+    "number": 8,
+    "title": "Shadow: CLI command + VS Code button",
+    "url": "https://github.com/Monawlo812/odavl_studio/pull/8"
+  },
+  {
+    "baseRefName": "odavl/bootstrap-20250919",
+    "createdAt": "2025-09-20T12:03:13Z",
+    "headRefName": "odavl/vscode-openpr-wire-20250920",
+    "number": 7,
+    "title": "VS Code: wire 'Open PR' to CLI (explain + dry-run)",
+    "url": "https://github.com/Monawlo812/odavl_studio/pull/7"
+  },
+  {
+    "baseRefName": "odavl/bootstrap-20250919",
+    "createdAt": "2025-09-20T11:53:26Z",
+    "headRefName": "odavl/cli-pr-open-20250920",
+    "number": 6,
+    "title": "CLI: add \\pr open --explain\\ (robust base resolver + dry-run)",
+    "url": "https://github.com/Monawlo812/odavl_studio/pull/6"
+  },
+  {
+    "baseRefName": "main",
+    "createdAt": "2025-09-19T23:42:07Z",
+    "headRefName": "odavl/readme-badge-20250920",
+    "number": 3,
+    "title": "docs: add CI status badge to README",
+    "url": "https://github.com/Monawlo812/odavl_studio/pull/3"
+  }
+]

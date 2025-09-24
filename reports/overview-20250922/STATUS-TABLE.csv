@@ -1,0 +1,9 @@
+name,has_lint,has_build,has_test,last_status_run,status_result
+odavl-cli,yes,yes,no,2025-09-22,pass
+odavl-studio,yes,yes,no,2025-09-22,pass
+@odavl/codemods,yes,yes,no,2025-09-22,pass
+@odavl/policy,yes,yes,no,2025-09-22,pass
+@odavl/core,n/a,n/a,n/a,n/a,n/a
+@odavl/launcher,n/a,yes,n/a,n/a,n/a
+@odavl/orchestrator,n/a,yes,n/a,n/a,n/a
+golden-repo,yes,yes,yes,2025-09-22,pass

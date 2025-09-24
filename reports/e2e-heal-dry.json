@@ -1,0 +1,16 @@
+{
+  "ok": true,
+  "code": 0,
+  "stdout": "{\"action\":\"heal\",\"mode\":\"dry-run\",\"pass\":true,\"recipe\":\"remove-unused\",\"stderr\":\"\",\"stdout\":\"\",\"tool\":\"odavl\"}\n",
+  "stderr": "Stage W2-2K done.\n",
+  "cmd": "node apps/cli/dist/index.js heal --recipe remove-unused --dry-run",
+  "parsed": {
+    "action": "heal",
+    "mode": "dry-run",
+    "pass": true,
+    "recipe": "remove-unused",
+    "stderr": "",
+    "stdout": "",
+    "tool": "odavl"
+  }
+}

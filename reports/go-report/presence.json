@@ -1,0 +1,11 @@
+{
+  "e2eScript": true,
+  "releaseWorkflow": true,
+  "pagesWorkflow": true,
+  "docsIndex": true,
+  "dockerfile": true,
+  "githubAppManifest": true,
+  "changelog": true,
+  "policyConfig": true,
+  "gatesConfig": false
+}

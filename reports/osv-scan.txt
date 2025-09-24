@@ -1,0 +1,16 @@
+﻿node.exe : ÔÇëERRORÔÇë Unknown 
+option: 'yes'
+In C:\Users\sabou\AppData\Roaming\
+npm\pnpm.ps1:24 Zeichen:5
++     & "node$exe"  "$basedir/node
+_modules/pnpm/bin/pnpm.cjs" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : Not 
+   Specified: (ÔÇëERRORÔÇë Unkno  
+  wn option: 'yes':String) [],    
+ RemoteException
+    + FullyQualifiedErrorId : Nat 
+   iveCommandError
+ 
+For help, run: pnpm help dlx

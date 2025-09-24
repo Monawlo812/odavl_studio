@@ -1,0 +1,11 @@
+{
+  "ruff": 0,
+  "tests": 0,
+  "vulns": 0,
+  "ok": true,
+  "details": {
+    "ruff": "No Python pack present.",
+    "tests": "No Python pack present.",
+    "vulns": "No Python pack present."
+  }
+}

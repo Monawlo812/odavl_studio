@@ -1,1 +1,154 @@
-{"name":"@odavl/vscode-ext","displayName":"ODAVL Studio","version":"0.0.0","private":true,"publisher":"odavl","engines":{"vscode":"^1.85.0"},"activationEvents":["onCommand:odavlStudio.openPanel"],"main":"dist/extension.js","contributes":{"commands":[{"command":"odavlStudio.openPanel","title":"ODAVL Studio: Open Panel"}]},"scripts":{"build":"tsc -p tsconfig.json"},"devDependencies":{"@types/vscode":"^1.85.0","@types/node":"^20"}}
+{
+  "name": "odavl-studio",
+  "displayName": "ODAVL Studio",
+  "description": "Automated development governance with code healing and CI management",
+  "version": "0.4.0",
+  "publisher": "odavl",
+  "categories": [
+    "Other",
+    "Linters"
+  ],
+  "galleryBanner": {
+    "color": "#1e3a8a",
+    "theme": "dark"
+  },
+  "icon": "assets/icon.png",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "activationEvents": [
+  ],
+  "main": "dist/extension.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Monawlo812/odavl_studio.git"
+  },
+  "homepage": "https://github.com/Monawlo812/odavl_studio",
+  "bugs": {
+    "url": "https://github.com/Monawlo812/odavl_studio/issues"
+  },
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "odavlControl",
+          "title": "ODAVL",
+          "icon": "media/odavl-icon-light.svg"
+        }
+      ]
+    },
+    "views": {
+      "odavlControl": [
+        {
+          "id": "odavl.control.center",
+          "name": "Control Center",
+          "type": "webview",
+          "icon": "$(gear)"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "odavlStudio.openPanel",
+        "title": "ODAVL Studio: Open Panel"
+      },
+      {
+        "command": "odavl.controlCenter.open",
+        "title": "ODAVL: Open Control Center"
+      },
+      {
+        "command": "odavl.magic.run",
+        "title": "ODAVL: Magic (One-Click)",
+        "icon": "$(rocket)"
+      },
+      {
+        "command": "odavl.debug.showIconStatus",
+        "title": "ODAVL: Debug — Show Icon Status"
+      },
+      {
+        "command": "odavl.scanHeal",
+        "title": "ODAVL: Scan/Heal Panel"
+      }
+    ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "odavl.magic.run",
+          "when": "view == odavl.control.center",
+          "group": "navigation@1"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "odavl.controlCenter.open",
+          "when": "true"
+        },
+        {
+          "command": "odavl.magic.run",
+          "when": "true"
+        },
+        {
+          "command": "odavl.debug.showIconStatus",
+          "when": "true"
+        }
+      ]
+    },
+    "keybindings": [
+      {
+        "command": "odavl.magic.run",
+        "key": "ctrl+alt+m",
+        "mac": "cmd+alt+m",
+        "when": "true"
+      }
+    ],
+    "walkthroughs": [
+      {
+        "id": "odavl.gettingStarted",
+        "title": "Get started with ODAVL Studio",
+        "description": "Learn the zero-terminal workflow for automated code governance",
+        "steps": [
+          {
+            "id": "odavl.step.scan",
+            "title": "Scan & Heal your code",
+            "description": "Analyze your codebase and apply automated fixes\n[Open Control Center](command:odavl.controlCenter.open)",
+            "media": {
+              "image": "media/scan.png",
+              "altText": "ODAVL scan and heal workflow"
+            }
+          },
+          {
+            "id": "odavl.step.shadow",
+            "title": "Run Shadow CI",
+            "description": "Test changes in isolated CI environment\n[Run Magic](command:odavl.magic.run)",
+            "media": {
+              "image": "media/shadow.png",
+              "altText": "ODAVL shadow CI workflow"
+            }
+          },
+          {
+            "id": "odavl.step.pr",
+            "title": "Open Pull Request",
+            "description": "Create evidence-based PRs with governance reports\n[View Reports](command:vscode.openFolder)",
+            "media": {
+              "image": "media/pr.png",
+              "altText": "ODAVL PR creation workflow"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.85.0",
+    "@types/node": "^20",
+    "@types/react": "^18.2.47",
+    "@types/react-dom": "^18.2.17"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "stage": "W5-C.0",
+  "created": [
+    "packages/validators/index.ts",
+    "examples/validators/js-samples/sample.ts"
+  ],
+  "preview": {
+    "contract": {
+      "fnPath": "./examples/validators/js-samples/sample.js",
+      "inputsShape": { "name": "Mo" },
+      "outputsShape": { "msg": "" },
+      "critical": true
+    },
+    "note": "Use generateSmokeTest(defineContract(contract)) to get a test snippet string; do NOT write spec files here."
+  }
+}

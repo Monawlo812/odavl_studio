@@ -1,0 +1,36 @@
+[
+  {
+    "name": "CI",
+    "file": ".github/workflows/ci.yml",
+    "triggers": ["pull_request", "push", "workflow_dispatch"],
+    "matrix": {
+      "node": [18, 20]
+    },
+    "steps": [
+      "checkout@v4",
+      "pnpm/action-setup@v4 (version: 9)",
+      "actions/setup-node@v4 (with cache)",
+      "pnpm install --frozen-lockfile",
+      "pnpm -w -r run build",
+      "pnpm -w -r run type-check",
+      "pnpm -w -r run lint"
+    ],
+    "runsOn": "ubuntu-latest"
+  },
+  {
+    "name": "Release",
+    "file": ".github/workflows/release.yml",
+    "triggers": ["workflow_dispatch"],
+    "matrix": null,
+    "steps": ["unknown - file not analyzed"],
+    "runsOn": "unknown"
+  },
+  {
+    "name": "Pages",
+    "file": ".github/workflows/pages.yml",
+    "triggers": ["push", "workflow_dispatch"],
+    "matrix": null,
+    "steps": ["unknown - file not analyzed"],
+    "runsOn": "unknown"
+  }
+]

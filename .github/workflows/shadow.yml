@@ -1,0 +1,40 @@
+name: Shadow CI
+on:
+  pull_request:
+    branches: [main, master]
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: [18, 20]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+      - name: Setup pnpm cache
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+          run_install: false
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Build
+        run: pnpm -w run build
+      - name: Test
+        run: pnpm -w run test
+      - name: Typecheck
+        run: pnpm -w run typecheck
+
+      - name: Governance Policy Check
+        run: pnpm odavl policy validate
+
+      - name: Upload reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: reports
+          path: reports/
+          if-no-files-found: ignore

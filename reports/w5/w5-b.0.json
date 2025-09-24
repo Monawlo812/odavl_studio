@@ -1,0 +1,7 @@
+{
+  "stage": "W5-B.0",
+  "pack": "java",
+  "created": ["packages/packs/java/index.ts"],
+  "limits": { "maxLines": 40, "maxFiles": 5 },
+  "notes": "Skeleton stubs for scan()/heal() returning {status:\"not-implemented\"}."
+}

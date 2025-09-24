@@ -1,0 +1,46 @@
+name: Go CI (W5)
+on:
+  push:
+    branches: ["odavl/**"]
+  pull_request:
+    branches: ["**"]
+
+jobs:
+  go:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        go: ["1.22.x", "1.23.x"]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: ${{ matrix.go }}
+      - name: Download modules
+        run: |
+          go mod download || true
+      - name: Lint (golangci-lint)
+        run: |
+          curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh \
+            | sh -s -- -b $(go env GOPATH)/bin v1.60.3 || true
+          golangci-lint run --out-format json > lint.json || true
+      - name: Tests
+        run: |
+          set -e
+          go test -count=1 ./... -json > tests.json || (echo "tests failed" && exit 1)
+      - name: Govulncheck
+        run: |
+          go install golang.org/x/vuln/cmd/govulncheck@latest || true
+          govulncheck -json ./... > vuln.json || true
+      - name: Summarize & Upload
+        run: |
+          L=$(jq '.Issues|length' lint.json 2>/dev/null || echo 0)
+          T=$(jq 'try (.[].Action=="fail")' tests.json 2>/dev/null | grep -c true || echo 0)
+          V=$(grep -i -c "vuln" vuln.json 2>/dev/null || echo 0)
+          printf '{"go":"%s","lintWarnings":%s,"testFailures":%s,"vulns":%s}\n' "${{ matrix.go }}" "$L" "$T" "$V" > summary.json
+        shell: bash
+      - uses: actions/upload-artifact@v4
+        with:
+          name: reports-w5-go-${{ matrix.go }}
+          path: summary.json

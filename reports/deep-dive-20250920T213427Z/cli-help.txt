@@ -1,0 +1,12 @@
+﻿Usage: odavl <command>
+Commands:
+  scan           Outputs placeholder HealthSnapshot JSON
+  heal           Fix code issues (--recipe remove-unused, --apply)
+  branch create  Create a new git branch
+  pr open        Open a pull request (--explain, --dry-run, --title)
+  shadow run     Trigger CI workflow (--ref <branch>, --wait, --dry-run)
+  shadow status  Check CI workflow status (--ref <branch>, --watch)
+  governor explain  Show current governor status for PR and shadow operations
+  report telemetry summary  Show usage analytics (--since 24h|<ISO>)
+  undo last      Restore files from last heal --apply (--show to preview)
+  abort          Cancel in-progress GitHub Actions runs on current branch

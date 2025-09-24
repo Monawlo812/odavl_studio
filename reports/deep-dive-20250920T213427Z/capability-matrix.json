@@ -1,0 +1,72 @@
+{
+  "cli": {
+    "supported": true,
+    "evidence": [
+      "reports/deep-dive-20250920T213427Z/cli-build.txt",
+      "reports/deep-dive-20250920T213427Z/cli-scan.json",
+      "reports/deep-dive-20250920T213427Z/heal-esm-dry.json",
+      "reports/deep-dive-20250920T213427Z/pr-explain-dry.json"
+    ],
+    "notes": "Full CLI with scan, heal (3 recipes), pr, shadow, governor, undo, abort commands"
+  },
+  "vscode": {
+    "supported": true,
+    "evidence": [
+      "reports/deep-dive-20250920T213427Z/vscode-build.txt",
+      "reports/deep-dive-20250920T213427Z/vscode-ui.json",
+      "apps/vscode-ext/src/extension.ts"
+    ],
+    "notes": "VS Code extension with webview panel, scan/heal/reports buttons, CLI integration"
+  },
+  "healers_1_5": {
+    "supported": true,
+    "evidence": [
+      "reports/deep-dive-20250920T213427Z/heal-esm-dry.json",
+      "reports/deep-dive-20250920T213427Z/heal-deps-dry.json",
+      "reports/deep-dive-20250920T213427Z/heal-unused-dry.json"
+    ],
+    "notes": "Risk-budgeted healing with chunking, 3 recipes: esm-hygiene, deps-patch, remove-unused"
+  },
+  "governor": {
+    "supported": true,
+    "evidence": [
+      "reports/deep-dive-20250920T213427Z/governor-explain.json",
+      "reports/deep-dive-20250920T213427Z/policy-keys.json",
+      "packages/policy/src/governor.ts"
+    ],
+    "notes": "Rate limiting for PRs/CI with wave windows, configurable limits"
+  },
+  "telemetry": {
+    "supported": true,
+    "evidence": [
+      "reports/deep-dive-20250920T213427Z/telemetry-summary.json",
+      "reports/deep-dive-20250920T213427Z/policy-keys.json"
+    ],
+    "notes": "Optional telemetry (off/on/anonymized), local logging, usage analytics"
+  },
+  "ci_shadow": {
+    "supported": true,
+    "evidence": [
+      "reports/deep-dive-20250920T213427Z/shadow-status.json",
+      "reports/deep-dive-20250920T213427Z/ci.yml",
+      "reports/deep-dive-20250920T213427Z/ci-runs.json"
+    ],
+    "notes": "Shadow CI runs with workflow_dispatch, status monitoring, matrix builds"
+  },
+  "policies": {
+    "supported": true,
+    "evidence": [
+      "reports/deep-dive-20250920T213427Z/policy.txt",
+      "reports/deep-dive-20250920T213427Z/policy-keys.json"
+    ],
+    "notes": "Policy-driven governance via .odavl.policy.yml configuration"
+  },
+  "golden_repo": {
+    "supported": true,
+    "evidence": [
+      "reports/deep-dive-20250920T213427Z/golden-exists.txt",
+      "examples/golden-repo/"
+    ],
+    "notes": "Test target repository for healing demonstrations"
+  }
+}

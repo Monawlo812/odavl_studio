@@ -1,0 +1,5 @@
+﻿# CI Diagnosis - Heuristic Analysis
+
+## Pattern Detection from Failed Run Logs:
+
+- DETECTED: Multiple pnpm versions conflict

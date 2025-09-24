@@ -3,7 +3,8 @@ on:
   pull_request:
   push:
     branches:
-      - '**'
+      - "**"
+  workflow_dispatch:
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -14,18 +15,18 @@ jobs:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
         with:
-          version: 9
+          version: 10.17.0
           run_install: false
       - uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node }}
-          cache: 'pnpm'
-          cache-dependency-path: '**/pnpm-lock.yaml'
+          cache: "pnpm"
+          cache-dependency-path: pnpm-lock.yaml
       - name: Install
-        run: pnpm install
-      - name: Build (workspace)
-        run: pnpm -w build || true
-      - name: Lint (golden-repo)
-        run: pnpm --filter golden-repo exec eslint . -f stylish || true
-      - name: Type-check (workspace)
-        run: pnpm -w run -r type-check || true
+        run: pnpm install --frozen-lockfile
+      - name: Build
+        run: pnpm -w -r run build || true
+      - name: Type
+        run: pnpm -w -r run type-check || pnpm exec tsc --noEmit || true
+      - name: Lint
+        run: pnpm -w -r run lint || true

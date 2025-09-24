@@ -1,0 +1,8 @@
+{
+  "hasWorkflowDispatch": true,
+  "triggers": ["pull_request", "push", "workflow_dispatch"],
+  "matrix": {
+    "node": ["18", "20"]
+  },
+  "steps": []
+}

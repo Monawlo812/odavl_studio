@@ -1,0 +1,4 @@
+﻿
+> @odavl/cli@0.0.0 build C:\Users\sabou\odavl_studio\apps\cli
+> tsc -p tsconfig.json
+

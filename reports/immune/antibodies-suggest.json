@@ -1,0 +1,15 @@
+{
+  "kind": "antibodies-suggest",
+  "time": "2025-09-23T22:42:15.821Z",
+  "count": 1,
+  "items": [
+    {
+      "id": "eslint-no-unused-vars-001",
+      "rule": "no-unused-vars",
+      "filePattern": "src/**/*.ts",
+      "successCount": 3,
+      "failureCount": 0,
+      "score": 1
+    }
+  ]
+}

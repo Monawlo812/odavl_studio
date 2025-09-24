@@ -1,0 +1,20 @@
+{
+  "name": "ODAVL E2E Workflow",
+  "nodes": [
+    { "id": "scan", "type": "cli", "command": "pnpm odavl scan" },
+    { "id": "heal", "type": "cli", "command": "pnpm odavl heal --recipe esm-hygiene --dry-run" },
+    { "id": "branch", "type": "cli", "command": "pnpm odavl branch create --name auto-e2e" },
+    { "id": "shadow", "type": "cli", "command": "pnpm odavl shadow verify" },
+    { "id": "pr", "type": "cli", "command": "pnpm odavl pr open" }
+  ],
+  "connections": [
+    { "from": "scan", "to": "heal" },
+    { "from": "heal", "to": "branch" },
+    { "from": "branch", "to": "shadow" },
+    { "from": "shadow", "to": "pr" }
+  ],
+  "trigger": {
+    "type": "webhook",
+    "url": "/odavl-e2e-trigger"
+  }
+}

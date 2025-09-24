@@ -1,0 +1,20 @@
+name: ODAVL Studio Bot
+description: Automated development governance with code healing and CI management
+url: https://github.com/Monawlo812/odavl_studio
+webhook_active: true
+public: false
+
+default_permissions:
+  contents: read
+  pull_requests: write
+  checks: write
+  issues: read
+  metadata: read
+
+default_events:
+  - pull_request
+  - pull_request_review
+  - push
+  - check_run
+
+setup_on_update: true

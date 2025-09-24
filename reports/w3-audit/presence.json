@@ -1,0 +1,102 @@
+{
+  "timestamp": "2025-09-20T23:27:32.876Z",
+  "totalFiles": 18,
+  "present": [
+    "README.md",
+    "docs/overview.md",
+    "docs/quickstart.md",
+    "docs/faq.md",
+    "docs/landing.md",
+    "docs/design-partner-playbook.md",
+    "docs/media/README.md",
+    "docs/media/scan.png",
+    "docs/media/heal.png",
+    "docs/media/shadow.png",
+    "docs/media/pr.png",
+    "scripts/e2e-golden.mjs",
+    ".github/PULL_REQUEST_TEMPLATE.md",
+    ".github/ISSUE_TEMPLATE/bug_report.md",
+    ".github/ISSUE_TEMPLATE/feature_request.md",
+    ".odavl.policy.yml",
+    ".odavl/gates.yml",
+    "CHANGELOG.md"
+  ],
+  "missing": [],
+  "details": {
+    "README.md": {
+      "size": 3340,
+      "modified": "2025-09-20T23:23:54.696Z"
+    },
+    "docs/overview.md": {
+      "size": 2216,
+      "modified": "2025-09-20T22:28:46.432Z"
+    },
+    "docs/quickstart.md": {
+      "size": 1315,
+      "modified": "2025-09-20T22:28:46.432Z"
+    },
+    "docs/faq.md": {
+      "size": 1719,
+      "modified": "2025-09-20T22:28:46.432Z"
+    },
+    "docs/landing.md": {
+      "size": 1121,
+      "modified": "2025-09-20T23:23:54.696Z"
+    },
+    "docs/design-partner-playbook.md": {
+      "size": 4159,
+      "modified": "2025-09-20T23:11:46.796Z"
+    },
+    "docs/media/README.md": {
+      "size": 955,
+      "modified": "2025-09-20T23:11:46.793Z"
+    },
+    "docs/media/scan.png": {
+      "size": 11,
+      "modified": "2025-09-20T23:11:46.793Z"
+    },
+    "docs/media/heal.png": {
+      "size": 11,
+      "modified": "2025-09-20T23:11:46.793Z"
+    },
+    "docs/media/shadow.png": {
+      "size": 11,
+      "modified": "2025-09-20T23:11:46.793Z"
+    },
+    "docs/media/pr.png": {
+      "size": 11,
+      "modified": "2025-09-20T23:11:46.793Z"
+    },
+    "scripts/e2e-golden.mjs": {
+      "size": 7440,
+      "modified": "2025-09-20T22:34:32.463Z"
+    },
+    ".github/PULL_REQUEST_TEMPLATE.md": {
+      "size": 915,
+      "modified": "2025-09-20T23:06:52.271Z"
+    },
+    ".github/ISSUE_TEMPLATE/bug_report.md": {
+      "size": 387,
+      "modified": "2025-09-20T23:06:52.271Z"
+    },
+    ".github/ISSUE_TEMPLATE/feature_request.md": {
+      "size": 509,
+      "modified": "2025-09-20T23:06:52.271Z"
+    },
+    ".odavl.policy.yml": {
+      "size": 295,
+      "modified": "2025-09-20T17:34:57.552Z"
+    },
+    ".odavl/gates.yml": {
+      "size": 185,
+      "modified": "2025-09-19T23:08:26.768Z"
+    },
+    "CHANGELOG.md": {
+      "size": 633,
+      "modified": "2025-09-20T23:15:50.642Z"
+    }
+  },
+  "presentCount": 18,
+  "missingCount": 0,
+  "coverage": 100
+}

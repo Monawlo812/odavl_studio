@@ -1,0 +1,21 @@
+Encoding Scan Results:
+
+ISSUE CONFIRMED: examples/golden-repo/src/example.ts
+- File detected as BINARY when it should be TEXT
+- Cannot be opened in VS Code editor 
+- Causes TypeScript compilation errors with "Invalid character" messages
+- This matches the W3-DEEP-AUDIT findings
+
+FILES CHECKED:
+✅ examples/golden-repo/package.json - OK
+✅ examples/golden-repo/tsconfig.json - OK  
+✅ examples/golden-repo/eslint.config.js - OK
+❌ examples/golden-repo/src/example.ts - ENCODING ISSUE (binary detection)
+✅ examples/golden-repo/dist/example.js - OK
+
+ROOT CAUSE: Non-UTF-8 characters or BOM in example.ts
+
+SOLUTION NEEDED:
+1. Re-save example.ts as UTF-8 without BOM
+2. Add .editorconfig for charset standards
+3. Add .gitattributes for line ending control

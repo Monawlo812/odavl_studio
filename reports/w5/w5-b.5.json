@@ -1,0 +1,6 @@
+{
+  "stage": "W5-B.5",
+  "updated": [".odavl/gates.yml"],
+  "created": ["docs/java-pack.md"],
+  "notes": "Added Java gates + docs."
+}

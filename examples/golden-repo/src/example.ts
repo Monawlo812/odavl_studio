@@ -1,4 +1,6 @@
-// unused
-const _UNUSED_CONST = 42            // unused (prefixed with _ to ignore)
-export function sum(a: number, b: number) { return a + b }
-export default function main() { const x = sum(1,2); console.log('demo', x); }
+// Golden repo example for testing code healing
+export function greet(name: string): string {
+  return `Hello, ${name}!`;
+}
+
+export const version = "1.0.0";

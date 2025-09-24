@@ -1,0 +1,30 @@
+Evidence++ Branch & PR Creation Summary
+========================================
+
+✅ Branch Created: odavl/evidence-20250920
+✅ Base Branch: odavl/bootstrap-20250919  
+✅ PR URL: https://github.com/Monawlo812/odavl_studio/pull/12
+
+🎯 Feature Summary:
+- Enhanced `pr open --explain` with Evidence section
+- ESLint/Types delta calculation vs baseline
+- Latest CI run URL integration
+- What/Why section prepended to PR body
+- Professional formatting with indented Evidence block
+
+📋 Commit Details:
+- Message: "feat(cli): PR Evidence++ — add deltas and latest CI link"
+- Files: 38 files changed, 1051 insertions(+), 3 deletions(-)
+- Includes: CLI source changes, build artifacts, reports
+
+🔧 Implementation Features:
+- Delta computation against reports/cli-scan.json baseline
+- GitHub CLI integration for CI run URLs
+- Best-effort error handling (fallback to "n/a")
+- Backwards compatible with existing PR functionality
+
+✅ Validation Completed:
+- CLI builds successfully
+- All commands working (scan, heal, pr open)
+- Evidence++ properly integrated into PR body
+- Professional formatting maintained

@@ -1,0 +1,6 @@
+{
+  "prsPerDay": 5,
+  "ciMinutesPerHour": 60,
+  "maxConcurrentShadows": 3,
+  "waves": [{ "window": "09:00-17:00", "maxPrs": 2 }]
+}

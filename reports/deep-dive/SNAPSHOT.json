@@ -1,0 +1,146 @@
+{
+  "ts": "2025-09-21T13:25:00+01:00",
+  "branch": "odavl/launch-fixes-20250921",
+  "repo": {
+    "apps": 2,
+    "packages": 4,
+    "docsFiles": 8,
+    "workflows": 3
+  },
+  "cli": {
+    "built": true,
+    "commands": [
+      "scan",
+      "heal",
+      "branch create",
+      "pr open",
+      "shadow run",
+      "shadow status",
+      "status",
+      "governor explain",
+      "report telemetry summary",
+      "undo last",
+      "abort"
+    ],
+    "statusOk": false
+  },
+  "healers": {
+    "count": 3,
+    "items": [
+      {
+        "id": "esm-hygiene",
+        "scope": "code",
+        "guards": {
+          "maxLines": 40,
+          "maxFiles": 10,
+          "protected": ["/security/", ".spec.", "/public-api/"]
+        },
+        "verify": {
+          "typecheck": false,
+          "tests": false,
+          "build": false,
+          "perf": false
+        }
+      },
+      {
+        "id": "deps-patch-minor",
+        "scope": "deps",
+        "guards": { "maxLines": null, "maxFiles": null, "protected": [] },
+        "verify": {
+          "typecheck": false,
+          "tests": false,
+          "build": false,
+          "perf": false
+        }
+      },
+      {
+        "id": "remove-unused",
+        "scope": "code",
+        "guards": { "maxLines": null, "maxFiles": null, "protected": [] },
+        "verify": {
+          "typecheck": false,
+          "tests": false,
+          "build": false,
+          "perf": false
+        }
+      }
+    ]
+  },
+  "policy": {
+    "governor": {
+      "prsPerDay": 5,
+      "ciMinutesPerHour": 60,
+      "maxConcurrentShadows": 3,
+      "waves": [{ "window": "22:00-06:00", "maxPrs": 3 }]
+    },
+    "studio": { "telemetry": "anonymized" }
+  },
+  "gates": {
+    "typeErrors": { "deltaMax": 0 },
+    "eslint": { "deltaMax": 0 },
+    "bundleKB": { "deltaMax": 10 },
+    "buildMs": { "deltaPctMax": 5 },
+    "shadow": { "mustPass": true },
+    "policy": { "violationsMax": 0 }
+  },
+  "ci": {
+    "workflows": [
+      {
+        "name": "CI",
+        "on": ["pull_request", "push", "workflow_dispatch"],
+        "matrix": ["node: 18,20"]
+      },
+      {
+        "name": "Release",
+        "on": ["workflow_dispatch"],
+        "matrix": []
+      },
+      {
+        "name": "Pages",
+        "on": ["push", "workflow_dispatch"],
+        "matrix": []
+      }
+    ]
+  },
+  "vscodeExt": {
+    "identifier": "odavl.odavl-studio",
+    "displayName": "ODAVL Studio",
+    "commands": ["odavlStudio.openPanel"],
+    "activation": ["onCommand:odavlStudio.openPanel"],
+    "statusBarPattern": true
+  },
+  "e2e": {
+    "script": true,
+    "artifacts": {
+      "scan": true,
+      "healDry": true,
+      "shadow": false,
+      "prDry": false
+    }
+  },
+  "links": {
+    "checked": 0,
+    "broken": 0
+  },
+  "gitWaves": {
+    "wave1": [
+      "CLI bootstrap",
+      "VS Code extension",
+      "GitHub integration",
+      "Docker setup"
+    ],
+    "wave2": [
+      "Governor system",
+      "Protected paths",
+      "Healers implementation",
+      "Telemetry"
+    ]
+  },
+  "security": {
+    "available": false,
+    "notes": "CLI scan command exists but returns placeholder data"
+  },
+  "todos": {
+    "count": 0
+  }
+}

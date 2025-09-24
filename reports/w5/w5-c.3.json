@@ -1,0 +1,6 @@
+{
+  "stage": "W5-C.3",
+  "created": ["scripts/verify-contracts.js"],
+  "updated": [".odavl/gates.yml"],
+  "notes": "Preview runner executes generated contract previews and writes reports/w5/contracts-report.json"
+}
