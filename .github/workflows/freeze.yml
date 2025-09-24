@@ -19,22 +19,61 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+      - name: Secret scan (gitleaks)
+        if: ${{ github.event_name == 'pull_request' }}
+        shell: bash
+        run: |
+          if ! command -v gitleaks >/dev/null 2>&1; then
+            curl -sSL https://raw.githubusercontent.com/gitleaks/gitleaks/master/install.sh | bash -s -- -b /usr/local/bin
+          fi
+          mkdir -p reports
+          gitleaks detect --redact --no-banner --report-path reports/gitleaks.json
       - name: Protected paths guard
         if: ${{ github.event_name == 'pull_request' }}
         shell: bash
         run: |
           bash scripts/guards/protected-paths.sh
-      - name: Prepare dirs
-        run: mkdir -p reports/evidence reports/shadow reports/executive reports/cleanup
 
-      - name: Generate evidence (shadow, attestation, cleanup, observability, all-in-one, bundle)
-        run: |
-          node scripts/shadow-verify.mjs
-          node scripts/attest.mjs
-          node scripts/kill-list.mjs
-          node scripts/observability.mjs
-          node scripts/synthesize-all-in-one.mjs
-          node scripts/bundle-report.mjs
+        - name: Prepare dirs
+          run: mkdir -p reports/evidence reports/shadow reports/executive reports/cleanup
+
+        - name: Upload gitleaks report
+          if: ${{ github.event_name == 'pull_request' }}
+          uses: actions/upload-artifact@v4
+          with:
+            name: gitleaks-report
+            path: reports/gitleaks.json
+            if-no-files-found: warn
+
+        - name: Generate evidence (shadow, attestation, cleanup, observability, all-in-one, bundle)
+          run: |
+            node scripts/shadow-verify.mjs
+            node scripts/attest.mjs
+            node scripts/kill-list.mjs
+            node scripts/observability.mjs
+            node scripts/synthesize-all-in-one.mjs
+            node scripts/bundle-report.mjs
+
+        - name: Run smoke test
+          run: node scripts/tests/smoke.mjs
+
+        - name: Check for src/ changes
+          id: srcdiff
+          run: |
+            git fetch origin main
+            if git diff --name-only origin/main...HEAD | grep '^src/'; then echo "src_changed=true" >> $GITHUB_OUTPUT; else echo "src_changed=false" >> $GITHUB_OUTPUT; fi
+
+        - name: Public API check
+          if: steps.srcdiff.outputs.src_changed == 'true'
+          run: node scripts/guards/public-api-check.mjs
+
+        - name: Upload API baseline
+          if: always()
+          uses: actions/upload-artifact@v4
+          with:
+            name: api-baseline
+            path: reports/api.d.ts
+            if-no-files-found: warn
 
 
       - name: Run final audit
