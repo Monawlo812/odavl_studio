@@ -19,6 +19,14 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+
+      - name: Fail on main if marker exists
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: |
+          if [ -f .ci/force_fail_on_main ]; then
+            echo 'Marker .ci/force_fail_on_main found, forcing failure.'
+            exit 1
+          fi
       - name: Secret scan (gitleaks)
         if: ${{ github.event_name == 'pull_request' }}
         shell: bash
