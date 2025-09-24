@@ -66,6 +66,10 @@
   "odavl:problems:escalate": "node scripts/immune/problems/escalate.mjs"
   ,
   "odavl:problems:run": "node scripts/immune/problems/run.mjs"
+  ,
+  "lint:pkgs": "pnpm -r exec eslint \"src/**/*.ts\" \"packages/**/*.ts\" --ext .ts,.tsx"
+  ,
+  "build:pkgs": "pnpm -r exec tsc -b"
   },
   "devDependencies": {
     "@cyclonedx/cyclonedx-library": "^9.0.0",
