@@ -1,0 +1,17 @@
+autonomy_level: 3
+limits:
+  max_changed_files: 10
+  max_changed_lines: 40
+protected_paths:
+  - "**/security/**"
+  - "**/*.spec.*"
+  - "**/public-api/**"
+merge_policy:
+  require_shadow_ci: true
+  allow_src_changes: false
+risk_budget:
+  daily_tokens: 5
+auto_stop:
+  - "cve:critical>0"
+  - "bundle_growth_pct>3"
+  - "tests_failed>0"
