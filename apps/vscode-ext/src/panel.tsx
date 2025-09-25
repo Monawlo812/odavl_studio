@@ -1,45 +1,31 @@
-import React, { useState, useEffect } from 'react';
+
+import React, { useEffect } from 'react';
+
 
 export function OdavlPanel() {
-  const [undoLoading, setUndoLoading] = useState(false);
-  const [explainLoading, setExplainLoading] = useState(false);
-  const [diff, setDiff] = useState<string | null>(null);
-  const [guardian, setGuardian] = useState<any[]>([]);
+  const [guardian, setGuardian] = React.useState<any[]>([]);
   useEffect(() => {
-    window.addEventListener('message', (e) => {
+    (globalThis as any).addEventListener('message', (e: MessageEvent) => {
       if (e.data && e.data.type === 'guardian-insights') {
         setGuardian(e.data.payload?.rules || []);
       }
     });
   }, []);
 
-  // Handlers (stubbed)
-  const handleUndo = async () => {
-    setUndoLoading(true);
-    setTimeout(() => setUndoLoading(false), 800);
-  };
-  const handleExplain = async () => {
-    setExplainLoading(true);
-    setTimeout(() => setExplainLoading(false), 800);
-  };
-  const handleShowDiff = () => {
-    setDiff('--- before\n+++ after\n-foo\n+bar');
+  // VS Code API
+  const vscode = (globalThis as any).acquireVsCodeApi ? (globalThis as any).acquireVsCodeApi() : { postMessage: () => {} };
+
+  const handle = (type: string) => () => {
+    vscode.postMessage({ type });
   };
 
   return (
     <div>
-      <button onClick={handleUndo} disabled={undoLoading}>
-        {undoLoading ? 'Undoing...' : 'Undo'}
-      </button>
-      <button onClick={handleExplain} disabled={explainLoading}>
-        {explainLoading ? 'Explaining...' : 'Explain'}
-      </button>
-      <button onClick={handleShowDiff}>Show Diff</button>
-      {diff && (
-        <pre style={{ border: '1px solid #ccc', marginTop: 8 }}>
-          {diff}
-        </pre>
-      )}
+      <button onClick={handle('scan')}>Scan</button>
+      <button onClick={handle('heal')}>Heal</button>
+      <button onClick={handle('undo')}>Undo</button>
+      <button onClick={handle('explain')}>Explain</button>
+      <button onClick={handle('openReports')}>Reports</button>
       <section id="guardian-insights" style={{ marginTop: 16, fontSize: 13 }}>
         <b>Guardian Insights</b>
         {guardian.length === 0 ? (
