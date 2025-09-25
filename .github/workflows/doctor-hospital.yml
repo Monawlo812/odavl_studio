@@ -1,0 +1,35 @@
+name: Doctor Hospital (Continuous Care)
+
+on:
+  schedule:
+    - cron: '0 2 * * *'
+  workflow_dispatch:
+
+jobs:
+  hospital:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+      - name: Install deps
+        run: pnpm install --frozen-lockfile
+      - name: Run Doctor Hospital Scan
+        run: pnpm -w run doctor:hospital:scan
+      - name: Upload reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: doctor-hospital-reports
+          path: reports/doctor-hospital-*.json
+      - name: OSV Scanner
+        uses: google/osv-scanner-action@v1
+        with:
+          scan-args: --lockfile=pnpm-lock.yaml
+      - name: Fail if attention needed
+        run: |
+          status=$(jq -r .overall reports/doctor-hospital-*.json | head -1)
+          if [ "$status" = "attention-needed" ]; then
+            echo "Doctor Hospital requires attention!" >&2
+            exit 1
+          fi

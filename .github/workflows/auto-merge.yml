@@ -1,0 +1,22 @@
+name: Auto Merge
+on:
+  workflow_run:
+    workflows: ["Freeze Audit"]
+    types:
+      - completed
+  pull_request_target:
+    types: [labeled]
+jobs:
+  auto-merge:
+    if: >-
+      github.event.workflow_run.conclusion == 'success' ||
+      (github.event.label.name == 'odavl:auto-safe')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check PR label and limits
+        run: |
+          echo "Checking PR label and limits..."
+          # This is a stub; real implementation would use gh/REST
+          echo "TODO: check files/lines, run guard, merge if safe"
+          exit 0

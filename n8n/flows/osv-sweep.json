@@ -1,0 +1,11 @@
+{
+  "name": "Weekly OSV Sweep",
+  "nodes": [
+    { "type": "cron", "name": "Weekly Trigger", "parameters": { "mode": "everyWeek", "dayOfWeek": "1", "hour": "2", "minute": "0" } },
+    { "type": "function", "name": "Run OSV Scan", "parameters": { "functionCode": "// Simulate OSV scan\nitem.osvIssues = true;\nreturn items;" } },
+    { "type": "if", "name": "Issues Found?", "parameters": { "conditions": [{ "value1": "={{$json.osvIssues}}", "operation": "equal", "value2": true }] } },
+    { "type": "httpRequest", "name": "Open Issue/PR", "parameters": { "url": "https://api.github.com/repos/{{ $json.repo }}/issues", "method": "POST", "body": { "title": "OSV Vulnerabilities Found", "body": "See attached osv.json" }, "authentication": "GitHub OAuth2" } },
+    { "type": "function", "name": "Attach osv.json", "parameters": { "functionCode": "// Reference reports/osv.json\nreturn items;" } }
+  ],
+  "connections": {}
+}

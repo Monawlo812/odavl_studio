@@ -1,0 +1,10 @@
+{
+  "name": "Auto-Rollback",
+  "nodes": [
+    { "type": "webhook", "name": "Main Failure Trigger", "parameters": { "httpMethod": "POST", "path": "auto-rollback" } },
+    { "type": "function", "name": "Parse Failure", "parameters": { "functionCode": "// Parse failure event, extract info\nreturn items;" } },
+    { "type": "httpRequest", "name": "Open Revert PR", "parameters": { "url": "https://api.github.com/repos/{{ $json.repo }}/pulls", "method": "POST", "body": { "title": "Auto-Rollback: Revert main failure", "head": "revert-branch", "base": "main", "body": "Automated rollback due to failure. See logs attached." }, "authentication": "GitHub OAuth2" } },
+    { "type": "function", "name": "Attach Logs", "parameters": { "functionCode": "// Reference failure logs\nitem.logs = 'reports/ci-run-latest.log';\nreturn items;" } }
+  ],
+  "connections": {}
+}

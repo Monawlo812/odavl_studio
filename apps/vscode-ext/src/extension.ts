@@ -1,7 +1,108 @@
+// --- Guardian Insights (V8) ---
+function postGuardianInsights(panelWebview: any, workspaceRoot: string) {
+  const fs = require('fs');
+  const path = require('path');
+  let rules = [];
+  let trusted: string[] = [];
+  try {
+    const kb = JSON.parse(fs.readFileSync(path.join(workspaceRoot, '.odavl/guardian/knowledge.json'), 'utf8'));
+    rules = kb.rules.map((r: any) => ({
+      id: r.id,
+      successCount: r.successCount,
+      failCount: r.failCount,
+      trusted: (r.successCount >= 3 && r.failCount === 0)
+    }));
+  trusted = rules.filter((r: { trusted: boolean }) => r.trusted).map((r: { id: string }) => r.id);
+  } catch { rules = []; }
+  panelWebview.postMessage({ type: 'guardian-insights', payload: { rules, trusted } });
+}
+// --- Doctor Hospital Scan integration ---
+async function runDoctorHospitalScan(context: vscode.ExtensionContext) {
+  const workspaceRoot = vscode.workspace.workspaceFolders?.[0]?.uri.fsPath || "";
+  if (!workspaceRoot) return;
+  const { spawn } = require('child_process');
+  return new Promise((resolve) => {
+    const proc = spawn('pnpm', ['-w', 'run', 'doctor:hospital:scan'], { cwd: workspaceRoot, shell: true });
+    let output = '';
+  proc.stdout.on('data', (d: Buffer) => { output += d.toString(); });
+  proc.stderr.on('data', (d: Buffer) => { output += d.toString(); });
+    proc.on('close', () => {
+      // Try to read JSON summary
+      const day = new Date().toISOString().slice(0,10);
+      const reportPath = path.join(workspaceRoot, 'reports', `doctor-hospital-${day}.json`);
+      let summary = '';
+      try {
+        const j = JSON.parse(fs.readFileSync(reportPath, 'utf8'));
+        summary = `Doctor Hospital v2 — Status: ${j.overall} (ci_yaml: ${j.ci_yaml}, osv_scan: ${j.osv_scan}, hygiene: ${j.hygiene})`;
+      } catch {
+        summary = output.split('\n').slice(0,10).join('\n');
+      }
+      // Show in panel (if available)
+      vscode.commands.executeCommand('odavl.openPanel');
+      vscode.window.showInformationMessage(summary);
+
+      // Post summary to ODAVL panel webview output area
+      // Try to find the ODAVL Studio panel and post a message
+      const panels = vscode.window.tabGroups.all
+        .flatMap(g => g.tabs)
+        .filter(tab => tab.label && tab.label.includes('ODAVL Studio'));
+  if (panels.length > 0 && panels[0].input && (panels[0].input as { viewType?: string }).viewType === 'odavlStudio') {
+        // This is a hack: VS Code API does not expose direct webview panel refs, but we can try to send a message
+        // Instead, we can use the global webview API if available
+        // (If using WebviewViewProvider, use a static ref or event)
+        // For now, also post to all visible webviews
+        vscode.window.visibleTextEditors.forEach(editor => {
+          if (editor.document && editor.document.fileName.includes('ODAVL Studio')) {
+            // Not a real webview, but placeholder for future
+          }
+        });
+      }
+      // Fallback: use the webview API if available
+      if ((globalThis as any).odavlPanelWebview && typeof (globalThis as any).odavlPanelWebview.postMessage === 'function') {
+        (globalThis as any).odavlPanelWebview.postMessage({ type: 'result', data: summary });
+        // Also post Guardian Insights after scan
+        postGuardianInsights((globalThis as any).odavlPanelWebview, workspaceRoot);
+      }
+      // Also try to post to all webviews (for multi-panel support)
+      vscode.window.tabGroups.all.forEach(group => {
+        group.tabs.forEach(tab => {
+          if (tab.input && (tab.input as { viewType?: string }).viewType === 'odavlStudio' && tab.isActive) {
+            // No direct API, but placeholder for future
+          }
+        });
+      });
+  // (If not possible, the panel will still show the summary on next open)
+  resolve(summary);
+  // On panel open, post Guardian Insights
+  context.subscriptions.push(vscode.commands.registerCommand('odavl.openPanel', () => {
+    if ((globalThis as any).odavlPanelWebview && typeof (globalThis as any).odavlPanelWebview.postMessage === 'function') {
+      const workspaceRoot = vscode.workspace.workspaceFolders?.[0]?.uri.fsPath || "";
+      postGuardianInsights((globalThis as any).odavlPanelWebview, workspaceRoot);
+    }
+  }));
+    });
+  });
+}
+  // Register Doctor Hospital Scan command
+  // (moved to activate)
 import * as vscode from "vscode";
 import * as path from "path";
 import * as fs from "fs";
 import { spawn } from "child_process";
+import { activateDoctor } from './doctor';
+
+// --- Telemetry and error taxonomy helpers ---
+function sendTelemetry(cmd: string, duration: number, exitCode: number) {
+  const enabled = vscode.workspace.getConfiguration('odavl').get('telemetryEnabled');
+  if (enabled) {
+    // Non-PII: command, duration, exitCode
+    // (In real impl, send to backend or append to log)
+    // console.log(`[telemetry]`, { cmd, duration, exitCode });
+  }
+}
+function showError(msg: string) {
+  vscode.window.showErrorMessage(`[ODAVL] ${msg}`);
+}
 
 // Module-level status bar variables
 let statusItem: vscode.StatusBarItem | undefined;
@@ -342,9 +443,10 @@ export async function activate(
 
   // register immune clinic
   // prettier-ignore
-  try { var { openImmuneClinic } = require('./immuneClinic'); } catch {}
+  let openImmuneClinic: undefined | ((ctx: vscode.ExtensionContext) => void);
+  try { ({ openImmuneClinic } = require('./immuneClinic')); } catch {}
   if (openImmuneClinic) {
-    context.subscriptions.push(vscode.commands.registerCommand('odavl.immuneClinic.open',()=>openImmuneClinic(context)));
+    context.subscriptions.push(vscode.commands.registerCommand('odavl.immuneClinic.open',()=>openImmuneClinic!(context)));
   }
 
   // Auto-reveal Activity Bar container on activation
@@ -816,6 +918,13 @@ export async function activate(
   );
 
   context.subscriptions.push(controlCenterCommand, magicCommand, debugCommand);
+
+  // On Doctor Mode startup, trigger hospital scan once if enabled
+  activateDoctor(context);
+  const config = vscode.workspace.getConfiguration('odavl.doctor');
+  if (config.get('enabled', true)) {
+    runDoctorHospitalScan(context);
+  }
 }
 
 export function deactivate(): void {

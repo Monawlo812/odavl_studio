@@ -1,0 +1,12 @@
+{
+  "action": "opened",
+  "number": 42,
+  "pull_request": {
+    "url": "https://api.github.com/repos/example/repo/pulls/42",
+    "head": { "ref": "feature-branch" },
+    "base": { "ref": "main" }
+  },
+  "repository": {
+    "full_name": "example/repo"
+  }
+}

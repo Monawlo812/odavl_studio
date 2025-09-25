@@ -1,0 +1,8 @@
+{
+  "version": 1,
+  "rules": [
+    { "id": "unused-import", "pattern": "ESLint: no-unused-vars|no-unused-imports", "action": "autofix:remove-unused", "successCount": 0, "failCount": 0 },
+    { "id": "var-to-const",  "pattern": "Sonar.*Unexpected var", "action": "autofix:var-to-const", "successCount": 0, "failCount": 0 },
+    { "id": "yaml-indent",   "pattern": "YAML.*implicit map key|Indentation", "action": "autofix:yaml-indent", "successCount": 0, "failCount": 0 }
+  ]
+}

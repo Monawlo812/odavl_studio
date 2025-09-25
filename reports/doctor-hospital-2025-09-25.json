@@ -1,0 +1,13 @@
+{
+  "ci_yaml": "skipped",
+  "osv_scan": "skipped",
+  "hygiene": "passed",
+  "overall": "healthy-with-skips",
+  "details": {
+    "ci_yaml": "rhysd/actionlint:latest skipped (not available)",
+    "osv_scan": "ghcr.io/google/osv-scanner:latest skipped (not available)",
+    "build": "\n> odavl-studio@0.5.0 build C:\\Users\\sabou\\odavl_studio\n> turbo run build\n\n• Packages in scope: @odavl/cli, @odavl/codemods, @odavl/core, @odavl/launcher, @odavl/orchestrator, @odavl/policy, @odavl/reporters, @odavl/vscode-ext, golden-repo\n• Running build in 9 packages\n• Remote caching disabled\n@odavl/orchestrator:build: cache hit, replaying logs 72bbd7b62dc2dd2a\n@odavl/orchestrator:build: \n@odavl/orchestrator:build: > @odavl/orchestrator@0.4.0 build C:\\Users\\sabou\\odavl_studio\\apps\\orchestrator",
+    "test": "\n> odavl-studio@0.5.0 test C:\\Users\\sabou\\odavl_studio\n> echo \"no tests\" && exit 0 \"--if-present\"\n\n\"no tests\" \r\n",
+    "hygiene": "\n> odavl-studio@0.5.0 odavl:problems:run C:\\Users\\sabou\\odavl_studio\n> node scripts/immune/problems/run.mjs\n\nProblems-Pro: noop | VERIFY:PASS | before=0 after=0\n"
+  }
+}

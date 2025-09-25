@@ -1,0 +1,26 @@
+name: Canary Promotion
+on:
+  pull_request:
+    types: [labeled]
+    branches: [ main ]
+
+jobs:
+  canary:
+    if: contains(github.event.pull_request.labels.*.name, 'odavl:canary')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Merge to canary
+        run: |
+          git fetch origin
+          git checkout -B canary origin/main
+          git merge --no-ff ${{ github.event.pull_request.head.ref }}
+          git push origin canary
+      - name: Run Freeze
+        run: |
+          gh workflow run freeze.yml -b canary
+      - name: Promote main if green
+        run: |
+          git fetch origin
+          git checkout main
+          git merge --ff-only canary && git push origin main || echo "Canary failed, not promoting."

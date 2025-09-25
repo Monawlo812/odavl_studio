@@ -1,0 +1,29 @@
+name: Freeze Vulnerabilities
+on:
+  pull_request:
+jobs:
+  osv:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install osv-scanner
+        shell: bash
+        run: |
+          curl -sSfL https://raw.githubusercontent.com/google/osv-scanner/main/install.sh | sh -s -- -b /usr/local/bin
+      - name: Run osv-scanner
+        shell: bash
+        run: |
+          mkdir -p reports
+          osv-scanner -r . --format json --output reports/osv.json || true
+      - name: Enforce OSV policy (fail on HIGH/CRITICAL)
+        shell: bash
+        run: |
+          node -e "const fs=require('fs');const j=JSON.parse(fs.readFileSync('reports/osv.json','utf8'));let bad=0;(j.results||[]).forEach(r=>(r.packages||[]).forEach(p=>(p.vulnerabilities||[]).forEach(v=>{if(['HIGH','CRITICAL'].includes(v.severity)) bad++}))); if(bad){console.error('OSV policy: '+bad+' HIGH/CRITICAL vulns'); process.exit(1)} else {console.log('OSV policy: OK')}"
+      - name: Upload osv report
+        uses: actions/upload-artifact@v4
+        with:
+          name: osv-report
+          path: reports/osv.json
+          if-no-files-found: warn

@@ -1,0 +1,21 @@
+autonomy_level: 5
+governor:
+  maintenance_windows:
+    - "0 3 * * *" # 3am daily
+  daily_tokens: 5
+  codemod_cost: 2
+canary: true
+limits:
+  max_changed_files: 10
+  max_changed_lines: 40
+protected_paths:
+  - "**/security/**"
+  - "**/*.spec.*"
+  - "**/public-api/**"
+merge_policy:
+  require_shadow_ci: true
+  allow_src_changes: codemod-only
+notes:
+  - "Codemod PRs must pass smoke & public API checks before merge."
+  - "Canary branch and maintenance windows enforced at L5."
+  - "See scripts/tests/smoke.mjs and scripts/guards/public-api-check.mjs."

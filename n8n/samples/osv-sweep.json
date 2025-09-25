@@ -1,0 +1,5 @@
+{
+  "osvIssues": true,
+  "repo": "example/repo",
+  "osvReport": "reports/osv.json"
+}

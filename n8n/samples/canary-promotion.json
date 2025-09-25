@@ -1,0 +1,6 @@
+{
+  "ref": "refs/heads/canary",
+  "repo": "example/repo",
+  "gatesPassed": true,
+  "attestation": "reports/attestation-latest.json"
+}

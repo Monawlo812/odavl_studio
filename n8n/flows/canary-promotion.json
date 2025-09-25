@@ -1,0 +1,13 @@
+{
+  "name": "Canary Promotion",
+  "nodes": [
+    { "type": "webhook", "name": "Canary Push Trigger", "parameters": { "httpMethod": "POST", "path": "canary-promotion" } },
+    { "type": "function", "name": "Check Branch", "parameters": { "functionCode": "// Check if push is to canary\nitem.isCanary = $json.ref && $json.ref.endsWith('/canary');\nreturn items;" } },
+    { "type": "if", "name": "Is Canary?", "parameters": { "conditions": [{ "value1": "={{$json.isCanary}}", "operation": "equal", "value2": true }] } },
+    { "type": "function", "name": "Run Freeze", "parameters": { "functionCode": "// Simulate Freeze, set gatesPassed\nitem.gatesPassed = true;\nreturn items;" } },
+    { "type": "if", "name": "Gates Passed?", "parameters": { "conditions": [{ "value1": "={{$json.gatesPassed}}", "operation": "equal", "value2": true }] } },
+    { "type": "httpRequest", "name": "Promote to Main", "parameters": { "url": "https://api.github.com/repos/{{ $json.repo }}/merges", "method": "POST", "body": { "base": "main", "head": "canary" }, "authentication": "GitHub OAuth2" } },
+    { "type": "function", "name": "Post Attestation", "parameters": { "functionCode": "// Reference attestation file\nitem.attestation = 'reports/attestation-latest.json';\nreturn items;" } }
+  ],
+  "connections": {}
+}

@@ -1,0 +1,16 @@
+[
+  {
+    "recipe": "unknown",
+    "features": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "score": 0.5,
+    "rationale": "Contextual stub: logistic([0,0,0,0]) → 0.50",
+    "phase": "contextual",
+    "timestamp": "2025-09-25T00:02:29.968Z",
+    "humanApprovalRequired": true
+  }
+]
