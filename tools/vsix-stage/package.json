@@ -1,0 +1,43 @@
+{
+  "name": "odavl-studio",
+  "displayName": "ODAVL Studio",
+  "description": "Automated development governance with code healing and CI management",
+  "version": "0.4.2",
+  "publisher": "odavl",
+  "engines": { "vscode": ">=1.70.0" },
+  "categories": ["Other", "Linters"],
+  "main": "dist/extension.js",
+  "activationEvents": ["onStartupFinished"],
+  "contributes": {
+    "commands": [
+      { "command": "odavl.runCodemod", "title": "ODAVL: Run Codemod" },
+      { "command": "odavl.freezeNow", "title": "ODAVL: Freeze Now" },
+      { "command": "odavl.undo", "title": "ODAVL: Undo" },
+      { "command": "odavl.openEvidence", "title": "ODAVL: Open Evidence" },
+      { "command": "odavl.doctor.toggle", "title": "ODAVL Doctor: Toggle" },
+      { "command": "odavl.doctor.fixNext", "title": "ODAVL Doctor: Fix Next Problem" },
+      { "command": "odavl.doctor.fixAllBatch", "title": "ODAVL Doctor: Fix Batch" }
+    ],
+    "configuration": {
+      "type": "object",
+      "title": "ODAVL Studio",
+      "properties": {
+        "odavl.doctor.enabled": { "type": "boolean", "default": true, "description": "Enable ODAVL Doctor Mode (live diagnostics agent)" },
+        "odavl.doctor.maxLines": { "type": "number", "default": 40, "description": "Doctor Mode: max lines per batch" },
+        "odavl.doctor.maxFiles": { "type": "number", "default": 10, "description": "Doctor Mode: max files per batch" },
+        "odavl.doctor.protectedGlobs": { "type": "array", "default": ["**/security/**","**/*.spec.*","**/public-api/**"], "description": "Globs to protect from Doctor Mode edits" },
+        "odavl.doctor.allowWorkflows": { "type": "boolean", "default": false, "description": "Allow Doctor Mode to edit .github/workflows/* (default: false)" },
+        "odavl.doctor.autorunOnStartup": { "type": "boolean", "default": true, "description": "Automatically enable and run Doctor Mode on startup" },
+        "odavl.ui.openPanelOnStartup": { "type": "boolean", "default": true, "description": "Open ODAVL main panel on startup" }
+      }
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Monawlo812/odavl_studio.git"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  }
+}
