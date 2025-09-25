@@ -23,7 +23,7 @@ jobs:
           name: doctor-hospital-reports
           path: reports/doctor-hospital-*.json
       - name: OSV Scanner
-        uses: google/osv-scanner-action@v1
+        uses: google/osv-scanner-action@v1.7.4
         with:
           scan-args: --lockfile=pnpm-lock.yaml
       - name: Fail if attention needed
