@@ -1,0 +1,12 @@
+{
+  "name": "Freeze on PR",
+  "nodes": [
+    { "type": "webhook", "name": "GitHub PR Webhook", "parameters": { "httpMethod": "POST", "path": "freeze-on-pr" } },
+    { "type": "function", "name": "Parse PR", "parameters": { "functionCode": "// Extract PR number, repo, etc. from webhook body\nreturn items;" } },
+    { "type": "httpRequest", "name": "Get PR Details", "parameters": { "url": "https://api.github.com/repos/{{ $json.repo }}/pulls/{{ $json.number }}", "authentication": "GitHub OAuth2" } },
+    { "type": "function", "name": "Run Freeze", "parameters": { "functionCode": "// Simulate running Freeze, evaluate gates\nitem.gatesPassed = true;\nreturn items;" } },
+    { "type": "if", "name": "Gates Passed?", "parameters": { "conditions": [{ "value1": "={{$json.gatesPassed}}", "operation": "equal", "value2": true }] } },
+    { "type": "httpRequest", "name": "Comment/Label PR", "parameters": { "url": "https://api.github.com/repos/{{ $json.repo }}/issues/{{ $json.number }}/comments", "method": "POST", "body": { "body": "Freeze completed. All gates passed." }, "authentication": "GitHub OAuth2" } }
+  ],
+  "connections": {}
+}

@@ -1,8 +1,8 @@
 {
-  "name": "odavl-studio",
+  "name": "@odavl/vscode-ext",
   "displayName": "ODAVL Studio",
   "description": "Automated development governance with code healing and CI management",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "publisher": "odavl",
   "categories": [
     "Other",
@@ -14,11 +14,13 @@
   },
   "icon": "assets/icon.png",
   "engines": {
-    "vscode": "^1.85.0"
+    "vscode": ">=1.70.0"
   },
-  "activationEvents": [
-  ],
   "main": "dist/extension.js",
+  "activationEvents": [
+    "onView:odavl.panel",
+    "onView:odavl.evidence"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/Monawlo812/odavl_studio.git"
@@ -31,67 +33,39 @@
     "viewsContainers": {
       "activitybar": [
         {
-          "id": "odavlControl",
+          "id": "odavl",
           "title": "ODAVL",
-          "icon": "media/odavl-icon-light.svg"
+          "icon": "resources/odavl.svg"
         }
       ]
     },
     "views": {
-      "odavlControl": [
-        {
-          "id": "odavl.control.center",
-          "name": "Control Center",
-          "type": "webview",
-          "icon": "$(gear)"
-        }
+      "odavl": [
+        { "id": "odavl.panel", "name": "ODAVL Panel", "type": "webview", "icon": "resources/odavl.svg" },
+        { "id": "odavl.evidence", "name": "Evidence", "type": "webview", "icon": "resources/odavl.svg" }
       ]
     },
     "commands": [
-      {
-        "command": "odavlStudio.openPanel",
-        "title": "ODAVL Studio: Open Panel"
-      },
-      {
-        "command": "odavl.controlCenter.open",
-        "title": "ODAVL: Open Control Center"
-      },
-      {
-        "command": "odavl.magic.run",
-        "title": "ODAVL: Magic (One-Click)",
-        "icon": "$(rocket)"
-      },
-      {
-        "command": "odavl.debug.showIconStatus",
-        "title": "ODAVL: Debug — Show Icon Status"
-      },
-      {
-        "command": "odavl.scanHeal",
-        "title": "ODAVL: Scan/Heal Panel"
-      }
+    { "command": "odavl.openPanel", "title": "ODAVL: Open Panel" },
+    { "command": "odavl.openEvidence", "title": "ODAVL: Open Evidence" },
+    { "command": "odavl.doctor.toggle", "title": "ODAVL Doctor: Toggle" },
+    { "command": "odavl.doctor.fixNext", "title": "ODAVL Doctor: Fix Next Problem" },
+    { "command": "odavl.doctor.fixAllBatch", "title": "ODAVL Doctor: Fix Batch" },
+    { "command": "odavl.doctorHospitalScan", "title": "ODAVL Doctor: Hospital Scan" }
     ],
-    "menus": {
-      "view/title": [
-        {
-          "command": "odavl.magic.run",
-          "when": "view == odavl.control.center",
-          "group": "navigation@1"
-        }
-      ],
-      "commandPalette": [
-        {
-          "command": "odavl.controlCenter.open",
-          "when": "true"
-        },
-        {
-          "command": "odavl.magic.run",
-          "when": "true"
-        },
-        {
-          "command": "odavl.debug.showIconStatus",
-          "when": "true"
-        }
-      ]
+    "configuration": {
+      "type": "object",
+      "title": "ODAVL Studio",
+      "properties": {
+        "odavl.ui.openPanelOnStartup": { "type": "boolean", "default": true, "description": "Open ODAVL main panel on startup" },
+        "odavl.ui.openEvidenceOnStartup": { "type": "boolean", "default": false, "description": "Open Evidence view on startup" },
+        "odavl.doctor.autorunOnStartup": { "type": "boolean", "default": true, "description": "Automatically enable and run Doctor Mode on startup" },
+        "odavl.doctor.enabled": { "type": "boolean", "default": true, "description": "Enable ODAVL Doctor Mode (live diagnostics agent)" },
+        "odavl.doctor.maxLines": { "type": "number", "default": 40, "description": "Doctor Mode: max lines per batch" },
+        "odavl.doctor.maxFiles": { "type": "number", "default": 10, "description": "Doctor Mode: max files per batch" },
+        "odavl.doctor.protectedGlobs": { "type": "array", "default": ["**/security/**","**/*.spec.*","**/public-api/**"], "description": "Globs to protect from Doctor Mode edits" },
+        "odavl.doctor.allowWorkflows": { "type": "boolean", "default": true, "description": "Allow Doctor Mode to edit .github/workflows/* (default: true)" }
+      }
     },
     "keybindings": [
       {
@@ -139,8 +113,17 @@
     ]
   },
   "scripts": {
-    "build": "tsc -p tsconfig.json"
+    "clean": "node -e \"require('fs').rmSync('dist', { recursive: true, force: true })\"",
+    "bundle": "node scripts/bundle-extension.mjs",
+    "build": "pnpm run clean && pnpm run bundle"
   },
+  "files": [
+    "dist/**",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE",
+    "package.json"
+  ],
   "devDependencies": {
     "@types/vscode": "^1.85.0",
     "@types/node": "^20",

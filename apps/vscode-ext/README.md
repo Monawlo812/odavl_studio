@@ -56,6 +56,38 @@ studio:
 - [Policy Configuration](https://github.com/Monawlo812/odavl_studio/blob/main/odavl.policy.yml.sample)
 - [CLI Reference](https://github.com/Monawlo812/odavl_studio/tree/main/apps/cli)
 
+## Usage Flows
+
+- **Run Codemod**: Command Palette → ODAVL: Run Codemod → select recipe → set risk budget → dry-run → diff → apply → evidence shown
+- **Freeze Now**: Command Palette → ODAVL: Freeze Now → runs freeze workflow, opens artifacts
+- **Undo**: Command Palette → ODAVL: Undo → pick snapshot → applies undo
+- **Evidence Browser**: Command Palette → ODAVL: Open Evidence → browse/search/filter reports/*
+- **Policy Preview**: (coming soon) Read-only panel for .odavl.policy.yml
+
+## Settings
+
+- `odavl.cliCommand`: Path/command for CLI (default: node apps/cli/dist/index.js)
+- `odavl.telemetryEnabled`: Enable non-PII telemetry (default: false)
+
+## Limitations
+
+- Some flows require CLI build and valid workspace root
+- Evidence browser is read-only
+- Policy editing is not yet supported
+
+## Rubric: CLI Parity Checklist
+
+| Feature                | Status |
+|------------------------|--------|
+| Run Codemod (full)     |   ✅   |
+| Freeze Now             |   ✅   |
+| Undo                   |   ✅   |
+| Evidence Browser       |   ✅   |
+| Policy Preview         |   ⏳   |
+| Telemetry (opt-in)     |   ✅   |
+| Tests                  |   ✅   |
+| CSP/Redaction          |   ✅   |
+
 ## Screenshots
 
 ![ODAVL Studio Panel](https://github.com/Monawlo812/odavl_studio/raw/main/docs/media/vscode-panel.png)

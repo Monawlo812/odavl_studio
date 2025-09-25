@@ -1,0 +1,22 @@
+{
+  "timestamp": "2025-09-24T19:17:10.072Z",
+  "allPresent": false,
+  "evidence": [
+    {
+      "file": "reports/shadow/verify-report.md",
+      "exists": false
+    },
+    {
+      "file": "reports/attestation.json",
+      "exists": false
+    },
+    {
+      "file": "reports/cleanup/kill-list.json",
+      "exists": false
+    },
+    {
+      "file": "reports/executive/scoreboard.md",
+      "exists": false
+    }
+  ]
+}

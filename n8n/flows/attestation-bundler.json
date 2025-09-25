@@ -1,0 +1,9 @@
+{
+  "name": "Attestation Bundler",
+  "nodes": [
+    { "type": "webhook", "name": "Release Trigger", "parameters": { "httpMethod": "POST", "path": "attestation-bundler" } },
+    { "type": "function", "name": "Collect Artifacts", "parameters": { "functionCode": "// Simulate collecting reports/*\nitem.bundle = 'reports/bundle.zip';\nreturn items;" } },
+    { "type": "httpRequest", "name": "Upload to Release", "parameters": { "url": "https://api.github.com/repos/{{ $json.repo }}/releases/assets?name=bundle.zip", "method": "POST", "body": {}, "authentication": "GitHub OAuth2" } }
+  ],
+  "connections": {}
+}

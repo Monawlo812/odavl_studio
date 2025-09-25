@@ -5,12 +5,13 @@
     "moduleResolution": "node",
     "strict": true,
     "skipLibCheck": true,
-    "outDir": "dist",
-    "rootDir": "src",
-    "esModuleInterop": true,
-    "lib": ["ES2020"],
-    "types": ["node", "vscode"],
+  "outDir": "dist",
+  "rootDir": "src",
+  "esModuleInterop": true,
+  "lib": ["ES2020"],
+  "types": ["mocha", "node", "vscode"],
     "jsx": "react-jsx"
   },
-  "include": ["src"]
+  "include": ["src"],
+  "exclude": ["**/*.test.ts", "**/*.spec.ts", "**/__tests__/**"]
 }

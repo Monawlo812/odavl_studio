@@ -1,0 +1,7 @@
+{
+  "odavl.doctor.enabled": true,
+  "odavl.doctor.maxLines": 40,
+  "odavl.doctor.maxFiles": 10,
+  "odavl.doctor.protectedGlobs": ["**/security/**","**/*.spec.*","**/public-api/**"],
+  "odavl.doctor.allowWorkflows": true
+}

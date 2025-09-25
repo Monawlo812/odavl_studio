@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // Compute outcome stats for codemod recipes
-import { readdirSync, readFileSync, writeFileSync, mkdirSync } from 'fs';
+import { readFileSync, writeFileSync, mkdirSync } from 'fs';
 const day = new Date().toISOString().slice(0,10);
 const reports = ['osv.json', 'gitleaks.json', 'bundle.log'];
 const out = { date: day, recipes: {} };

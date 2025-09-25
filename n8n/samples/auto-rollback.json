@@ -1,0 +1,5 @@
+{
+  "repo": "example/repo",
+  "failure": true,
+  "logs": "reports/ci-run-latest.log"
+}

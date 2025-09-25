@@ -175,3 +175,19 @@ Placeholders (replace with real screenshots/GIFs):
 - **[Support Channels](SUPPORT.md)** - Get help and report issues
 - **[Partner Onboarding](.github/ISSUE_TEMPLATE/onboarding.md)** - Design partner setup checklist
 - **[Design Partner Playbook](docs/design-partner-playbook.md)** - Early adopter guide
+
+## Learning Model (Adaptive Risk)
+
+ODAVL Studio includes a multi-phase learning model for adaptive risk budgeting:
+- **Metrics aggregation**: Normalizes per-recipe outcomes (success, revert, gate failures)
+- **EWMA adjustment**: Suggests risk budgets using exponential weighted moving average
+- **Bandit model**: Thompson sampling for adaptive risk per recipe
+- **Contextual stub**: Logistic regression stub, human-in-loop only
+- **Governance**: All suggestions are suggestions-only, never auto-applied; full audit trail in `reports/learn/`
+
+**Artifacts:**
+- Scripts: `scripts/learn/`
+- Outputs: `reports/learn/`
+- Verification: `reports/learn-verify.md`, `reports/learn-verify.log`
+
+See verification report for rubric and evidence.

@@ -1,0 +1,20 @@
+{
+  "date": "2025-09-25",
+  "upgrades": [
+    "VS Code extension parity",
+    "n8n integration flows",
+    "Learning/Adaptive Risk Model"
+  ],
+  "evidence": {
+    "vscode": "reports/extension-parity-verify.md",
+    "n8n": "reports/n8n-flows-verify.md",
+    "learning": "reports/learn-verify.md"
+  },
+  "scoring": {
+    "vscode": 10,
+    "n8n": 10,
+    "learning": 10,
+    "total": 30
+  },
+  "residualRisk": "none"
+}

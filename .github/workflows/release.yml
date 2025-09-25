@@ -51,10 +51,10 @@ jobs:
       - name: Create GitHub Release
         run: |
           if [ "${{ steps.qa_report.outputs.qa_exists }}" = "true" ]; then
-            gh release create "${{ steps.version.outputs.version }}" \
-              --title "ODAVL Studio ${{ steps.version.outputs.version }}" \
-              --notes-file "${{ steps.changelog.outputs.changes_file }}" \
-              "${{ steps.qa_report.outputs.qa_file }}"
+              gh release create "${{ steps.version.outputs.version }}" \
+                --title "ODAVL Studio ${{ steps.version.outputs.version }}" \
+                --notes-file "${{ steps.changelog.outputs.changes_file }}" \
+                --qa-file "${{ steps.qa_report.outputs.qa_file }}"
           else
             gh release create "${{ steps.version.outputs.version }}" \
               --title "ODAVL Studio ${{ steps.version.outputs.version }}" \
@@ -66,5 +66,5 @@ jobs:
           echo "🚀 Release ${{ steps.version.outputs.version }} created successfully!"
           echo "📋 Changelog: ${{ steps.changelog.outputs.changes_file }}"
           if [ "${{ steps.qa_report.outputs.qa_exists }}" = "true" ]; then
-            echo "📊 QA Report: ${{ steps.qa_report.outputs.qa_file }}"
+              echo "📊 QA Report: ${{ steps.qa_report.outputs.qa_file }}"
           fi
