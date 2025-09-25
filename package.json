@@ -51,7 +51,9 @@
     "lint:loose": "pnpm -r exec eslint \"src/**/*.ts\" \"packages/**/*.ts\" || echo 'lint warnings only'",
     "build:loose": "pnpm -r exec tsc --noEmit --skipLibCheck || echo 'build ok (loose)",
     "orchestrate:audit": "node scripts/orchestrate-audit.mjs",
-    "doctor:hospital:scan": "node scripts/doctor/hospital.mjs"
+  "doctor:hospital:scan": "node scripts/doctor/hospital.mjs",
+  "odavl:scan": "pnpm -w run odavl:problems:run --if-present",
+  "odavl:heal": "pnpm -w run odavl:problems:run --if-present"
   },
   "devDependencies": {
     "@cyclonedx/cyclonedx-library": "^9.0.0",
