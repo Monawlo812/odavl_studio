@@ -1,0 +1,47 @@
+name: 'ODAVL Doctor Runner (Advice-Only)'
+description: 'Run Doctor in advice-only mode (scan, heal, upload artifacts)'
+inputs:
+  mode:
+    required: true
+    default: 'advice'
+  max_files:
+    required: true
+    default: '10'
+  max_lines:
+    required: true
+    default: '40'
+  protected_paths:
+    required: true
+    default: '**/security/**,**/*.spec.*,**/public-api/**'
+  task_name:
+    required: true
+    default: 'ci-heal'
+runs:
+  using: 'composite'
+  steps:
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+    - uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+    - name: Enable corepack + setup pnpm
+      shell: bash
+      run: |
+        corepack enable
+        corepack prepare pnpm@9 --activate
+    - name: Install dependencies
+      shell: bash
+      run: pnpm install --frozen-lockfile || pnpm install
+    - name: Doctor Scan
+      shell: bash
+      run: pnpm -w run odavl:scan || true
+    - name: Doctor Heal
+      shell: bash
+      run: pnpm -w run odavl:heal || true
+    - name: Upload Artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: doctor-artifacts
+        path: reports/doctor
+        if-no-files-found: warn
