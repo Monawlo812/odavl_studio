@@ -1,0 +1,39 @@
+name: Artifact Sanity
+on:
+  push:
+    branches: ["odavl/ci-doctor-smoke-20250926"]
+  workflow_dispatch:
+permissions:
+  actions: write
+  contents: read
+jobs:
+  sanity:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Create files
+        run: |
+          echo "hello $(date -u)" > "$GITHUB_WORKSPACE/doctor-test.txt"
+          mkdir -p "$GITHUB_WORKSPACE/reports/doctor"
+          echo "# sanity patch $(date -u)" > "$GITHUB_WORKSPACE/reports/doctor/patch.diff"
+          echo "readme" > "$GITHUB_WORKSPACE/reports/doctor/README.txt"
+          ls -la "$GITHUB_WORKSPACE" || true
+          ls -la "$GITHUB_WORKSPACE/reports/doctor" || true
+      - name: Upload TXT
+        uses: actions/upload-artifact@v3
+        with:
+          name: doctor-test-${{ github.run_id }}
+          path: ${{ github.workspace }}/doctor-test.txt
+          if-no-files-found: error
+      - name: Package & Upload TGZ
+        run: |
+          tar -czf "$GITHUB_WORKSPACE/doctor-artifacts.tgz" -C "$GITHUB_WORKSPACE" reports/doctor
+          tar -tzf "$GITHUB_WORKSPACE/doctor-artifacts.tgz" | sed -n '1,20p'
+        shell: bash
+      - name: Upload TGZ
+        uses: actions/upload-artifact@v3
+        with:
+          name: doctor-artifacts-${{ github.run_id }}
+          path: ${{ github.workspace }}/doctor-artifacts.tgz
+          if-no-files-found: error
