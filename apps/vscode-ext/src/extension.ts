@@ -33,20 +33,37 @@ export function activate(context: vscode.ExtensionContext){
           const payload={tool:'odavl',action:'scan',pass:true,metrics:{eslint:17,typeErrors:0},generatedAt:new Date().toISOString()};
           panel.webview.postMessage({type:'scanResult',data:payload});
         }else if(msg?.type==='heal'){
-          const cli=path.join(root,'apps','cli','dist','index.js'); const args=[cli,'heal','--recipe','remove-unused']; if(msg.apply) args.push('--apply');
-          const child=spawn(process.execPath,args,{cwd:root,shell:process.platform==='win32'}); let out='',err=''; child.stdout.on('data',d=>out+=d); child.stderr.on('data',d=>err+=d);
+          const cli=path.join(root,'apps','cli','dist','index.js');
+          const args=[cli,'heal','--recipe','remove-unused'];
+          if(msg.apply) {
+            args.push('--apply');
+          }
+          const child=spawn(process.execPath,args,{cwd:root,shell:process.platform==='win32'}); let out='',err='';
+          child.stdout.on('data',d=>out+=d); child.stderr.on('data',d=>err+=d);
           child.on('close',()=>{ try{ panel.webview.postMessage({type:'healResult',data:JSON.parse(out.trim())}); }catch{ panel.webview.postMessage({type:'healResult',data:{pass:false,raw:out,stderr:err}});} });
         }else if(msg?.type==='openpr'){
-          const cli=path.join(root,'apps','cli','dist','index.js'); const args=[cli,'pr','open','--explain']; if(msg?.title) args.push('--title',String(msg.title)); if(msg?.dry) args.push('--dry-run');
-          const child=spawn(process.execPath,args,{cwd:root,shell:process.platform==='win32'}); let out='',err=''; child.stdout.on('data',d=>out+=d); child.stderr.on('data',d=>err+=d);
+          const cli=path.join(root,'apps','cli','dist','index.js');
+          const args=[cli,'pr','open','--explain'];
+          if(msg?.title) {
+            args.push('--title',String(msg.title));
+          }
+          if(msg?.dry) {
+            args.push('--dry-run');
+          }
+          const child=spawn(process.execPath,args,{cwd:root,shell:process.platform==='win32'}); let out='',err='';
+          child.stdout.on('data',d=>out+=d); child.stderr.on('data',d=>err+=d);
           child.on('close',()=>{ try{ panel.webview.postMessage({type:'prResult',data:JSON.parse(out.trim())}); }catch{ panel.webview.postMessage({type:'prResult',data:{pass:false,raw:out,stderr:err}});} });
         }else if(msg?.type==='shadow'){
-          const cli=path.join(root,'apps','cli','dist','index.js'); const args=[cli,'shadow','run'];
-          const child=spawn(process.execPath,args,{cwd:root,shell:process.platform==='win32'}); let out='',err=''; child.stdout.on('data',d=>out+=d); child.stderr.on('data',d=>err+=d);
+          const cli=path.join(root,'apps','cli','dist','index.js');
+          const args=[cli,'shadow','run'];
+          const child=spawn(process.execPath,args,{cwd:root,shell:process.platform==='win32'}); let out='',err='';
+          child.stdout.on('data',d=>out+=d); child.stderr.on('data',d=>err+=d);
           child.on('close',()=>{ try{ panel.webview.postMessage({type:'shadowResult',data:JSON.parse(out.trim())}); }catch{ panel.webview.postMessage({type:'shadowResult',data:{pass:false,raw:out,stderr:err}});} });
         }
       }catch(e:any){ panel.webview.postMessage({type:'error',error:String(e?.message||e)}); }
     },undefined,context.subscriptions);
   }); context.subscriptions.push(cmd);
 }
+// This is required for VS Code extension deactivation lifecycle.
+// eslint-disable-next-line @typescript-eslint/no-empty-function
 export function deactivate(){}
