@@ -1,28 +1,18 @@
 name: ODAVL CI Doctor
 on:
-  workflow_run:
-    workflows: ["CI","Go CI (W5)","Java CI (W5)"]
-    types: [completed]
-  workflow_dispatch:
   pull_request:
-    branches: ["odavl/ci-doctor-smoke-20250926"]
-  schedule:
-    - cron: "0 3 * * *"
+  workflow_dispatch:
+concurrency:
+  group: doctor-${{ github.ref }}
+  cancel-in-progress: true
 permissions:
   contents: read
   actions: read
   checks: write
   security-events: write
   pull-requests: write
-concurrency:
-  group: doctor-${{ github.event.workflow_run.head_branch || github.ref }}
-  cancel-in-progress: true
 jobs:
   run-doctor:
-    if: >
-      (github.event_name != 'workflow_run') ||
-      (github.event.workflow_run.conclusion == 'failure' &&
-       !startsWith(github.event.workflow_run.head_branch, 'odavl/doctor-'))
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
