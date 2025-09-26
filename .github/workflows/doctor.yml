@@ -1,0 +1,47 @@
+name: ODAVL CI Doctor
+on:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+  checks: write
+  security-events: write
+  pull-requests: write
+concurrency:
+  group: doctor-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  run-doctor:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: ./.github/actions/odavl-doctor-runner
+        with:
+          mode: advice
+          max_files: 10
+          max_lines: 40
+          protected_paths: "**/security/**,**/*.spec.*,**/public-api/**"
+          task_name: "ci-heal"
+      - uses: actions/download-artifact@v4
+        with:
+          name: doctor-artifacts
+          path: reports/doctor
+      - name: Shadow Verify
+        if: ${{ hashFiles('reports/doctor/patch.diff') != '' }}
+        shell: bash
+        run: |
+          set -e
+          if [ ! -s reports/doctor/patch.diff ] || head -n1 reports/doctor/patch.diff | grep -q '# no-op'; then exit 0; fi
+          git apply --check reports/doctor/patch.diff && git apply reports/doctor/patch.diff
+          pnpm install --frozen-lockfile || pnpm install
+          (pnpm -w run build || true) 2>&1 | tee -a reports/doctor/shadow-verify.txt
+        continue-on-error: true
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: doctor-shadow-verify
+          path: reports/doctor/shadow-verify.txt
+          if-no-files-found: ignore
