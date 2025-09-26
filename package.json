@@ -7,10 +7,12 @@
     "examples/*"
   ],
   "scripts": {
-    "build": "turbo run build",
-    "lint": "turbo run lint",
-    "test": "turbo run test",
-    "format": "turbo run format"
+  "build": "turbo run build",
+  "lint": "turbo run lint",
+  "test": "turbo run test",
+  "format": "turbo run format",
+  "odavl:scan": "mkdir -p reports && mkdir -p reports/doctor && (eslint . -f json -o reports/diagnostics.json || true) && (eslint . -f sarif -o reports/diagnostics.sarif || true)",
+  "odavl:heal": "node tools/doctor-heal.js"
   },
   "devDependencies": {
     "turbo": "^2.5.6",
