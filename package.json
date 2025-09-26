@@ -10,8 +10,11 @@
     "build": "turbo run build",
     "lint": "turbo run lint",
     "test": "turbo run test",
-    "format": "turbo run format"
+    "format": "turbo run format",
+    "odavl:scan": "mkdir -p reports/doctor && (eslint . -f sarif -o reports/doctor/diagnostics.sarif || true)",
+    "odavl:heal": "node tools/doctor-heal.js"
   },
+  "packageManager": "pnpm@9.0.0",
   "devDependencies": {
     "turbo": "^2.5.6",
     "typescript": "^5.9.2"
