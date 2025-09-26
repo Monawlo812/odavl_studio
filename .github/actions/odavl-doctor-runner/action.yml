@@ -27,6 +27,12 @@ runs:
       with:
         name: doctor-artifacts
         path: ./reports/doctor-artifacts
+    - name: Fallback heal (direct node)
+      shell: bash
+      run: |
+        node -e "require('fs').mkdirSync('reports/doctor',{recursive:true})"
+        node tools/doctor-heal.js || true
+        ls -la reports/doctor || true
     - name: Upload Shadow Verify
       if: always()
       uses: actions/upload-artifact@v4
