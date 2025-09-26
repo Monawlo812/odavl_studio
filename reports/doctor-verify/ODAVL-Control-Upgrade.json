@@ -1,0 +1,12 @@
+{
+  "date": "2025-09-26",
+  "branch": "odavl/fix-doctor-20250926",
+  "status": "PASS",
+  "icon": "media/odavl.svg",
+  "controlPanel": true,
+  "buttons": ["scan", "heal", "explain", "undo", "reports"],
+  "doctorMode": true,
+  "statusBar": "Doctor: PASS ✅",
+  "autoRunOnSave": true,
+  "allGoalsMet": true
+}
