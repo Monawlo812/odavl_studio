@@ -1,0 +1,77 @@
+name: "ODAVL Doctor Runner"name: 'ODAVL Doctor Runner (Advice-Only)'
+
+description: "Scan & plan safe patch (advice-only)."description: 'Run Doctor in advice-only mode (scan, heal --dry-run, upload artifacts)'
+
+inputs:runs:
+
+  mode: {required: true, default: "advice"}  using: 'composite'
+
+  max_files: {required: true, default: "10"}  steps:
+
+  max_lines: {required: true, default: "40"}    - name: Checkout
+
+  protected_paths: {required: true, default: "**/security/**,**/*.spec.*,**/public-api/**"}      uses: actions/checkout@v4
+
+  task_name: {required: true, default: "ci-heal"}    - name: Setup Node.js
+
+runs:      uses: actions/setup-node@v4
+
+  using: "composite"      with:
+
+  steps:        node-version: '20'
+
+    - uses: actions/checkout@v4    - name: Setup pnpm
+
+      with: {fetch-depth: 0}      uses: pnpm/action-setup@v2
+
+    - uses: actions/setup-node@v4      with:
+
+      with: {node-version: "20"}        version: 9
+
+    - name: Setup pnpm    - name: Install dependencies
+
+      shell: bash      run: pnpm install --frozen-lockfile
+
+      run: |      shell: bash
+
+        corepack enable    - name: Doctor Scan
+
+        corepack prepare pnpm@9 --activate      run: pnpm exec doctor scan --advice --output ./reports/doctor-artifacts
+
+    - name: Install + Scan      shell: bash
+
+      shell: bash    - name: Doctor Heal (dry-run)
+
+      run: |      run: pnpm exec doctor heal --dry-run --output ./reports/doctor-artifacts
+
+        pnpm install --frozen-lockfile || pnpm install      shell: bash
+
+        mkdir -p reports/doctor    - name: Upload Artifacts
+
+        pnpm -w run odavl:scan || true      uses: actions/upload-artifact@v4
+
+    - name: Plan patch (dry-run)      with:
+
+      shell: bash        name: doctor-artifacts
+
+      run: |        path: ./reports/doctor-artifacts
+
+        pnpm -w run odavl:heal || true    - name: Fallback heal (direct node)
+
+    - name: Upload artifacts      shell: bash
+
+      uses: actions/upload-artifact@v4      run: |
+
+      with:        node -e "require('fs').mkdirSync('reports/doctor',{recursive:true})"
+
+        name: doctor-artifacts        node tools/doctor-heal.js || true
+
+        path: reports/doctor        ls -la reports/doctor || true
+
+        if-no-files-found: warn    - name: Upload Shadow Verify
+
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: doctor-shadow-verify
+        path: ./reports/doctor-artifacts/shadow-verify.txt
