@@ -1,0 +1,24 @@
+<!-- CI Doctor (skeleton) -->
+<section id="ci-doctor" style="margin-top:1rem;">
+  <h3>CI Doctor (GitHub)</h3>
+  <div id="ci-doctor-status" aria-live="polite"></div>
+  <div class="row">
+    <button id="ciDoctorRun">Run on GitHub</button>
+    <button id="ciDoctorExplain">Explain last failure</button>
+    <button id="ciDoctorUndo">Undo/Close Doctor PRs</button>
+  </div>
+</section>
+<script>
+(function(){
+  const vscode = (typeof acquireVsCodeApi === 'function') ? acquireVsCodeApi() : null;
+  const S = document.getElementById('ci-doctor-status');
+  const set = (t)=>{ if(S) S.textContent = t; };
+  const send = (type,p={})=>{
+    if(vscode && vscode.postMessage){ vscode.postMessage({type, payload:p}); set('Sent: '+type); }
+    else { set('Not wired yet (P3b will connect).'); }
+  };
+  document.getElementById('ciDoctorRun')?.addEventListener('click', ()=>send('ciDoctor.run'));
+  document.getElementById('ciDoctorExplain')?.addEventListener('click', ()=>send('ciDoctor.explain'));
+  document.getElementById('ciDoctorUndo')?.addEventListener('click', ()=>send('ciDoctor.undo'));
+})();
+</script>
