@@ -1,9 +1,13 @@
 {
-  "name": "@odavl/vscode-ext",
+  "name": "odavl-vscode-ext",
   "displayName": "ODAVL Studio",
   "description": "Automated development governance with code healing and CI management",
   "version": "0.4.1",
   "publisher": "odavl",
+  "engines": {
+    "vscode": ">=1.85.0"
+  },
+  "main": "./dist/extension.js",
   "categories": [
     "Other",
     "Linters"
@@ -12,123 +16,55 @@
     "color": "#1e3a8a",
     "theme": "dark"
   },
-  "icon": "assets/icon.png",
-  "engines": {
-    "vscode": ">=1.70.0"
-  },
-  "main": "dist/extension.js",
-  "activationEvents": [
-    "onView:odavl.panel",
-    "onView:odavl.evidence"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/Monawlo812/odavl_studio.git"
-  },
-  "homepage": "https://github.com/Monawlo812/odavl_studio",
-  "bugs": {
-    "url": "https://github.com/Monawlo812/odavl_studio/issues"
-  },
+  "icon": "media/odavl.svg",
   "contributes": {
     "viewsContainers": {
       "activitybar": [
-        {
-          "id": "odavl",
-          "title": "ODAVL",
-          "icon": "resources/odavl.svg"
-        }
+        { "id": "odavl", "title": "ODAVL", "icon": "media/odavl.svg" }
       ]
     },
     "views": {
       "odavl": [
-        { "id": "odavl.panel", "name": "ODAVL Panel", "type": "webview", "icon": "resources/odavl.svg" },
-        { "id": "odavl.evidence", "name": "Evidence", "type": "webview", "icon": "resources/odavl.svg" }
+        { "id": "odavl.control", "name": "Control", "icon": "media/odavl.svg" }
       ]
     },
     "commands": [
-    { "command": "odavl.openPanel", "title": "ODAVL: Open Panel" },
-    { "command": "odavl.openEvidence", "title": "ODAVL: Open Evidence" },
-    { "command": "odavl.doctor.toggle", "title": "ODAVL Doctor: Toggle" },
-    { "command": "odavl.doctor.fixNext", "title": "ODAVL Doctor: Fix Next Problem" },
-    { "command": "odavl.doctor.fixAllBatch", "title": "ODAVL Doctor: Fix Batch" },
-    { "command": "odavl.doctorHospitalScan", "title": "ODAVL Doctor: Hospital Scan" }
+      { "command": "odavl.scan", "title": "ODAVL: Scan" },
+      { "command": "odavl.heal", "title": "ODAVL: Heal" },
+      { "command": "odavl.explain", "title": "ODAVL: Explain" },
+      { "command": "odavl.undo", "title": "ODAVL: Undo" },
+      { "command": "odavl.reports", "title": "ODAVL: Open Reports" }
     ],
-    "configuration": {
-      "type": "object",
-      "title": "ODAVL Studio",
-      "properties": {
-        "odavl.ui.openPanelOnStartup": { "type": "boolean", "default": true, "description": "Open ODAVL main panel on startup" },
-        "odavl.ui.openEvidenceOnStartup": { "type": "boolean", "default": false, "description": "Open Evidence view on startup" },
-        "odavl.doctor.autorunOnStartup": { "type": "boolean", "default": true, "description": "Automatically enable and run Doctor Mode on startup" },
-        "odavl.doctor.enabled": { "type": "boolean", "default": true, "description": "Enable ODAVL Doctor Mode (live diagnostics agent)" },
-        "odavl.doctor.maxLines": { "type": "number", "default": 40, "description": "Doctor Mode: max lines per batch" },
-        "odavl.doctor.maxFiles": { "type": "number", "default": 10, "description": "Doctor Mode: max files per batch" },
-        "odavl.doctor.protectedGlobs": { "type": "array", "default": ["**/security/**","**/*.spec.*","**/public-api/**"], "description": "Globs to protect from Doctor Mode edits" },
-        "odavl.doctor.allowWorkflows": { "type": "boolean", "default": true, "description": "Allow Doctor Mode to edit .github/workflows/* (default: true)" }
-      }
-    },
-    "keybindings": [
-      {
-        "command": "odavl.magic.run",
-        "key": "ctrl+alt+m",
-        "mac": "cmd+alt+m",
-        "when": "true"
-      }
-    ],
-    "walkthroughs": [
-      {
-        "id": "odavl.gettingStarted",
-        "title": "Get started with ODAVL Studio",
-        "description": "Learn the zero-terminal workflow for automated code governance",
-        "steps": [
-          {
-            "id": "odavl.step.scan",
-            "title": "Scan & Heal your code",
-            "description": "Analyze your codebase and apply automated fixes\n[Open Control Center](command:odavl.controlCenter.open)",
-            "media": {
-              "image": "media/scan.png",
-              "altText": "ODAVL scan and heal workflow"
-            }
-          },
-          {
-            "id": "odavl.step.shadow",
-            "title": "Run Shadow CI",
-            "description": "Test changes in isolated CI environment\n[Run Magic](command:odavl.magic.run)",
-            "media": {
-              "image": "media/shadow.png",
-              "altText": "ODAVL shadow CI workflow"
-            }
-          },
-          {
-            "id": "odavl.step.pr",
-            "title": "Open Pull Request",
-            "description": "Create evidence-based PRs with governance reports\n[View Reports](command:vscode.openFolder)",
-            "media": {
-              "image": "media/pr.png",
-              "altText": "ODAVL PR creation workflow"
-            }
-          }
-        ]
-      }
+    "activationEvents": [
+      "onView:odavl.control",
+      "onCommand:odavl.scan",
+      "onCommand:odavl.heal",
+      "onCommand:odavl.explain",
+      "onCommand:odavl.undo",
+      "onCommand:odavl.reports"
     ]
   },
+  
   "scripts": {
-    "clean": "node -e \"require('fs').rmSync('dist', { recursive: true, force: true })\"",
-    "bundle": "node scripts/bundle-extension.mjs",
-    "build": "pnpm run clean && pnpm run bundle"
+  "clean": "node -e \"require('fs').rmSync('dist', { recursive: true, force: true })\"",
+  "bundle": "node scripts/bundle-extension.mjs",
+  "build": "pnpm run clean && pnpm run bundle"
   },
-  "files": [
-    "dist/**",
-    "README.md",
-    "CHANGELOG.md",
-    "LICENSE",
-    "package.json"
-  ],
   "devDependencies": {
     "@types/vscode": "^1.85.0",
     "@types/node": "^20",
     "@types/react": "^18.2.47",
-    "@types/react-dom": "^18.2.17"
+    "@types/react-dom": "^18.2.17",
+    "tape": "^5.9.0",
+    "nyc": "^15.1.0",
+    "auto-changelog": "^2.5.0",
+    "@types/tape": "^5.8.1",
+    "@ljharb/eslint-config": "^21.1.1",
+    "@ljharb/tsconfig": "^0.3.2",
+    "core-js": "^3.40.0",
+    "encoding": "^0.1.13",
+    "npmignore": "^0.3.1",
+    "safe-publish-latest": "^2.0.0"
   },
   "dependencies": {
     "react": "^18.2.0",

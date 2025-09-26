@@ -94,16 +94,11 @@
     </div>
 
     <div class="controls">
-      <button class="btn btn-scan" onclick="runAction('scan')">
-        📊 Scan/Heal
-      </button>
-      <button class="btn btn-shadow" onclick="runAction('shadow')">
-        ☁️ Run Shadow
-      </button>
-      <button class="btn btn-pr" onclick="runAction('pr')">📝 Open PR</button>
-      <button class="btn btn-magic" onclick="runAction('magic')">
-        ✨ Magic
-      </button>
+      <button class="btn btn-scan" onclick="postMsg('scan')">📊 Scan</button>
+      <button class="btn btn-heal" onclick="postMsg('heal')">🩺 Heal</button>
+      <button class="btn btn-explain" onclick="postMsg('explain')">� Explain</button>
+      <button class="btn btn-undo" onclick="postMsg('undo')">↩️ Undo</button>
+      <button class="btn btn-reports" onclick="postMsg('reports')">📁 Reports</button>
     </div>
 
     <div id="log" class="log">
@@ -115,9 +110,9 @@
       const vscode = acquireVsCodeApi();
       const log = document.getElementById("log");
 
-      function runAction(cmd) {
-        appendLog(`▶️ Running ${cmd}...`);
-        vscode.postMessage({ cmd });
+      function postMsg(type) {
+        appendLog(`▶️ ${type.charAt(0).toUpperCase() + type.slice(1)} requested...`);
+        vscode.postMessage({ type });
       }
 
       function appendLog(message) {
@@ -168,7 +163,6 @@
       // Listen for messages from extension
       window.addEventListener("message", (event) => {
         const { type, message } = event.data;
-
         if (type === "log") {
           appendLog(message);
         } else if (type === "success") {
@@ -176,6 +170,8 @@
           showConfetti();
         } else if (type === "error") {
           appendLog("❌ " + message);
+        } else if (type === "result") {
+          appendLog("Result: " + JSON.stringify(event.data.data));
         }
       });
     </script>
