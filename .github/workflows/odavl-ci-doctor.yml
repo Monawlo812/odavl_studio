@@ -1,0 +1,22 @@
+name: ODAVL CI Doctor
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+  checks: write
+  security-events: write
+  pull-requests: write
+jobs:
+  run-doctor:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: {fetch-depth: 0}
+      - uses: ./.github/actions/odavl-doctor-runner
+        with:
+          mode: advice
+          max_files: 10
+          max_lines: 40
+          protected_paths: "**/security/**,**/*.spec.*,**/public-api/**"
+          task_name: "ci-heal"
