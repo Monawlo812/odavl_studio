@@ -6,9 +6,6 @@ on:
 permissions:
   contents: read
   actions: write
-  checks: write
-  security-events: write
-  pull-requests: write
 jobs:
   run-doctor:
     runs-on: ubuntu-latest
@@ -40,9 +37,9 @@ jobs:
           echo "hello from doctor smoke $(date -u)" > "$GITHUB_WORKSPACE/doctor-test.txt"
           ls -la "$GITHUB_WORKSPACE/doctor-test.txt"
 
-      - name: Upload test artifact (v3)
+      - name: Upload test artifact (v4)
         if: always()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: doctor-test-${{ github.run_id }}
           path: ${{ github.workspace }}/doctor-test.txt
@@ -86,9 +83,9 @@ jobs:
           ls -la "$GITHUB_WORKSPACE"
           test -s "$GITHUB_WORKSPACE/doctor-artifacts.tgz" && echo "tgz present & non-empty" || (echo "tgz missing!"; exit 1)
 
-      - name: Upload packaged artifact (v3, unique)
+      - name: Upload packaged artifact (v4, unique)
         if: always()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: doctor-artifacts-${{ github.run_id }}
           path: ${{ github.workspace }}/doctor-artifacts.tgz
