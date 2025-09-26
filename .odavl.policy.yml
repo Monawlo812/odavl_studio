@@ -15,6 +15,32 @@ antibodies:
   enable: true
   similarity_threshold: 0.82
 
+ci_doctor:
+  mode: advice
+  risk_budget:
+    max_files: 10
+    max_lines: 40
+  protected_paths:
+    - "**/security/**"
+    - "**/*.spec.*"
+    - "**/public-api/**"
+  triggers:
+    on_ci_failure: true
+    on_manual_dispatch: true
+    schedule_cron: "0 3 * * *"
+  labels:
+    doctor_pr: ci-doctor
+    needs_human: needs-human
+  gates:
+    require_shadow_verify: true
+    require_codeowners: true
+    max_attempts_per_sha: 2
+  safety:
+    forbid_on_forks: true
+    forbid_secrets_access: true
+    read_only_env: true
+  kill_switch_env: ODAVL_DOCTOR_DISABLE
+
 governor:
   prsPerDay: 2
   ciMinutesPerHour: 30
