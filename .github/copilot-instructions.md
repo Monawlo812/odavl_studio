@@ -2,13 +2,13 @@
 
 ## Project Overview
 
-ODAVL Studio is an **automated development governance platform** for code healing, CI governance, and risk-budgeted automation. It uses pnpm workspaces, Turborepo, and a "Governor" policy system to ensure safe, chunked automation.
+ODAVL Studio is an **automated development governance platform** for code healing, CI governance, and risk-budgeted automation. It is organized as a pnpm/Turborepo monorepo with a strong focus on safe, chunked automation and policy-driven workflows.
 
 ## Architecture & Key Components
 
-- **Monorepo**: pnpm + Turborepo. See `apps/`, `packages/`, `examples/`, `reports/`.
-- **CLI (`apps/cli`)**: Main entrypoint. Supports `scan`, `heal`, `shadow`, `pr`, `governor`, `undo` commands. All output is structured JSON.
-- **VS Code Extension (`apps/vscode-ext`)**: Webview panel, calls CLI via `child_process.spawn`, shows telemetry, scan/heal/reports, and respects workspace CLI path.
+- **Monorepo**: Uses pnpm workspaces and Turborepo. Key directories: `apps/` (CLI, VS Code extension), `packages/` (policy, codemods), `examples/`, `reports/`.
+- **CLI (`apps/cli`)**: Main entrypoint. Supports `scan`, `heal`, `shadow`, `pr`, `governor`, `undo`. All output is structured JSON for downstream automation.
+- **VS Code Extension (`apps/vscode-ext`)**: Webview panel, invokes CLI via `child_process.spawn`, displays telemetry, scan/heal/reports, and respects workspace CLI path.
 - **Governor (`packages/policy`)**: Enforces PR/CI rate limits, wave windows, and risk budgets. Configured in `.odavl.policy.yml`.
 - **Codemods (`packages/codemods`)**: Automated code transforms (e.g., `esmHygiene`, `depsPatchMinor`). All healing is chunked by risk budget.
 - **Undo System**: Snapshots before changes, stored in `reports/undo/`.
