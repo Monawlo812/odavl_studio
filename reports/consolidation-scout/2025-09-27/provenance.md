@@ -1,4 +1,12 @@
+
 # Provenance Log — Batch 1 (2025-09-27)
+
+## Phase 5.5 Fixes (2025-09-27)
+
+- Removed duplicate workspace for @odavl/cli:
+	- Deleted `apps/cli/` (kept `packages/cli/` as canonical)
+	- Updated all workspace globs and references as needed
+	- See commit: fix(workspace): remove duplicate @odavl/cli entry (Phase 5.5)
 
 | Path                        | Source Folder                  | Notes                                 |
 |-----------------------------|-------------------------------|---------------------------------------|

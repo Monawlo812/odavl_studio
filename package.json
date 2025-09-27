@@ -3,7 +3,9 @@
   "private": true,
   "packageManager": "pnpm@10.17.0",
   "workspaces": [
-    "apps/*",
+    "apps/launcher",
+    "apps/orchestrator",
+    "apps/vscode-ext",
     "packages/*",
     "examples/*"
   ],
