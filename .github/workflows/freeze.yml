@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 name: Freeze Pipeline
 on:
   workflow_dispatch:
@@ -16,6 +17,9 @@ jobs:
         with:
           name: freeze-evidence
           path: reports/evaluations/2025-10-01/governance/*.freeze.*name: Freeze Audit
+=======
+name: Freeze Audit
+>>>>>>> 9fe4bd7 (chore: bootstrap ODAVL Studio repository)
 on:
   workflow_dispatch:
   pull_request:

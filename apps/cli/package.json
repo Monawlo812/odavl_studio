@@ -17,16 +17,24 @@
     "prepublishOnly": "pnpm run build",
     "prepack": "pnpm run build",
     "lint": "eslint .",
+<<<<<<< HEAD
     "typecheck": "tsc -b --noEmit",
     "test": "vitest run --coverage --reporter=default --outputFile=../../coverage/cli-test.log"
+=======
+    "typecheck": "tsc -b --noEmit"
+>>>>>>> 9fe4bd7 (chore: bootstrap ODAVL Studio repository)
   },
   "dependencies": {
     "@odavl/codemods": "workspace:*",
     "@odavl/policy": "workspace:*"
   },
   "devDependencies": {
+<<<<<<< HEAD
     "@types/node": "^20",
     "vitest": "^3.2.4"
+=======
+    "@types/node": "^20"
+>>>>>>> 9fe4bd7 (chore: bootstrap ODAVL Studio repository)
   },
   "packageManager": "pnpm@10.17.0"
 }

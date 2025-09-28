@@ -1,5 +1,9 @@
 # Immune Metrics
+<<<<<<< HEAD
 - total runs: 2
+=======
+- total runs: 1
+>>>>>>> 9fe4bd7 (chore: bootstrap ODAVL Studio repository)
 - self_heal_rate: 0.00
 - escalation_rate: 1.00
 - regression_free: 0.0%
@@ -7,7 +11,11 @@
 ## Latest Snapshot
 ```json
 {
+<<<<<<< HEAD
   "time": "2025-09-30T14:49:05.872Z",
+=======
+  "time": "2025-09-23T22:53:07.101Z",
+>>>>>>> 9fe4bd7 (chore: bootstrap ODAVL Studio repository)
   "tsErrors": 0,
   "eslintErrors": null,
   "deps": {

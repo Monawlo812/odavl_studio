@@ -1,19 +1,28 @@
 name: Secure CI
 on:
+<<<<<<< HEAD
   workflow_dispatch:
+=======
+>>>>>>> 9fe4bd7 (chore: bootstrap ODAVL Studio repository)
   pull_request:
   push:
     branches: [main]
 jobs:
   semgrep:
+<<<<<<< HEAD
     continue-on-error: false
+=======
+>>>>>>> 9fe4bd7 (chore: bootstrap ODAVL Studio repository)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - run: pipx install semgrep
       - run: semgrep ci --config p/ci --error --timeout 600
   gitleaks:
+<<<<<<< HEAD
     continue-on-error: false
+=======
+>>>>>>> 9fe4bd7 (chore: bootstrap ODAVL Studio repository)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -21,6 +30,7 @@ jobs:
           curl -sSL https://raw.githubusercontent.com/gitleaks/gitleaks/master/install.sh | bash
           ./gitleaks detect -v --redact --exit-code 1
   osv_scanner:
+<<<<<<< HEAD
     continue-on-error: false
     runs-on: ubuntu-latest
     steps:
@@ -28,11 +38,17 @@ jobs:
       - run: npm install -g osv-scanner gitleaks
       - run: osv-scanner --skip-git
       - run: gitleaks detect --no-banner
+=======
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+>>>>>>> 9fe4bd7 (chore: bootstrap ODAVL Studio repository)
       - run: |
           curl -sSL https://raw.githubusercontent.com/google/osv-scanner/main/scripts/install.sh | sh -s -- -b /usr/local/bin
           mkdir -p reports/security
           osv-scanner -r . --format json > reports/security/osv.json || true
           jq -e '[.vulnerabilities[]?|select(.severity|inside(["HIGH","CRITICAL"]))] | length==0' reports/security/osv.json
+<<<<<<< HEAD
   sbom:
     continue-on-error: false
     runs-on: ubuntu-latest
@@ -40,3 +56,5 @@ jobs:
       - uses: actions/checkout@v4
       - run: |
           if [ -f package.json ]; then npm run sbom || echo "no sbom script"; else echo "no package.json"; fi
+=======
+>>>>>>> 9fe4bd7 (chore: bootstrap ODAVL Studio repository)

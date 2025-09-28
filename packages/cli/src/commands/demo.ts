@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /* eslint-env node */
 /* global process, console */
 // CLI: odavl demo
@@ -11,6 +12,12 @@ const USER_ROLE = (process.env.ODAVL_ROLE || 'admin') as RbacRole;
 import { enforceRbac } from '@odavl/policy';
 const USER_ROLE = process.env.ODAVL_ROLE || 'admin';
 >>>>>>> 86b1346 (H3: Safe delete (quarantine) of LEGACY and NOISE files with full evidence. See reports/hygiene/2025-10-01/run-1/ for audit trail.)
+=======
+// CLI: odavl demo
+import { execSync } from 'child_process';
+import { enforceRbac, type RbacRole } from '@odavl/policy';
+const USER_ROLE = (process.env.ODAVL_ROLE || 'admin') as RbacRole;
+>>>>>>> 9fe4bd7 (chore: bootstrap ODAVL Studio repository)
 
 export function runDemo() {
   if (!enforceRbac('scan.run', USER_ROLE)) {

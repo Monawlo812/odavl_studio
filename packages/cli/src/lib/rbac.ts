@@ -1,7 +1,12 @@
+<<<<<<< HEAD
 /* eslint-env node */
 /* global console */
 // CLI/extension RBAC check stub
 import { enforceRbac } from '@odavl/policy/src/rbac.js';
+=======
+// CLI/extension RBAC check stub
+import { enforceRbac } from '@odavl/policy';
+>>>>>>> 9fe4bd7 (chore: bootstrap ODAVL Studio repository)
 export function checkRbac(action: string, role: string) {
   if (!enforceRbac(action as any, role as any)) {
     console.warn(`[RBAC] Action '${action}' denied for role '${role}'.`);

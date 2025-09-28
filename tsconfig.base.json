@@ -4,7 +4,11 @@
     "module": "ESNext",
     "moduleResolution": "Node",
     "lib": ["ES2015", "DOM"],
+<<<<<<< HEAD
     "types": ["node", "jest"],
+=======
+    "types": ["node"],
+>>>>>>> 9fe4bd7 (chore: bootstrap ODAVL Studio repository)
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,

@@ -90,11 +90,19 @@ The **Magic** command provides a **one-click automated governance pipeline**:
 
 ### **File Structure**
 
+<<<<<<< HEAD
+=======
+```
+>>>>>>> 9fe4bd7 (chore: bootstrap ODAVL Studio repository)
 apps/vscode-ext/
 ├── package.json              # Commands, menus, walkthroughs
 ├── src/extension.ts          # Core logic, webview, Magic flow
 └── media/
     └── control-center.html   # Professional UI with confetti
+<<<<<<< HEAD
+=======
+```
+>>>>>>> 9fe4bd7 (chore: bootstrap ODAVL Studio repository)
 
 ### **Key Technical Decisions**
 

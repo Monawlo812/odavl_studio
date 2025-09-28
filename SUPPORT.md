@@ -84,4 +84,8 @@ For critical production issues affecting design partners:
 
 ---
 
+<<<<<<< HEAD
 ### Support documentation updated as of September 2025
+=======
+_Support documentation updated as of September 2025_
+>>>>>>> 9fe4bd7 (chore: bootstrap ODAVL Studio repository)

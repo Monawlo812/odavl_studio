@@ -1,6 +1,10 @@
+<<<<<<< HEAD
 import { describe, it, expect } from 'vitest';
 import { enforceRbac } from '../src/rbac.js';
 
+=======
+import { enforceRbac } from '../src/rbac.js';
+>>>>>>> 9fe4bd7 (chore: bootstrap ODAVL Studio repository)
 describe('RBAC enforcement', () => {
   it('allows admin for any action', () => {
     expect(enforceRbac('scan.run', 'admin')).toBe(true);

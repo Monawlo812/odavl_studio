@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
   "name": "odavl",
   "displayName": "ODAVL Studio",
   "publisher": "odavl",
@@ -16,15 +17,34 @@
     "ci",
     "governance",
     "doctor"
+=======
+  "name": "odavl-studio",
+  "displayName": "ODAVL Studio",
+  "description": "Automated development governance with code healing and CI management",
+  "version": "0.4.0",
+  "publisher": "odavl",
+  "categories": [
+    "Other",
+    "Linters"
+>>>>>>> 9fe4bd7 (chore: bootstrap ODAVL Studio repository)
   ],
   "galleryBanner": {
     "color": "#1e3a8a",
     "theme": "dark"
   },
+<<<<<<< HEAD
+=======
+  "icon": "assets/icon.png",
+>>>>>>> 9fe4bd7 (chore: bootstrap ODAVL Studio repository)
   "engines": {
     "vscode": "^1.85.0"
   },
   "activationEvents": [
+<<<<<<< HEAD
+=======
+    "onCommand:odavl.undoLast",
+    "onCommand:odavl.redoLast"
+>>>>>>> 9fe4bd7 (chore: bootstrap ODAVL Studio repository)
   ],
   "main": "dist/extension.js",
   "repository": {
@@ -159,11 +179,17 @@
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "lint": "eslint .",
+<<<<<<< HEAD
     "typecheck": "tsc -b --noEmit",
     "test": "vitest run --coverage --reporter=default --outputFile=../../coverage/vscode-ext-test.log"
   },
   "devDependencies": {
     "vitest": "^3.2.4",
+=======
+    "typecheck": "tsc -b --noEmit"
+  },
+  "devDependencies": {
+>>>>>>> 9fe4bd7 (chore: bootstrap ODAVL Studio repository)
     "@types/vscode": "^1.85.0",
     "@types/node": "^20",
     "@types/react": "^18.2.47",
@@ -172,5 +198,10 @@
   "dependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
+<<<<<<< HEAD
   }
+=======
+  },
+  "packageManager": "pnpm@10.17.0"
+>>>>>>> 9fe4bd7 (chore: bootstrap ODAVL Studio repository)
 }

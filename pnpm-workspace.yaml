@@ -2,7 +2,13 @@ packages:
   - "apps/launcher"
   - "apps/orchestrator"
   - "apps/vscode-ext"
+<<<<<<< HEAD
   - "apps/*"
   - "packages/*"
   - "examples/*"
   - "packages/codemods"
+=======
+  - "packages/*"
+  - "examples/*"
+  - packages/codemods
+>>>>>>> 9fe4bd7 (chore: bootstrap ODAVL Studio repository)

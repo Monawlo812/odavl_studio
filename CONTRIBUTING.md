@@ -31,6 +31,10 @@ The following paths are automatically excluded from automated changes and requir
 
 #### Commit Messages
 
+<<<<<<< HEAD
+=======
+```
+>>>>>>> 9fe4bd7 (chore: bootstrap ODAVL Studio repository)
 type(scope): brief description
 
 Detailed explanation if needed
@@ -39,6 +43,10 @@ Examples:
 feat(cli): add weekly telemetry summary command
 fix(governor): handle rate limit edge case
 docs(readme): update installation instructions
+<<<<<<< HEAD
+=======
+```
+>>>>>>> 9fe4bd7 (chore: bootstrap ODAVL Studio repository)
 
 #### TypeScript Standards
 

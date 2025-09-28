@@ -1,4 +1,5 @@
 
+<<<<<<< HEAD
 
 # ODAVL Studio – AI Coding Agent Instructions
 
@@ -11,6 +12,19 @@
   - `packages/` – Core logic, codemods, policy, recipes
   - `reports/` – Logs, undo, CI artifacts, evidence
   - `docs/`, `examples/` – Onboarding, reference, media
+=======
+# ODAVL Studio – AI Coding Agent Instructions
+
+> **Purpose:** This guide enables AI agents to work productively and safely in the ODAVL Studio monorepo. Focus on actionable, project-specific knowledge and workflows.
+
+## 1. Architecture & Key Components
+
+- **Monorepo:** pnpm + Turborepo. Main dirs:
+	- `apps/` – CLI (`cli/`), VS Code extension (`vscode-ext/`), launcher (`launcher/`)
+	- `packages/` – Core logic, codemods, policy, recipes
+	- `reports/` – All logs, undo, evidence, and CI artifacts
+	- `docs/`, `examples/` – Onboarding, reference, media
+>>>>>>> 9fe4bd7 (chore: bootstrap ODAVL Studio repository)
 - **CLI (`apps/cli`)**: Main automation entrypoint. All output is JSON. Supports `scan`, `heal`, `pr`, `shadow`, `governor`, `undo`.
 - **VS Code Extension (`apps/vscode-ext`)**: Webview panel, invokes CLI, shows telemetry, scan/heal/reports.
 - **Governor (`packages/policy`)**: Enforces PR/CI rate limits, wave windows, and risk budgets. Configured in `.odavl.policy.yml`.
@@ -20,9 +34,15 @@
 ## 2. Critical Workflows
 
 - **Install/build:**
+<<<<<<< HEAD
   - `pnpm install`
   - `pnpm --filter @odavl/cli run build` (CLI)
   - `pnpm --filter @odavl/vscode-ext run build` (VS Code ext)
+=======
+	- `pnpm install`
+	- `pnpm --filter @odavl/cli run build` (CLI)
+	- `pnpm --filter @odavl/vscode-ext run build` (VS Code ext)
+>>>>>>> 9fe4bd7 (chore: bootstrap ODAVL Studio repository)
 - **Scan:** `node apps/cli/dist/index.js scan`
 - **Heal:** `node apps/cli/dist/index.js heal --recipe esm-hygiene --dry-run --max-lines 40 --max-files 10`
 - **Apply healing:** Add `--apply` and restrict with `--max-files`/`--max-lines` for safety

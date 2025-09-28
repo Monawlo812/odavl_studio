@@ -6,6 +6,7 @@
     "strict": true,
     "skipLibCheck": true,
     "outDir": "dist",
+<<<<<<< HEAD
   // "rootDir": "src",
     "esModuleInterop": true,
     "lib": ["ES2020"],
@@ -13,4 +14,13 @@
     "jsx": "react-jsx"
   },
   "include": ["src", "__tests__"]
+=======
+    "rootDir": "src",
+    "esModuleInterop": true,
+    "lib": ["ES2020"],
+    "types": ["node", "vscode"],
+    "jsx": "react-jsx"
+  },
+  "include": ["src"]
+>>>>>>> 9fe4bd7 (chore: bootstrap ODAVL Studio repository)
 }

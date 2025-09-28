@@ -1,5 +1,8 @@
+<<<<<<< HEAD
 /* eslint-env node */
 /* global process */
+=======
+>>>>>>> 9fe4bd7 (chore: bootstrap ODAVL Studio repository)
 // Audit logger stub with redaction
 import { redact } from './redaction.js';
 export function logAudit(entry: string) {

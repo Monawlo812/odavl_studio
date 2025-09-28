@@ -14,9 +14,13 @@
 
 # Infra & examples
 /infra/              @odavl-maintainers
+<<<<<<< HEAD
 /examples/           @odavl-maintainers
 
 # Phase 4: Critical path coverage
 /security/           @odavl-maintainers
 *.spec.*             @odavl-maintainers
 /public-api/         @odavl-maintainers
+=======
+/examples/           @odavl-maintainers
+>>>>>>> 9fe4bd7 (chore: bootstrap ODAVL Studio repository)

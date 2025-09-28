@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 {"root":["./__tests__/redacting-writer.spec.ts","./src/redacting-writer.ts","./src/telemetry.ts"],"version":"5.9.2"}
+=======
+{"root":["./src/telemetry.ts"],"version":"5.9.2"}
+>>>>>>> 9fe4bd7 (chore: bootstrap ODAVL Studio repository)

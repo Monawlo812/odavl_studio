@@ -2,7 +2,10 @@ name: Policy Guard
 on: [pull_request]
 jobs:
   guard:
+<<<<<<< HEAD
     continue-on-error: false
+=======
+>>>>>>> 9fe4bd7 (chore: bootstrap ODAVL Studio repository)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

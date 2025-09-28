@@ -1,6 +1,9 @@
 name: Go CI (W5)
 on:
+<<<<<<< HEAD
   workflow_dispatch:
+=======
+>>>>>>> 9fe4bd7 (chore: bootstrap ODAVL Studio repository)
   push:
     branches: ["odavl/**"]
   pull_request:
@@ -8,7 +11,10 @@ on:
 
 jobs:
   go:
+<<<<<<< HEAD
     continue-on-error: false
+=======
+>>>>>>> 9fe4bd7 (chore: bootstrap ODAVL Studio repository)
     runs-on: ubuntu-latest
     strategy:
       matrix:

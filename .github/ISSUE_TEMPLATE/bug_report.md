@@ -1,11 +1,16 @@
+<<<<<<< HEAD
 Bug Report
 ==========
 
+=======
+---
+>>>>>>> 9fe4bd7 (chore: bootstrap ODAVL Studio repository)
 name: Bug report
 about: Help us fix a problem
 labels: bug
 ---
 
+<<<<<<< HEAD
 Summary
 -------
 
@@ -35,5 +40,28 @@ Env
 
 Related
 -------
+=======
+## Summary
+
+<!-- Short description -->
+
+## Steps to Reproduce
+
+1. 2. 3.
+
+## Expected vs Actual
+
+**Expected:** | **Actual:**
+
+## Logs / Screens
+
+Attach relevant logs (from reports/) and screenshots/GIFs.
+
+## Env
+
+**OS:** | **Node:** | **Package version:** | **CI/Runner:**
+
+## Related
+>>>>>>> 9fe4bd7 (chore: bootstrap ODAVL Studio repository)
 
 Links/PRs/Commits:

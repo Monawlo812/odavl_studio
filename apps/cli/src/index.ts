@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 #!/usr/bin/env node
 // ODAVL CLI placeholder
 import { spawn, spawnSync, execSync } from "child_process";
@@ -30,6 +31,11 @@ function startSpan(
 =======
 // --- ODAVL CLI: Additional imports for codemods and governor logic ---
 import { esmHygiene, depsPatchMinor } from "@odavl/codemods";
+=======
+// --- ODAVL CLI: Additional imports for codemods and governor logic ---
+import { esmHygiene } from "@odavl/codemods/esmHygiene.ts";
+import { depsPatchMinor } from "@odavl/codemods/depsPatchMinor.ts";
+>>>>>>> 9fe4bd7 (chore: bootstrap ODAVL Studio repository)
 import { readGovernorConfig, currentUsage, decide } from "@odavl/policy";
 
 // #!/usr/bin/env node
@@ -48,6 +54,9 @@ function startSpan(kind: string, mode: TelemetryMode, ctx?: { repo?: string; bra
   if (mode === "off") {
     return { end(_ok: boolean, _extra?: any): void {} };
   }
+<<<<<<< HEAD
+>>>>>>> 9fe4bd7 (chore: bootstrap ODAVL Studio repository)
+=======
 >>>>>>> 9fe4bd7 (chore: bootstrap ODAVL Studio repository)
   const startTime = Date.now();
   return {
@@ -71,9 +80,12 @@ function startSpan(kind: string, mode: TelemetryMode, ctx?: { repo?: string; bra
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+=======
+>>>>>>> 9fe4bd7 (chore: bootstrap ODAVL Studio repository)
 =======
 >>>>>>> 9fe4bd7 (chore: bootstrap ODAVL Studio repository)
 // Helper function to find JavaScript/TypeScript files
@@ -1620,7 +1632,11 @@ Evidence:
         code: 1,
         out: "",
 <<<<<<< HEAD
+<<<<<<< HEAD
         err: String((e && (e as any).message) || e),
+=======
+  err: String(e?.message || e),
+>>>>>>> 9fe4bd7 (chore: bootstrap ODAVL Studio repository)
 =======
   err: String(e?.message || e),
 >>>>>>> 9fe4bd7 (chore: bootstrap ODAVL Studio repository)

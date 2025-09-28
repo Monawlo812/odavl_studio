@@ -20,8 +20,11 @@ export function computeRiskTokens(i: TokensInput) {
   const tokens = Math.min(25, Math.max(5, Math.round(raw)));
   return { tokens, base, k: { k1, k2, k3, k4 }, input: i };
 }
+<<<<<<< HEAD
 
 // Minimal tokenize implementation for test
 export function tokenize(str: string): string[] {
   return str.split(/\s+/).filter(Boolean);
 }
+=======
+>>>>>>> 9fe4bd7 (chore: bootstrap ODAVL Studio repository)

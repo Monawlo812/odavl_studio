@@ -6,6 +6,7 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "exports": {
+<<<<<<< HEAD
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
@@ -23,12 +24,24 @@
     "typecheck": "tsc -b --noEmit",
     "test": "vitest run --coverage --reporter=default --outputFile=../../coverage/policy-test.log"
 >>>>>>> 86b1346 (H3: Safe delete (quarantine) of LEGACY and NOISE files with full evidence. See reports/hygiene/2025-10-01/run-1/ for audit trail.)
+=======
+    ".": { "types": "./dist/index.d.ts", "import": "./dist/index.js" }
+  },
+  "scripts": {
+  "build": "tsc -p tsconfig.json",
+  "lint": "eslint . --ignore-pattern dist --ignore-pattern __tests__",
+  "typecheck": "tsc -b --noEmit"
+>>>>>>> 9fe4bd7 (chore: bootstrap ODAVL Studio repository)
   },
   "devDependencies": {
     "@types/js-yaml": "^4.0.9",
     "@types/node": "^20.0.0",
+<<<<<<< HEAD
     "typescript": "^5.0.0",
     "vitest": "^3.2.4"
+=======
+    "typescript": "^5.0.0"
+>>>>>>> 9fe4bd7 (chore: bootstrap ODAVL Studio repository)
   },
   "packageManager": "pnpm@10.17.0"
 }

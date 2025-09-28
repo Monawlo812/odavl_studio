@@ -59,8 +59,12 @@ If the automated workflow fails or manual intervention is needed:
    ```
 
 4. **Verify release:**
+<<<<<<< HEAD
 
 ```bash
+=======
+   ```bash
+>>>>>>> 9fe4bd7 (chore: bootstrap ODAVL Studio repository)
    gh release view v0.3.0
    ```
 

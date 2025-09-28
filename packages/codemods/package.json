@@ -1,17 +1,27 @@
 {
   "name": "@odavl/codemods",
+<<<<<<< HEAD
   "version": "0.4.0",
   "private": true,
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
+=======
+  "version": "0.1.0",
+  "type": "module",
+  "main": "./dist/index.js",
+>>>>>>> 9fe4bd7 (chore: bootstrap ODAVL Studio repository)
   "exports": {
     ".": "./dist/index.js"
   },
   "files": ["dist"],
   "scripts": {
+<<<<<<< HEAD
     "build": "tsc -p tsconfig.json",
     "dev": "tsc -p tsconfig.json --watch"
+=======
+    "build": "tsc -p tsconfig.json"
+>>>>>>> 9fe4bd7 (chore: bootstrap ODAVL Studio repository)
   },
   "devDependencies": {
     "@types/node": "^20.0.0",

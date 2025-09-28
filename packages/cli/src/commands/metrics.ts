@@ -1,6 +1,11 @@
+<<<<<<< HEAD
 /* global console, process */
 // CLI: odavl metrics serve
 import { serveMetrics } from '../lib/metrics.js';
+=======
+// CLI: odavl metrics serve
+import { serveMetrics } from '../lib/metrics';
+>>>>>>> 9fe4bd7 (chore: bootstrap ODAVL Studio repository)
 
 export function metricsServe() {
   try {

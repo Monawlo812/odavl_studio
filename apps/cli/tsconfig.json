@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+<<<<<<< HEAD
     "outDir": "dist",
     "types": ["node"],
     "resolveJsonModule": true,
@@ -19,4 +20,26 @@
 >>>>>>> 86b1346 (H3: Safe delete (quarantine) of LEGACY and NOISE files with full evidence. See reports/hygiene/2025-10-01/run-1/ for audit trail.)
   },
   "include": ["src", "commands", "lib", "policy-bridge"]
+=======
+    "target": "ES2022",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+  "rootDir": "../../",
+    "outDir": "dist",
+    "declaration": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "types": ["node"],
+    "baseUrl": "./",
+    "paths": {
+      "@odavl/codemods/*": ["../../packages/codemods/src/*"],
+      "@odavl/policy": ["../../packages/policy/dist/index.d.ts"],
+      "@odavl/policy/*": ["../../packages/policy/dist/index.d.ts"]
+    },
+  "allowImportingTsExtensions": true,
+  "noEmit": true
+  },
+  "include": ["src"]
+>>>>>>> 9fe4bd7 (chore: bootstrap ODAVL Studio repository)
 }
