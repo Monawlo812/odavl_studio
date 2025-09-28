@@ -1,0 +1,9 @@
+{
+  "eslintBefore": { "errors": 0, "warnings": 1 },
+  "eslintAfter":  { "errors": 0, "warnings": 0 },
+  "typesBefore":  { "errors": 0 },
+  "typesAfter":   { "errors": 0 },
+  "filesTouched": 2,
+  "linesChanged": 2,
+  "rootCause": "The orchestrator ESLint config only matched packages/org-orchestrator, but the code is in apps/orchestrator. No config block matched, so ESLint ignored it. Fixed by adding a config block for apps/orchestrator and correcting the lint script."
+}

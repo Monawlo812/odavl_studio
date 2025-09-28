@@ -1,0 +1,17 @@
+{
+  "stage": "A",
+  "timestamp": "2025-09-22T00:00:00Z",
+  "files": [
+    ".odavl.policy.yml",
+    ".odavl/gates.yml",
+    ".github/pull_request_template.md",
+    "package.json",
+    "reports/.gitkeep"
+  ],
+  "hashes": {
+    "plan": "PLACEHOLDER_HASH_PLAN_A",
+    "patch": "PLACEHOLDER_HASH_PATCH_A",
+    "policy": "PLACEHOLDER_HASH_POLICY_A"
+  },
+  "notes": "Stage A attestation: infra/policy/gates/template/scripts. Hashes are placeholders."
+}

@@ -1,0 +1,322 @@
+{
+  "date": "2025-09-27",
+  "evidenceRoot": "reports/evaluations/2025-09-27/features/logs/",
+  "features": [
+    {
+      "name": "Code Scanning & Diagnostics",
+      "description": "Automated linting and typechecking across all packages using ESLint and TypeScript.",
+      "paths": ["apps/", "packages/", "pnpm-workspace.yaml", "eslint.config.mjs", "tsconfig.json"],
+      "commands": [
+        {"cmd": "pnpm -w run lint", "evidence": "scan/eslint.log"},
+        {"cmd": "pnpm -w run typecheck", "evidence": "scan/tsc.log"}
+      ],
+      "businessValue": "Early detection of code issues, improved code quality, and reduced technical debt.",
+      "maturityScore": 8,
+      "whyNot10": ["Some lint/type errors remain", "Not all packages have 100% coverage"],
+      "risks": ["Lint/typecheck failures can block CI", "Inconsistent config across packages"],
+      "roadmap": {
+        "30": "Address top lint/type errors, unify configs.",
+        "60": "Enforce zero-tolerance in CI, add custom rules.",
+        "90": "Integrate with PR gating and reporting dashboards."
+      }
+    },
+    {
+      "name": "Build System (Monorepo)",
+      "description": "Turborepo + pnpm orchestrate builds across all apps/packages.",
+      "paths": ["turbo.json", "pnpm-workspace.yaml", "apps/", "packages/"],
+      "commands": [
+        {"cmd": "pnpm -w run build", "evidence": "build/build.log"}
+      ],
+      "businessValue": "Fast, cacheable builds; scalable for large teams.",
+      "maturityScore": 7,
+      "whyNot10": ["Some build failures", "Not all packages build cleanly"],
+      "risks": ["Build breaks block all downstream tasks", "Cache invalidation issues"],
+      "roadmap": {
+        "30": "Fix failing builds, document build matrix.",
+        "60": "Add build health dashboards, improve cache usage.",
+        "90": "Enable distributed builds, integrate with CI/CD."
+      }
+    },
+    {
+      "name": "Automated Testing & Coverage",
+      "description": "Vitest/Jest test suites with coverage reporting.",
+      "paths": ["apps/", "packages/", "vitest.config.ts", "jest.config.js"],
+      "commands": [
+        {"cmd": "pnpm -w run test -- --coverage", "evidence": "build/test.log"},
+        {"cmd": "pnpm -w exec vitest run --coverage", "evidence": "build/vitest.log"},
+        {"cmd": "pnpm -w exec jest --coverage", "evidence": "build/jest.log"}
+      ],
+      "businessValue": "Prevents regressions, ensures code reliability.",
+      "maturityScore": 6,
+      "whyNot10": ["Test failures", "ESM/Jest config gaps", "Low coverage in some areas"],
+      "risks": ["False sense of security if tests are weak", "Config drift"],
+      "roadmap": {
+        "30": "Fix test runner configs, address top failures.",
+        "60": "Increase coverage, enforce in CI.",
+        "90": "Add mutation testing, dashboard reporting."
+      }
+    },
+    {
+      "name": "Security & Vulnerability Scanning",
+      "description": "Dependency audit via pnpm audit; security logs and reporting.",
+      "paths": ["pnpm-lock.yaml", "package.json", "reports/security*"],
+      "commands": [
+        {"cmd": "pnpm -w audit", "evidence": "security/audit.log"}
+      ],
+      "businessValue": "Reduces risk of known vulnerabilities in dependencies.",
+      "maturityScore": 7,
+      "whyNot10": ["Some audit warnings remain", "No automated patching"],
+      "risks": ["Missed CVEs", "Audit tool gaps", "Manual remediation required"],
+      "roadmap": {
+        "30": "Address critical audit warnings.",
+        "60": "Integrate with PR checks, add osv-scanner.",
+        "90": "Automate patch PRs, add SAST/DAST."
+      }
+    },
+    {
+      "name": "CI/CD Automation",
+      "description": "GitHub Actions for build, test, and deploy; evidence in workflow logs.",
+      "paths": [".github/workflows/ci.yml", "reports/ci*"],
+      "commands": [
+        {"cmd": "See workflow", "evidence": "ci/ci-yml.log"}
+      ],
+      "businessValue": "Enables continuous integration, fast feedback, and safe deploys.",
+      "maturityScore": 8,
+      "whyNot10": ["Some manual steps", "Not all jobs are fully automated"],
+      "risks": ["CI flakiness", "Secrets leakage", "Incomplete coverage"],
+      "roadmap": {
+        "30": "Add missing jobs, improve error reporting.",
+        "60": "Add deployment gates, secret scanning.",
+        "90": "Full CD, rollback automation."
+      }
+    },
+    {
+      "name": "Policy-Driven Governance (Governor)",
+      "description": "Rate limits, risk budgets, and protected paths enforced via .odavl.policy.yml.",
+      "paths": [".odavl.policy.yml", "packages/policy/", "reports/ci-runs-governor.json"],
+      "commands": [
+        {"cmd": "Policy enforcement", "evidence": "governor/policy-yml.log"}
+      ],
+      "businessValue": "Prevents resource exhaustion, enforces org policies.",
+      "maturityScore": 9,
+      "whyNot10": ["Manual override possible", "Policy drift risk"],
+      "risks": ["Overly strict policies block work", "Under-enforcement"],
+      "roadmap": {
+        "30": "Review and tune risk budgets.",
+        "60": "Add policy change audit logs.",
+        "90": "Integrate with external policy engines."
+      }
+    },
+    {
+      "name": "Undo & Rollback System",
+      "description": "Snapshots and undo logs for all automated changes.",
+      "paths": ["reports/undo/", "reports/undo*"],
+      "commands": [
+        {"cmd": "odavl undo last", "evidence": "undo/undo-dir.log"}
+      ],
+      "businessValue": "Enables safe experimentation and rapid recovery.",
+      "maturityScore": 8,
+      "whyNot10": ["Manual restore required", "Not all actions are atomic"],
+      "risks": ["Incomplete snapshots", "Restore failures"],
+      "roadmap": {
+        "30": "Add snapshot validation.",
+        "60": "Automate multi-step undo.",
+        "90": "Add UI for undo/redo."
+      }
+    },
+    {
+      "name": "Telemetry & Observability",
+      "description": "Local telemetry logs, opt-in analytics, and runtime version evidence.",
+      "paths": ["reports/telemetry.log.jsonl", ".odavl.policy.yml", "reports/telemetry*"],
+      "commands": [
+        {"cmd": "Telemetry log", "evidence": "telemetry/telemetry-dir.log"},
+        {"cmd": "Node version", "evidence": "observability/node-version.log"}
+      ],
+      "businessValue": "Enables usage analytics, debugging, and performance monitoring.",
+      "maturityScore": 7,
+      "whyNot10": ["Telemetry is opt-in/off by default", "Limited remote reporting"],
+      "risks": ["Privacy concerns", "Incomplete data"],
+      "roadmap": {
+        "30": "Add anonymized mode, improve docs.",
+        "60": "Add remote endpoint, dashboards.",
+        "90": "Integrate with external observability tools."
+      }
+    },
+    {
+      "name": "Protected Paths & Safety Gates",
+      "description": "Critical paths (e.g., security/, *.spec.*, public-api/) are protected from automation.",
+      "paths": [".odavl.policy.yml", "packages/policy/"],
+      "commands": [
+        {"cmd": "Policy check", "evidence": "protected-paths/protected-paths.log"}
+      ],
+      "businessValue": "Prevents accidental or risky changes to sensitive code.",
+      "maturityScore": 9,
+      "whyNot10": ["Manual bypass possible", "Config drift risk"],
+      "risks": ["Over-protection blocks needed changes"],
+      "roadmap": {
+        "30": "Review protected paths.",
+        "60": "Add dynamic path detection.",
+        "90": "Integrate with PR review bots."
+      }
+    },
+    {
+      "name": "Documentation & Onboarding",
+      "description": "Extensive markdown docs, onboarding guides, and design partner playbooks.",
+      "paths": ["docs/", "docs/*.md", "README.md", "SUPPORT.md"],
+      "commands": [
+        {"cmd": "Docs listing", "evidence": "docs/docs-md-dir.log"}
+      ],
+      "businessValue": "Reduces onboarding time, improves support and adoption.",
+      "maturityScore": 8,
+      "whyNot10": ["Docs can lag behind code", "Some areas lack diagrams"],
+      "risks": ["Outdated docs", "Fragmented knowledge"],
+      "roadmap": {
+        "30": "Update for latest features.",
+        "60": "Add more diagrams, video guides.",
+        "90": "Integrate docs with codebase (e.g., docgen)."
+      }
+    },
+    {
+      "name": "RBAC & Access Control",
+      "description": "Role-based access via odavl.rbac.yml and policy enforcement.",
+      "paths": ["odavl.rbac.yml", "packages/policy/"],
+      "commands": [
+        {"cmd": "RBAC config", "evidence": "rbac/rbac-yml.log"}
+      ],
+      "businessValue": "Ensures only authorized users can perform sensitive actions.",
+      "maturityScore": 7,
+      "whyNot10": ["Manual config", "No UI for role management"],
+      "risks": ["Misconfigurations", "Privilege escalation"],
+      "roadmap": {
+        "30": "Audit current roles.",
+        "60": "Add role change logs.",
+        "90": "Integrate with SSO/IdP."
+      }
+    },
+    {
+      "name": "API & Extensibility",
+      "description": "Public API surface for automation and integration (planned, not yet present).",
+      "paths": [],
+      "commands": [],
+      "businessValue": "Enables ecosystem integrations and custom workflows.",
+      "maturityScore": 3,
+      "whyNot10": ["No public API yet", "Only internal modules"],
+      "risks": ["Integration blockers for partners"],
+      "roadmap": {
+        "30": "Design API surface.",
+        "60": "Implement read-only endpoints.",
+        "90": "Add mutation endpoints, publish docs."
+      }
+    },
+    {
+      "name": "Monorepo Management",
+      "description": "pnpm + Turborepo for scalable, multi-package development.",
+      "paths": ["pnpm-workspace.yaml", "turbo.json", "apps/", "packages/"],
+      "commands": [
+        {"cmd": "Workspace config", "evidence": "monorepo/pnpm-workspace-yaml.log"},
+        {"cmd": "Turbo config", "evidence": "monorepo/turbo-json.log"}
+      ],
+      "businessValue": "Simplifies dependency management, enables code sharing.",
+      "maturityScore": 9,
+      "whyNot10": ["Some build/test config drift", "Onboarding for new devs can be complex"],
+      "risks": ["Tooling upgrades", "Workspace bloat"],
+      "roadmap": {
+        "30": "Document workspace structure.",
+        "60": "Add monorepo health checks.",
+        "90": "Automate dependency upgrades."
+      }
+    },
+    {
+      "name": "Examples & Onboarding",
+      "description": "Example projects and codemod fixtures for onboarding and testing.",
+      "paths": ["examples/", "examples/codemod-fixture.ts", "examples/golden-repo/"],
+      "commands": [
+        {"cmd": "Examples listing", "evidence": "examples/examples-dir.log"}
+      ],
+      "businessValue": "Accelerates onboarding, provides reference implementations.",
+      "maturityScore": 8,
+      "whyNot10": ["Some examples are minimal", "Not all features covered"],
+      "risks": ["Outdated examples", "Lack of real-world complexity"],
+      "roadmap": {
+        "30": "Add more real-world examples.",
+        "60": "Integrate with docs and tests.",
+        "90": "Add guided onboarding flows."
+      }
+    },
+    {
+      "name": "Reporting & Auditability",
+      "description": "All automation, undo, and evidence logs are stored in reports/ for traceability.",
+      "paths": ["reports/", "reports/undo/", "reports/ci*", "reports/security*"],
+      "commands": [
+        {"cmd": "Reports listing", "evidence": "reports/reports-dir.log"}
+      ],
+      "businessValue": "Enables compliance, audit trails, and debugging.",
+      "maturityScore": 9,
+      "whyNot10": ["Manual log review", "No centralized dashboard"],
+      "risks": ["Log bloat", "Missed evidence"],
+      "roadmap": {
+        "30": "Add log rotation.",
+        "60": "Build reporting dashboard.",
+        "90": "Integrate with SIEM/compliance tools."
+      }
+    }
+  ],
+  "serviceCatalog": [
+    {
+      "service": "Code Health Scan",
+      "description": "Automated lint/typecheck, health scoring",
+      "valueProposition": "Reduce tech debt, fast feedback",
+      "maturity": "8/10",
+      "evidence": ["scan/eslint.log", "scan/tsc.log"]
+    },
+    {
+      "service": "Automated Healing",
+      "description": "Risk-budgeted code fixes, undo/rollback",
+      "valueProposition": "Safe automation, fast recovery",
+      "maturity": "8/10",
+      "evidence": ["undo/undo-dir.log"]
+    },
+    {
+      "service": "CI/CD Automation",
+      "description": "GitHub Actions, build/test/deploy",
+      "valueProposition": "Fast, safe releases",
+      "maturity": "8/10",
+      "evidence": ["ci/ci-yml.log"]
+    },
+    {
+      "service": "Security Audit",
+      "description": "Dependency audit, protected paths",
+      "valueProposition": "Reduce risk, compliance",
+      "maturity": "7/10",
+      "evidence": ["security/audit.log"]
+    },
+    {
+      "service": "Policy Governance",
+      "description": "Rate limits, risk budgets, RBAC",
+      "valueProposition": "Prevent resource exhaustion",
+      "maturity": "9/10",
+      "evidence": ["governor/policy-yml.log", "rbac/rbac-yml.log"]
+    },
+    {
+      "service": "Observability/Telemetry",
+      "description": "Usage analytics, logs, opt-in telemetry",
+      "valueProposition": "Debugging, usage insights",
+      "maturity": "7/10",
+      "evidence": ["telemetry/telemetry-dir.log"]
+    },
+    {
+      "service": "Documentation",
+      "description": "Markdown docs, onboarding guides",
+      "valueProposition": "Faster onboarding, support",
+      "maturity": "8/10",
+      "evidence": ["docs/docs-md-dir.log"]
+    },
+    {
+      "service": "Reporting & Audit",
+      "description": "Evidence logs, undo, compliance",
+      "valueProposition": "Traceability, audit trails",
+      "maturity": "9/10",
+      "evidence": ["reports/reports-dir.log"]
+    }
+  ]
+}

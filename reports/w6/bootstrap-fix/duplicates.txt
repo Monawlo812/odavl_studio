@@ -1,0 +1,5 @@
+c:\Users\sabou\odavl_studio\apps\launcher\package.json
+c:\Users\sabou\odavl_studio\apps\cli\package.json
+c:\Users\sabou\odavl_studio\apps\vscode-ext\package.json
+c:\Users\sabou\odavl_studio\packages\policy\package.json
+c:\Users\sabou\odavl_studio\packages\codemods\package.json

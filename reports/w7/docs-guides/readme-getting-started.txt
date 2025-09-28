@@ -1,0 +1,1 @@
+README.md contains a 'Getting Started' section with prerequisites, install/build, and quickstart commands. Evidence captured from lines 1-81 and 82-178.

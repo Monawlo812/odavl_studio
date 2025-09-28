@@ -1,0 +1,9 @@
+{
+  "publisher": "odavl",
+  "name": "odavl-studio",
+  "displayName": "ODAVL Studio",
+  "version": "0.3.0",
+  "identifier": "odavl.odavl-studio",
+  "description": "Automated development governance with code healing and CI management",
+  "repository": "https://github.com/Monawlo812/odavl_studio.git"
+}

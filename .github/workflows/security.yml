@@ -1,0 +1,32 @@
+name: Security
+on:
+  workflow_dispatch:
+  pull_request:
+  push:
+    branches: [ main ]
+  schedule:
+    - cron: '17 2 * * *'
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: '20' }
+      - name: Prepare evidence dir
+        run: mkdir -p reports/evidence
+      - name: npm audit (json)
+        run: npm audit --json > reports/evidence/deps-audit.json || true
+      - name: gitleaks (json, redacted)
+        run: |
+          curl -sSfL https://raw.githubusercontent.com/gitleaks/gitleaks/master/install.sh | bash
+          ./gitleaks detect --redact --no-banner --report-format json --report-path reports/evidence/gitleaks.json || true
+      - name: osv-scanner (json)
+        run: |
+          curl -sSfL https://github.com/google/osv-scanner/releases/latest/download/osv-scanner_Linux_x86_64.tar.gz | tar -xz
+          ./osv-scanner -r . --json > reports/evidence/osv.json || true
+      - name: Upload security artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: security-evidence
+          path: reports/evidence/

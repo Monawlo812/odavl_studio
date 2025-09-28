@@ -1,0 +1,7 @@
+{
+  "stage": "W5-A.0",
+  "pack": "go",
+  "created": ["packages/packs/go/index.ts"],
+  "limits": { "maxLines": 40, "maxFiles": 5 },
+  "notes": "Skeleton stubs for scan()/heal() returning {status:\"not-implemented\"}."
+}

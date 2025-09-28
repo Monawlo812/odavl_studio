@@ -1,0 +1,9 @@
+﻿{
+  "tool": "odavl",
+  "action": "heal",
+  "recipe": "remove-unused",
+  "mode": "apply",
+  "pass": true,
+  "stdout": "",
+  "stderr": ""
+}

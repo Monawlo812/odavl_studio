@@ -1,0 +1,20 @@
+name: Policy Guard
+on: [pull_request]
+jobs:
+  guard:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check VS Code settings and lockfiles
+        run: |
+          set -e
+          if [ -f .vscode/settings.json ]; then
+            # forbid excludes that hide files
+            if grep -E '"files\.exclude"| "search\.exclude"| "explorer\.excludeGitIgnore":\s*true' .vscode/settings.json; then
+              echo "❌ Forbidden excludes in .vscode/settings.json"; exit 1
+            fi
+          fi
+          # forbid non-pnpm lockfiles
+          if git diff --name-only origin/${{ github.base_ref }}... | grep -E '(^|/)(yarn\.lock|package-lock\.json)$' >/dev/null; then
+            echo "❌ Lockfiles not allowed (pnpm only)"; exit 1
+          fi

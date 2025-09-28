@@ -1,0 +1,20 @@
+name: Orchestrator
+on:
+  workflow_dispatch:
+  pull_request:
+  push:
+    branches: [ main ]
+jobs:
+  orch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: '20' }
+      - run: pnpm install
+      - run: mkdir -p reports/evidence
+      - run: pnpm orchestrate:audit
+      - uses: actions/upload-artifact@v4
+        with:
+          name: orchestrator-evidence
+          path: reports/evidence/

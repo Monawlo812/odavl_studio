@@ -1,0 +1,16 @@
+{
+  "kind": "immune-triage",
+  "time": "2025-09-23T22:30:21.966Z",
+  "input": {
+    "tsErrors": 0,
+    "eslintErrors": null,
+    "deps": {
+      "outdatedPatch": null,
+      "outdatedMinor": null
+    }
+  },
+  "classification": "healthy",
+  "playbook": null,
+  "reasons": [],
+  "risk_tokens": 1
+}

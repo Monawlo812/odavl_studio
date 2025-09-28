@@ -1,0 +1,12 @@
+{
+  "name": "@odavl/orchestrator",
+  "version": "0.4.0",
+  "private": true,
+  "scripts": {
+  "build": "echo build stub",
+  "clean": "echo clean stub",
+  "lint": "eslint \"src/**/*.{ts,tsx,js,jsx}\"",
+  "typecheck": "tsc -b --noEmit"
+  },
+  "packageManager": "pnpm@10.17.0"
+}

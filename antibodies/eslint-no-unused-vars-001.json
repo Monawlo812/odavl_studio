@@ -1,0 +1,8 @@
+{
+  "id": "eslint-no-unused-vars-001",
+  "context": { "rule": "no-unused-vars", "filePattern": "src/**/*.ts" },
+  "patch": "eslint --fix (scoped to files matching rule)",
+  "evidence": { "testsPass": true, "linesChanged": 8 },
+  "successCount": 3,
+  "failureCount": 0
+}

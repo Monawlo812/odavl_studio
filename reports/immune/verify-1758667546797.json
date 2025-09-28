@@ -1,0 +1,32 @@
+{
+  "kind": "immune-verify",
+  "time": "2025-09-23T22:45:42.414Z",
+  "steps": [
+    {
+      "name": "typecheck",
+      "ok": true,
+      "sec": 0.82,
+      "errors": 0
+    },
+    {
+      "name": "lint",
+      "ok": false,
+      "sec": 0.93,
+      "errors": null
+    },
+    {
+      "name": "build",
+      "ok": false,
+      "sec": 1.28
+    },
+    {
+      "name": "test",
+      "ok": false,
+      "sec": 1.25
+    }
+  ],
+  "summary": {
+    "all_ok": false,
+    "branch": "odavl/p6-verify-20250924"
+  }
+}

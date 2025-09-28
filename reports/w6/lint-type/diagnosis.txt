@@ -1,0 +1,1 @@
+Root cause: The orchestrator ESLint config only matches files in packages/org-orchestrator/**/*.{ts,tsx}, but the actual orchestrator code is in apps/orchestrator/src/index.ts. No config block matches this file, so ESLint ignores it. Fix: Add a config block for apps/orchestrator/**/*.{ts,tsx} in eslint.config.mjs.

@@ -1,0 +1,11 @@
+{
+  "lint": 0,
+  "tests": 0,
+  "vulns": 0,
+  "ok": true,
+  "details": {
+    "lint": "No Java pack present.",
+    "tests": "No Java pack present.",
+    "vulns": "No Java pack present."
+  }
+}

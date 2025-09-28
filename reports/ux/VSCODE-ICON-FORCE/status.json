@@ -1,0 +1,34 @@
+{
+  "timestamp": "2025-09-21T16:40:00.000Z",
+  "workspace": "c:\\Users\\sabou\\odavl_studio",
+  "extension": {
+    "version": "0.3.0",
+    "activationEvents": ["*"]
+  },
+  "manifest": {
+    "viewsContainersPresent": true,
+    "viewsPresent": true,
+    "commandsPresent": 4
+  },
+  "files": {
+    "iconLightExists": true,
+    "iconDarkExists": true,
+    "packageJsonExists": true
+  },
+  "registration": {
+    "viewRegistered": true,
+    "providerActive": true,
+    "statusBarActive": true
+  },
+  "activationEventsOk": true,
+  "iconFilesPresent": true,
+  "viewRegistered": true,
+  "buildSuccess": true,
+  "validationPassed": true,
+  "testResults": {
+    "buildCompleted": true,
+    "extensionHostLaunched": true,
+    "iconValidationPassed": true,
+    "manifestIntegrity": true
+  }
+}

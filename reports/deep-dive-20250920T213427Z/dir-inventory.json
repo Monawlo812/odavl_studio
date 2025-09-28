@@ -1,0 +1,145 @@
+{
+  "./": {
+    "": 2,
+    ".yml": 1,
+    ".sample": 1,
+    ".json": 2,
+    ".yaml": 2,
+    ".md": 1
+  },
+  "apps/": {},
+  "apps/cli/": {
+    "": 1,
+    ".json": 2
+  },
+  "apps/cli/dist/": {
+    ".js": 1
+  },
+  "apps/cli/dist/apps/": {},
+  "apps/cli/dist/apps/cli/": {},
+  "apps/cli/dist/apps/cli/src/": {
+    ".js": 1
+  },
+  "apps/cli/dist/packages/": {},
+  "apps/cli/dist/packages/reporters/": {},
+  "apps/cli/dist/packages/reporters/src/": {
+    ".js": 1
+  },
+  "apps/cli/src/": {
+    ".ts": 1
+  },
+  "apps/vscode-ext/": {
+    "": 1,
+    ".json": 2
+  },
+  "apps/vscode-ext/dist/": {
+    ".js": 2
+  },
+  "apps/vscode-ext/src/": {
+    ".ts": 2
+  },
+  "examples/": {},
+  "examples/golden-repo/": {
+    "": 1,
+    ".js": 1,
+    ".json": 2
+  },
+  "examples/golden-repo/dist/": {
+    ".js": 1
+  },
+  "examples/golden-repo/src/": {
+    ".ts": 1
+  },
+  "infra/": {},
+  "infra/n8n/": {
+    "": 1
+  },
+  "packages/": {},
+  "packages/codemods/": {
+    "": 1,
+    ".json": 2
+  },
+  "packages/codemods/dist/": {
+    ".ts": 4,
+    ".map": 8,
+    ".js": 4
+  },
+  "packages/codemods/src/": {
+    ".js": 4,
+    ".ts": 4
+  },
+  "packages/core/": {
+    "": 1,
+    ".json": 2
+  },
+  "packages/policy/": {
+    "": 1,
+    ".json": 2
+  },
+  "packages/policy/dist/": {
+    ".ts": 2,
+    ".map": 4,
+    ".js": 2
+  },
+  "packages/policy/src/": {
+    ".ts": 2
+  },
+  "packages/reporters/": {
+    "": 1,
+    ".json": 2
+  },
+  "packages/reporters/src/": {
+    ".ts": 1
+  },
+  "reports/": {
+    ".json": 46,
+    ".md": 7,
+    ".log": 6,
+    ".txt": 24,
+    ".jsonl": 1
+  },
+  "reports/ci-nit-20250920T213216Z/": {
+    ".txt": 2,
+    ".patch": 1,
+    ".json": 6,
+    ".log": 1,
+    ".md": 1
+  },
+  "reports/deep-dive-20250920T211822Z/": {
+    ".txt": 10,
+    ".json": 4
+  },
+  "reports/deep-dive-20250920T213427Z/": {
+    ".txt": 7
+  },
+  "reports/feature-audit-20250920T202543Z/": {},
+  "reports/feature-audit-20250920T202553Z/": {
+    ".json": 14,
+    ".txt": 11,
+    ".md": 1
+  },
+  "reports/ultra-/": {},
+  "reports/ultra-20250920T211812Z/": {
+    ".json": 4,
+    ".txt": 4,
+    ".md": 1
+  },
+  "reports/ultra-20250920T214043Z/": {
+    ".json": 13,
+    ".txt": 9,
+    ".md": 1
+  },
+  "reports/ultra-repair-20250920T214908Z/": {
+    ".txt": 6,
+    ".json": 2,
+    ".md": 1
+  },
+  "reports/undo/": {
+    ".json": 1
+  },
+  "reports/undo/2025-09-20T20-07-55/": {
+    ".json": 1,
+    ".js": 1,
+    ".bak": 1
+  }
+}

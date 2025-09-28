@@ -1,0 +1,13 @@
+# ODAVL Policy Configuration Sample
+# Copy to .governor/config.json and adapt to JSON format
+
+governor:
+  prsPerDay: 5
+  ciMinutesPerHour: 60
+  maxConcurrentShadows: 3
+  waves:
+    - window: "22:00-06:00"
+      maxPrs: 3
+
+studio:
+  telemetry: off  # Options: on|anonymized|off

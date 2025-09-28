@@ -1,0 +1,23 @@
+limits:
+  max_lines_changed: 40
+  max_files_changed: 10
+protected_paths:
+  - "**/security/**"
+  - "**/*.spec.*"
+  - "**/public-api/**"
+requires:
+  - "tests:green"
+  - "coverage:stable"
+  - "shadow_ci:pass"
+typeErrors:
+  deltaMax: 0
+eslint:
+  deltaMax: 0
+bundleKB:
+  deltaMax: 10
+buildMs:
+  deltaPctMax: 5
+shadow:
+  mustPass: true
+policy:
+  violationsMax: 0

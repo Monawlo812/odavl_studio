@@ -1,0 +1,26 @@
+{
+  "step": "Preflight & Lock",
+  "date": "2025-09-27",
+  "cwd": "C:/Users/sabou/odavl_studio",
+  "commands": [
+    "pwd; git rev-parse --show-toplevel; git worktree list; git branch --show-current",
+    "mkdir .odavl; echo ODAVL_STUDIO_ROOT=1 > .odavl/.root",
+    "echo ODAVL_STUDIO_ROOT=1 > .odavl/.root",
+    "mkdir .vscode",
+    "cat > .vscode/settings.json ... (see file)"
+  ],
+  "outputs": {
+    "pwd": "C:/Users/sabou/odavl_studio",
+    "git": "fatal: not a git repository: ...",
+    "mkdir .odavl": "already exists",
+    "echo .odavl/.root": "success",
+    "mkdir .vscode": "already exists",
+    "settings.json": "written"
+  },
+  "gates": {
+    ".odavl/.root": true,
+    ".vscode/settings.json": true,
+    "no_hidden_file_rules": true
+  },
+  "result": "✅ Preflight & Lock succeeded 🎉"
+}

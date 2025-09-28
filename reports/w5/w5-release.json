@@ -1,0 +1,6 @@
+{
+  "stage": "W5-F.2",
+  "version": "0.5.0",
+  "changed": ["CHANGELOG.md", "docs/release-0.5.0.md", "package.json"],
+  "tag": "v0.5.0"
+}

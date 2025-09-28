@@ -1,0 +1,17 @@
+# ODAVL Studio Code Owners
+# Default owners (fallback)
+*       @odavl-maintainers
+
+# Apps
+/apps/cli/           @odavl-maintainers
+/apps/vscode-ext/    @odavl-maintainers
+
+# Packages
+/packages/core/      @odavl-maintainers
+/packages/codemods/  @odavl-maintainers
+/packages/policy/    @odavl-maintainers
+/packages/reporters/ @odavl-maintainers
+
+# Infra & examples
+/infra/              @odavl-maintainers
+/examples/           @odavl-maintainers

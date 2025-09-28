@@ -1,0 +1,5 @@
+{
+  "commands": [],
+  "helpText": "Usage: odavl <command>');\r\n  console.log('Commands:');\r\n  console.log('  scan           Outputs placeholder HealthSnapshot JSON');\r\n  console.log('  heal           Fix code issues (--recipe remove-unused, --apply)');\r\n  console.log('  branch create  Create a new git branch');\r\n  console.log('  pr open        Open a pull request (--explain, --dry-run, --title)');\r\n  console.log('  shadow run     Trigger CI workflow (--ref <branch>, --wait, --dry-run)');\r\n  console.log('  shadow status  Check CI w",
+  "totalLines": 11
+}

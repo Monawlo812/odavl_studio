@@ -1,0 +1,42 @@
+{
+  "ci": [
+    {
+      "workflow": "ci.yml",
+      "node_versions": [18, 20],
+      "jobs": ["build"],
+      "triggers": ["pull_request", "push", "workflow_dispatch"]
+    },
+    {
+      "workflow": "release.yml",
+      "node_versions": [20],
+      "jobs": ["build-and-release"],
+      "triggers": ["push:tags"]
+    },
+    {
+      "workflow": "policy-guard.yml",
+      "jobs": ["guard"],
+      "triggers": ["pull_request"]
+    },
+    {
+      "workflow": "pages.yml",
+      "jobs": ["deploy"],
+      "triggers": ["push:docs/**", "workflow_dispatch"]
+    },
+    {
+      "workflow": "secure-ci.yml",
+      "jobs": ["semgrep", "gitleaks", "osv_scanner"],
+      "triggers": ["pull_request", "push:main"]
+    },
+    {
+      "workflow": "orchestrator.yml",
+      "jobs": ["orch"],
+      "triggers": ["workflow_dispatch", "pull_request", "push:main"]
+    },
+    {
+      "workflow": "shadow.yml",
+      "node_versions": [18, 20],
+      "jobs": ["test"],
+      "triggers": ["pull_request:main,master", "workflow_dispatch"]
+    }
+  ]
+}

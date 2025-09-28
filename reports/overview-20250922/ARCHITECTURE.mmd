@@ -1,0 +1,16 @@
+flowchart TD
+  Observe((Observe)) --> Decide((Decide))
+  Decide --> Act((Act))
+  Act --> Verify((Verify))
+  Verify --> Learn((Learn))
+  Learn --> Observe
+  subgraph Components
+    CLI
+    VSCodeExt[VS Code Extension]
+    n8n
+    ShadowCI[Shadow CI]
+  end
+  Observe -.-> CLI
+  Observe -.-> VSCodeExt
+  Act -.-> n8n
+  Act -.-> ShadowCI

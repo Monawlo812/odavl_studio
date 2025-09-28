@@ -1,0 +1,12 @@
+{
+  "name": "@odavl/codemods",
+  "version": "0.1.0",
+  "type": "module",
+  "main": "dist/index.js",
+  "exports": { ".": "./dist/index.js" },
+  "files": ["dist"],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "prepack": "pnpm run build"
+  }
+}

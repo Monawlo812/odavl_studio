@@ -1,0 +1,1 @@
+Wave 7 Docs & Guides checkpoint: README.md, CHANGELOG.md, docs/mvp-launch-guide.md, and docs/quickstart.md all present and compliant. Evidence saved for each file. Checkpoint PASSED.

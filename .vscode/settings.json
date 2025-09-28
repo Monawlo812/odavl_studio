@@ -1,0 +1,17 @@
+{
+  "explorer.excludeGitIgnore": false,
+  "files.exclude": {},
+  "search.exclude": {},
+  "explorer.fileNesting.enabled": false,
+  "security.workspace.trust.enabled": true,
+  "git.openRepositoryInParentFolders": "never",
+  "git.enableSmartCommit": false,
+  "git.confirmSync": true,
+  "git.autofetch": false,
+  "terminal.integrated.defaultProfile.windows": "PowerShell 7",
+  "terminal.integrated.profiles.windows": {
+    "PowerShell 7": {
+      "path": "C:\\Program Files\\PowerShell\\7\\pwsh.exe"
+    }
+  }
+}

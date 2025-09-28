@@ -1,0 +1,27 @@
+{
+  "timestamp": "2025-09-21T15:09:00Z",
+  "architecture": {
+    "workspace_structure": {
+      "apps": ["cli", "vscode-ext"],
+      "packages": ["codemods", "core", "policy", "reporters"],
+      "examples": ["golden-repo"],
+      "infrastructure": ["infra/n8n"],
+      "documentation": ["README.md", "reports/"]
+    },
+    "package_boundaries": {
+      "@odavl/cli": "apps/cli - Main CLI tool with 11 commands",
+      "@odavl/vscode-ext": "apps/vscode-ext - VS Code extension with webview",
+      "@odavl/codemods": "packages/codemods - Code transformation recipes",
+      "@odavl/policy": "packages/policy - Governor rate limiting system",
+      "@odavl/core": "packages/core - Shared utilities",
+      "@odavl/reporters": "packages/reporters - Output formatters"
+    },
+    "dependencies": {
+      "monorepo": "pnpm workspaces + turborepo",
+      "runtime": "Node.js v22.19.0",
+      "package_manager": "pnpm 10.17.0",
+      "git": "2.50.1.windows.1",
+      "github_cli": "2.79.0"
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "js": { "lint": 0, "types": 0, "build": 0, "tests": 0, "ok": true },
+  "py": { "ruff": 0, "tests": 0, "vulns": 0, "ok": true },
+  "go": { "lint": 0, "tests": 0, "vulns": 0, "ok": true },
+  "java": { "lint": 0, "tests": 0, "vulns": 0, "ok": true },
+  "gates": {
+    "typeErrorsDelta": 0,
+    "lintDelta": 0,
+    "buildDelta": 0,
+    "bundleDelta": 0,
+    "tests": 0,
+    "vulns": 0,
+    "policy": 0
+  },
+  "shadowE2E": "pass",
+  "finalcheck": true
+}

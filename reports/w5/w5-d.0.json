@@ -1,0 +1,11 @@
+{
+  "stage": "W5-D.0",
+  "created": ["scripts/mutation-preview.js"],
+  "updated": [".odavl/gates.yml"],
+  "howToOptIn": [
+    "Add '/** @mutation */' near the top of a JS/TS file to include it",
+    "OR list file paths in 'reports/w5/mutation-allowlist.txt' (one per line)",
+    "Run: `node scripts/mutation-preview.js` → writes reports/w5/mutation-preview.json"
+  ],
+  "note": "Preview-only: no source edits, no test execution. Gate disabled by default."
+}

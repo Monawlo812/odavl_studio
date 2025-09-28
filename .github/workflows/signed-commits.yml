@@ -1,0 +1,24 @@
+name: Signed Commits Guard
+on: [pull_request]
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - name: Verify PR commits are signed
+        env:
+          BASE: ${{ github.event.pull_request.base.sha }}
+          HEAD: ${{ github.event.pull_request.head.sha }}
+        run: |
+          set -e
+          git fetch --no-tags origin $BASE $HEAD
+          COMMITS=$(git rev-list $BASE..$HEAD)
+          BAD=0
+          for C in $COMMITS; do
+            S=$(git log -1 --pretty='%G?' $C)
+            if [ "$S" != "G" ] && [ "$S" != "U" ]; then
+              echo "❌ Unsigned or invalid-signed commit: $C (status $S)"; BAD=1
+            fi
+          done
+          [ "$BAD" -eq 0 ]

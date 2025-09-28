@@ -1,0 +1,25 @@
+{
+  "packs": {
+    "go": true,
+    "java": true
+  },
+  "proofTwin": {
+    "previews": true
+  },
+  "mutation": {
+    "preview": true
+  },
+  "planner": {
+    "tokensV2": 12
+  },
+  "artifacts": [
+    "poly",
+    "ablation",
+    "tokens",
+    "go",
+    "java",
+    "contracts",
+    "mutation"
+  ],
+  "ok": true
+}

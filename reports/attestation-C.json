@@ -1,0 +1,16 @@
+{
+  "stage": "C",
+  "timestamp": "2025-09-22T00:00:00Z",
+  "files": [
+    "apps/cli/bin/odavl.js",
+    "apps/cli/src/index.ts",
+    "apps/cli/tsconfig.json",
+    "package.json"
+  ],
+  "hashes": {
+    "plan": "PLACEHOLDER_HASH_PLAN_C",
+    "patch": "PLACEHOLDER_HASH_PATCH_C",
+    "policy": "PLACEHOLDER_HASH_POLICY_C"
+  },
+  "notes": "Stage C attestation: CLI skeleton. Hashes are placeholders."
+}

@@ -1,0 +1,30 @@
+{
+  "timestamp": "2025-09-20T23:30:29.793Z",
+  "expectedCount": 4,
+  "found": [
+    {
+      "file": "reports/e2e-scan.json",
+      "size": 444,
+      "modified": "2025-09-20T23:29:47.604Z"
+    },
+    {
+      "file": "reports/e2e-heal-dry.json",
+      "size": 1111,
+      "modified": "2025-09-20T23:29:50.450Z"
+    },
+    {
+      "file": "reports/e2e-shadow.json",
+      "size": 740,
+      "modified": "2025-09-20T23:30:07.598Z"
+    },
+    {
+      "file": "reports/e2e-pr-dry.json",
+      "size": 857,
+      "modified": "2025-09-20T23:30:12.385Z"
+    }
+  ],
+  "missing": [],
+  "valid": true,
+  "foundCount": 4,
+  "missingCount": 0
+}

@@ -1,0 +1,11 @@
+est                                      Scope: 9 of 10 workspace projects
+examples/golden-repo test$ jest --config jest.config.js
+ ts-jest[config] (WARN) message TS151...
+ PASS test/trivial.test.ts
+   ✓ trivial test passes (3 ms)
+Test Suites: 1 passed, 1 total
+Tests:       1 passed, 1 total
+Snapshots:   0 total
+Time:        1.892 s, estimated 2 s
+Ran all test suites.
+Done in 3.1s

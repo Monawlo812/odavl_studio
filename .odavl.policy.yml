@@ -1,0 +1,57 @@
+risk_budget:
+  daily_tokens: 3
+  per_batch_max_changes: 40
+  per_batch_max_files: 10
+self_heal:
+  enable: true
+  allow_autofix: [eslint, prettier]
+  allowed_dep_upgrades: [patch, minor]
+  require_shadow_ci_pass: true
+vaccines:
+  enable: true
+  deny_apis: ["legacyX.*", "fs.promises.readdirSync"]
+  enforce_ts: ["noImplicitAny", "noUnusedLocals"]
+antibodies:
+  enable: true
+  similarity_threshold: 0.82
+
+governor:
+  prsPerDay: 2
+  ciMinutesPerHour: 30
+  maxConcurrentShadows: 2
+
+studio:
+  autonomy: 1
+  telemetry: anonymized # Options: off|on|anonymized (default: anonymized)
+
+riskBudget:
+  maxLinesPerPatch: 40
+  maxPatchesPerRun: 3
+  maxFilesTouched: 10
+  tokensPerDay: 8
+
+protected:
+  - "**/security/**"
+  - "**/*.spec.*"
+  - "**/public-api/**"
+
+bans:
+  lockfiles:
+    - "yarn.lock"
+    - "package-lock.json"
+  deepImports:
+    - "**/internal/**"
+
+llmSafeMode:
+  banOps:
+    - public-api-change
+    - contract-break
+  redact:
+    - "AKIA[0-9A-Z]{16}" # AWS keys
+    - "ghp_[A-Za-z0-9]{36}" # GitHub tokens
+    - "xox[baprs]-[A-Za-z0-9-]{10,48}" # Slack tokens
+
+shadow:
+  matrix:
+    - node18
+    - node20

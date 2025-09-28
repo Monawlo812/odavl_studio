@@ -1,0 +1,28 @@
+name: Secure CI
+on:
+  pull_request:
+  push:
+    branches: [main]
+jobs:
+  semgrep:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: pipx install semgrep
+      - run: semgrep ci --config p/ci --error --timeout 600
+  gitleaks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: |
+          curl -sSL https://raw.githubusercontent.com/gitleaks/gitleaks/master/install.sh | bash
+          ./gitleaks detect -v --redact --exit-code 1
+  osv_scanner:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: |
+          curl -sSL https://raw.githubusercontent.com/google/osv-scanner/main/scripts/install.sh | sh -s -- -b /usr/local/bin
+          mkdir -p reports/security
+          osv-scanner -r . --format json > reports/security/osv.json || true
+          jq -e '[.vulnerabilities[]?|select(.severity|inside(["HIGH","CRITICAL"]))] | length==0' reports/security/osv.json

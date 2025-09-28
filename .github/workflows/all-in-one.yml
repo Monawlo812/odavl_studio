@@ -1,0 +1,17 @@
+name: All-in-One
+on:
+  workflow_dispatch:
+  pull_request:
+  push:
+    branches: [ main ]
+jobs:
+  synthesize:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: mkdir -p reports/evidence reports/shadow
+      - run: node scripts/synthesize-all-in-one.mjs
+      - uses: actions/upload-artifact@v4
+        with:
+          name: all-in-one
+          path: odavl-all-in-one.md

@@ -1,0 +1,17 @@
+name: Kill-List
+on:
+  workflow_dispatch:
+  pull_request:
+  push:
+    branches: [ main ]
+jobs:
+  killlist:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: mkdir -p reports/cleanup
+      - run: node scripts/kill-list.mjs
+      - uses: actions/upload-artifact@v4
+        with:
+          name: kill-list
+          path: reports/cleanup/kill-list.json

@@ -1,0 +1,5 @@
+
+> golden-repo@0.3.0 lint C:\Users\sabou\odavl_studio\examples\golden-repo
+> eslint . "--format" "json"
+
+[{"filePath":"C:\\Users\\sabou\\odavl_studio\\examples\\golden-repo\\test\\trivial.test.ts","messages":[],"suppressedMessages":[],"errorCount":0,"fatalErrorCount":0,"warningCount":0,"fixableErrorCount":0,"fixableWarningCount":0,"usedDeprecatedRules":[]}]

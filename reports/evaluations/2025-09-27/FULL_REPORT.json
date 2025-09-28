@@ -1,0 +1,124 @@
+{
+  "date": "2025-09-27",
+  "repo": "ODAVL / ODAVL Studio",
+  "idea": "Automated development governance platform for safe, policy-driven code healing, CI governance, and risk-budgeted automation.",
+  "architecture": {
+    "monorepo": "pnpm + Turborepo, TypeScript (ESM), Node.js",
+    "key_directories": ["apps/", "packages/", "reports/", "docs/", "examples/"],
+    "core_components": ["CLI (@odavl/cli)", "VS Code Extension", "Governor (@odavl/policy)", "Codemods"],
+    "languages": ["TypeScript", "Node.js"],
+    "frameworks": ["Express (launcher)", "VS Code API (extension)"],
+    "packages": ["turbo", "eslint", "vitest", "jest", "js-yaml", "prom-client"]
+  },
+  "code_health": {
+    "lint": {"errors": 84, "warnings": 1, "log": "logs/lint.log"},
+    "typecheck": {"errors": 0, "log": "logs/typecheck.log"},
+    "build": {"status": "fail", "log": "logs/build.log"},
+    "tests": {"status": "none", "log": "logs/test.log"},
+    "coverage": "not available",
+    "complexity": "not measured",
+    "dead_code": "not measured"
+  },
+  "security_governance": {
+    "policy": ".odavl.policy.yml",
+    "gates": ".odavl/gates.yml",
+    "sbom": "not available (tool error)",
+    "osv_scanner": "not available",
+    "gitleaks": "not available",
+    "licenses": "MIT",
+    "redaction": "AWS, GitHub, Slack patterns"
+  },
+  "ci_cd": {
+    "workflows": "GitHub Actions, shadow CI, PR automation",
+    "rollback": "Undo system, kill-switch",
+    "artifacts": "reports/",
+    "auto_merge": "Policy-driven, gates enforced"
+  },
+  "observability": {
+    "bundle_size": "not measured",
+    "logs": "reports/",
+    "metrics": "prom-client (partial)",
+    "evidence": "snapshots, logs, attestation files"
+  },
+  "docs_dx": {
+    "docs": "Comprehensive (docs/, README, onboarding)",
+    "cli": "Rich help, dry-run/apply, chunked automation",
+    "vscode": "Extension, walkthrough, confetti UX",
+    "web_launcher": "Professional UI, live logs"
+  },
+  "enterprise_readiness": {
+    "undo_explain": true,
+    "attestation": true,
+    "shadow_verify": true,
+    "compliance": "Policy/gates, RBAC, kill-switch"
+  },
+  "evidence_strength": {
+    "logs": true,
+    "snapshots": true,
+    "coverage": false,
+    "sbom": false
+  },
+  "market_comparison": {
+    "renovate_dependabot": "ODAVL offers chunked, policy-driven healing, undo, and risk budgets",
+    "snyk_mend_semgrep_codeql_sonarqube_qodana": "ODAVL focuses on healing/governance, not deep vuln scanning",
+    "gitguardian_gitleaks": "Not integrated (tooling gap)",
+    "openrewrite": "ODAVL codemods are similar, but less mature",
+    "mergify": "ODAVL has policy-driven auto-merge, but less flexible"
+  },
+  "risks": [
+    {"risk": "Lint/Type errors block CI", "probability": "High", "impact": "High", "notes": "See logs/lint.log"},
+    {"risk": "Build failures in CLI", "probability": "High", "impact": "High", "notes": "See logs/build.log"},
+    {"risk": "No test coverage", "probability": "High", "impact": "High", "notes": "See logs/test.log"},
+    {"risk": "Security scan gaps", "probability": "Medium", "impact": "High", "notes": "osv-scanner/gitleaks not available"},
+    {"risk": "Bundle size not measured", "probability": "Medium", "impact": "Medium", "notes": "Tooling gap"},
+    {"risk": "Policy bypass (manual)", "probability": "Low", "impact": "High", "notes": "RBAC, kill-switch mitigate"}
+  ],
+  "pillar_scores": [
+    {"pillar": "Product E2E", "score": 8, "reasons": ["Build/test gaps", "SBOM not working", "no coverage"], "evidence": ["README", "logs/build.log"]},
+    {"pillar": "Code Health", "score": 4, "reasons": ["Lint/type errors", "build fails", "no tests"], "evidence": ["logs/lint.log", "logs/build.log"]},
+    {"pillar": "Security & Governance", "score": 6, "reasons": ["SBOM/scanner gaps", "no gitleaks", "policy present"], "evidence": ["SECURITY.md", ".odavl.policy.yml"]},
+    {"pillar": "CI/CD", "score": 7, "reasons": ["Build/test gates", "auto-merge", "but build fails"], "evidence": [".github/workflows/ci.yml"]},
+    {"pillar": "Observability", "score": 5, "reasons": ["No bundle size", "partial metrics", "logs present"], "evidence": ["reports/"]},
+    {"pillar": "Docs & DX", "score": 8, "reasons": ["Docs strong", "onboarding good", "but build/test gaps"], "evidence": ["docs/", "README.md"]},
+    {"pillar": "Enterprise Readiness", "score": 7, "reasons": ["Undo/Explain", "RBAC", "but compliance not externally audited"], "evidence": ["SECURITY.md"]},
+    {"pillar": "Evidence Strength", "score": 6, "reasons": ["Logs/snapshots", "but no coverage", "partial SBOM"], "evidence": ["reports/"]},
+    {"pillar": "Market Comparison", "score": 6, "reasons": ["Unique healing", "but less mature than Snyk/Semgrep", "no deep vuln scan"], "evidence": ["Section 10"]}
+  ],
+  "final_score": 6.8,
+  "valuation": {
+    "rebuild_cost_floor_eur": "120k–180k",
+    "comps_based_eur": "200k–350k",
+    "strategic_premium_eur": "400k–600k",
+    "raise_value": [
+      "Fix build/lint/test errors",
+      "Add test coverage and CI gates",
+      "Integrate security scanners (osv, gitleaks)",
+      "Bundle size/metrics reporting",
+      "External compliance audit"
+    ]
+  },
+  "roadmap": {
+    "top_10_fixes": [
+      "Fix all lint/type/build errors in CLI and packages",
+      "Add and pass basic test coverage (unit/integration)",
+      "Integrate osv-scanner/gitleaks for security",
+      "Add bundle size and complexity reporting",
+      "Enforce CI gates for all merges",
+      "Improve codemod maturity (OpenRewrite parity)",
+      "Add external compliance audit",
+      "Expand undo/explain/attestation UX",
+      "Improve RBAC and policy explainability",
+      "Enhance documentation with more E2E examples"
+    ],
+    "plan_30_60_90": {
+      "30d": "Fix build/lint/test, add coverage, basic security scan",
+      "60d": "Bundle/complexity metrics, CI gates, codemod upgrades",
+      "90d": "Compliance audit, RBAC/policy UX, docs polish"
+    }
+  },
+  "appendices": {
+    "mermaid_diagrams": ["docs/overview.md", "docs/channels.md"],
+    "logs": "reports/logs/",
+    "sbom": "not available (tooling gap)"
+  }
+}

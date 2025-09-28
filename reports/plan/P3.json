@@ -1,0 +1,12 @@
+{
+  "stage": "P3",
+  "branch": "odavl/safeops-202509271200",
+  "created": [
+    ".odavl.policy.yml (maybe)",
+    ".odavl/gates.yml (maybe)",
+    ".github/workflows/ci.yml",
+    ".github/workflows/signed-commits.yml",
+    ".github/workflows/secure-ci.yml",
+    ".github/workflows/policy-guard.yml"
+  ]
+}

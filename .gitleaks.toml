@@ -1,0 +1,5 @@
+title = "odavl gitleaks baseline"
+redact = true
+[allowlist]
+description = "common test/dev secrets"
+paths = ["^tests?/","^e2e?/","^fixtures?/"]

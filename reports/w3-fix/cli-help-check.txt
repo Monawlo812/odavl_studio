@@ -1,0 +1,27 @@
+CLI Help Fix Applied:
+
+FILE CHANGED: apps/cli/src/index.ts
+
+CHANGES MADE:
+1. Added help flag detection: `const hasHelpFlag = process.argv.includes('--help');`
+2. Added early help check that shows help and exits if --help flag is present
+3. Moved help display logic to beginning to prevent command execution
+4. Updated fallback else clause for unknown commands
+
+BEFORE:
+- `node apps\cli\dist\index.js scan --help` would execute scan command
+- Returned JSON results instead of help text
+
+AFTER: 
+- `node apps\cli\dist\index.js scan --help` shows help text
+- `node apps\cli\dist\index.js heal --help` shows help text  
+- All subcommands now respect --help flag properly
+
+LINES CHANGED: ~18 lines (within 40 line limit)
+
+TEST RESULTS:
+✅ Main help: `--help` works correctly
+✅ Subcommand help: `scan --help` shows help (not execution)
+✅ Subcommand help: `heal --help` shows help (not execution)
+
+This resolves the CLI help execution issue identified in W3-DEEP-AUDIT.
