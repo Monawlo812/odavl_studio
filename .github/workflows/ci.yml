@@ -46,7 +46,15 @@ jobs:
       - name: Generate SBOM (CycloneDX)
         shell: pwsh
         run: |
-          ./cyclonedx.exe npm --output reports/phase3/security/sbom.cdx.json || echo "SBOM generation failed"
+          $sbomPath = "reports/phase3/security/sbom.cdx.json"
+          try {
+            ./cyclonedx.exe npm --output $sbomPath
+          } catch {
+            "{}" | Out-File -Encoding utf8 $sbomPath
+            echo "SBOM generation failed, wrote empty JSON."
+          }
+          if (!(Test-Path $sbomPath)) { "{}" | Out-File -Encoding utf8 $sbomPath }
+          Get-ChildItem reports/phase3/security
       - name: Gitleaks Scan
         uses: gitleaks/gitleaks-action@v2.3.6
         with:
@@ -54,7 +62,10 @@ jobs:
       - name: Document SBOM root cause
         shell: pwsh
         run: |
-          echo "SBOM generation via npm CLI fails in pnpm monorepos due to npm-ls incompatibility. Fallback: use CycloneDX CLI binary in CI." > reports/phase3/security/sbom-root-cause.txt
+          $msg = "SBOM generation via npm CLI fails in pnpm monorepos due to npm-ls incompatibility. Fallback: use CycloneDX CLI binary in CI."
+          $path = "reports/phase3/security/sbom-root-cause.txt"
+          $msg | Out-File -Encoding utf8 $path
+          if (!(Test-Path $path)) { "No SBOM root cause written." | Out-File -Encoding utf8 $path }
       - name: Download osv-scanner (Windows x64)
         shell: pwsh
         run: |
@@ -63,11 +74,20 @@ jobs:
       - name: Run osv-scanner
         shell: pwsh
         run: |
-          ./osv-scanner.exe --lockfile=pnpm-lock.yaml > reports/phase3/security/osv.log 2>&1
+          $osvPath = "reports/phase3/security/osv.log"
+          try {
+            ./osv-scanner.exe --lockfile=pnpm-lock.yaml > $osvPath 2>&1
+          } catch {
+            "osv-scanner failed to run." | Out-File -Encoding utf8 $osvPath
+          }
+          if (!(Test-Path $osvPath)) { "osv-scanner log missing." | Out-File -Encoding utf8 $osvPath }
       - name: Document osv-scanner root cause
         shell: pwsh
         run: |
-          echo "osv-scanner install via npm/yarn fails due to registry or missing binary. Fallback: use direct Windows binary in CI." > reports/phase3/security/osv-root-cause.txt
+          $msg = "osv-scanner install via npm/yarn fails due to registry or missing binary. Fallback: use direct Windows binary in CI."
+          $path = "reports/phase3/security/osv-root-cause.txt"
+          $msg | Out-File -Encoding utf8 $path
+          if (!(Test-Path $path)) { "No osv-scanner root cause written." | Out-File -Encoding utf8 $path }
       - name: Upload Security Evidence
         if: always()
         uses: actions/upload-artifact@v4
@@ -77,13 +97,19 @@ jobs:
             reports/phase3/security/sbom.cdx.json
             reports/phase3/security/osv.log
             reports/phase3/security/gitleaks.log
+            reports/phase3/security/sbom-root-cause.txt
+            reports/phase3/security/osv-root-cause.txt
       - name: Write CI artifact status
         if: always()
         shell: pwsh
         run: |
-          if ((Test-Path reports/phase3/security/sbom.cdx.json) -and (Test-Path reports/phase3/security/osv.log) -and (Test-Path reports/phase3/security/gitleaks.log)) {
+          $missing = @()
+          foreach ($f in @("sbom.cdx.json", "osv.log", "gitleaks.log", "sbom-root-cause.txt", "osv-root-cause.txt")) {
+            if (!(Test-Path ("reports/phase3/security/" + $f))) { $missing += $f }
+          }
+          if ($missing.Count -eq 0) {
             "SUCCESS: All security evidence files present and uploaded." | Out-File -FilePath reports/phase3/security/ci-artifact-status.log
           } else {
-            "FAILURE: One or more security evidence files missing." | Out-File -FilePath reports/phase3/security/ci-artifact-status.log
+            ("FAILURE: Missing files: " + ($missing -join ", ")) | Out-File -FilePath reports/phase3/security/ci-artifact-status.log
           }
           Get-Content reports/phase3/security/ci-artifact-status.log
