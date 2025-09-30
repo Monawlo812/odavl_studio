@@ -7,6 +7,7 @@ on:
       - "**"
   workflow_dispatch:
 jobs:
+
   build:
     runs-on: ubuntu-latest
     strategy:
@@ -32,15 +33,16 @@ jobs:
       - name: Lint
         run: pnpm -w -r run lint || true
 
-      # --- Security & SBOM Enforcement ---
+  security:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
       - name: Download CycloneDX CLI (Windows x64)
-        if: runner.os == 'Windows'
         shell: pwsh
         run: |
           Invoke-WebRequest -Uri "https://github.com/CycloneDX/cyclonedx-cli/releases/download/v0.29.1/cyclonedx-win-x64.exe" -OutFile cyclonedx.exe
           mkdir -Force reports/phase3/security
       - name: Generate SBOM (CycloneDX)
-        if: runner.os == 'Windows'
         shell: pwsh
         run: |
           ./cyclonedx.exe npm -o reports/phase3/security/sbom.cdx.json || echo "SBOM generation failed"
@@ -53,13 +55,11 @@ jobs:
         run: |
           echo "SBOM generation via npm CLI fails in pnpm monorepos due to npm-ls incompatibility. Fallback: use CycloneDX CLI binary in CI." > reports/phase3/security/sbom-root-cause.txt
       - name: Download osv-scanner (Windows x64)
-        if: runner.os == 'Windows'
         shell: pwsh
         run: |
           Invoke-WebRequest -Uri "https://github.com/google/osv-scanner/releases/download/v2.2.2/osv-scanner_windows_amd64.exe" -OutFile osv-scanner.exe
           mkdir -Force reports/phase3/security
       - name: Run osv-scanner
-        if: runner.os == 'Windows'
         shell: pwsh
         run: |
           ./osv-scanner.exe --lockfile=pnpm-lock.yaml > reports/phase3/security/osv.log 2>&1
@@ -67,11 +67,22 @@ jobs:
         shell: pwsh
         run: |
           echo "osv-scanner install via npm/yarn fails due to registry or missing binary. Fallback: use direct Windows binary in CI." > reports/phase3/security/osv-root-cause.txt
-      - name: Upload Security Artifacts
+      - name: Upload Security Evidence
+        if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: security-artifacts
+          name: security-evidence
           path: |
             reports/phase3/security/sbom.cdx.json
             reports/phase3/security/osv.log
             reports/phase3/security/gitleaks.log
+      - name: Write CI artifact status
+        if: always()
+        shell: pwsh
+        run: |
+          if (Test-Path reports/phase3/security/sbom.cdx.json -and Test-Path reports/phase3/security/osv.log -and Test-Path reports/phase3/security/gitleaks.log) {
+            "SUCCESS: All security evidence files present and uploaded." | Out-File -FilePath reports/phase3/security/ci-artifact-status.log
+          } else {
+            "FAILURE: One or more security evidence files missing." | Out-File -FilePath reports/phase3/security/ci-artifact-status.log
+          }
+          Get-Content reports/phase3/security/ci-artifact-status.log
