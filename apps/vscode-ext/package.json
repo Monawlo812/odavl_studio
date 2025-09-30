@@ -151,11 +151,13 @@
     ]
   },
   "scripts": {
+    
     "build": "tsc -p tsconfig.json",
     "lint": "eslint .",
     "typecheck": "tsc -b --noEmit"
   },
   "devDependencies": {
+    "vitest": "^3.2.4",
     "@types/vscode": "^1.85.0",
     "@types/node": "^20",
     "@types/react": "^18.2.47",

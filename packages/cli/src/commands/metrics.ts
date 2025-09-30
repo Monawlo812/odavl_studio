@@ -1,5 +1,5 @@
 // CLI: odavl metrics serve
-import { serveMetrics } from '../lib/metrics';
+import { serveMetrics } from '../lib/metrics.js';
 
 export function metricsServe() {
   try {

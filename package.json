@@ -10,6 +10,9 @@
     "examples/*"
   ],
   "scripts": {
+    "sbom:generate": "pnpm dlx @cyclonedx/cyclonedx-npm --output-file reports/phase3/security/sbom.cdx.json",
+    "scan:osv": "pnpm dlx osv-scanner --lockfile=pnpm-lock.yaml > reports/phase3/security/osv.log 2>&1",
+    "scan:gitleaks": "pnpm dlx gitleaks detect --redact --report-format=json --report-path=reports/phase3/security/gitleaks.log",
     "build": "turbo run build",
     "lint": "turbo run lint",
     "test": "echo \"no tests\" && exit 0",
@@ -48,7 +51,7 @@
     "odavl:problems:apply": "node scripts/immune/problems/apply.mjs",
     "odavl:problems:escalate": "node scripts/immune/problems/escalate.mjs",
     "odavl:problems:run": "node scripts/immune/problems/run.mjs",
-    "lint:pkgs": "pnpm -r exec eslint \"src/**/*.ts\" \"packages/**/*.ts\" --ext .ts,.tsx",
+  "lint:pkgs": "pnpm -r exec eslint \"src/**/*.ts\" \"apps/*/src/**/*.ts\" \"packages/*/src/**/*.ts\" --ext .ts,.tsx",
     "build:pkgs": "pnpm -r exec tsc -b",
     "lint:loose": "pnpm -r exec eslint \"src/**/*.ts\" \"packages/**/*.ts\" || echo 'lint warnings only'",
     "build:loose": "pnpm -r exec tsc --noEmit --skipLibCheck || echo 'build ok (loose)",
