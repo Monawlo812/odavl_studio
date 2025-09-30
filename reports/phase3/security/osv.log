@@ -1,0 +1,12 @@
+Scanned C:\Users\sabou\odavl_studio\pnpm-lock.yaml file and found 808 packages
+Total 1 package affected by 3 known vulnerabilities (0 Critical, 2 High, 1 Medium, 0 Low, 0 Unknown) from 1 ecosystem.
+3 vulnerabilities can be fixed.
+
+
++-------------------------------------+------+-----------+---------+---------+---------------+----------------+
+| OSV URL                             | CVSS | ECOSYSTEM | PACKAGE | VERSION | FIXED VERSION | SOURCE         |
++-------------------------------------+------+-----------+---------+---------+---------------+----------------+
+| https://osv.dev/GHSA-29mw-wpgm-hmr9 | 5.3  | npm       | lodash  | 4.17.15 | 4.17.21       | pnpm-lock.yaml |
+| https://osv.dev/GHSA-35jh-r3h4-6jhm | 7.2  | npm       | lodash  | 4.17.15 | 4.17.21       | pnpm-lock.yaml |
+| https://osv.dev/GHSA-p6mc-m468-83gw | 7.4  | npm       | lodash  | 4.17.15 | 4.17.19       | pnpm-lock.yaml |
++-------------------------------------+------+-----------+---------+---------+---------------+----------------+
