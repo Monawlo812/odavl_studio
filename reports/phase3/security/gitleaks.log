@@ -1,0 +1,4 @@
+{
+  "fallback": true,
+  "explanation": "All gitleaks install and execution attempts failed.\nCommands tried: pnpm dlx gitleaks, npx gitleaks, direct Windows binary.\nNo compatible gitleaks binary or npm package found for this OS.\nNo secrets scan performed.\n\nEnvironment:\n  OS: Windows\n  Node: (see node -v)\n  pnpm: (see pnpm -v)\n\nSee terminal logs for full error details.\n"
+  "error": "Gitleaks binary could not be downloaded or executed in this environment. Network or GitHub rate-limiting issue suspected. No secrets scan performed. See CI logs for details."
