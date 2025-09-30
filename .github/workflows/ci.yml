@@ -45,7 +45,7 @@ jobs:
       - name: Generate SBOM (CycloneDX)
         shell: pwsh
         run: |
-          ./cyclonedx.exe npm -o reports/phase3/security/sbom.cdx.json || echo "SBOM generation failed"
+          ./cyclonedx.exe npm --output reports/phase3/security/sbom.cdx.json || echo "SBOM generation failed"
       - name: Gitleaks Scan
         uses: gitleaks/gitleaks-action@v2.3.6
         with:
@@ -80,7 +80,7 @@ jobs:
         if: always()
         shell: pwsh
         run: |
-          if (Test-Path reports/phase3/security/sbom.cdx.json -and Test-Path reports/phase3/security/osv.log -and Test-Path reports/phase3/security/gitleaks.log) {
+          if ((Test-Path reports/phase3/security/sbom.cdx.json) -and (Test-Path reports/phase3/security/osv.log) -and (Test-Path reports/phase3/security/gitleaks.log)) {
             "SUCCESS: All security evidence files present and uploaded." | Out-File -FilePath reports/phase3/security/ci-artifact-status.log
           } else {
             "FAILURE: One or more security evidence files missing." | Out-File -FilePath reports/phase3/security/ci-artifact-status.log
