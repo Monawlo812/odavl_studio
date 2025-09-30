@@ -40,6 +40,10 @@
   "allowImportingTsExtensions": true,
   "noEmit": true
   },
+<<<<<<< HEAD
   "include": ["src"]
 >>>>>>> 9fe4bd7 (chore: bootstrap ODAVL Studio repository)
+=======
+  "include": ["src", "commands", "lib", "policy-bridge"]
+>>>>>>> 79b66b0 (fix: remove broken submodule reference for CI security jobs)
 }

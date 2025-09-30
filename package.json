@@ -15,6 +15,7 @@
   ],
   "scripts": {
 <<<<<<< HEAD
+<<<<<<< HEAD
     "sbom:generate": "pnpm list --json --recursive > reports/phase3/security/sbom.cdx.json",
     "scan:osv": "pnpm dlx osv-scanner -r . > reports/phase3/security/osv.log 2>&1",
     "scan:gitleaks": "pnpm dlx gitleaks detect --no-git -s . --redact --report-format=json --report-path=reports/phase3/security/gitleaks.log",
@@ -22,6 +23,11 @@
     "lint": "turbo run lint",
     "test": "pnpm -r exec vitest run --coverage --reporter=default --outputFile=coverage/test.log",
 =======
+=======
+    "sbom:generate": "pnpm dlx @cyclonedx/cyclonedx-npm --output-file reports/phase3/security/sbom.cdx.json",
+    "scan:osv": "pnpm dlx osv-scanner --lockfile=pnpm-lock.yaml > reports/phase3/security/osv.log 2>&1",
+    "scan:gitleaks": "pnpm dlx gitleaks detect --redact --report-format=json --report-path=reports/phase3/security/gitleaks.log",
+>>>>>>> 79b66b0 (fix: remove broken submodule reference for CI security jobs)
     "build": "turbo run build",
     "lint": "turbo run lint",
     "test": "echo \"no tests\" && exit 0",
@@ -62,6 +68,7 @@
     "odavl:problems:escalate": "node scripts/immune/problems/escalate.mjs",
     "odavl:problems:run": "node scripts/immune/problems/run.mjs",
 <<<<<<< HEAD
+<<<<<<< HEAD
     "lint:pkgs": "pnpm -r exec eslint \"src/**/*.ts\" \"apps/*/src/**/*.ts\" \"packages/*/src/**/*.ts\" --ext .ts,.tsx",
     "build:pkgs": "pnpm -r exec tsc -b",
     "lint:loose": "pnpm -r exec eslint \"src/**/*.ts\" \"packages/**/*.ts\" || echo 'lint warnings only'",
@@ -100,6 +107,9 @@
     "gitleaks": "^1.0.0",
 =======
     "lint:pkgs": "pnpm -r exec eslint \"src/**/*.ts\" \"packages/**/*.ts\" --ext .ts,.tsx",
+=======
+  "lint:pkgs": "pnpm -r exec eslint \"src/**/*.ts\" \"apps/*/src/**/*.ts\" \"packages/*/src/**/*.ts\" --ext .ts,.tsx",
+>>>>>>> 79b66b0 (fix: remove broken submodule reference for CI security jobs)
     "build:pkgs": "pnpm -r exec tsc -b",
     "lint:loose": "pnpm -r exec eslint \"src/**/*.ts\" \"packages/**/*.ts\" || echo 'lint warnings only'",
     "build:loose": "pnpm -r exec tsc --noEmit --skipLibCheck || echo 'build ok (loose)",

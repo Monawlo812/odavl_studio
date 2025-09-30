@@ -177,6 +177,7 @@
     ]
   },
   "scripts": {
+    
     "build": "tsc -p tsconfig.json",
     "lint": "eslint .",
 <<<<<<< HEAD
@@ -189,7 +190,11 @@
     "typecheck": "tsc -b --noEmit"
   },
   "devDependencies": {
+<<<<<<< HEAD
 >>>>>>> 9fe4bd7 (chore: bootstrap ODAVL Studio repository)
+=======
+    "vitest": "^3.2.4",
+>>>>>>> 79b66b0 (fix: remove broken submodule reference for CI security jobs)
     "@types/vscode": "^1.85.0",
     "@types/node": "^20",
     "@types/react": "^18.2.47",

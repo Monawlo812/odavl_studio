@@ -18,11 +18,16 @@
     "prepack": "pnpm run build",
     "lint": "eslint .",
 <<<<<<< HEAD
+<<<<<<< HEAD
     "typecheck": "tsc -b --noEmit",
     "test": "vitest run --coverage --reporter=default --outputFile=../../coverage/cli-test.log"
 =======
     "typecheck": "tsc -b --noEmit"
 >>>>>>> 9fe4bd7 (chore: bootstrap ODAVL Studio repository)
+=======
+    "typecheck": "tsc -b --noEmit",
+    "test": "vitest run --coverage --reporter=default --outputFile=../../reports/phase2/test.log"
+>>>>>>> 79b66b0 (fix: remove broken submodule reference for CI security jobs)
   },
   "dependencies": {
     "@odavl/codemods": "workspace:*",
@@ -30,11 +35,16 @@
   },
   "devDependencies": {
 <<<<<<< HEAD
+<<<<<<< HEAD
     "@types/node": "^20",
     "vitest": "^3.2.4"
 =======
     "@types/node": "^20"
 >>>>>>> 9fe4bd7 (chore: bootstrap ODAVL Studio repository)
+=======
+    "@types/node": "^20",
+    "vitest": "^3.2.4"
+>>>>>>> 79b66b0 (fix: remove broken submodule reference for CI security jobs)
   },
   "packageManager": "pnpm@10.17.0"
 }

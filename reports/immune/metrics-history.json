@@ -13,6 +13,9 @@
     "antibody_applied": true,
     "escalation": true
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 79b66b0 (fix: remove broken submodule reference for CI security jobs)
   },
   {
     "time": "2025-09-30T14:49:05.872Z",
@@ -27,7 +30,10 @@
     "heal_lines": 0,
     "antibody_applied": true,
     "escalation": true
+<<<<<<< HEAD
 =======
 >>>>>>> 9fe4bd7 (chore: bootstrap ODAVL Studio repository)
+=======
+>>>>>>> 79b66b0 (fix: remove broken submodule reference for CI security jobs)
   }
 ]

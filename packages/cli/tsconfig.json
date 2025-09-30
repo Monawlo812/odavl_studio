@@ -2,6 +2,7 @@
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
 <<<<<<< HEAD
+<<<<<<< HEAD
   "outDir": "dist",
   "rootDir": ".",
     "declaration": true,
@@ -11,14 +12,15 @@
   },
   "include": ["src/**/*", "__tests__/**/*"],
 =======
+=======
+    
+>>>>>>> 79b66b0 (fix: remove broken submodule reference for CI security jobs)
     "outDir": "dist",
     "rootDir": "src",
     "declaration": true,
     "declarationMap": true,
     "baseUrl": ".",
-    "paths": {
-      "@odavl/policy": ["../../packages/policy/dist/index.js", "../../packages/policy/dist/index.d.ts"]
-    }
+    
   },
   "include": ["src/**/*"],
 >>>>>>> 9fe4bd7 (chore: bootstrap ODAVL Studio repository)

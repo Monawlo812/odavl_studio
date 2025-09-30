@@ -7,10 +7,14 @@
   "types": "dist/index.d.ts",
   "exports": {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 79b66b0 (fix: remove broken submodule reference for CI security jobs)
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
     }
+<<<<<<< HEAD
   },
   "scripts": {
 <<<<<<< HEAD
@@ -32,16 +36,29 @@
   "lint": "eslint . --ignore-pattern dist --ignore-pattern __tests__",
   "typecheck": "tsc -b --noEmit"
 >>>>>>> 9fe4bd7 (chore: bootstrap ODAVL Studio repository)
+=======
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "lint": "eslint . --ignore-pattern dist --ignore-pattern __tests__",
+    "typecheck": "tsc -b --noEmit",
+    "test": "vitest run --coverage --reporter=default --outputFile=../../reports/phase2/test.log"
+>>>>>>> 79b66b0 (fix: remove broken submodule reference for CI security jobs)
   },
   "devDependencies": {
     "@types/js-yaml": "^4.0.9",
     "@types/node": "^20.0.0",
+<<<<<<< HEAD
 <<<<<<< HEAD
     "typescript": "^5.0.0",
     "vitest": "^3.2.4"
 =======
     "typescript": "^5.0.0"
 >>>>>>> 9fe4bd7 (chore: bootstrap ODAVL Studio repository)
+=======
+    "typescript": "^5.0.0",
+    "vitest": "^3.2.4"
+>>>>>>> 79b66b0 (fix: remove broken submodule reference for CI security jobs)
   },
   "packageManager": "pnpm@10.17.0"
 }

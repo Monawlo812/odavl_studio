@@ -3,10 +3,13 @@
 // Prometheus metrics for ODAVL CLI
 import client from 'prom-client';
 import express from 'express';
+<<<<<<< HEAD
 =======
 // Prometheus metrics for ODAVL CLI
 import client from 'prom-client';
 >>>>>>> 9fe4bd7 (chore: bootstrap ODAVL Studio repository)
+=======
+>>>>>>> 79b66b0 (fix: remove broken submodule reference for CI security jobs)
 
 export const eslintWarnings = new client.Gauge({ name: 'eslint_warnings', help: 'ESLint warnings' });
 export const typeErrors = new client.Gauge({ name: 'type_errors', help: 'Type errors' });
@@ -18,6 +21,7 @@ export const rollbacks = new client.Counter({ name: 'rollbacks', help: 'Rollback
 export const shadowFailRate = new client.Gauge({ name: 'shadow_fail_rate', help: 'Shadow CI fail rate' });
 export const ciMinutesUsed = new client.Gauge({ name: 'ci_minutes_used', help: 'CI minutes used' });
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 
 export function serveMetrics() {
@@ -32,13 +36,21 @@ export function serveMetrics() {
 
 // Additional script commands
 =======
+=======
+
+>>>>>>> 79b66b0 (fix: remove broken submodule reference for CI security jobs)
 export function serveMetrics() {
-  const express = require('express');
   const app = express();
-  app.get('/metrics', async (_req, res) => {
+  app.get('/metrics', async function(req, res) {
     res.set('Content-Type', client.register.contentType);
     res.end(await client.register.metrics());
   });
+  // eslint-disable-next-line no-undef
   app.listen(9464, () => console.log('Prometheus metrics on :9464/metrics'));
 }
+<<<<<<< HEAD
 >>>>>>> 9fe4bd7 (chore: bootstrap ODAVL Studio repository)
+=======
+
+// Additional script commands
+>>>>>>> 79b66b0 (fix: remove broken submodule reference for CI security jobs)
