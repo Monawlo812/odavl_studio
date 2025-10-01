@@ -21,10 +21,16 @@ export function computeRiskTokens(i: TokensInput) {
   return { tokens, base, k: { k1, k2, k3, k4 }, input: i };
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 86b1346 (H3: Safe delete (quarantine) of LEGACY and NOISE files with full evidence. See reports/hygiene/2025-10-01/run-1/ for audit trail.)
 
 // Minimal tokenize implementation for test
 export function tokenize(str: string): string[] {
   return str.split(/\s+/).filter(Boolean);
 }
+<<<<<<< HEAD
 =======
 >>>>>>> 9fe4bd7 (chore: bootstrap ODAVL Studio repository)
+=======
+>>>>>>> 86b1346 (H3: Safe delete (quarantine) of LEGACY and NOISE files with full evidence. See reports/hygiene/2025-10-01/run-1/ for audit trail.)

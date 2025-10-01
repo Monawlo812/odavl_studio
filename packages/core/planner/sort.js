@@ -20,9 +20,15 @@ export function sortWithTokensV2(items, ctx) {
     });
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 86b1346 (H3: Safe delete (quarantine) of LEGACY and NOISE files with full evidence. See reports/hygiene/2025-10-01/run-1/ for audit trail.)
 // Minimal sort implementation for test
 export function sort(arr) {
     return [...arr].sort((a, b) => a - b);
 }
+<<<<<<< HEAD
 =======
 >>>>>>> 9fe4bd7 (chore: bootstrap ODAVL Studio repository)
+=======
+>>>>>>> 86b1346 (H3: Safe delete (quarantine) of LEGACY and NOISE files with full evidence. See reports/hygiene/2025-10-01/run-1/ for audit trail.)

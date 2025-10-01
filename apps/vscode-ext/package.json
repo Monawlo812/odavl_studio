@@ -177,10 +177,12 @@
     ]
   },
   "scripts": {
-    
     "build": "tsc -p tsconfig.json",
     "lint": "eslint .",
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 86b1346 (H3: Safe delete (quarantine) of LEGACY and NOISE files with full evidence. See reports/hygiene/2025-10-01/run-1/ for audit trail.)
     "typecheck": "tsc -b --noEmit",
     "test": "vitest run --coverage --reporter=default --outputFile=../../coverage/vscode-ext-test.log"
   },

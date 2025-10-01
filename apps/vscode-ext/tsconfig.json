@@ -7,6 +7,7 @@
     "skipLibCheck": true,
     "outDir": "dist",
 <<<<<<< HEAD
+<<<<<<< HEAD
   // "rootDir": "src",
     "esModuleInterop": true,
     "lib": ["ES2020"],
@@ -16,11 +17,18 @@
   "include": ["src", "__tests__"]
 =======
     "rootDir": "src",
+=======
+  // "rootDir": "src",
+>>>>>>> 86b1346 (H3: Safe delete (quarantine) of LEGACY and NOISE files with full evidence. See reports/hygiene/2025-10-01/run-1/ for audit trail.)
     "esModuleInterop": true,
     "lib": ["ES2020"],
-    "types": ["node", "vscode"],
+  "types": ["node", "vscode", "vitest/globals"],
     "jsx": "react-jsx"
   },
+<<<<<<< HEAD
   "include": ["src"]
 >>>>>>> 9fe4bd7 (chore: bootstrap ODAVL Studio repository)
+=======
+  "include": ["src", "__tests__"]
+>>>>>>> 86b1346 (H3: Safe delete (quarantine) of LEGACY and NOISE files with full evidence. See reports/hygiene/2025-10-01/run-1/ for audit trail.)
 }
