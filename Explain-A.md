@@ -1,3 +1,4 @@
+ARCHIVED — Superseded by reports/final/AUDIT_BOOK.md
 # Explain-A.md — Stage A: Policies, Gates, Scripts, PR Template
 
 ## What changed

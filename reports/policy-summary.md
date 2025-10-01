@@ -1,3 +1,4 @@
+ARCHIVED — Superseded by ../final/SECURITY_ALL_IN_ONE.md
 # Policy Summary
 
 ## Lockfile Hygiene

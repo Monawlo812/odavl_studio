@@ -1,3 +1,4 @@
+ARCHIVED — Superseded by reports/final/AUDIT_BOOK.md
 # Explain-C.md — Stage C: CLI Skeleton
 
 ## What changed

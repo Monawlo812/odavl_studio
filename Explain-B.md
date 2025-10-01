@@ -1,3 +1,4 @@
+ARCHIVED — Superseded by reports/final/AUDIT_BOOK.md
 # Explain-B.md — Stage B: Shadow CI (GitHub Actions)
 
 ## What changed

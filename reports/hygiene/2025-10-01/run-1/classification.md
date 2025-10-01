@@ -1,3 +1,4 @@
+ARCHIVED — Superseded by ../../../final/HYGIENE_ALL_IN_ONE.md
 # H1: File Inventory & Classification
 
 ## Classification Buckets

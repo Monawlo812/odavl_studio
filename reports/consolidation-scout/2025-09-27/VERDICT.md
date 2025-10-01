@@ -1,3 +1,4 @@
+ARCHIVED — Superseded by ../../final/AUDIT_BOOK.md
 # ODAVL Consolidation VERDICT
 
 **Date:** 2025-09-27

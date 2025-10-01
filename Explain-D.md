@@ -1,3 +1,4 @@
+ARCHIVED — Superseded by reports/final/AUDIT_BOOK.md
 # Explain-D.md — Stage D: VS Code Extension Minimal Panel
 
 ## What changed

@@ -1,3 +1,4 @@
+ARCHIVED — Superseded by reports/final/AUDIT_BOOK.md
 # Stage F – PR Evidence/Attestation Integration
 
 **What was added:**
