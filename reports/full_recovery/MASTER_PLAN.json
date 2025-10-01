@@ -1,0 +1,124 @@
+{
+  "phases": [
+    {
+      "name": "Build, Type, Lint Baseline",
+      "goal": "Ensure all packages build, typecheck, and lint with zero errors.",
+      "scope": "All apps/packages except protected paths.",
+      "actions": [
+        "Fix lint:pkgs and build:pkgs patterns to match real files.",
+        "Remove or repair broken scripts referencing missing files."
+      ],
+      "evidence": [
+        "reports/fix/phase5/build.log",
+        "reports/fix/phase5/typecheck.log",
+        "reports/fix/phase5/lint.log",
+        "reports/fix/phase5/lint-pkgs.log",
+        "reports/fix/phase5/build-pkgs.log"
+      ],
+      "risks": ["Hidden config drift", "missing files"],
+      "acceptance": "All logs show 0 errors, all scripts run without failure."
+    },
+    {
+      "name": "Test Baseline",
+      "goal": "Establish a real test baseline (even minimal smoke tests).",
+      "scope": "All apps/packages with testable code.",
+      "actions": [
+        "Add at least one real test per package (skip protected paths).",
+        "Update test script to run real tests (e.g., turbo run test or pnpm -r test)."
+      ],
+      "evidence": [
+        "reports/fix/phase5/test.log",
+        "new test files",
+        "passing CI"
+      ],
+      "risks": ["No test infra", "test flakiness"],
+      "acceptance": "test.log shows real tests run and pass."
+    },
+    {
+      "name": "Security & SBOM",
+      "goal": "Enforce security scanning and SBOM generation in CI/CD.",
+      "scope": "Root and all packages.",
+      "actions": [
+        "Install and configure osv-scanner, gitleaks, and CycloneDX tools.",
+        "Add working scripts and CI steps for each."
+      ],
+      "evidence": [
+        "reports/fix/phase5/osv.log",
+        "reports/fix/phase5/gitleaks.log",
+        "reports/fix/phase5/sbom.log",
+        "CI artifacts"
+      ],
+      "risks": ["Tool install issues", "false positives"],
+      "acceptance": "Security logs show scans run and pass, SBOM generated."
+    },
+    {
+      "name": "CI/CD & Governance",
+      "goal": "CI/CD enforces build, lint, typecheck, test, and security as required checks.",
+      "scope": ".github/workflows/ci.yml, CODEOWNERS, policy configs.",
+      "actions": [
+        "Update CI to run all required checks and fail on error.",
+        "Fix or remove broken immune/governance scripts."
+      ],
+      "evidence": [
+        "reports/fix/phase5/ci-status.log",
+        "workflow runs",
+        "CODEOWNERS",
+        "policy logs"
+      ],
+      "risks": ["CI config drift", "missing permissions"],
+      "acceptance": "CI passes only if all checks pass; CODEOWNERS and policy validated."
+    },
+    {
+      "name": "Observability & Docs",
+      "goal": "Bundle log, metrics, and docs are up-to-date and validated.",
+      "scope": "Root, docs, examples, metrics scripts.",
+      "actions": [
+        "Add/fix bundle:log script; ensure bundle log is generated.",
+        "Validate and update README, docs, and examples."
+      ],
+      "evidence": [
+        "reports/fix/phase5/bundle.log",
+        "updated docs",
+        "metrics logs"
+      ],
+      "risks": ["Outdated docs", "missing scripts"],
+      "acceptance": "All evidence present, docs accurate, bundle log stable."
+    },
+    {
+      "name": "Future-Proofing",
+      "goal": "Multi-platform CI, Node/TS compatibility, dependency automation.",
+      "scope": "CI config, Renovate/Dependabot, chaos/canary jobs.",
+      "actions": [
+        "Enable Linux+Windows CI, Node 22, latest TS.",
+        "Re-enable Renovate/Dependabot with safe policies.",
+        "Add chaos/canary job for resilience."
+      ],
+      "evidence": [
+        "CI matrix",
+        "config files",
+        "canary logs"
+      ],
+      "risks": ["Platform-specific bugs", "dependency noise"],
+      "acceptance": "CI matrix green, canary job runs, dependency PRs flow."
+    }
+  ],
+  "definition_of_done": {
+    "build": "PASS",
+    "typecheck": "0 errors",
+    "lint": "0 errors",
+    "tests": "baseline running and passing",
+    "ci_cd": "all workflows green, required checks enforced",
+    "sbom": "present and up-to-date",
+    "security_scans": "clean",
+    "bundle_log": "stable",
+    "docs": "updated and validated",
+    "evidence": "all under reports/"
+  },
+  "future_proofing": [
+    "Schedule regular evidence sweeps and audits.",
+    "Keep all scripts and CI configs in sync with reality.",
+    "Automate dependency and security updates.",
+    "Maintain a real test baseline and expand coverage.",
+    "Document all changes and store evidence for every wave."
+  ]
+}

@@ -15,3 +15,8 @@
 # Infra & examples
 /infra/              @odavl-maintainers
 /examples/           @odavl-maintainers
+
+# Phase 4: Critical path coverage
+/security/           @odavl-maintainers
+*.spec.*             @odavl-maintainers
+/public-api/         @odavl-maintainers

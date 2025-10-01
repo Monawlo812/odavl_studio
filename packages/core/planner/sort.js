@@ -19,3 +19,7 @@ export function sortWithTokensV2(items, ctx) {
         return sb - sa;
     });
 }
+// Minimal sort implementation for test
+export function sort(arr) {
+    return [...arr].sort((a, b) => a - b);
+}

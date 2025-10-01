@@ -40,3 +40,8 @@ export function sortWithTokensV2(
     return sb - sa;
   });
 }
+
+// Minimal sort implementation for test
+export function sort(arr: number[]): number[] {
+  return [...arr].sort((a, b) => a - b);
+}

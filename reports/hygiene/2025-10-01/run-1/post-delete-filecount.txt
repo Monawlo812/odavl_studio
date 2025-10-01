@@ -1,0 +1,9 @@
+
+Count             : 34619
+Average           : 
+Sum               : 
+Maximum           : 
+Minimum           : 
+StandardDeviation : 
+Property          : 
+

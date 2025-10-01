@@ -1,0 +1,9 @@
+Patched CLI imports for ESM compatibility (2025-09-30):
+
+packages/cli/src/commands/metrics.ts:
+- import { serveMetrics } from '../lib/metrics';
++ import { serveMetrics } from '../lib/metrics.js';
+
+packages/cli/src/commands/policy-org.ts:
+- import { validateOrgPolicy } from '../policy-bridge';
++ import { validateOrgPolicy } from '../policy-bridge.js';

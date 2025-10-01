@@ -1,6 +1,5 @@
 // --- ODAVL CLI: Additional imports for codemods and governor logic ---
-import { esmHygiene } from "@odavl/codemods/esmHygiene.ts";
-import { depsPatchMinor } from "@odavl/codemods/depsPatchMinor.ts";
+import { esmHygiene, depsPatchMinor } from "@odavl/codemods";
 import { readGovernorConfig, currentUsage, decide } from "@odavl/policy";
 
 // #!/usr/bin/env node

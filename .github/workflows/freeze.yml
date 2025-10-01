@@ -1,4 +1,21 @@
-name: Freeze Audit
+name: Freeze Pipeline
+on:
+  workflow_dispatch:
+jobs:
+  freeze:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Lock Dependencies
+        run: |
+          cp pnpm-lock.yaml reports/evaluations/2025-10-01/governance/pnpm-lock.freeze.yaml
+          cp package.json reports/evaluations/2025-10-01/governance/package.freeze.json
+      - name: Archive Freeze Evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: freeze-evidence
+          path: reports/evaluations/2025-10-01/governance/*.freeze.*name: Freeze Audit
 on:
   workflow_dispatch:
   pull_request:

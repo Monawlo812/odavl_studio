@@ -12,12 +12,13 @@
     "types": ["node"],
     "baseUrl": "./",
     "paths": {
-      "@odavl/codemods/*": ["../../packages/codemods/src/*"],
+      "@odavl/codemods/*": ["../../packages/codemods/dist/*"],
+      "@odavl/codemods": ["../../packages/codemods/dist/index.js"],
       "@odavl/policy": ["../../packages/policy/dist/index.d.ts"],
       "@odavl/policy/*": ["../../packages/policy/dist/index.d.ts"]
     },
-  "allowImportingTsExtensions": true,
-  "noEmit": true
+  
+  "noEmit": false
   },
   "include": ["src", "commands", "lib", "policy-bridge"]
 }

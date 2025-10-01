@@ -18,7 +18,7 @@
     "prepack": "pnpm run build",
     "lint": "eslint .",
     "typecheck": "tsc -b --noEmit",
-    "test": "vitest run --coverage --reporter=default --outputFile=../../reports/phase2/test.log"
+    "test": "vitest run --coverage --reporter=default --outputFile=../../coverage/cli-test.log"
   },
   "dependencies": {
     "@odavl/codemods": "workspace:*",

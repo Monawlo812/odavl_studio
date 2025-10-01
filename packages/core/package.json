@@ -6,6 +6,7 @@
   "packageManager": "pnpm@10.17.0",
   "scripts": {
     "lint": "eslint .",
-    "typecheck": "tsc -b --noEmit"
+    "typecheck": "tsc -b --noEmit",
+    "test": "vitest run --coverage --reporter=default --outputFile=../../coverage/core-test.log"
   }
 }

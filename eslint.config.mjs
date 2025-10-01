@@ -50,7 +50,15 @@ const orchestratorTestOverride = {
   }
 };
 const globalIgnores = {
-  ignores: ["**/node_modules/**","**/dist/**","**/coverage/**","reports/**"]
+  ignores: [
+    "**/node_modules/**",
+    "**/dist/**",
+    "**/coverage/**",
+    "reports/**",
+    // Migrated from .eslintignore in golden-repo
+    "examples/golden-repo/jest.config.js",
+    "examples/golden-repo/jest.config.cjs"
+  ]
 };
 /* --- END orchestrator ESLint scope --- */
 

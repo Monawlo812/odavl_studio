@@ -1,7 +1,8 @@
 // CLI: odavl demo
+/* global process, console */
 import { execSync } from 'child_process';
-import { enforceRbac, type RbacRole } from '@odavl/policy';
-const USER_ROLE = (process.env.ODAVL_ROLE || 'admin') as RbacRole;
+import { enforceRbac } from '@odavl/policy';
+const USER_ROLE = process.env.ODAVL_ROLE || 'admin';
 
 export function runDemo() {
   if (!enforceRbac('scan.run', USER_ROLE)) {
