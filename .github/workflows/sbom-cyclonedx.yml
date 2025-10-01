@@ -1,0 +1,36 @@
+name: Generate SBOM (CycloneDX)
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  sbom:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: |
+          corepack enable
+          pnpm install --frozen-lockfile
+
+      - name: Install CycloneDX BOM CLI
+        run: pnpm add -Dw @cyclonedx/bom
+
+      - name: Generate SBOM
+        run: |
+          mkdir -p reports/evaluations/$(date +'%Y-%m-%d')/security
+          npx cyclonedx-bom -o reports/evaluations/$(date +'%Y-%m-%d')/security/sbom.cdx.json
+
+      - name: Archive SBOM as Evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: sbom-evidence-$(date +'%Y-%m-%d')
+          path: reports/evaluations/$(date +'%Y-%m-%d')/security/sbom.cdx.json
