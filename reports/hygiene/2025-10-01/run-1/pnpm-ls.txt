@@ -1,0 +1,1319 @@
+Legend: production dependency, optional only, dev only
+
+odavl-studio@0.5.0 C:\Users\sabou\odavl_studio (PRIVATE)
+
+dependencies:
+@eslint/js 9.36.0
+js-yaml 4.1.0
+ÔööÔöÇÔöÇ argparse 2.0.1
+
+devDependencies:
+@cyclonedx/bom 4.1.2
+Ôö£ÔöÇÔö¼ @cyclonedx/cyclonedx-npm 4.0.3
+Ôöé Ôö£ÔöÇÔöÇ @cyclonedx/cyclonedx-library 9.0.0
+Ôöé Ôö£ÔöÇÔöÇ ajv 8.17.1
+Ôöé Ôö£ÔöÇÔöÇ ajv-formats 3.0.1
+Ôöé Ôö£ÔöÇÔöÇ ajv-formats-draft2019 1.6.1
+Ôöé Ôö£ÔöÇÔöÇ commander 14.0.1
+Ôöé Ôö£ÔöÇÔöÇ libxmljs2 0.37.0
+Ôöé Ôö£ÔöÇÔöÇ normalize-package-data 8.0.0
+Ôöé ÔööÔöÇÔöÇ xmlbuilder2 3.1.1
+ÔööÔöÇÔöÇ @cyclonedx/yarn-plugin-cyclonedx 3.1.2
+@cyclonedx/cyclonedx-library 9.0.0
+Ôö£ÔöÇÔö¼ ajv 8.17.1 peer
+Ôöé Ôö£ÔöÇÔöÇ fast-deep-equal 3.1.3
+Ôöé Ôö£ÔöÇÔöÇ fast-uri 3.1.0
+Ôöé Ôö£ÔöÇÔöÇ json-schema-traverse 1.0.0
+Ôöé ÔööÔöÇÔöÇ require-from-string 2.0.2
+Ôö£ÔöÇÔö¼ ajv-formats 3.0.1 peer
+Ôöé ÔööÔöÇÔöÇ ajv 8.17.1 peer
+Ôö£ÔöÇÔö¼ ajv-formats-draft2019 1.6.1 peer
+Ôöé Ôö£ÔöÇÔöÇ ajv 8.17.1 peer
+Ôöé Ôö£ÔöÇÔöÇ punycode 2.3.1
+Ôöé Ôö£ÔöÇÔöÇ schemes 1.4.0
+Ôöé Ôö£ÔöÇÔöÇ smtp-address-parser 1.1.0
+Ôöé ÔööÔöÇÔöÇ uri-js 4.4.1
+Ôö£ÔöÇÔö¼ libxmljs2 0.37.0 peer
+Ôöé Ôö£ÔöÇÔöÇ bindings 1.5.0
+Ôöé Ôö£ÔöÇÔöÇ nan 2.22.2
+Ôöé Ôö£ÔöÇÔöÇ node-gyp 11.4.2
+Ôöé ÔööÔöÇÔöÇ prebuild-install 7.1.3
+Ôö£ÔöÇÔöÇ packageurl-js 2.0.1
+Ôö£ÔöÇÔö¼ spdx-expression-parse 4.0.0
+Ôöé Ôö£ÔöÇÔöÇ spdx-exceptions 2.5.0
+Ôöé ÔööÔöÇÔöÇ spdx-license-ids 3.0.22
+ÔööÔöÇÔö¼ xmlbuilder2 3.1.1 peer
+  Ôö£ÔöÇÔöÇ @oozcitak/dom 1.15.10
+  Ôö£ÔöÇÔöÇ @oozcitak/infra 1.0.8
+  Ôö£ÔöÇÔöÇ @oozcitak/util 8.3.8
+  ÔööÔöÇÔöÇ js-yaml 3.14.1
+@cyclonedx/cyclonedx-npm 4.0.3
+Ôö£ÔöÇÔö¼ @cyclonedx/cyclonedx-library 9.0.0
+Ôöé Ôö£ÔöÇÔöÇ ajv 8.17.1 peer
+Ôöé Ôö£ÔöÇÔöÇ ajv-formats 3.0.1 peer
+Ôöé Ôö£ÔöÇÔöÇ ajv-formats-draft2019 1.6.1 peer
+Ôöé Ôö£ÔöÇÔöÇ libxmljs2 0.37.0 peer
+Ôöé Ôö£ÔöÇÔöÇ packageurl-js 2.0.1
+Ôöé Ôö£ÔöÇÔöÇ spdx-expression-parse 4.0.0
+Ôöé ÔööÔöÇÔöÇ xmlbuilder2 3.1.1 peer
+Ôö£ÔöÇÔö¼ ajv 8.17.1
+Ôöé Ôö£ÔöÇÔöÇ fast-deep-equal 3.1.3
+Ôöé Ôö£ÔöÇÔöÇ fast-uri 3.1.0
+Ôöé Ôö£ÔöÇÔöÇ json-schema-traverse 1.0.0
+Ôöé ÔööÔöÇÔöÇ require-from-string 2.0.2
+Ôö£ÔöÇÔö¼ ajv-formats 3.0.1
+Ôöé ÔööÔöÇÔöÇ ajv 8.17.1 peer
+Ôö£ÔöÇÔö¼ ajv-formats-draft2019 1.6.1
+Ôöé Ôö£ÔöÇÔöÇ ajv 8.17.1 peer
+Ôöé Ôö£ÔöÇÔöÇ punycode 2.3.1
+Ôöé Ôö£ÔöÇÔöÇ schemes 1.4.0
+Ôöé Ôö£ÔöÇÔöÇ smtp-address-parser 1.1.0
+Ôöé ÔööÔöÇÔöÇ uri-js 4.4.1
+Ôö£ÔöÇÔöÇ commander 14.0.1
+Ôö£ÔöÇÔö¼ libxmljs2 0.37.0
+Ôöé Ôö£ÔöÇÔöÇ bindings 1.5.0
+Ôöé Ôö£ÔöÇÔöÇ nan 2.22.2
+Ôöé Ôö£ÔöÇÔöÇ node-gyp 11.4.2
+Ôöé ÔööÔöÇÔöÇ prebuild-install 7.1.3
+Ôö£ÔöÇÔö¼ normalize-package-data 8.0.0
+Ôöé Ôö£ÔöÇÔöÇ hosted-git-info 9.0.0
+Ôöé Ôö£ÔöÇÔöÇ semver 7.7.2
+Ôöé ÔööÔöÇÔöÇ validate-npm-package-license 3.0.4
+ÔööÔöÇÔö¼ xmlbuilder2 3.1.1
+  Ôö£ÔöÇÔöÇ @oozcitak/dom 1.15.10
+  Ôö£ÔöÇÔöÇ @oozcitak/infra 1.0.8
+  Ôö£ÔöÇÔöÇ @oozcitak/util 8.3.8
+  ÔööÔöÇÔöÇ js-yaml 3.14.1
+@size-limit/preset-app 11.2.0
+Ôö£ÔöÇÔö¼ @size-limit/file 11.2.0
+Ôöé ÔööÔöÇÔöÇ size-limit 11.2.0 peer
+Ôö£ÔöÇÔö¼ @size-limit/time 11.2.0
+Ôöé Ôö£ÔöÇÔöÇ estimo 3.0.5
+Ôöé ÔööÔöÇÔöÇ size-limit 11.2.0 peer
+ÔööÔöÇÔö¼ size-limit 11.2.0 peer
+  Ôö£ÔöÇÔöÇ bytes-iec 3.1.1
+  Ôö£ÔöÇÔöÇ chokidar 4.0.3
+  Ôö£ÔöÇÔöÇ jiti 2.6.1
+  Ôö£ÔöÇÔöÇ lilconfig 3.1.3
+  Ôö£ÔöÇÔöÇ nanospinner 1.2.2
+  Ôö£ÔöÇÔöÇ picocolors 1.1.1
+  ÔööÔöÇÔöÇ tinyglobby 0.2.15
+@types/jest 30.0.0
+Ôö£ÔöÇÔö¼ expect 30.2.0
+Ôöé Ôö£ÔöÇÔöÇ @jest/expect-utils 30.2.0
+Ôöé Ôö£ÔöÇÔöÇ @jest/get-type 30.1.0
+Ôöé Ôö£ÔöÇÔöÇ jest-matcher-utils 30.2.0
+Ôöé Ôö£ÔöÇÔöÇ jest-message-util 30.2.0
+Ôöé Ôö£ÔöÇÔöÇ jest-mock 30.2.0
+Ôöé ÔööÔöÇÔöÇ jest-util 30.2.0
+ÔööÔöÇÔö¼ pretty-format 30.2.0
+  Ôö£ÔöÇÔöÇ @jest/schemas 30.0.5
+  Ôö£ÔöÇÔöÇ ansi-styles 5.2.0
+  ÔööÔöÇÔöÇ react-is 18.3.1
+@types/node 24.6.1
+ÔööÔöÇÔöÇ undici-types 7.13.0
+@typescript-eslint/eslint-plugin 8.45.0
+Ôö£ÔöÇÔöÇ @eslint-community/regexpp 4.12.1
+Ôö£ÔöÇÔö¼ @typescript-eslint/parser 8.45.0 peer
+Ôöé Ôö£ÔöÇÔöÇ @typescript-eslint/scope-manager 8.45.0
+Ôöé Ôö£ÔöÇÔöÇ @typescript-eslint/types 8.45.0
+Ôöé Ôö£ÔöÇÔöÇ @typescript-eslint/typescript-estree 8.45.0
+Ôöé Ôö£ÔöÇÔöÇ @typescript-eslint/visitor-keys 8.45.0
+Ôöé Ôö£ÔöÇÔöÇ debug 4.4.3
+Ôöé Ôö£ÔöÇÔöÇ eslint 9.36.0 peer
+Ôöé ÔööÔöÇÔöÇ typescript 5.9.3 peer
+Ôö£ÔöÇÔö¼ @typescript-eslint/scope-manager 8.45.0
+Ôöé Ôö£ÔöÇÔöÇ @typescript-eslint/types 8.45.0
+Ôöé ÔööÔöÇÔöÇ @typescript-eslint/visitor-keys 8.45.0
+Ôö£ÔöÇÔö¼ @typescript-eslint/type-utils 8.45.0
+Ôöé Ôö£ÔöÇÔöÇ @typescript-eslint/types 8.45.0
+Ôöé Ôö£ÔöÇÔöÇ @typescript-eslint/typescript-estree 8.45.0
+Ôöé Ôö£ÔöÇÔöÇ @typescript-eslint/utils 8.45.0
+Ôöé Ôö£ÔöÇÔöÇ debug 4.4.3
+Ôöé Ôö£ÔöÇÔöÇ eslint 9.36.0 peer
+Ôöé Ôö£ÔöÇÔöÇ ts-api-utils 2.1.0
+Ôöé ÔööÔöÇÔöÇ typescript 5.9.3 peer
+Ôö£ÔöÇÔö¼ @typescript-eslint/utils 8.45.0
+Ôöé Ôö£ÔöÇÔöÇ @eslint-community/eslint-utils 4.9.0
+Ôöé Ôö£ÔöÇÔöÇ @typescript-eslint/scope-manager 8.45.0
+Ôöé Ôö£ÔöÇÔöÇ @typescript-eslint/types 8.45.0
+Ôöé Ôö£ÔöÇÔöÇ @typescript-eslint/typescript-estree 8.45.0
+Ôöé Ôö£ÔöÇÔöÇ eslint 9.36.0 peer
+Ôöé ÔööÔöÇÔöÇ typescript 5.9.3 peer
+Ôö£ÔöÇÔö¼ @typescript-eslint/visitor-keys 8.45.0
+Ôöé Ôö£ÔöÇÔöÇ @typescript-eslint/types 8.45.0
+Ôöé ÔööÔöÇÔöÇ eslint-visitor-keys 4.2.1
+Ôö£ÔöÇÔö¼ eslint 9.36.0 peer
+Ôöé Ôö£ÔöÇÔöÇ @eslint-community/eslint-utils 4.9.0
+Ôöé Ôö£ÔöÇÔöÇ @eslint-community/regexpp 4.12.1
+Ôöé Ôö£ÔöÇÔöÇ @eslint/config-array 0.21.0
+Ôöé Ôö£ÔöÇÔöÇ @eslint/config-helpers 0.3.1
+Ôöé Ôö£ÔöÇÔöÇ @eslint/core 0.15.2
+Ôöé Ôö£ÔöÇÔöÇ @eslint/eslintrc 3.3.1
+Ôöé Ôö£ÔöÇÔöÇ @eslint/js 9.36.0
+Ôöé Ôö£ÔöÇÔöÇ @eslint/plugin-kit 0.3.5
+Ôöé Ôö£ÔöÇÔöÇ @humanfs/node 0.16.7
+Ôöé Ôö£ÔöÇÔöÇ @humanwhocodes/module-importer 1.0.1
+Ôöé Ôö£ÔöÇÔöÇ @humanwhocodes/retry 0.4.3
+Ôöé Ôö£ÔöÇÔöÇ @types/estree 1.0.8
+Ôöé Ôö£ÔöÇÔöÇ @types/json-schema 7.0.15
+Ôöé Ôö£ÔöÇÔöÇ ajv 6.12.6
+Ôöé Ôö£ÔöÇÔöÇ chalk 4.1.2
+Ôöé Ôö£ÔöÇÔöÇ cross-spawn 7.0.6
+Ôöé Ôö£ÔöÇÔöÇ debug 4.4.3
+Ôöé Ôö£ÔöÇÔöÇ escape-string-regexp 4.0.0
+Ôöé Ôö£ÔöÇÔöÇ eslint-scope 8.4.0
+Ôöé Ôö£ÔöÇÔöÇ eslint-visitor-keys 4.2.1
+Ôöé Ôö£ÔöÇÔöÇ espree 10.4.0
+Ôöé Ôö£ÔöÇÔöÇ esquery 1.6.0
+Ôöé Ôö£ÔöÇÔöÇ esutils 2.0.3
+Ôöé Ôö£ÔöÇÔöÇ fast-deep-equal 3.1.3
+Ôöé Ôö£ÔöÇÔöÇ file-entry-cache 8.0.0
+Ôöé Ôö£ÔöÇÔöÇ find-up 5.0.0
+Ôöé Ôö£ÔöÇÔöÇ glob-parent 6.0.2
+Ôöé Ôö£ÔöÇÔöÇ ignore 5.3.2
+Ôöé Ôö£ÔöÇÔöÇ imurmurhash 0.1.4
+Ôöé Ôö£ÔöÇÔöÇ is-glob 4.0.3
+Ôöé Ôö£ÔöÇÔöÇ jiti 2.6.1 peer
+Ôöé Ôö£ÔöÇÔöÇ json-stable-stringify-without-jsonify 1.0.1
+Ôöé Ôö£ÔöÇÔöÇ lodash.merge 4.6.2
+Ôöé Ôö£ÔöÇÔöÇ minimatch 3.1.2
+Ôöé Ôö£ÔöÇÔöÇ natural-compare 1.4.0
+Ôöé ÔööÔöÇÔöÇ optionator 0.9.4
+Ôö£ÔöÇÔöÇ graphemer 1.4.0
+Ôö£ÔöÇÔöÇ ignore 7.0.5
+Ôö£ÔöÇÔöÇ natural-compare 1.4.0
+Ôö£ÔöÇÔö¼ ts-api-utils 2.1.0
+Ôöé ÔööÔöÇÔöÇ typescript 5.9.3 peer
+ÔööÔöÇÔöÇ typescript 5.9.3 peer
+@typescript-eslint/parser 8.45.0
+Ôö£ÔöÇÔö¼ @typescript-eslint/scope-manager 8.45.0
+Ôöé Ôö£ÔöÇÔöÇ @typescript-eslint/types 8.45.0
+Ôöé ÔööÔöÇÔöÇ @typescript-eslint/visitor-keys 8.45.0
+Ôö£ÔöÇÔöÇ @typescript-eslint/types 8.45.0
+Ôö£ÔöÇÔö¼ @typescript-eslint/typescript-estree 8.45.0
+Ôöé Ôö£ÔöÇÔöÇ @typescript-eslint/project-service 8.45.0
+Ôöé Ôö£ÔöÇÔöÇ @typescript-eslint/tsconfig-utils 8.45.0
+Ôöé Ôö£ÔöÇÔöÇ @typescript-eslint/types 8.45.0
+Ôöé Ôö£ÔöÇÔöÇ @typescript-eslint/visitor-keys 8.45.0
+Ôöé Ôö£ÔöÇÔöÇ debug 4.4.3
+Ôöé Ôö£ÔöÇÔöÇ fast-glob 3.3.3
+Ôöé Ôö£ÔöÇÔöÇ is-glob 4.0.3
+Ôöé Ôö£ÔöÇÔöÇ minimatch 9.0.5
+Ôöé Ôö£ÔöÇÔöÇ semver 7.7.2
+Ôöé Ôö£ÔöÇÔöÇ ts-api-utils 2.1.0
+Ôöé ÔööÔöÇÔöÇ typescript 5.9.3 peer
+Ôö£ÔöÇÔö¼ @typescript-eslint/visitor-keys 8.45.0
+Ôöé Ôö£ÔöÇÔöÇ @typescript-eslint/types 8.45.0
+Ôöé ÔööÔöÇÔöÇ eslint-visitor-keys 4.2.1
+Ôö£ÔöÇÔö¼ debug 4.4.3
+Ôöé ÔööÔöÇÔöÇ ms 2.1.3
+Ôö£ÔöÇÔö¼ eslint 9.36.0 peer
+Ôöé Ôö£ÔöÇÔöÇ @eslint-community/eslint-utils 4.9.0
+Ôöé Ôö£ÔöÇÔöÇ @eslint-community/regexpp 4.12.1
+Ôöé Ôö£ÔöÇÔöÇ @eslint/config-array 0.21.0
+Ôöé Ôö£ÔöÇÔöÇ @eslint/config-helpers 0.3.1
+Ôöé Ôö£ÔöÇÔöÇ @eslint/core 0.15.2
+Ôöé Ôö£ÔöÇÔöÇ @eslint/eslintrc 3.3.1
+Ôöé Ôö£ÔöÇÔöÇ @eslint/js 9.36.0
+Ôöé Ôö£ÔöÇÔöÇ @eslint/plugin-kit 0.3.5
+Ôöé Ôö£ÔöÇÔöÇ @humanfs/node 0.16.7
+Ôöé Ôö£ÔöÇÔöÇ @humanwhocodes/module-importer 1.0.1
+Ôöé Ôö£ÔöÇÔöÇ @humanwhocodes/retry 0.4.3
+Ôöé Ôö£ÔöÇÔöÇ @types/estree 1.0.8
+Ôöé Ôö£ÔöÇÔöÇ @types/json-schema 7.0.15
+Ôöé Ôö£ÔöÇÔöÇ ajv 6.12.6
+Ôöé Ôö£ÔöÇÔöÇ chalk 4.1.2
+Ôöé Ôö£ÔöÇÔöÇ cross-spawn 7.0.6
+Ôöé Ôö£ÔöÇÔöÇ debug 4.4.3
+Ôöé Ôö£ÔöÇÔöÇ escape-string-regexp 4.0.0
+Ôöé Ôö£ÔöÇÔöÇ eslint-scope 8.4.0
+Ôöé Ôö£ÔöÇÔöÇ eslint-visitor-keys 4.2.1
+Ôöé Ôö£ÔöÇÔöÇ espree 10.4.0
+Ôöé Ôö£ÔöÇÔöÇ esquery 1.6.0
+Ôöé Ôö£ÔöÇÔöÇ esutils 2.0.3
+Ôöé Ôö£ÔöÇÔöÇ fast-deep-equal 3.1.3
+Ôöé Ôö£ÔöÇÔöÇ file-entry-cache 8.0.0
+Ôöé Ôö£ÔöÇÔöÇ find-up 5.0.0
+Ôöé Ôö£ÔöÇÔöÇ glob-parent 6.0.2
+Ôöé Ôö£ÔöÇÔöÇ ignore 5.3.2
+Ôöé Ôö£ÔöÇÔöÇ imurmurhash 0.1.4
+Ôöé Ôö£ÔöÇÔöÇ is-glob 4.0.3
+Ôöé Ôö£ÔöÇÔöÇ jiti 2.6.1 peer
+Ôöé Ôö£ÔöÇÔöÇ json-stable-stringify-without-jsonify 1.0.1
+Ôöé Ôö£ÔöÇÔöÇ lodash.merge 4.6.2
+Ôöé Ôö£ÔöÇÔöÇ minimatch 3.1.2
+Ôöé Ôö£ÔöÇÔöÇ natural-compare 1.4.0
+Ôöé ÔööÔöÇÔöÇ optionator 0.9.4
+ÔööÔöÇÔöÇ typescript 5.9.3 peer
+@vitest/coverage-v8 3.2.4
+Ôö£ÔöÇÔö¼ @ampproject/remapping 2.3.0
+Ôöé Ôö£ÔöÇÔöÇ @jridgewell/gen-mapping 0.3.13
+Ôöé ÔööÔöÇÔöÇ @jridgewell/trace-mapping 0.3.31
+Ôö£ÔöÇÔöÇ @bcoe/v8-coverage 1.0.2
+Ôö£ÔöÇÔö¼ ast-v8-to-istanbul 0.3.5
+Ôöé Ôö£ÔöÇÔöÇ @jridgewell/trace-mapping 0.3.31
+Ôöé Ôö£ÔöÇÔöÇ estree-walker 3.0.3
+Ôöé ÔööÔöÇÔöÇ js-tokens 9.0.1
+Ôö£ÔöÇÔö¼ debug 4.4.3
+Ôöé ÔööÔöÇÔöÇ ms 2.1.3
+Ôö£ÔöÇÔöÇ istanbul-lib-coverage 3.2.2
+Ôö£ÔöÇÔö¼ istanbul-lib-report 3.0.1
+Ôöé Ôö£ÔöÇÔöÇ istanbul-lib-coverage 3.2.2
+Ôöé Ôö£ÔöÇÔöÇ make-dir 4.0.0
+Ôöé ÔööÔöÇÔöÇ supports-color 7.2.0
+Ôö£ÔöÇÔö¼ istanbul-lib-source-maps 5.0.6
+Ôöé Ôö£ÔöÇÔöÇ @jridgewell/trace-mapping 0.3.31
+Ôöé Ôö£ÔöÇÔöÇ debug 4.4.3
+Ôöé ÔööÔöÇÔöÇ istanbul-lib-coverage 3.2.2
+Ôö£ÔöÇÔö¼ istanbul-reports 3.2.0
+Ôöé Ôö£ÔöÇÔöÇ html-escaper 2.0.2
+Ôöé ÔööÔöÇÔöÇ istanbul-lib-report 3.0.1
+Ôö£ÔöÇÔö¼ magic-string 0.30.19
+Ôöé ÔööÔöÇÔöÇ @jridgewell/sourcemap-codec 1.5.5
+Ôö£ÔöÇÔö¼ magicast 0.3.5
+Ôöé Ôö£ÔöÇÔöÇ @babel/parser 7.28.4
+Ôöé Ôö£ÔöÇÔöÇ @babel/types 7.28.4
+Ôöé ÔööÔöÇÔöÇ source-map-js 1.2.1
+Ôö£ÔöÇÔöÇ std-env 3.9.0
+Ôö£ÔöÇÔö¼ test-exclude 7.0.1
+Ôöé Ôö£ÔöÇÔöÇ @istanbuljs/schema 0.1.3
+Ôöé Ôö£ÔöÇÔöÇ glob 10.4.5
+Ôöé ÔööÔöÇÔöÇ minimatch 9.0.5
+Ôö£ÔöÇÔöÇ tinyrainbow 2.0.0
+ÔööÔöÇÔö¼ vitest 3.2.4 peer
+  Ôö£ÔöÇÔöÇ @types/chai 5.2.2
+  Ôö£ÔöÇÔöÇ @types/debug 4.1.12 peer
+  Ôö£ÔöÇÔöÇ @types/node 24.6.1 peer
+  Ôö£ÔöÇÔöÇ @vitest/expect 3.2.4
+  Ôö£ÔöÇÔöÇ @vitest/mocker 3.2.4
+  Ôö£ÔöÇÔöÇ @vitest/pretty-format 3.2.4
+  Ôö£ÔöÇÔöÇ @vitest/runner 3.2.4
+  Ôö£ÔöÇÔöÇ @vitest/snapshot 3.2.4
+  Ôö£ÔöÇÔöÇ @vitest/spy 3.2.4
+  Ôö£ÔöÇÔöÇ @vitest/utils 3.2.4
+  Ôö£ÔöÇÔöÇ chai 5.3.3
+  Ôö£ÔöÇÔöÇ debug 4.4.3
+  Ôö£ÔöÇÔöÇ expect-type 1.2.2
+  Ôö£ÔöÇÔöÇ magic-string 0.30.19
+  Ôö£ÔöÇÔöÇ pathe 2.0.3
+  Ôö£ÔöÇÔöÇ picomatch 4.0.3
+  Ôö£ÔöÇÔöÇ std-env 3.9.0
+  Ôö£ÔöÇÔöÇ tinybench 2.9.0
+  Ôö£ÔöÇÔöÇ tinyexec 0.3.2
+  Ôö£ÔöÇÔöÇ tinyglobby 0.2.15
+  Ôö£ÔöÇÔöÇ tinypool 1.1.1
+  Ôö£ÔöÇÔöÇ tinyrainbow 2.0.0
+  Ôö£ÔöÇÔöÇ vite 7.1.7
+  Ôö£ÔöÇÔöÇ vite-node 3.2.4
+  ÔööÔöÇÔöÇ why-is-node-running 2.3.0
+c8 10.1.3
+Ôö£ÔöÇÔöÇ @bcoe/v8-coverage 1.0.2
+Ôö£ÔöÇÔöÇ @istanbuljs/schema 0.1.3
+Ôö£ÔöÇÔö¼ find-up 5.0.0
+Ôöé Ôö£ÔöÇÔöÇ locate-path 6.0.0
+Ôöé ÔööÔöÇÔöÇ path-exists 4.0.0
+Ôö£ÔöÇÔö¼ foreground-child 3.3.1
+Ôöé Ôö£ÔöÇÔöÇ cross-spawn 7.0.6
+Ôöé ÔööÔöÇÔöÇ signal-exit 4.1.0
+Ôö£ÔöÇÔöÇ istanbul-lib-coverage 3.2.2
+Ôö£ÔöÇÔö¼ istanbul-lib-report 3.0.1
+Ôöé Ôö£ÔöÇÔöÇ istanbul-lib-coverage 3.2.2
+Ôöé Ôö£ÔöÇÔöÇ make-dir 4.0.0
+Ôöé ÔööÔöÇÔöÇ supports-color 7.2.0
+Ôö£ÔöÇÔö¼ istanbul-reports 3.2.0
+Ôöé Ôö£ÔöÇÔöÇ html-escaper 2.0.2
+Ôöé ÔööÔöÇÔöÇ istanbul-lib-report 3.0.1
+Ôö£ÔöÇÔö¼ test-exclude 7.0.1
+Ôöé Ôö£ÔöÇÔöÇ @istanbuljs/schema 0.1.3
+Ôöé Ôö£ÔöÇÔöÇ glob 10.4.5
+Ôöé ÔööÔöÇÔöÇ minimatch 9.0.5
+Ôö£ÔöÇÔö¼ v8-to-istanbul 9.3.0
+Ôöé Ôö£ÔöÇÔöÇ @jridgewell/trace-mapping 0.3.31
+Ôöé Ôö£ÔöÇÔöÇ @types/istanbul-lib-coverage 2.0.6
+Ôöé ÔööÔöÇÔöÇ convert-source-map 2.0.0
+Ôö£ÔöÇÔö¼ yargs 17.7.2
+Ôöé Ôö£ÔöÇÔöÇ cliui 8.0.1
+Ôöé Ôö£ÔöÇÔöÇ escalade 3.2.0
+Ôöé Ôö£ÔöÇÔöÇ get-caller-file 2.0.5
+Ôöé Ôö£ÔöÇÔöÇ require-directory 2.1.1
+Ôöé Ôö£ÔöÇÔöÇ string-width 4.2.3
+Ôöé Ôö£ÔöÇÔöÇ y18n 5.0.8
+Ôöé ÔööÔöÇÔöÇ yargs-parser 21.1.1
+ÔööÔöÇÔöÇ yargs-parser 21.1.1
+depcheck 1.4.7
+Ôö£ÔöÇÔö¼ @babel/parser 7.28.4
+Ôöé ÔööÔöÇÔöÇ @babel/types 7.28.4
+Ôö£ÔöÇÔö¼ @babel/traverse 7.28.4
+Ôöé Ôö£ÔöÇÔöÇ @babel/code-frame 7.27.1
+Ôöé Ôö£ÔöÇÔöÇ @babel/generator 7.28.3
+Ôöé Ôö£ÔöÇÔöÇ @babel/helper-globals 7.28.0
+Ôöé Ôö£ÔöÇÔöÇ @babel/parser 7.28.4
+Ôöé Ôö£ÔöÇÔöÇ @babel/template 7.27.2
+Ôöé Ôö£ÔöÇÔöÇ @babel/types 7.28.4
+Ôöé ÔööÔöÇÔöÇ debug 4.4.3
+Ôö£ÔöÇÔö¼ @vue/compiler-sfc 3.5.22
+Ôöé Ôö£ÔöÇÔöÇ @babel/parser 7.28.4
+Ôöé Ôö£ÔöÇÔöÇ @vue/compiler-core 3.5.22
+Ôöé Ôö£ÔöÇÔöÇ @vue/compiler-dom 3.5.22
+Ôöé Ôö£ÔöÇÔöÇ @vue/compiler-ssr 3.5.22
+Ôöé Ôö£ÔöÇÔöÇ @vue/shared 3.5.22
+Ôöé Ôö£ÔöÇÔöÇ estree-walker 2.0.2
+Ôöé Ôö£ÔöÇÔöÇ magic-string 0.30.19
+Ôöé Ôö£ÔöÇÔöÇ postcss 8.5.6
+Ôöé ÔööÔöÇÔöÇ source-map-js 1.2.1
+Ôö£ÔöÇÔöÇ callsite 1.0.0
+Ôö£ÔöÇÔöÇ camelcase 6.3.0
+Ôö£ÔöÇÔö¼ cosmiconfig 7.1.0
+Ôöé Ôö£ÔöÇÔöÇ @types/parse-json 4.0.2
+Ôöé Ôö£ÔöÇÔöÇ import-fresh 3.3.1
+Ôöé Ôö£ÔöÇÔöÇ parse-json 5.2.0
+Ôöé Ôö£ÔöÇÔöÇ path-type 4.0.0
+Ôöé ÔööÔöÇÔöÇ yaml 1.10.2
+Ôö£ÔöÇÔö¼ debug 4.4.3
+Ôöé ÔööÔöÇÔöÇ ms 2.1.3
+Ôö£ÔöÇÔöÇ deps-regex 0.2.0
+Ôö£ÔöÇÔö¼ findup-sync 5.0.0
+Ôöé Ôö£ÔöÇÔöÇ detect-file 1.0.0
+Ôöé Ôö£ÔöÇÔöÇ is-glob 4.0.3
+Ôöé Ôö£ÔöÇÔöÇ micromatch 4.0.8
+Ôöé ÔööÔöÇÔöÇ resolve-dir 1.0.1
+Ôö£ÔöÇÔöÇ ignore 5.3.2
+Ôö£ÔöÇÔö¼ is-core-module 2.16.1
+Ôöé ÔööÔöÇÔöÇ hasown 2.0.2
+Ôö£ÔöÇÔö¼ js-yaml 3.14.1
+Ôöé Ôö£ÔöÇÔöÇ argparse 1.0.10
+Ôöé ÔööÔöÇÔöÇ esprima 4.0.1
+Ôö£ÔöÇÔöÇ json5 2.2.3
+Ôö£ÔöÇÔöÇ lodash 4.17.21
+Ôö£ÔöÇÔö¼ minimatch 7.4.6
+Ôöé ÔööÔöÇÔöÇ brace-expansion 2.0.2
+Ôö£ÔöÇÔö¼ multimatch 5.0.0
+Ôöé Ôö£ÔöÇÔöÇ @types/minimatch 3.0.5
+Ôöé Ôö£ÔöÇÔöÇ array-differ 3.0.0
+Ôöé Ôö£ÔöÇÔöÇ array-union 2.1.0
+Ôöé Ôö£ÔöÇÔöÇ arrify 2.0.1
+Ôöé ÔööÔöÇÔöÇ minimatch 3.1.2
+Ôö£ÔöÇÔö¼ please-upgrade-node 3.2.0
+Ôöé ÔööÔöÇÔöÇ semver-compare 1.0.0
+Ôö£ÔöÇÔö¼ readdirp 3.6.0
+Ôöé ÔööÔöÇÔöÇ picomatch 2.3.1
+Ôö£ÔöÇÔöÇ require-package-name 2.0.1
+Ôö£ÔöÇÔö¼ resolve 1.22.10
+Ôöé Ôö£ÔöÇÔöÇ is-core-module 2.16.1
+Ôöé Ôö£ÔöÇÔöÇ path-parse 1.0.7
+Ôöé ÔööÔöÇÔöÇ supports-preserve-symlinks-flag 1.0.0
+Ôö£ÔöÇÔöÇ resolve-from 5.0.0
+Ôö£ÔöÇÔöÇ semver 7.7.2
+ÔööÔöÇÔö¼ yargs 16.2.0
+  Ôö£ÔöÇÔöÇ cliui 7.0.4
+  Ôö£ÔöÇÔöÇ escalade 3.2.0
+  Ôö£ÔöÇÔöÇ get-caller-file 2.0.5
+  Ôö£ÔöÇÔöÇ require-directory 2.1.1
+  Ôö£ÔöÇÔöÇ string-width 4.2.3
+  Ôö£ÔöÇÔöÇ y18n 5.0.8
+  ÔööÔöÇÔöÇ yargs-parser 20.2.9
+esbuild 0.25.10
+Ôö£ÔöÇÔöÇ @esbuild/aix-ppc64 0.25.10
+Ôö£ÔöÇÔöÇ @esbuild/android-arm 0.25.10
+Ôö£ÔöÇÔöÇ @esbuild/android-arm64 0.25.10
+Ôö£ÔöÇÔöÇ @esbuild/android-x64 0.25.10
+Ôö£ÔöÇÔöÇ @esbuild/darwin-arm64 0.25.10
+Ôö£ÔöÇÔöÇ @esbuild/darwin-x64 0.25.10
+Ôö£ÔöÇÔöÇ @esbuild/freebsd-arm64 0.25.10
+Ôö£ÔöÇÔöÇ @esbuild/freebsd-x64 0.25.10
+Ôö£ÔöÇÔöÇ @esbuild/linux-arm 0.25.10
+Ôö£ÔöÇÔöÇ @esbuild/linux-arm64 0.25.10
+Ôö£ÔöÇÔöÇ @esbuild/linux-ia32 0.25.10
+Ôö£ÔöÇÔöÇ @esbuild/linux-loong64 0.25.10
+Ôö£ÔöÇÔöÇ @esbuild/linux-mips64el 0.25.10
+Ôö£ÔöÇÔöÇ @esbuild/linux-ppc64 0.25.10
+Ôö£ÔöÇÔöÇ @esbuild/linux-riscv64 0.25.10
+Ôö£ÔöÇÔöÇ @esbuild/linux-s390x 0.25.10
+Ôö£ÔöÇÔöÇ @esbuild/linux-x64 0.25.10
+Ôö£ÔöÇÔöÇ @esbuild/netbsd-arm64 0.25.10
+Ôö£ÔöÇÔöÇ @esbuild/netbsd-x64 0.25.10
+Ôö£ÔöÇÔöÇ @esbuild/openbsd-arm64 0.25.10
+Ôö£ÔöÇÔöÇ @esbuild/openbsd-x64 0.25.10
+Ôö£ÔöÇÔöÇ @esbuild/openharmony-arm64 0.25.10
+Ôö£ÔöÇÔöÇ @esbuild/sunos-x64 0.25.10
+Ôö£ÔöÇÔöÇ @esbuild/win32-arm64 0.25.10
+Ôö£ÔöÇÔöÇ @esbuild/win32-ia32 0.25.10
+ÔööÔöÇÔöÇ @esbuild/win32-x64 0.25.10
+eslint 9.36.0
+Ôö£ÔöÇÔö¼ @eslint-community/eslint-utils 4.9.0
+Ôöé Ôö£ÔöÇÔöÇ eslint 9.36.0 peer
+Ôöé ÔööÔöÇÔöÇ eslint-visitor-keys 3.4.3
+Ôö£ÔöÇÔöÇ @eslint-community/regexpp 4.12.1
+Ôö£ÔöÇÔö¼ @eslint/config-array 0.21.0
+Ôöé Ôö£ÔöÇÔöÇ @eslint/object-schema 2.1.6
+Ôöé Ôö£ÔöÇÔöÇ debug 4.4.3
+Ôöé ÔööÔöÇÔöÇ minimatch 3.1.2
+Ôö£ÔöÇÔöÇ @eslint/config-helpers 0.3.1
+Ôö£ÔöÇÔö¼ @eslint/core 0.15.2
+Ôöé ÔööÔöÇÔöÇ @types/json-schema 7.0.15
+Ôö£ÔöÇÔö¼ @eslint/eslintrc 3.3.1
+Ôöé Ôö£ÔöÇÔöÇ ajv 6.12.6
+Ôöé Ôö£ÔöÇÔöÇ debug 4.4.3
+Ôöé Ôö£ÔöÇÔöÇ espree 10.4.0
+Ôöé Ôö£ÔöÇÔöÇ globals 14.0.0
+Ôöé Ôö£ÔöÇÔöÇ ignore 5.3.2
+Ôöé Ôö£ÔöÇÔöÇ import-fresh 3.3.1
+Ôöé Ôö£ÔöÇÔöÇ js-yaml 4.1.0
+Ôöé Ôö£ÔöÇÔöÇ minimatch 3.1.2
+Ôöé ÔööÔöÇÔöÇ strip-json-comments 3.1.1
+Ôö£ÔöÇÔöÇ @eslint/js 9.36.0
+Ôö£ÔöÇÔö¼ @eslint/plugin-kit 0.3.5
+Ôöé Ôö£ÔöÇÔöÇ @eslint/core 0.15.2
+Ôöé ÔööÔöÇÔöÇ levn 0.4.1
+Ôö£ÔöÇÔö¼ @humanfs/node 0.16.7
+Ôöé Ôö£ÔöÇÔöÇ @humanfs/core 0.19.1
+Ôöé ÔööÔöÇÔöÇ @humanwhocodes/retry 0.4.3
+Ôö£ÔöÇÔöÇ @humanwhocodes/module-importer 1.0.1
+Ôö£ÔöÇÔöÇ @humanwhocodes/retry 0.4.3
+Ôö£ÔöÇÔöÇ @types/estree 1.0.8
+Ôö£ÔöÇÔöÇ @types/json-schema 7.0.15
+Ôö£ÔöÇÔö¼ ajv 6.12.6
+Ôöé Ôö£ÔöÇÔöÇ fast-deep-equal 3.1.3
+Ôöé Ôö£ÔöÇÔöÇ fast-json-stable-stringify 2.1.0
+Ôöé Ôö£ÔöÇÔöÇ json-schema-traverse 0.4.1
+Ôöé ÔööÔöÇÔöÇ uri-js 4.4.1
+Ôö£ÔöÇÔö¼ chalk 4.1.2
+Ôöé Ôö£ÔöÇÔöÇ ansi-styles 4.3.0
+Ôöé ÔööÔöÇÔöÇ supports-color 7.2.0
+Ôö£ÔöÇÔö¼ cross-spawn 7.0.6
+Ôöé Ôö£ÔöÇÔöÇ path-key 3.1.1
+Ôöé Ôö£ÔöÇÔöÇ shebang-command 2.0.0
+Ôöé ÔööÔöÇÔöÇ which 2.0.2
+Ôö£ÔöÇÔö¼ debug 4.4.3
+Ôöé ÔööÔöÇÔöÇ ms 2.1.3
+Ôö£ÔöÇÔöÇ escape-string-regexp 4.0.0
+Ôö£ÔöÇÔö¼ eslint-scope 8.4.0
+Ôöé Ôö£ÔöÇÔöÇ esrecurse 4.3.0
+Ôöé ÔööÔöÇÔöÇ estraverse 5.3.0
+Ôö£ÔöÇÔöÇ eslint-visitor-keys 4.2.1
+Ôö£ÔöÇÔö¼ espree 10.4.0
+Ôöé Ôö£ÔöÇÔöÇ acorn 8.15.0
+Ôöé Ôö£ÔöÇÔöÇ acorn-jsx 5.3.2
+Ôöé ÔööÔöÇÔöÇ eslint-visitor-keys 4.2.1
+Ôö£ÔöÇÔö¼ esquery 1.6.0
+Ôöé ÔööÔöÇÔöÇ estraverse 5.3.0
+Ôö£ÔöÇÔöÇ esutils 2.0.3
+Ôö£ÔöÇÔöÇ fast-deep-equal 3.1.3
+Ôö£ÔöÇÔö¼ file-entry-cache 8.0.0
+Ôöé ÔööÔöÇÔöÇ flat-cache 4.0.1
+Ôö£ÔöÇÔö¼ find-up 5.0.0
+Ôöé Ôö£ÔöÇÔöÇ locate-path 6.0.0
+Ôöé ÔööÔöÇÔöÇ path-exists 4.0.0
+Ôö£ÔöÇÔö¼ glob-parent 6.0.2
+Ôöé ÔööÔöÇÔöÇ is-glob 4.0.3
+Ôö£ÔöÇÔöÇ ignore 5.3.2
+Ôö£ÔöÇÔöÇ imurmurhash 0.1.4
+Ôö£ÔöÇÔö¼ is-glob 4.0.3
+Ôöé ÔööÔöÇÔöÇ is-extglob 2.1.1
+Ôö£ÔöÇÔöÇ jiti 2.6.1 peer
+Ôö£ÔöÇÔöÇ json-stable-stringify-without-jsonify 1.0.1
+Ôö£ÔöÇÔöÇ lodash.merge 4.6.2
+Ôö£ÔöÇÔö¼ minimatch 3.1.2
+Ôöé ÔööÔöÇÔöÇ brace-expansion 1.1.12
+Ôö£ÔöÇÔöÇ natural-compare 1.4.0
+ÔööÔöÇÔö¼ optionator 0.9.4
+  Ôö£ÔöÇÔöÇ deep-is 0.1.4
+  Ôö£ÔöÇÔöÇ fast-levenshtein 2.0.6
+  Ôö£ÔöÇÔöÇ levn 0.4.1
+  Ôö£ÔöÇÔöÇ prelude-ls 1.2.1
+  Ôö£ÔöÇÔöÇ type-check 0.4.0
+  ÔööÔöÇÔöÇ word-wrap 1.2.5
+eslint-config-prettier 10.1.8
+ÔööÔöÇÔö¼ eslint 9.36.0 peer
+  Ôö£ÔöÇÔöÇ @eslint-community/eslint-utils 4.9.0
+  Ôö£ÔöÇÔöÇ @eslint-community/regexpp 4.12.1
+  Ôö£ÔöÇÔöÇ @eslint/config-array 0.21.0
+  Ôö£ÔöÇÔöÇ @eslint/config-helpers 0.3.1
+  Ôö£ÔöÇÔöÇ @eslint/core 0.15.2
+  Ôö£ÔöÇÔöÇ @eslint/eslintrc 3.3.1
+  Ôö£ÔöÇÔöÇ @eslint/js 9.36.0
+  Ôö£ÔöÇÔöÇ @eslint/plugin-kit 0.3.5
+  Ôö£ÔöÇÔöÇ @humanfs/node 0.16.7
+  Ôö£ÔöÇÔöÇ @humanwhocodes/module-importer 1.0.1
+  Ôö£ÔöÇÔöÇ @humanwhocodes/retry 0.4.3
+  Ôö£ÔöÇÔöÇ @types/estree 1.0.8
+  Ôö£ÔöÇÔöÇ @types/json-schema 7.0.15
+  Ôö£ÔöÇÔöÇ ajv 6.12.6
+  Ôö£ÔöÇÔöÇ chalk 4.1.2
+  Ôö£ÔöÇÔöÇ cross-spawn 7.0.6
+  Ôö£ÔöÇÔöÇ debug 4.4.3
+  Ôö£ÔöÇÔöÇ escape-string-regexp 4.0.0
+  Ôö£ÔöÇÔöÇ eslint-scope 8.4.0
+  Ôö£ÔöÇÔöÇ eslint-visitor-keys 4.2.1
+  Ôö£ÔöÇÔöÇ espree 10.4.0
+  Ôö£ÔöÇÔöÇ esquery 1.6.0
+  Ôö£ÔöÇÔöÇ esutils 2.0.3
+  Ôö£ÔöÇÔöÇ fast-deep-equal 3.1.3
+  Ôö£ÔöÇÔöÇ file-entry-cache 8.0.0
+  Ôö£ÔöÇÔöÇ find-up 5.0.0
+  Ôö£ÔöÇÔöÇ glob-parent 6.0.2
+  Ôö£ÔöÇÔöÇ ignore 5.3.2
+  Ôö£ÔöÇÔöÇ imurmurhash 0.1.4
+  Ôö£ÔöÇÔöÇ is-glob 4.0.3
+  Ôö£ÔöÇÔöÇ jiti 2.6.1 peer
+  Ôö£ÔöÇÔöÇ json-stable-stringify-without-jsonify 1.0.1
+  Ôö£ÔöÇÔöÇ lodash.merge 4.6.2
+  Ôö£ÔöÇÔöÇ minimatch 3.1.2
+  Ôö£ÔöÇÔöÇ natural-compare 1.4.0
+  ÔööÔöÇÔöÇ optionator 0.9.4
+eslint-define-config 2.1.0
+eslint-plugin-import 2.32.0
+Ôö£ÔöÇÔöÇ @rtsao/scc 1.1.0
+Ôö£ÔöÇÔö¼ @typescript-eslint/parser 8.45.0 peer
+Ôöé Ôö£ÔöÇÔöÇ @typescript-eslint/scope-manager 8.45.0
+Ôöé Ôö£ÔöÇÔöÇ @typescript-eslint/types 8.45.0
+Ôöé Ôö£ÔöÇÔöÇ @typescript-eslint/typescript-estree 8.45.0
+Ôöé Ôö£ÔöÇÔöÇ @typescript-eslint/visitor-keys 8.45.0
+Ôöé Ôö£ÔöÇÔöÇ debug 4.4.3
+Ôöé Ôö£ÔöÇÔöÇ eslint 9.36.0 peer
+Ôöé ÔööÔöÇÔöÇ typescript 5.9.3 peer
+Ôö£ÔöÇÔö¼ array-includes 3.1.9
+Ôöé Ôö£ÔöÇÔöÇ call-bind 1.0.8
+Ôöé Ôö£ÔöÇÔöÇ call-bound 1.0.4
+Ôöé Ôö£ÔöÇÔöÇ define-properties 1.2.1
+Ôöé Ôö£ÔöÇÔöÇ es-abstract 1.24.0
+Ôöé Ôö£ÔöÇÔöÇ es-object-atoms 1.1.1
+Ôöé Ôö£ÔöÇÔöÇ get-intrinsic 1.3.0
+Ôöé Ôö£ÔöÇÔöÇ is-string 1.1.1
+Ôöé ÔööÔöÇÔöÇ math-intrinsics 1.1.0
+Ôö£ÔöÇÔö¼ array.prototype.findlastindex 1.2.6
+Ôöé Ôö£ÔöÇÔöÇ call-bind 1.0.8
+Ôöé Ôö£ÔöÇÔöÇ call-bound 1.0.4
+Ôöé Ôö£ÔöÇÔöÇ define-properties 1.2.1
+Ôöé Ôö£ÔöÇÔöÇ es-abstract 1.24.0
+Ôöé Ôö£ÔöÇÔöÇ es-errors 1.3.0
+Ôöé Ôö£ÔöÇÔöÇ es-object-atoms 1.1.1
+Ôöé ÔööÔöÇÔöÇ es-shim-unscopables 1.1.0
+Ôö£ÔöÇÔö¼ array.prototype.flat 1.3.3
+Ôöé Ôö£ÔöÇÔöÇ call-bind 1.0.8
+Ôöé Ôö£ÔöÇÔöÇ define-properties 1.2.1
+Ôöé Ôö£ÔöÇÔöÇ es-abstract 1.24.0
+Ôöé ÔööÔöÇÔöÇ es-shim-unscopables 1.1.0
+Ôö£ÔöÇÔö¼ array.prototype.flatmap 1.3.3
+Ôöé Ôö£ÔöÇÔöÇ call-bind 1.0.8
+Ôöé Ôö£ÔöÇÔöÇ define-properties 1.2.1
+Ôöé Ôö£ÔöÇÔöÇ es-abstract 1.24.0
+Ôöé ÔööÔöÇÔöÇ es-shim-unscopables 1.1.0
+Ôö£ÔöÇÔö¼ debug 3.2.7
+Ôöé ÔööÔöÇÔöÇ ms 2.1.3
+Ôö£ÔöÇÔö¼ doctrine 2.1.0
+Ôöé ÔööÔöÇÔöÇ esutils 2.0.3
+Ôö£ÔöÇÔö¼ eslint 9.36.0 peer
+Ôöé Ôö£ÔöÇÔöÇ @eslint-community/eslint-utils 4.9.0
+Ôöé Ôö£ÔöÇÔöÇ @eslint-community/regexpp 4.12.1
+Ôöé Ôö£ÔöÇÔöÇ @eslint/config-array 0.21.0
+Ôöé Ôö£ÔöÇÔöÇ @eslint/config-helpers 0.3.1
+Ôöé Ôö£ÔöÇÔöÇ @eslint/core 0.15.2
+Ôöé Ôö£ÔöÇÔöÇ @eslint/eslintrc 3.3.1
+Ôöé Ôö£ÔöÇÔöÇ @eslint/js 9.36.0
+Ôöé Ôö£ÔöÇÔöÇ @eslint/plugin-kit 0.3.5
+Ôöé Ôö£ÔöÇÔöÇ @humanfs/node 0.16.7
+Ôöé Ôö£ÔöÇÔöÇ @humanwhocodes/module-importer 1.0.1
+Ôöé Ôö£ÔöÇÔöÇ @humanwhocodes/retry 0.4.3
+Ôöé Ôö£ÔöÇÔöÇ @types/estree 1.0.8
+Ôöé Ôö£ÔöÇÔöÇ @types/json-schema 7.0.15
+Ôöé Ôö£ÔöÇÔöÇ ajv 6.12.6
+Ôöé Ôö£ÔöÇÔöÇ chalk 4.1.2
+Ôöé Ôö£ÔöÇÔöÇ cross-spawn 7.0.6
+Ôöé Ôö£ÔöÇÔöÇ debug 4.4.3
+Ôöé Ôö£ÔöÇÔöÇ escape-string-regexp 4.0.0
+Ôöé Ôö£ÔöÇÔöÇ eslint-scope 8.4.0
+Ôöé Ôö£ÔöÇÔöÇ eslint-visitor-keys 4.2.1
+Ôöé Ôö£ÔöÇÔöÇ espree 10.4.0
+Ôöé Ôö£ÔöÇÔöÇ esquery 1.6.0
+Ôöé Ôö£ÔöÇÔöÇ esutils 2.0.3
+Ôöé Ôö£ÔöÇÔöÇ fast-deep-equal 3.1.3
+Ôöé Ôö£ÔöÇÔöÇ file-entry-cache 8.0.0
+Ôöé Ôö£ÔöÇÔöÇ find-up 5.0.0
+Ôöé Ôö£ÔöÇÔöÇ glob-parent 6.0.2
+Ôöé Ôö£ÔöÇÔöÇ ignore 5.3.2
+Ôöé Ôö£ÔöÇÔöÇ imurmurhash 0.1.4
+Ôöé Ôö£ÔöÇÔöÇ is-glob 4.0.3
+Ôöé Ôö£ÔöÇÔöÇ jiti 2.6.1 peer
+Ôöé Ôö£ÔöÇÔöÇ json-stable-stringify-without-jsonify 1.0.1
+Ôöé Ôö£ÔöÇÔöÇ lodash.merge 4.6.2
+Ôöé Ôö£ÔöÇÔöÇ minimatch 3.1.2
+Ôöé Ôö£ÔöÇÔöÇ natural-compare 1.4.0
+Ôöé ÔööÔöÇÔöÇ optionator 0.9.4
+Ôö£ÔöÇÔö¼ eslint-import-resolver-node 0.3.9
+Ôöé Ôö£ÔöÇÔöÇ debug 3.2.7
+Ôöé Ôö£ÔöÇÔöÇ is-core-module 2.16.1
+Ôöé ÔööÔöÇÔöÇ resolve 1.22.10
+Ôö£ÔöÇÔö¼ eslint-module-utils 2.12.1
+Ôöé Ôö£ÔöÇÔöÇ @typescript-eslint/parser 8.45.0 peer
+Ôöé Ôö£ÔöÇÔöÇ debug 3.2.7
+Ôöé Ôö£ÔöÇÔöÇ eslint 9.36.0 peer
+Ôöé ÔööÔöÇÔöÇ eslint-import-resolver-node 0.3.9 peer
+Ôö£ÔöÇÔö¼ hasown 2.0.2
+Ôöé ÔööÔöÇÔöÇ function-bind 1.1.2
+Ôö£ÔöÇÔö¼ is-core-module 2.16.1
+Ôöé ÔööÔöÇÔöÇ hasown 2.0.2
+Ôö£ÔöÇÔö¼ is-glob 4.0.3
+Ôöé ÔööÔöÇÔöÇ is-extglob 2.1.1
+Ôö£ÔöÇÔö¼ minimatch 3.1.2
+Ôöé ÔööÔöÇÔöÇ brace-expansion 1.1.12
+Ôö£ÔöÇÔö¼ object.fromentries 2.0.8
+Ôöé Ôö£ÔöÇÔöÇ call-bind 1.0.8
+Ôöé Ôö£ÔöÇÔöÇ define-properties 1.2.1
+Ôöé Ôö£ÔöÇÔöÇ es-abstract 1.24.0
+Ôöé ÔööÔöÇÔöÇ es-object-atoms 1.1.1
+Ôö£ÔöÇÔö¼ object.groupby 1.0.3
+Ôöé Ôö£ÔöÇÔöÇ call-bind 1.0.8
+Ôöé Ôö£ÔöÇÔöÇ define-properties 1.2.1
+Ôöé ÔööÔöÇÔöÇ es-abstract 1.24.0
+Ôö£ÔöÇÔö¼ object.values 1.2.1
+Ôöé Ôö£ÔöÇÔöÇ call-bind 1.0.8
+Ôöé Ôö£ÔöÇÔöÇ call-bound 1.0.4
+Ôöé Ôö£ÔöÇÔöÇ define-properties 1.2.1
+Ôöé ÔööÔöÇÔöÇ es-object-atoms 1.1.1
+Ôö£ÔöÇÔöÇ semver 6.3.1
+Ôö£ÔöÇÔö¼ string.prototype.trimend 1.0.9
+Ôöé Ôö£ÔöÇÔöÇ call-bind 1.0.8
+Ôöé Ôö£ÔöÇÔöÇ call-bound 1.0.4
+Ôöé Ôö£ÔöÇÔöÇ define-properties 1.2.1
+Ôöé ÔööÔöÇÔöÇ es-object-atoms 1.1.1
+ÔööÔöÇÔö¼ tsconfig-paths 3.15.0
+  Ôö£ÔöÇÔöÇ @types/json5 0.0.29
+  Ôö£ÔöÇÔöÇ json5 1.0.2
+  Ôö£ÔöÇÔöÇ minimist 1.2.8
+  ÔööÔöÇÔöÇ strip-bom 3.0.0
+eslint-plugin-jest 29.0.1
+Ôö£ÔöÇÔö¼ @typescript-eslint/eslint-plugin 8.45.0 peer
+Ôöé Ôö£ÔöÇÔöÇ @eslint-community/regexpp 4.12.1
+Ôöé Ôö£ÔöÇÔöÇ @typescript-eslint/parser 8.45.0 peer
+Ôöé Ôö£ÔöÇÔöÇ @typescript-eslint/scope-manager 8.45.0
+Ôöé Ôö£ÔöÇÔöÇ @typescript-eslint/type-utils 8.45.0
+Ôöé Ôö£ÔöÇÔöÇ @typescript-eslint/utils 8.45.0
+Ôöé Ôö£ÔöÇÔöÇ @typescript-eslint/visitor-keys 8.45.0
+Ôöé Ôö£ÔöÇÔöÇ eslint 9.36.0 peer
+Ôöé Ôö£ÔöÇÔöÇ graphemer 1.4.0
+Ôöé Ôö£ÔöÇÔöÇ ignore 7.0.5
+Ôöé Ôö£ÔöÇÔöÇ natural-compare 1.4.0
+Ôöé Ôö£ÔöÇÔöÇ ts-api-utils 2.1.0
+Ôöé ÔööÔöÇÔöÇ typescript 5.9.3 peer
+Ôö£ÔöÇÔö¼ @typescript-eslint/utils 8.45.0
+Ôöé Ôö£ÔöÇÔöÇ @eslint-community/eslint-utils 4.9.0
+Ôöé Ôö£ÔöÇÔöÇ @typescript-eslint/scope-manager 8.45.0
+Ôöé Ôö£ÔöÇÔöÇ @typescript-eslint/types 8.45.0
+Ôöé Ôö£ÔöÇÔöÇ @typescript-eslint/typescript-estree 8.45.0
+Ôöé Ôö£ÔöÇÔöÇ eslint 9.36.0 peer
+Ôöé ÔööÔöÇÔöÇ typescript 5.9.3 peer
+Ôö£ÔöÇÔö¼ eslint 9.36.0 peer
+Ôöé Ôö£ÔöÇÔöÇ @eslint-community/eslint-utils 4.9.0
+Ôöé Ôö£ÔöÇÔöÇ @eslint-community/regexpp 4.12.1
+Ôöé Ôö£ÔöÇÔöÇ @eslint/config-array 0.21.0
+Ôöé Ôö£ÔöÇÔöÇ @eslint/config-helpers 0.3.1
+Ôöé Ôö£ÔöÇÔöÇ @eslint/core 0.15.2
+Ôöé Ôö£ÔöÇÔöÇ @eslint/eslintrc 3.3.1
+Ôöé Ôö£ÔöÇÔöÇ @eslint/js 9.36.0
+Ôöé Ôö£ÔöÇÔöÇ @eslint/plugin-kit 0.3.5
+Ôöé Ôö£ÔöÇÔöÇ @humanfs/node 0.16.7
+Ôöé Ôö£ÔöÇÔöÇ @humanwhocodes/module-importer 1.0.1
+Ôöé Ôö£ÔöÇÔöÇ @humanwhocodes/retry 0.4.3
+Ôöé Ôö£ÔöÇÔöÇ @types/estree 1.0.8
+Ôöé Ôö£ÔöÇÔöÇ @types/json-schema 7.0.15
+Ôöé Ôö£ÔöÇÔöÇ ajv 6.12.6
+Ôöé Ôö£ÔöÇÔöÇ chalk 4.1.2
+Ôöé Ôö£ÔöÇÔöÇ cross-spawn 7.0.6
+Ôöé Ôö£ÔöÇÔöÇ debug 4.4.3
+Ôöé Ôö£ÔöÇÔöÇ escape-string-regexp 4.0.0
+Ôöé Ôö£ÔöÇÔöÇ eslint-scope 8.4.0
+Ôöé Ôö£ÔöÇÔöÇ eslint-visitor-keys 4.2.1
+Ôöé Ôö£ÔöÇÔöÇ espree 10.4.0
+Ôöé Ôö£ÔöÇÔöÇ esquery 1.6.0
+Ôöé Ôö£ÔöÇÔöÇ esutils 2.0.3
+Ôöé Ôö£ÔöÇÔöÇ fast-deep-equal 3.1.3
+Ôöé Ôö£ÔöÇÔöÇ file-entry-cache 8.0.0
+Ôöé Ôö£ÔöÇÔöÇ find-up 5.0.0
+Ôöé Ôö£ÔöÇÔöÇ glob-parent 6.0.2
+Ôöé Ôö£ÔöÇÔöÇ ignore 5.3.2
+Ôöé Ôö£ÔöÇÔöÇ imurmurhash 0.1.4
+Ôöé Ôö£ÔöÇÔöÇ is-glob 4.0.3
+Ôöé Ôö£ÔöÇÔöÇ jiti 2.6.1 peer
+Ôöé Ôö£ÔöÇÔöÇ json-stable-stringify-without-jsonify 1.0.1
+Ôöé Ôö£ÔöÇÔöÇ lodash.merge 4.6.2
+Ôöé Ôö£ÔöÇÔöÇ minimatch 3.1.2
+Ôöé Ôö£ÔöÇÔöÇ natural-compare 1.4.0
+Ôöé ÔööÔöÇÔöÇ optionator 0.9.4
+ÔööÔöÇÔö¼ jest 30.2.0 peer
+  Ôö£ÔöÇÔöÇ @jest/core 30.2.0
+  Ôö£ÔöÇÔöÇ @jest/types 30.2.0
+  Ôö£ÔöÇÔöÇ import-local 3.2.0
+  ÔööÔöÇÔöÇ jest-cli 30.2.0
+gitleaks 1.0.0
+globals 16.4.0
+jest 30.2.0
+Ôö£ÔöÇÔö¼ @jest/core 30.2.0
+Ôöé Ôö£ÔöÇÔöÇ @jest/console 30.2.0
+Ôöé Ôö£ÔöÇÔöÇ @jest/pattern 30.0.1
+Ôöé Ôö£ÔöÇÔöÇ @jest/reporters 30.2.0
+Ôöé Ôö£ÔöÇÔöÇ @jest/test-result 30.2.0
+Ôöé Ôö£ÔöÇÔöÇ @jest/transform 30.2.0
+Ôöé Ôö£ÔöÇÔöÇ @jest/types 30.2.0
+Ôöé Ôö£ÔöÇÔöÇ @types/node 24.6.1
+Ôöé Ôö£ÔöÇÔöÇ ansi-escapes 4.3.2
+Ôöé Ôö£ÔöÇÔöÇ chalk 4.1.2
+Ôöé Ôö£ÔöÇÔöÇ ci-info 4.3.0
+Ôöé Ôö£ÔöÇÔöÇ exit-x 0.2.2
+Ôöé Ôö£ÔöÇÔöÇ graceful-fs 4.2.11
+Ôöé Ôö£ÔöÇÔöÇ jest-changed-files 30.2.0
+Ôöé Ôö£ÔöÇÔöÇ jest-config 30.2.0
+Ôöé Ôö£ÔöÇÔöÇ jest-haste-map 30.2.0
+Ôöé Ôö£ÔöÇÔöÇ jest-message-util 30.2.0
+Ôöé Ôö£ÔöÇÔöÇ jest-regex-util 30.0.1
+Ôöé Ôö£ÔöÇÔöÇ jest-resolve 30.2.0
+Ôöé Ôö£ÔöÇÔöÇ jest-resolve-dependencies 30.2.0
+Ôöé Ôö£ÔöÇÔöÇ jest-runner 30.2.0
+Ôöé Ôö£ÔöÇÔöÇ jest-runtime 30.2.0
+Ôöé Ôö£ÔöÇÔöÇ jest-snapshot 30.2.0
+Ôöé Ôö£ÔöÇÔöÇ jest-util 30.2.0
+Ôöé Ôö£ÔöÇÔöÇ jest-validate 30.2.0
+Ôöé Ôö£ÔöÇÔöÇ jest-watcher 30.2.0
+Ôöé Ôö£ÔöÇÔöÇ micromatch 4.0.8
+Ôöé Ôö£ÔöÇÔöÇ pretty-format 30.2.0
+Ôöé ÔööÔöÇÔöÇ slash 3.0.0
+Ôö£ÔöÇÔö¼ @jest/types 30.2.0
+Ôöé Ôö£ÔöÇÔöÇ @jest/pattern 30.0.1
+Ôöé Ôö£ÔöÇÔöÇ @jest/schemas 30.0.5
+Ôöé Ôö£ÔöÇÔöÇ @types/istanbul-lib-coverage 2.0.6
+Ôöé Ôö£ÔöÇÔöÇ @types/istanbul-reports 3.0.4
+Ôöé Ôö£ÔöÇÔöÇ @types/node 24.6.1
+Ôöé Ôö£ÔöÇÔöÇ @types/yargs 17.0.33
+Ôöé ÔööÔöÇÔöÇ chalk 4.1.2
+Ôö£ÔöÇÔö¼ import-local 3.2.0
+Ôöé Ôö£ÔöÇÔöÇ pkg-dir 4.2.0
+Ôöé ÔööÔöÇÔöÇ resolve-cwd 3.0.0
+ÔööÔöÇÔö¼ jest-cli 30.2.0
+  Ôö£ÔöÇÔöÇ @jest/core 30.2.0
+  Ôö£ÔöÇÔöÇ @jest/test-result 30.2.0
+  Ôö£ÔöÇÔöÇ @jest/types 30.2.0
+  Ôö£ÔöÇÔöÇ chalk 4.1.2
+  Ôö£ÔöÇÔöÇ exit-x 0.2.2
+  Ôö£ÔöÇÔöÇ import-local 3.2.0
+  Ôö£ÔöÇÔöÇ jest-config 30.2.0
+  Ôö£ÔöÇÔöÇ jest-util 30.2.0
+  Ôö£ÔöÇÔöÇ jest-validate 30.2.0
+  ÔööÔöÇÔöÇ yargs 17.7.2
+knip 5.64.1
+Ôö£ÔöÇÔö¼ @nodelib/fs.walk 1.2.8
+Ôöé Ôö£ÔöÇÔöÇ @nodelib/fs.scandir 2.1.5
+Ôöé ÔööÔöÇÔöÇ fastq 1.19.1
+Ôö£ÔöÇÔö¼ @types/node 24.6.1 peer
+Ôöé ÔööÔöÇÔöÇ undici-types 7.13.0
+Ôö£ÔöÇÔö¼ fast-glob 3.3.3
+Ôöé Ôö£ÔöÇÔöÇ @nodelib/fs.stat 2.0.5
+Ôöé Ôö£ÔöÇÔöÇ @nodelib/fs.walk 1.2.8
+Ôöé Ôö£ÔöÇÔöÇ glob-parent 5.1.2
+Ôöé Ôö£ÔöÇÔöÇ merge2 1.4.1
+Ôöé ÔööÔöÇÔöÇ micromatch 4.0.8
+Ôö£ÔöÇÔö¼ formatly 0.3.0
+Ôöé ÔööÔöÇÔöÇ fd-package-json 2.0.0
+Ôö£ÔöÇÔöÇ jiti 2.6.1
+Ôö£ÔöÇÔö¼ js-yaml 4.1.0
+Ôöé ÔööÔöÇÔöÇ argparse 2.0.1
+Ôö£ÔöÇÔöÇ minimist 1.2.8
+Ôö£ÔöÇÔö¼ oxc-resolver 11.8.4
+Ôöé Ôö£ÔöÇÔöÇ @oxc-resolver/binding-android-arm-eabi 11.8.4
+Ôöé Ôö£ÔöÇÔöÇ @oxc-resolver/binding-android-arm64 11.8.4
+Ôöé Ôö£ÔöÇÔöÇ @oxc-resolver/binding-darwin-arm64 11.8.4
+Ôöé Ôö£ÔöÇÔöÇ @oxc-resolver/binding-darwin-x64 11.8.4
+Ôöé Ôö£ÔöÇÔöÇ @oxc-resolver/binding-freebsd-x64 11.8.4
+Ôöé Ôö£ÔöÇÔöÇ @oxc-resolver/binding-linux-arm-gnueabihf 11.8.4
+Ôöé Ôö£ÔöÇÔöÇ @oxc-resolver/binding-linux-arm-musleabihf 11.8.4
+Ôöé Ôö£ÔöÇÔöÇ @oxc-resolver/binding-linux-arm64-gnu 11.8.4
+Ôöé Ôö£ÔöÇÔöÇ @oxc-resolver/binding-linux-arm64-musl 11.8.4
+Ôöé Ôö£ÔöÇÔöÇ @oxc-resolver/binding-linux-ppc64-gnu 11.8.4
+Ôöé Ôö£ÔöÇÔöÇ @oxc-resolver/binding-linux-riscv64-gnu 11.8.4
+Ôöé Ôö£ÔöÇÔöÇ @oxc-resolver/binding-linux-riscv64-musl 11.8.4
+Ôöé Ôö£ÔöÇÔöÇ @oxc-resolver/binding-linux-s390x-gnu 11.8.4
+Ôöé Ôö£ÔöÇÔöÇ @oxc-resolver/binding-linux-x64-gnu 11.8.4
+Ôöé Ôö£ÔöÇÔöÇ @oxc-resolver/binding-linux-x64-musl 11.8.4
+Ôöé Ôö£ÔöÇÔöÇ @oxc-resolver/binding-wasm32-wasi 11.8.4
+Ôöé Ôö£ÔöÇÔöÇ @oxc-resolver/binding-win32-arm64-msvc 11.8.4
+Ôöé Ôö£ÔöÇÔöÇ @oxc-resolver/binding-win32-ia32-msvc 11.8.4
+Ôöé Ôö£ÔöÇÔöÇ @oxc-resolver/binding-win32-x64-msvc 11.8.4
+Ôöé ÔööÔöÇÔöÇ napi-postinstall 0.3.3
+Ôö£ÔöÇÔöÇ picocolors 1.1.1
+Ôö£ÔöÇÔöÇ picomatch 4.0.3
+Ôö£ÔöÇÔöÇ smol-toml 1.4.2
+Ôö£ÔöÇÔöÇ strip-json-comments 5.0.2
+Ôö£ÔöÇÔöÇ typescript 5.9.3 peer
+ÔööÔöÇÔöÇ zod 4.1.11
+lockfile-lint 4.14.1
+Ôö£ÔöÇÔö¼ cosmiconfig 9.0.0
+Ôöé Ôö£ÔöÇÔöÇ env-paths 2.2.1
+Ôöé Ôö£ÔöÇÔöÇ import-fresh 3.3.1
+Ôöé Ôö£ÔöÇÔöÇ js-yaml 4.1.0
+Ôöé Ôö£ÔöÇÔöÇ parse-json 5.2.0
+Ôöé ÔööÔöÇÔöÇ typescript 5.9.3 peer
+Ôö£ÔöÇÔö¼ debug 4.4.3
+Ôöé ÔööÔöÇÔöÇ ms 2.1.3
+Ôö£ÔöÇÔö¼ fast-glob 3.3.3
+Ôöé Ôö£ÔöÇÔöÇ @nodelib/fs.stat 2.0.5
+Ôöé Ôö£ÔöÇÔöÇ @nodelib/fs.walk 1.2.8
+Ôöé Ôö£ÔöÇÔöÇ glob-parent 5.1.2
+Ôöé Ôö£ÔöÇÔöÇ merge2 1.4.1
+Ôöé ÔööÔöÇÔöÇ micromatch 4.0.8
+Ôö£ÔöÇÔö¼ lockfile-lint-api 5.9.2
+Ôöé Ôö£ÔöÇÔöÇ @yarnpkg/parsers 3.0.3
+Ôöé Ôö£ÔöÇÔöÇ debug 4.4.3
+Ôöé ÔööÔöÇÔöÇ object-hash 3.0.0
+ÔööÔöÇÔö¼ yargs 17.7.2
+  Ôö£ÔöÇÔöÇ cliui 8.0.1
+  Ôö£ÔöÇÔöÇ escalade 3.2.0
+  Ôö£ÔöÇÔöÇ get-caller-file 2.0.5
+  Ôö£ÔöÇÔöÇ require-directory 2.1.1
+  Ôö£ÔöÇÔöÇ string-width 4.2.3
+  Ôö£ÔöÇÔöÇ y18n 5.0.8
+  ÔööÔöÇÔöÇ yargs-parser 21.1.1
+markdownlint-cli 0.45.0
+Ôö£ÔöÇÔöÇ commander 13.1.0
+Ôö£ÔöÇÔö¼ glob 11.0.3
+Ôöé Ôö£ÔöÇÔöÇ foreground-child 3.3.1
+Ôöé Ôö£ÔöÇÔöÇ jackspeak 4.1.1
+Ôöé Ôö£ÔöÇÔöÇ minimatch 10.0.3
+Ôöé Ôö£ÔöÇÔöÇ minipass 7.1.2
+Ôöé Ôö£ÔöÇÔöÇ package-json-from-dist 1.0.1
+Ôöé ÔööÔöÇÔöÇ path-scurry 2.0.0
+Ôö£ÔöÇÔöÇ ignore 7.0.5
+Ôö£ÔöÇÔö¼ js-yaml 4.1.0
+Ôöé ÔööÔöÇÔöÇ argparse 2.0.1
+Ôö£ÔöÇÔöÇ jsonc-parser 3.3.1
+Ôö£ÔöÇÔöÇ jsonpointer 5.0.1
+Ôö£ÔöÇÔö¼ markdown-it 14.1.0
+Ôöé Ôö£ÔöÇÔöÇ argparse 2.0.1
+Ôöé Ôö£ÔöÇÔöÇ entities 4.5.0
+Ôöé Ôö£ÔöÇÔöÇ linkify-it 5.0.0
+Ôöé Ôö£ÔöÇÔöÇ mdurl 2.0.0
+Ôöé Ôö£ÔöÇÔöÇ punycode.js 2.3.1
+Ôöé ÔööÔöÇÔöÇ uc.micro 2.1.0
+Ôö£ÔöÇÔö¼ markdownlint 0.38.0
+Ôöé Ôö£ÔöÇÔöÇ micromark 4.0.2
+Ôöé Ôö£ÔöÇÔöÇ micromark-core-commonmark 2.0.3
+Ôöé Ôö£ÔöÇÔöÇ micromark-extension-directive 4.0.0
+Ôöé Ôö£ÔöÇÔöÇ micromark-extension-gfm-autolink-literal 2.1.0
+Ôöé Ôö£ÔöÇÔöÇ micromark-extension-gfm-footnote 2.1.0
+Ôöé Ôö£ÔöÇÔöÇ micromark-extension-gfm-table 2.1.1
+Ôöé Ôö£ÔöÇÔöÇ micromark-extension-math 3.1.0
+Ôöé ÔööÔöÇÔöÇ micromark-util-types 2.0.2
+Ôö£ÔöÇÔö¼ minimatch 10.0.3
+Ôöé ÔööÔöÇÔöÇ @isaacs/brace-expansion 5.0.0
+Ôö£ÔöÇÔö¼ run-con 1.3.2
+Ôöé Ôö£ÔöÇÔöÇ deep-extend 0.6.0
+Ôöé Ôö£ÔöÇÔöÇ ini 4.1.3
+Ôöé Ôö£ÔöÇÔöÇ minimist 1.2.8
+Ôöé ÔööÔöÇÔöÇ strip-json-comments 3.1.1
+ÔööÔöÇÔöÇ smol-toml 1.3.4
+prettier 3.6.2
+prom-client 15.1.3
+Ôö£ÔöÇÔöÇ @opentelemetry/api 1.9.0
+ÔööÔöÇÔö¼ tdigest 0.1.2
+  ÔööÔöÇÔöÇ bintrees 1.0.2
+prometheus-client 0.1.1
+Ôö£ÔöÇÔö¼ debug 2.1.3
+Ôöé ÔööÔöÇÔöÇ ms 0.7.0
+Ôö£ÔöÇÔö¼ express 4.12.4
+Ôöé Ôö£ÔöÇÔöÇ accepts 1.2.13
+Ôöé Ôö£ÔöÇÔöÇ content-disposition 0.5.0
+Ôöé Ôö£ÔöÇÔöÇ content-type 1.0.5
+Ôöé Ôö£ÔöÇÔöÇ cookie 0.1.2
+Ôöé Ôö£ÔöÇÔöÇ cookie-signature 1.0.6
+Ôöé Ôö£ÔöÇÔöÇ debug 2.2.0
+Ôöé Ôö£ÔöÇÔöÇ depd 1.0.1
+Ôöé Ôö£ÔöÇÔöÇ escape-html 1.0.1
+Ôöé Ôö£ÔöÇÔöÇ etag 1.6.0
+Ôöé Ôö£ÔöÇÔöÇ finalhandler 0.3.6
+Ôöé Ôö£ÔöÇÔöÇ fresh 0.2.4
+Ôöé Ôö£ÔöÇÔöÇ merge-descriptors 1.0.0
+Ôöé Ôö£ÔöÇÔöÇ methods 1.1.2
+Ôöé Ôö£ÔöÇÔöÇ on-finished 2.2.1
+Ôöé Ôö£ÔöÇÔöÇ parseurl 1.3.3
+Ôöé Ôö£ÔöÇÔöÇ path-to-regexp 0.1.3
+Ôöé Ôö£ÔöÇÔöÇ proxy-addr 1.0.10
+Ôöé Ôö£ÔöÇÔöÇ qs 2.4.2
+Ôöé Ôö£ÔöÇÔöÇ range-parser 1.0.3
+Ôöé Ôö£ÔöÇÔöÇ send 0.12.3
+Ôöé Ôö£ÔöÇÔöÇ serve-static 1.9.3
+Ôöé Ôö£ÔöÇÔöÇ type-is 1.6.18
+Ôöé Ôö£ÔöÇÔöÇ utils-merge 1.0.0
+Ôöé ÔööÔöÇÔöÇ vary 1.0.1
+Ôö£ÔöÇÔöÇ object-hash 0.5.0
+ÔööÔöÇÔöÇ underscore 1.7.0
+semgrep 0.0.1
+size-limit 11.2.0
+Ôö£ÔöÇÔöÇ bytes-iec 3.1.1
+Ôö£ÔöÇÔö¼ chokidar 4.0.3
+Ôöé ÔööÔöÇÔöÇ readdirp 4.1.2
+Ôö£ÔöÇÔöÇ jiti 2.6.1
+Ôö£ÔöÇÔöÇ lilconfig 3.1.3
+Ôö£ÔöÇÔö¼ nanospinner 1.2.2
+Ôöé ÔööÔöÇÔöÇ picocolors 1.1.1
+Ôö£ÔöÇÔöÇ picocolors 1.1.1
+ÔööÔöÇÔö¼ tinyglobby 0.2.15
+  Ôö£ÔöÇÔöÇ fdir 6.5.0
+  ÔööÔöÇÔöÇ picomatch 4.0.3
+supertest 7.1.4
+Ôö£ÔöÇÔöÇ methods 1.1.2
+ÔööÔöÇÔö¼ superagent 10.2.3
+  Ôö£ÔöÇÔöÇ component-emitter 1.3.1
+  Ôö£ÔöÇÔöÇ cookiejar 2.1.4
+  Ôö£ÔöÇÔöÇ debug 4.4.3
+  Ôö£ÔöÇÔöÇ fast-safe-stringify 2.1.1
+  Ôö£ÔöÇÔöÇ form-data 4.0.4
+  Ôö£ÔöÇÔöÇ formidable 3.5.4
+  Ôö£ÔöÇÔöÇ methods 1.1.2
+  Ôö£ÔöÇÔöÇ mime 2.6.0
+  ÔööÔöÇÔöÇ qs 6.14.0
+ts-jest 29.4.4
+Ôö£ÔöÇÔö¼ @babel/core 7.28.4 peer
+Ôöé Ôö£ÔöÇÔöÇ @babel/code-frame 7.27.1
+Ôöé Ôö£ÔöÇÔöÇ @babel/generator 7.28.3
+Ôöé Ôö£ÔöÇÔöÇ @babel/helper-compilation-targets 7.27.2
+Ôöé Ôö£ÔöÇÔöÇ @babel/helper-module-transforms 7.28.3
+Ôöé Ôö£ÔöÇÔöÇ @babel/helpers 7.28.4
+Ôöé Ôö£ÔöÇÔöÇ @babel/parser 7.28.4
+Ôöé Ôö£ÔöÇÔöÇ @babel/template 7.27.2
+Ôöé Ôö£ÔöÇÔöÇ @babel/traverse 7.28.4
+Ôöé Ôö£ÔöÇÔöÇ @babel/types 7.28.4
+Ôöé Ôö£ÔöÇÔöÇ @jridgewell/remapping 2.3.5
+Ôöé Ôö£ÔöÇÔöÇ convert-source-map 2.0.0
+Ôöé Ôö£ÔöÇÔöÇ debug 4.4.3
+Ôöé Ôö£ÔöÇÔöÇ gensync 1.0.0-beta.2
+Ôöé Ôö£ÔöÇÔöÇ json5 2.2.3
+Ôöé ÔööÔöÇÔöÇ semver 6.3.1
+Ôö£ÔöÇÔö¼ @jest/transform 30.2.0 peer
+Ôöé Ôö£ÔöÇÔöÇ @babel/core 7.28.4
+Ôöé Ôö£ÔöÇÔöÇ @jest/types 30.2.0
+Ôöé Ôö£ÔöÇÔöÇ @jridgewell/trace-mapping 0.3.31
+Ôöé Ôö£ÔöÇÔöÇ babel-plugin-istanbul 7.0.1
+Ôöé Ôö£ÔöÇÔöÇ chalk 4.1.2
+Ôöé Ôö£ÔöÇÔöÇ convert-source-map 2.0.0
+Ôöé Ôö£ÔöÇÔöÇ fast-json-stable-stringify 2.1.0
+Ôöé Ôö£ÔöÇÔöÇ graceful-fs 4.2.11
+Ôöé Ôö£ÔöÇÔöÇ jest-haste-map 30.2.0
+Ôöé Ôö£ÔöÇÔöÇ jest-regex-util 30.0.1
+Ôöé Ôö£ÔöÇÔöÇ jest-util 30.2.0
+Ôöé Ôö£ÔöÇÔöÇ micromatch 4.0.8
+Ôöé Ôö£ÔöÇÔöÇ pirates 4.0.7
+Ôöé Ôö£ÔöÇÔöÇ slash 3.0.0
+Ôöé ÔööÔöÇÔöÇ write-file-atomic 5.0.1
+Ôö£ÔöÇÔö¼ @jest/types 30.2.0 peer
+Ôöé Ôö£ÔöÇÔöÇ @jest/pattern 30.0.1
+Ôöé Ôö£ÔöÇÔöÇ @jest/schemas 30.0.5
+Ôöé Ôö£ÔöÇÔöÇ @types/istanbul-lib-coverage 2.0.6
+Ôöé Ôö£ÔöÇÔöÇ @types/istanbul-reports 3.0.4
+Ôöé Ôö£ÔöÇÔöÇ @types/node 24.6.1
+Ôöé Ôö£ÔöÇÔöÇ @types/yargs 17.0.33
+Ôöé ÔööÔöÇÔöÇ chalk 4.1.2
+Ôö£ÔöÇÔö¼ babel-jest 30.2.0 peer
+Ôöé Ôö£ÔöÇÔöÇ @babel/core 7.28.4 peer
+Ôöé Ôö£ÔöÇÔöÇ @jest/transform 30.2.0
+Ôöé Ôö£ÔöÇÔöÇ @types/babel__core 7.20.5
+Ôöé Ôö£ÔöÇÔöÇ babel-plugin-istanbul 7.0.1
+Ôöé Ôö£ÔöÇÔöÇ babel-preset-jest 30.2.0
+Ôöé Ôö£ÔöÇÔöÇ chalk 4.1.2
+Ôöé Ôö£ÔöÇÔöÇ graceful-fs 4.2.11
+Ôöé ÔööÔöÇÔöÇ slash 3.0.0
+Ôö£ÔöÇÔö¼ bs-logger 0.2.6
+Ôöé ÔööÔöÇÔöÇ fast-json-stable-stringify 2.1.0
+Ôö£ÔöÇÔö¼ esbuild 0.25.10 peer
+Ôöé Ôö£ÔöÇÔöÇ @esbuild/aix-ppc64 0.25.10
+Ôöé Ôö£ÔöÇÔöÇ @esbuild/android-arm 0.25.10
+Ôöé Ôö£ÔöÇÔöÇ @esbuild/android-arm64 0.25.10
+Ôöé Ôö£ÔöÇÔöÇ @esbuild/android-x64 0.25.10
+Ôöé Ôö£ÔöÇÔöÇ @esbuild/darwin-arm64 0.25.10
+Ôöé Ôö£ÔöÇÔöÇ @esbuild/darwin-x64 0.25.10
+Ôöé Ôö£ÔöÇÔöÇ @esbuild/freebsd-arm64 0.25.10
+Ôöé Ôö£ÔöÇÔöÇ @esbuild/freebsd-x64 0.25.10
+Ôöé Ôö£ÔöÇÔöÇ @esbuild/linux-arm 0.25.10
+Ôöé Ôö£ÔöÇÔöÇ @esbuild/linux-arm64 0.25.10
+Ôöé Ôö£ÔöÇÔöÇ @esbuild/linux-ia32 0.25.10
+Ôöé Ôö£ÔöÇÔöÇ @esbuild/linux-loong64 0.25.10
+Ôöé Ôö£ÔöÇÔöÇ @esbuild/linux-mips64el 0.25.10
+Ôöé Ôö£ÔöÇÔöÇ @esbuild/linux-ppc64 0.25.10
+Ôöé Ôö£ÔöÇÔöÇ @esbuild/linux-riscv64 0.25.10
+Ôöé Ôö£ÔöÇÔöÇ @esbuild/linux-s390x 0.25.10
+Ôöé Ôö£ÔöÇÔöÇ @esbuild/linux-x64 0.25.10
+Ôöé Ôö£ÔöÇÔöÇ @esbuild/netbsd-arm64 0.25.10
+Ôöé Ôö£ÔöÇÔöÇ @esbuild/netbsd-x64 0.25.10
+Ôöé Ôö£ÔöÇÔöÇ @esbuild/openbsd-arm64 0.25.10
+Ôöé Ôö£ÔöÇÔöÇ @esbuild/openbsd-x64 0.25.10
+Ôöé Ôö£ÔöÇÔöÇ @esbuild/openharmony-arm64 0.25.10
+Ôöé Ôö£ÔöÇÔöÇ @esbuild/sunos-x64 0.25.10
+Ôöé Ôö£ÔöÇÔöÇ @esbuild/win32-arm64 0.25.10
+Ôöé Ôö£ÔöÇÔöÇ @esbuild/win32-ia32 0.25.10
+Ôöé ÔööÔöÇÔöÇ @esbuild/win32-x64 0.25.10
+Ôö£ÔöÇÔöÇ fast-json-stable-stringify 2.1.0
+Ôö£ÔöÇÔö¼ handlebars 4.7.8
+Ôöé Ôö£ÔöÇÔöÇ minimist 1.2.8
+Ôöé Ôö£ÔöÇÔöÇ neo-async 2.6.2
+Ôöé Ôö£ÔöÇÔöÇ source-map 0.6.1
+Ôöé Ôö£ÔöÇÔöÇ uglify-js 3.19.3
+Ôöé ÔööÔöÇÔöÇ wordwrap 1.0.0
+Ôö£ÔöÇÔö¼ jest 30.2.0 peer
+Ôöé Ôö£ÔöÇÔöÇ @jest/core 30.2.0
+Ôöé Ôö£ÔöÇÔöÇ @jest/types 30.2.0
+Ôöé Ôö£ÔöÇÔöÇ import-local 3.2.0
+Ôöé ÔööÔöÇÔöÇ jest-cli 30.2.0
+Ôö£ÔöÇÔö¼ jest-util 30.2.0 peer
+Ôöé Ôö£ÔöÇÔöÇ @jest/types 30.2.0
+Ôöé Ôö£ÔöÇÔöÇ @types/node 24.6.1
+Ôöé Ôö£ÔöÇÔöÇ chalk 4.1.2
+Ôöé Ôö£ÔöÇÔöÇ ci-info 4.3.0
+Ôöé Ôö£ÔöÇÔöÇ graceful-fs 4.2.11
+Ôöé ÔööÔöÇÔöÇ picomatch 4.0.3
+Ôö£ÔöÇÔöÇ json5 2.2.3
+Ôö£ÔöÇÔöÇ lodash.memoize 4.1.2
+Ôö£ÔöÇÔöÇ make-error 1.3.6
+Ôö£ÔöÇÔöÇ semver 7.7.2
+Ôö£ÔöÇÔöÇ type-fest 4.41.0
+Ôö£ÔöÇÔöÇ typescript 5.9.3 peer
+ÔööÔöÇÔöÇ yargs-parser 21.1.1
+tsup 8.5.0
+Ôö£ÔöÇÔö¼ bundle-require 5.1.0
+Ôöé Ôö£ÔöÇÔöÇ esbuild 0.25.10 peer
+Ôöé ÔööÔöÇÔöÇ load-tsconfig 0.2.5
+Ôö£ÔöÇÔöÇ cac 6.7.14
+Ôö£ÔöÇÔö¼ chokidar 4.0.3
+Ôöé ÔööÔöÇÔöÇ readdirp 4.1.2
+Ôö£ÔöÇÔöÇ consola 3.4.2
+Ôö£ÔöÇÔö¼ debug 4.4.3
+Ôöé ÔööÔöÇÔöÇ ms 2.1.3
+Ôö£ÔöÇÔö¼ esbuild 0.25.10
+Ôöé Ôö£ÔöÇÔöÇ @esbuild/aix-ppc64 0.25.10
+Ôöé Ôö£ÔöÇÔöÇ @esbuild/android-arm 0.25.10
+Ôöé Ôö£ÔöÇÔöÇ @esbuild/android-arm64 0.25.10
+Ôöé Ôö£ÔöÇÔöÇ @esbuild/android-x64 0.25.10
+Ôöé Ôö£ÔöÇÔöÇ @esbuild/darwin-arm64 0.25.10
+Ôöé Ôö£ÔöÇÔöÇ @esbuild/darwin-x64 0.25.10
+Ôöé Ôö£ÔöÇÔöÇ @esbuild/freebsd-arm64 0.25.10
+Ôöé Ôö£ÔöÇÔöÇ @esbuild/freebsd-x64 0.25.10
+Ôöé Ôö£ÔöÇÔöÇ @esbuild/linux-arm 0.25.10
+Ôöé Ôö£ÔöÇÔöÇ @esbuild/linux-arm64 0.25.10
+Ôöé Ôö£ÔöÇÔöÇ @esbuild/linux-ia32 0.25.10
+Ôöé Ôö£ÔöÇÔöÇ @esbuild/linux-loong64 0.25.10
+Ôöé Ôö£ÔöÇÔöÇ @esbuild/linux-mips64el 0.25.10
+Ôöé Ôö£ÔöÇÔöÇ @esbuild/linux-ppc64 0.25.10
+Ôöé Ôö£ÔöÇÔöÇ @esbuild/linux-riscv64 0.25.10
+Ôöé Ôö£ÔöÇÔöÇ @esbuild/linux-s390x 0.25.10
+Ôöé Ôö£ÔöÇÔöÇ @esbuild/linux-x64 0.25.10
+Ôöé Ôö£ÔöÇÔöÇ @esbuild/netbsd-arm64 0.25.10
+Ôöé Ôö£ÔöÇÔöÇ @esbuild/netbsd-x64 0.25.10
+Ôöé Ôö£ÔöÇÔöÇ @esbuild/openbsd-arm64 0.25.10
+Ôöé Ôö£ÔöÇÔöÇ @esbuild/openbsd-x64 0.25.10
+Ôöé Ôö£ÔöÇÔöÇ @esbuild/openharmony-arm64 0.25.10
+Ôöé Ôö£ÔöÇÔöÇ @esbuild/sunos-x64 0.25.10
+Ôöé Ôö£ÔöÇÔöÇ @esbuild/win32-arm64 0.25.10
+Ôöé Ôö£ÔöÇÔöÇ @esbuild/win32-ia32 0.25.10
+Ôöé ÔööÔöÇÔöÇ @esbuild/win32-x64 0.25.10
+Ôö£ÔöÇÔö¼ fix-dts-default-cjs-exports 1.0.1
+Ôöé Ôö£ÔöÇÔöÇ magic-string 0.30.19
+Ôöé Ôö£ÔöÇÔöÇ mlly 1.8.0
+Ôöé ÔööÔöÇÔöÇ rollup 4.52.3
+Ôö£ÔöÇÔöÇ joycon 3.1.1
+Ôö£ÔöÇÔöÇ picocolors 1.1.1
+Ôö£ÔöÇÔö¼ postcss 8.5.6 peer
+Ôöé Ôö£ÔöÇÔöÇ nanoid 3.3.11
+Ôöé Ôö£ÔöÇÔöÇ picocolors 1.1.1
+Ôöé ÔööÔöÇÔöÇ source-map-js 1.2.1
+Ôö£ÔöÇÔö¼ postcss-load-config 6.0.1
+Ôöé Ôö£ÔöÇÔöÇ jiti 2.6.1 peer
+Ôöé Ôö£ÔöÇÔöÇ lilconfig 3.1.3
+Ôöé ÔööÔöÇÔöÇ postcss 8.5.6 peer
+Ôö£ÔöÇÔöÇ resolve-from 5.0.0
+Ôö£ÔöÇÔö¼ rollup 4.52.3
+Ôöé Ôö£ÔöÇÔöÇ @rollup/rollup-android-arm-eabi 4.52.3
+Ôöé Ôö£ÔöÇÔöÇ @rollup/rollup-android-arm64 4.52.3
+Ôöé Ôö£ÔöÇÔöÇ @rollup/rollup-darwin-arm64 4.52.3
+Ôöé Ôö£ÔöÇÔöÇ @rollup/rollup-darwin-x64 4.52.3
+Ôöé Ôö£ÔöÇÔöÇ @rollup/rollup-freebsd-arm64 4.52.3
+Ôöé Ôö£ÔöÇÔöÇ @rollup/rollup-freebsd-x64 4.52.3
+Ôöé Ôö£ÔöÇÔöÇ @rollup/rollup-linux-arm-gnueabihf 4.52.3
+Ôöé Ôö£ÔöÇÔöÇ @rollup/rollup-linux-arm-musleabihf 4.52.3
+Ôöé Ôö£ÔöÇÔöÇ @rollup/rollup-linux-arm64-gnu 4.52.3
+Ôöé Ôö£ÔöÇÔöÇ @rollup/rollup-linux-arm64-musl 4.52.3
+Ôöé Ôö£ÔöÇÔöÇ @rollup/rollup-linux-loong64-gnu 4.52.3
+Ôöé Ôö£ÔöÇÔöÇ @rollup/rollup-linux-ppc64-gnu 4.52.3
+Ôöé Ôö£ÔöÇÔöÇ @rollup/rollup-linux-riscv64-gnu 4.52.3
+Ôöé Ôö£ÔöÇÔöÇ @rollup/rollup-linux-riscv64-musl 4.52.3
+Ôöé Ôö£ÔöÇÔöÇ @rollup/rollup-linux-s390x-gnu 4.52.3
+Ôöé Ôö£ÔöÇÔöÇ @rollup/rollup-linux-x64-gnu 4.52.3
+Ôöé Ôö£ÔöÇÔöÇ @rollup/rollup-linux-x64-musl 4.52.3
+Ôöé Ôö£ÔöÇÔöÇ @rollup/rollup-openharmony-arm64 4.52.3
+Ôöé Ôö£ÔöÇÔöÇ @rollup/rollup-win32-arm64-msvc 4.52.3
+Ôöé Ôö£ÔöÇÔöÇ @rollup/rollup-win32-ia32-msvc 4.52.3
+Ôöé Ôö£ÔöÇÔöÇ @rollup/rollup-win32-x64-gnu 4.52.3
+Ôöé Ôö£ÔöÇÔöÇ @rollup/rollup-win32-x64-msvc 4.52.3
+Ôöé Ôö£ÔöÇÔöÇ @types/estree 1.0.8
+Ôöé ÔööÔöÇÔöÇ fsevents 2.3.3
+Ôö£ÔöÇÔö¼ source-map 0.8.0-beta.0
+Ôöé ÔööÔöÇÔöÇ whatwg-url 7.1.0
+Ôö£ÔöÇÔö¼ sucrase 3.35.0
+Ôöé Ôö£ÔöÇÔöÇ @jridgewell/gen-mapping 0.3.13
+Ôöé Ôö£ÔöÇÔöÇ commander 4.1.1
+Ôöé Ôö£ÔöÇÔöÇ glob 10.4.5
+Ôöé Ôö£ÔöÇÔöÇ lines-and-columns 1.2.4
+Ôöé Ôö£ÔöÇÔöÇ mz 2.7.0
+Ôöé Ôö£ÔöÇÔöÇ pirates 4.0.7
+Ôöé ÔööÔöÇÔöÇ ts-interface-checker 0.1.13
+Ôö£ÔöÇÔöÇ tinyexec 0.3.2
+Ôö£ÔöÇÔö¼ tinyglobby 0.2.15
+Ôöé Ôö£ÔöÇÔöÇ fdir 6.5.0
+Ôöé ÔööÔöÇÔöÇ picomatch 4.0.3
+Ôö£ÔöÇÔöÇ tree-kill 1.2.2
+ÔööÔöÇÔöÇ typescript 5.9.3 peer
+turbo 2.5.8
+Ôö£ÔöÇÔöÇ turbo-darwin-64 2.5.8
+Ôö£ÔöÇÔöÇ turbo-darwin-arm64 2.5.8
+Ôö£ÔöÇÔöÇ turbo-linux-64 2.5.8
+Ôö£ÔöÇÔöÇ turbo-linux-arm64 2.5.8
+Ôö£ÔöÇÔöÇ turbo-windows-64 2.5.8
+ÔööÔöÇÔöÇ turbo-windows-arm64 2.5.8
+typescript 5.9.3
+vite 7.1.7
+Ôö£ÔöÇÔö¼ @types/node 24.6.1 peer
+Ôöé ÔööÔöÇÔöÇ undici-types 7.13.0
+Ôö£ÔöÇÔö¼ esbuild 0.25.10
+Ôöé Ôö£ÔöÇÔöÇ @esbuild/aix-ppc64 0.25.10
+Ôöé Ôö£ÔöÇÔöÇ @esbuild/android-arm 0.25.10
+Ôöé Ôö£ÔöÇÔöÇ @esbuild/android-arm64 0.25.10
+Ôöé Ôö£ÔöÇÔöÇ @esbuild/android-x64 0.25.10
+Ôöé Ôö£ÔöÇÔöÇ @esbuild/darwin-arm64 0.25.10
+Ôöé Ôö£ÔöÇÔöÇ @esbuild/darwin-x64 0.25.10
+Ôöé Ôö£ÔöÇÔöÇ @esbuild/freebsd-arm64 0.25.10
+Ôöé Ôö£ÔöÇÔöÇ @esbuild/freebsd-x64 0.25.10
+Ôöé Ôö£ÔöÇÔöÇ @esbuild/linux-arm 0.25.10
+Ôöé Ôö£ÔöÇÔöÇ @esbuild/linux-arm64 0.25.10
+Ôöé Ôö£ÔöÇÔöÇ @esbuild/linux-ia32 0.25.10
+Ôöé Ôö£ÔöÇÔöÇ @esbuild/linux-loong64 0.25.10
+Ôöé Ôö£ÔöÇÔöÇ @esbuild/linux-mips64el 0.25.10
+Ôöé Ôö£ÔöÇÔöÇ @esbuild/linux-ppc64 0.25.10
+Ôöé Ôö£ÔöÇÔöÇ @esbuild/linux-riscv64 0.25.10
+Ôöé Ôö£ÔöÇÔöÇ @esbuild/linux-s390x 0.25.10
+Ôöé Ôö£ÔöÇÔöÇ @esbuild/linux-x64 0.25.10
+Ôöé Ôö£ÔöÇÔöÇ @esbuild/netbsd-arm64 0.25.10
+Ôöé Ôö£ÔöÇÔöÇ @esbuild/netbsd-x64 0.25.10
+Ôöé Ôö£ÔöÇÔöÇ @esbuild/openbsd-arm64 0.25.10
+Ôöé Ôö£ÔöÇÔöÇ @esbuild/openbsd-x64 0.25.10
+Ôöé Ôö£ÔöÇÔöÇ @esbuild/openharmony-arm64 0.25.10
+Ôöé Ôö£ÔöÇÔöÇ @esbuild/sunos-x64 0.25.10
+Ôöé Ôö£ÔöÇÔöÇ @esbuild/win32-arm64 0.25.10
+Ôöé Ôö£ÔöÇÔöÇ @esbuild/win32-ia32 0.25.10
+Ôöé ÔööÔöÇÔöÇ @esbuild/win32-x64 0.25.10
+Ôö£ÔöÇÔö¼ fdir 6.5.0
+Ôöé ÔööÔöÇÔöÇ picomatch 4.0.3 peer
+Ôö£ÔöÇÔöÇ fsevents 2.3.3
+Ôö£ÔöÇÔöÇ jiti 2.6.1 peer
+Ôö£ÔöÇÔöÇ picomatch 4.0.3
+Ôö£ÔöÇÔö¼ postcss 8.5.6
+Ôöé Ôö£ÔöÇÔöÇ nanoid 3.3.11
+Ôöé Ôö£ÔöÇÔöÇ picocolors 1.1.1
+Ôöé ÔööÔöÇÔöÇ source-map-js 1.2.1
+Ôö£ÔöÇÔö¼ rollup 4.52.3
+Ôöé Ôö£ÔöÇÔöÇ @rollup/rollup-android-arm-eabi 4.52.3
+Ôöé Ôö£ÔöÇÔöÇ @rollup/rollup-android-arm64 4.52.3
+Ôöé Ôö£ÔöÇÔöÇ @rollup/rollup-darwin-arm64 4.52.3
+Ôöé Ôö£ÔöÇÔöÇ @rollup/rollup-darwin-x64 4.52.3
+Ôöé Ôö£ÔöÇÔöÇ @rollup/rollup-freebsd-arm64 4.52.3
+Ôöé Ôö£ÔöÇÔöÇ @rollup/rollup-freebsd-x64 4.52.3
+Ôöé Ôö£ÔöÇÔöÇ @rollup/rollup-linux-arm-gnueabihf 4.52.3
+Ôöé Ôö£ÔöÇÔöÇ @rollup/rollup-linux-arm-musleabihf 4.52.3
+Ôöé Ôö£ÔöÇÔöÇ @rollup/rollup-linux-arm64-gnu 4.52.3
+Ôöé Ôö£ÔöÇÔöÇ @rollup/rollup-linux-arm64-musl 4.52.3
+Ôöé Ôö£ÔöÇÔöÇ @rollup/rollup-linux-loong64-gnu 4.52.3
+Ôöé Ôö£ÔöÇÔöÇ @rollup/rollup-linux-ppc64-gnu 4.52.3
+Ôöé Ôö£ÔöÇÔöÇ @rollup/rollup-linux-riscv64-gnu 4.52.3
+Ôöé Ôö£ÔöÇÔöÇ @rollup/rollup-linux-riscv64-musl 4.52.3
+Ôöé Ôö£ÔöÇÔöÇ @rollup/rollup-linux-s390x-gnu 4.52.3
+Ôöé Ôö£ÔöÇÔöÇ @rollup/rollup-linux-x64-gnu 4.52.3
+Ôöé Ôö£ÔöÇÔöÇ @rollup/rollup-linux-x64-musl 4.52.3
+Ôöé Ôö£ÔöÇÔöÇ @rollup/rollup-openharmony-arm64 4.52.3
+Ôöé Ôö£ÔöÇÔöÇ @rollup/rollup-win32-arm64-msvc 4.52.3
+Ôöé Ôö£ÔöÇÔöÇ @rollup/rollup-win32-ia32-msvc 4.52.3
+Ôöé Ôö£ÔöÇÔöÇ @rollup/rollup-win32-x64-gnu 4.52.3
+Ôöé Ôö£ÔöÇÔöÇ @rollup/rollup-win32-x64-msvc 4.52.3
+Ôöé Ôö£ÔöÇÔöÇ @types/estree 1.0.8
+Ôöé ÔööÔöÇÔöÇ fsevents 2.3.3
+ÔööÔöÇÔö¼ tinyglobby 0.2.15
+  Ôö£ÔöÇÔöÇ fdir 6.5.0
+  ÔööÔöÇÔöÇ picomatch 4.0.3
+vitest 3.2.4
+Ôö£ÔöÇÔö¼ @types/chai 5.2.2
+Ôöé ÔööÔöÇÔöÇ @types/deep-eql 4.0.2
+Ôö£ÔöÇÔö¼ @types/debug 4.1.12 peer
+Ôöé ÔööÔöÇÔöÇ @types/ms 2.1.0
+Ôö£ÔöÇÔö¼ @types/node 24.6.1 peer
+Ôöé ÔööÔöÇÔöÇ undici-types 7.13.0
+Ôö£ÔöÇÔö¼ @vitest/expect 3.2.4
+Ôöé Ôö£ÔöÇÔöÇ @types/chai 5.2.2
+Ôöé Ôö£ÔöÇÔöÇ @vitest/spy 3.2.4
+Ôöé Ôö£ÔöÇÔöÇ @vitest/utils 3.2.4
+Ôöé Ôö£ÔöÇÔöÇ chai 5.3.3
+Ôöé ÔööÔöÇÔöÇ tinyrainbow 2.0.0
+Ôö£ÔöÇÔö¼ @vitest/mocker 3.2.4
+Ôöé Ôö£ÔöÇÔöÇ @vitest/spy 3.2.4
+Ôöé Ôö£ÔöÇÔöÇ estree-walker 3.0.3
+Ôöé Ôö£ÔöÇÔöÇ magic-string 0.30.19
+Ôöé ÔööÔöÇÔöÇ vite 7.1.7 peer
+Ôö£ÔöÇÔö¼ @vitest/pretty-format 3.2.4
+Ôöé ÔööÔöÇÔöÇ tinyrainbow 2.0.0
+Ôö£ÔöÇÔö¼ @vitest/runner 3.2.4
+Ôöé Ôö£ÔöÇÔöÇ @vitest/utils 3.2.4
+Ôöé Ôö£ÔöÇÔöÇ pathe 2.0.3
+Ôöé ÔööÔöÇÔöÇ strip-literal 3.1.0
+Ôö£ÔöÇÔö¼ @vitest/snapshot 3.2.4
+Ôöé Ôö£ÔöÇÔöÇ @vitest/pretty-format 3.2.4
+Ôöé Ôö£ÔöÇÔöÇ magic-string 0.30.19
+Ôöé ÔööÔöÇÔöÇ pathe 2.0.3
+Ôö£ÔöÇÔö¼ @vitest/spy 3.2.4
+Ôöé ÔööÔöÇÔöÇ tinyspy 4.0.4
+Ôö£ÔöÇÔö¼ @vitest/utils 3.2.4
+Ôöé Ôö£ÔöÇÔöÇ @vitest/pretty-format 3.2.4
+Ôöé Ôö£ÔöÇÔöÇ loupe 3.2.1
+Ôöé ÔööÔöÇÔöÇ tinyrainbow 2.0.0
+Ôö£ÔöÇÔö¼ chai 5.3.3
+Ôöé Ôö£ÔöÇÔöÇ assertion-error 2.0.1
+Ôöé Ôö£ÔöÇÔöÇ check-error 2.1.1
+Ôöé Ôö£ÔöÇÔöÇ deep-eql 5.0.2
+Ôöé Ôö£ÔöÇÔöÇ loupe 3.2.1
+Ôöé ÔööÔöÇÔöÇ pathval 2.0.1
+Ôö£ÔöÇÔö¼ debug 4.4.3
+Ôöé ÔööÔöÇÔöÇ ms 2.1.3
+Ôö£ÔöÇÔöÇ expect-type 1.2.2
+Ôö£ÔöÇÔö¼ magic-string 0.30.19
+Ôöé ÔööÔöÇÔöÇ @jridgewell/sourcemap-codec 1.5.5
+Ôö£ÔöÇÔöÇ pathe 2.0.3
+Ôö£ÔöÇÔöÇ picomatch 4.0.3
+Ôö£ÔöÇÔöÇ std-env 3.9.0
+Ôö£ÔöÇÔöÇ tinybench 2.9.0
+Ôö£ÔöÇÔöÇ tinyexec 0.3.2
+Ôö£ÔöÇÔö¼ tinyglobby 0.2.15
+Ôöé Ôö£ÔöÇÔöÇ fdir 6.5.0
+Ôöé ÔööÔöÇÔöÇ picomatch 4.0.3
+Ôö£ÔöÇÔöÇ tinypool 1.1.1
+Ôö£ÔöÇÔöÇ tinyrainbow 2.0.0
+Ôö£ÔöÇÔö¼ vite 7.1.7
+Ôöé Ôö£ÔöÇÔöÇ @types/node 24.6.1 peer
+Ôöé Ôö£ÔöÇÔöÇ esbuild 0.25.10
+Ôöé Ôö£ÔöÇÔöÇ fdir 6.5.0
+Ôöé Ôö£ÔöÇÔöÇ fsevents 2.3.3
+Ôöé Ôö£ÔöÇÔöÇ jiti 2.6.1 peer
+Ôöé Ôö£ÔöÇÔöÇ picomatch 4.0.3
+Ôöé Ôö£ÔöÇÔöÇ postcss 8.5.6
+Ôöé Ôö£ÔöÇÔöÇ rollup 4.52.3
+Ôöé ÔööÔöÇÔöÇ tinyglobby 0.2.15
+Ôö£ÔöÇÔö¼ vite-node 3.2.4
+Ôöé Ôö£ÔöÇÔöÇ cac 6.7.14
+Ôöé Ôö£ÔöÇÔöÇ debug 4.4.3
+Ôöé Ôö£ÔöÇÔöÇ es-module-lexer 1.7.0
+Ôöé Ôö£ÔöÇÔöÇ pathe 2.0.3
+Ôöé ÔööÔöÇÔöÇ vite 7.1.7
+ÔööÔöÇÔö¼ why-is-node-running 2.3.0
+  Ôö£ÔöÇÔöÇ siginfo 2.0.0
+  ÔööÔöÇÔöÇ stackback 0.0.2

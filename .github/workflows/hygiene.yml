@@ -1,0 +1,104 @@
+name: Hygiene Gate
+
+on:
+  schedule:
+    - cron: '0 0 * * 0' # Weekly, Sunday midnight UTC
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  hygiene:
+    continue-on-error: false
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+
+      - name: Install dependencies
+        run: |
+          npm install -g markdownlint-cli
+          pnpm install
+
+      - name: Run hygiene checks
+        id: hygiene-check
+        run: |
+          set -e
+          node scripts/hygiene-auto-repair.mjs --dry-run || true
+          node scripts/hygiene-auto-repair.mjs --detect-only > hygiene-violations.txt || true
+          if [ -s hygiene-violations.txt ]; then
+            echo "violations=true" >> $GITHUB_OUTPUT
+          else
+            echo "violations=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Auto-repair hygiene violations
+        if: steps.hygiene-check.outputs.violations == 'true'
+        run: |
+          node scripts/hygiene-auto-repair.mjs
+
+      - name: Commit and push auto-repair branch
+        if: steps.hygiene-check.outputs.violations == 'true'
+        id: commit-auto-repair
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git config user.name "odavl-hygiene-bot"
+          git config user.email "bot@odavl.studio"
+          BRANCH=odavl/hygiene-fix-$(date +%Y%m%d)
+          echo "branch_name=$BRANCH" >> $GITHUB_OUTPUT
+          git checkout -b $BRANCH
+          git add reports/ scripts/ .github/workflows/hygiene.yml
+          git commit -m "Hygiene Auto-Repair: $(date +%Y-%m-%d)"
+      - name: Open PR for hygiene auto-repair
+        if: steps.hygiene-check.outputs.violations == 'true'
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ steps.commit-auto-repair.outputs.branch_name }}
+          title: "Hygiene Auto-Repair: $(date +%Y-%m-%d)"
+          body: |
+            Hygiene auto-repair detected and fixed hygiene violations.
+            See [auto-repair-log.md](reports/hygiene/auto-repair-log.md) and [auto-repair-summary.md](reports/hygiene/auto-repair-summary.md) for details.
+            Hygiene auto-repair detected and fixed hygiene violations.
+            See [auto-repair-log.md](reports/hygiene/auto-repair-log.md) and [auto-repair-summary.md](reports/hygiene/auto-repair-summary.md) for details.
+
+
+      - name: Lint final reports
+        run: |
+          markdownlint ./reports/final/*.md
+
+      - name: Generate hygiene attestation
+        run: |
+          node scripts/hygiene-attestation.mjs
+
+      - name: Upload attestation artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: hygiene-attestation
+          path: |
+            reports/hygiene/attestations/hygiene-*.json
+            reports/hygiene/attestations/hygiene-*.sig
+
+      - name: Commit attestation to repo
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git config user.name "odavl-hygiene-bot"
+          git config user.email "bot@odavl.studio"
+          git add reports/hygiene/attestations/
+          git commit -m "Hygiene attestation: $(date +%Y-%m-%dT%H:%M)" || echo "No changes to commit"
+          git push || echo "No changes to push"
+
+      - name: Archive failures
+        if: failure()
+        run: |
+          mkdir -p ./reports/hygiene/hygiene-gate-failures
+          cp -r ./reports/final/*.md ./reports/hygiene/hygiene-gate-failures/ || true
+          cp ./reports/INDEX.md ./reports/hygiene/hygiene-gate-failures/ || true
+          echo "Hygiene gate failed at $(date -u)" > ./reports/hygiene/hygiene-gate-failures/FAILURE-$(date +%Y%m%d%H%M%S).txt

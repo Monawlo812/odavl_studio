@@ -1,0 +1,9 @@
+
+Count             : 31720
+Average           : 
+Sum               : 507779450
+Maximum           : 
+Minimum           : 
+StandardDeviation : 
+Property          : Length
+

@@ -1,0 +1,32 @@
+ARCHIVED — Superseded by ../../final/HYGIENE_ALL_IN_ONE.md
+{
+  "excludedFiles": [
+    ".turbo/cache/",
+    ".turbo/cookies/",
+    "node_modules/.bin/",
+    ".vscode/settings.json",
+    "tsconfig.tsbuildinfo",
+    "$OUT/",
+    "antibodies/",
+    "coverage/",
+    "clover.xml",
+    "lcov.info",
+    "build.log",
+    "lint.log",
+    "test.log",
+    "typecheck.log"
+  ],
+  "results": {
+    "build": "PASS",
+    "typecheck": "PASS",
+    "lint": "PASS",
+    "tests": "PASS",
+    "coverage": "PASS",
+    "sbom": "PASS",
+    "osv": "PASS",
+    "gitleaks": "PASS",
+    "ci": "PASS"
+  },
+  "failures": [],
+  "escalatedToSafeHold": []
+}

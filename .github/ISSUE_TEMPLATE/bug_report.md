@@ -1,29 +1,39 @@
----
+Bug Report
+==========
+
 name: Bug report
 about: Help us fix a problem
 labels: bug
 ---
 
-## Summary
+Summary
+-------
 
 <!-- Short description -->
 
-## Steps to Reproduce
+Steps to Reproduce
+------------------
 
-1. 2. 3.
+1. Step one
+1. Step two
+1. Step three
 
-## Expected vs Actual
+Expected vs Actual
+------------------
 
 **Expected:** | **Actual:**
 
-## Logs / Screens
+Logs / Screens
+--------------
 
 Attach relevant logs (from reports/) and screenshots/GIFs.
 
-## Env
+Env
+---
 
 **OS:** | **Node:** | **Package version:** | **CI/Runner:**
 
-## Related
+Related
+-------
 
 Links/PRs/Commits:

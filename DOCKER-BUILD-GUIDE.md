@@ -4,9 +4,9 @@
 
 Docker must be installed on your system. If not installed:
 
-- Windows: Download Docker Desktop from https://docker.com/products/docker-desktop
-- Linux: Install Docker Engine
-- macOS: Download Docker Desktop
+Windows: Download Docker Desktop from [https://docker.com/products/docker-desktop](https://docker.com/products/docker-desktop)
+Linux: Install Docker Engine
+macOS: Download Docker Desktop
 
 ## 🚀 Docker Commands
 
@@ -41,19 +41,19 @@ docker push ghcr.io/monawlo812/odavl-runner:0.3.0
 
 ## 📋 Docker Image Details
 
-### Multi-stage Build Structure:
+### Multi-stage Build Structure
 
 - **Stage 1 (builder)**: Node.js 20 Alpine with pnpm
 - **Stage 2 (runner)**: Lightweight production image
 - **Final Size**: Optimized for production deployment
 
-### Image Contents:
+### Image Contents
 
 - ODAVL CLI built and ready
 - All dependencies included
 - Entry point configured for CLI usage
 
-### Usage Examples:
+### Usage Examples
 
 ```bash
 # Run ODAVL CLI scan
@@ -80,4 +80,4 @@ docker run --rm -it -v $(pwd):/workspace ghcr.io/monawlo812/odavl-runner:0.3.0 /
 
 ---
 
-_Generated on ${new Date().toISOString()}_
+Generated on ${new Date().toISOString()}

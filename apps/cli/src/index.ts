@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #!/usr/bin/env node
 // ODAVL CLI placeholder
 import { spawn, spawnSync, execSync } from "child_process";
@@ -26,6 +27,29 @@ function startSpan(
     return { end(_ok: boolean, _extra?: any): void {} };
   }
 
+=======
+// --- ODAVL CLI: Additional imports for codemods and governor logic ---
+import { esmHygiene } from "@odavl/codemods/esmHygiene.ts";
+import { depsPatchMinor } from "@odavl/codemods/depsPatchMinor.ts";
+import { readGovernorConfig, currentUsage, decide } from "@odavl/policy";
+
+// #!/usr/bin/env node
+import { existsSync, mkdirSync, readdirSync, readFileSync, statSync, writeFileSync } from "fs";
+import path from "path";
+import { spawnSync, spawn, execSync } from "child_process";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Telemetry mode type alias
+type TelemetryMode = "off" | "on" | "anonymized";
+// Helper for telemetry span
+function startSpan(kind: string, mode: TelemetryMode, ctx?: { repo?: string; branch?: string }) {
+  if (mode === "off") {
+    return { end(_ok: boolean, _extra?: any): void {} };
+  }
+>>>>>>> 9fe4bd7 (chore: bootstrap ODAVL Studio repository)
   const startTime = Date.now();
   return {
     end(ok: boolean, extra?: any): void {
@@ -47,9 +71,12 @@ function startSpan(
   };
 }
 
+<<<<<<< HEAD
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+=======
+>>>>>>> 9fe4bd7 (chore: bootstrap ODAVL Studio repository)
 // Helper function to find JavaScript/TypeScript files
 function findJsTsFiles(rootDir: string): string[] {
   const files: string[] = [];
@@ -1593,7 +1620,11 @@ Evidence:
         ok: false,
         code: 1,
         out: "",
+<<<<<<< HEAD
         err: String((e && (e as any).message) || e),
+=======
+  err: String(e?.message || e),
+>>>>>>> 9fe4bd7 (chore: bootstrap ODAVL Studio repository)
       };
     }
   }

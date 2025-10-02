@@ -90,13 +90,11 @@ The **Magic** command provides a **one-click automated governance pipeline**:
 
 ### **File Structure**
 
-```
 apps/vscode-ext/
 ├── package.json              # Commands, menus, walkthroughs
 ├── src/extension.ts          # Core logic, webview, Magic flow
 └── media/
     └── control-center.html   # Professional UI with confetti
-```
 
 ### **Key Technical Decisions**
 

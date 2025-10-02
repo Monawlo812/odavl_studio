@@ -1,3 +1,5 @@
+/* eslint-env node */
+/* global console */
 // CLI/extension RBAC check stub
 import { enforceRbac } from '@odavl/policy/src/rbac.js';
 export function checkRbac(action: string, role: string) {

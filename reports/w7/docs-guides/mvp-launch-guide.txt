@@ -1,0 +1,1 @@
+docs/mvp-launch-guide.md exists and contains a step-by-step guide for end-to-end usage, including prerequisites, install/build, E2E flow, PR template, VS Code extension, n8n workflow, governance, and resources.

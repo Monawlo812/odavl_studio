@@ -1,3 +1,5 @@
+/* eslint-env node */
+/* global process, console */
 // Structured JSON logging for ODAVL CLI
 export function logJson(obj: Record<string, unknown>) {
   process.stdout.write(JSON.stringify(obj) + '\n');

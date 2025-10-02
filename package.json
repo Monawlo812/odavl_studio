@@ -3,6 +3,9 @@
   "private": true,
   "packageManager": "pnpm@10.17.0",
   "workspaces": [
+    "apps/launcher",
+    "apps/orchestrator",
+    "apps/vscode-ext",
     "apps/*",
     "packages/*",
     "examples/*"
@@ -10,7 +13,7 @@
   "scripts": {
     "build": "turbo run build",
     "lint": "turbo run lint",
-  "test": "echo \"no tests\" && exit 0",
+    "test": "echo \"no tests\" && exit 0",
     "format": "turbo run format",
     "e2e": "node scripts/e2e-golden.mjs",
     "qa:wave4": "node scripts/wave4-qa.mjs",
@@ -20,60 +23,38 @@
     "gates:validate": "node scripts/gates-validate.mjs",
     "verify:unify": "node scripts/verify-unify.mjs",
     "status": "node ./apps/cli/bin/odavl.js status --json > reports/metrics.json || echo \"{}\"",
-  "verify": "node ./apps/cli/bin/odavl.js verify --report reports/verify.json || echo \"{}\"",
-  "build:cli": "tsc -p apps/cli/tsconfig.json",
-  "typecheck": "tsc -p . --noEmit",
-  "studio:build": "pnpm --filter @odavl/vscode-ext build"
-  ,
-  "odavl:immune:p0": "node scripts/immune/p0-attest.mjs"
-  ,
-  "odavl:immune:status": "node scripts/immune/sensors.mjs"
-  ,
-  "odavl:immune:triage": "node scripts/immune/triage.mjs"
-  ,
-  "odavl:immune:triage:verify": "node scripts/immune/triage-verify.mjs"
-  ,
-  "odavl:immune:vaccinate:dry": "node scripts/immune/vaccines-dry.mjs"
-  ,
-  "odavl:immune:heal:eslint": "node scripts/immune/heal.mjs eslint",
-  "odavl:immune:heal:plan": "node scripts/immune/heal.mjs plan"
-  ,
-  "odavl:immune:ab:suggest": "node scripts/immune/antibodies.mjs suggest"
-  ,
-  "odavl:immune:ab:apply": "node scripts/immune/antibodies-apply.mjs --id=eslint-no-unused-vars-001 --dry"
-  ,
-  "odavl:immune:verify": "node scripts/immune/verify.mjs",
-  "odavl:immune:undo":   "node scripts/immune/undo.mjs"
-  ,
-  "odavl:immune:escalate": "node scripts/immune/escalate.mjs"
-  ,
-  "odavl:immune:metrics": "node scripts/immune/metrics.mjs"
-  ,
-  "odavl:immune:heatmap": "node scripts/immune/heatmap.mjs"
-  ,
-  "odavl:immune:twin": "node scripts/immune/twin.mjs"
-  ,
-  "odavl:immune:finalcheck": "node scripts/immune/final-check.mjs"
-  ,
-  "odavl:immune:problems": "node scripts/immune/problems.mjs"
-  ,
-  "odavl:problems:scan": "node scripts/immune/problems/scan.mjs"
-  ,
-  "odavl:problems:plan": "node scripts/immune/problems/plan.mjs"
-  ,
-  "odavl:problems:apply": "node scripts/immune/problems/apply.mjs"
-  ,
-  "odavl:problems:escalate": "node scripts/immune/problems/escalate.mjs"
-  ,
-  "odavl:problems:run": "node scripts/immune/problems/run.mjs"
-  ,
-  "lint:pkgs": "pnpm -r exec eslint \"src/**/*.ts\" \"packages/**/*.ts\" --ext .ts,.tsx"
-  ,
-  "build:pkgs": "pnpm -r exec tsc -b"
-  ,
-  "lint:loose": "pnpm -r exec eslint \"src/**/*.ts\" \"packages/**/*.ts\" || echo 'lint warnings only'",
-  "build:loose": "pnpm -r exec tsc --noEmit --skipLibCheck || echo 'build ok (loose)" ,
-  "orchestrate:audit": "node scripts/orchestrate-audit.mjs"
+    "verify": "node ./apps/cli/bin/odavl.js verify --report reports/verify.json || echo \"{}\"",
+    "build:cli": "tsc -p apps/cli/tsconfig.json",
+    "typecheck": "tsc -p . --noEmit",
+    "studio:build": "pnpm --filter @odavl/vscode-ext build",
+    "odavl:immune:p0": "node scripts/immune/p0-attest.mjs",
+    "odavl:immune:status": "node scripts/immune/sensors.mjs",
+    "odavl:immune:triage": "node scripts/immune/triage.mjs",
+    "odavl:immune:triage:verify": "node scripts/immune/triage-verify.mjs",
+    "odavl:immune:vaccinate:dry": "node scripts/immune/vaccines-dry.mjs",
+    "odavl:immune:heal:eslint": "node scripts/immune/heal.mjs eslint",
+    "odavl:immune:heal:plan": "node scripts/immune/heal.mjs plan",
+    "odavl:immune:ab:suggest": "node scripts/immune/antibodies.mjs suggest",
+    "odavl:immune:ab:apply": "node scripts/immune/antibodies-apply.mjs --id=eslint-no-unused-vars-001 --dry",
+    "odavl:immune:verify": "node scripts/immune/verify.mjs",
+    "odavl:immune:undo": "node scripts/immune/undo.mjs",
+    "odavl:immune:escalate": "node scripts/immune/escalate.mjs",
+    "odavl:immune:metrics": "node scripts/immune/metrics.mjs",
+    "odavl:immune:heatmap": "node scripts/immune/heatmap.mjs",
+    "odavl:immune:twin": "node scripts/immune/twin.mjs",
+    "odavl:immune:finalcheck": "node scripts/immune/final-check.mjs",
+    "odavl:immune:problems": "node scripts/immune/problems.mjs",
+    "odavl:problems:scan": "node scripts/immune/problems/scan.mjs",
+    "odavl:problems:plan": "node scripts/immune/problems/plan.mjs",
+    "odavl:problems:apply": "node scripts/immune/problems/apply.mjs",
+    "odavl:problems:escalate": "node scripts/immune/problems/escalate.mjs",
+    "odavl:problems:run": "node scripts/immune/problems/run.mjs",
+    "lint:pkgs": "pnpm -r exec eslint \"src/**/*.ts\" \"packages/**/*.ts\" --ext .ts,.tsx",
+    "build:pkgs": "pnpm -r exec tsc -b",
+    "lint:loose": "pnpm -r exec eslint \"src/**/*.ts\" \"packages/**/*.ts\" || echo 'lint warnings only'",
+    "build:loose": "pnpm -r exec tsc --noEmit --skipLibCheck || echo 'build ok (loose)'",
+  "orchestrate:audit": "node scripts/orchestrate-audit.mjs",
+  "sbom": "node scripts/sbom-generate.mjs"
   },
   "devDependencies": {
     "@cyclonedx/cyclonedx-library": "^9.0.0",
@@ -87,6 +68,7 @@
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-import": "^2.32.0",
     "eslint-plugin-jest": "^29.0.1",
+    "globals": "^16.4.0",
     "jest": "^30.1.3",
     "knip": "^5.64.0",
     "lockfile-lint": "^4.14.1",
@@ -97,6 +79,16 @@
     "turbo": "^2.5.6",
     "typescript": "^5.9.2",
     "vitest": "^3.2.4"
+  },
+  "dependencies": {
+    "@eslint/js": "^9.36.0",
+    "@types/express": "^4.17.23",
+    "@vitest/coverage-v8": "^3.2.4",
+    "express": "^4.21.2",
+    "framer-motion": "^12.23.22",
+    "js-yaml": "^4.1.0",
+    "lucide-react": "^0.544.0",
+    "prom-client": "^15.1.3"
   },
   "version": "0.5.0"
 }

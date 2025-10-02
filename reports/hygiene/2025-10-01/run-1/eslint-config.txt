@@ -1,0 +1,1 @@
+The --print-config option must be used with exactly one file name.

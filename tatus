@@ -1,0 +1,5 @@
+* [33m1e82c6d[m[33m ([m[1;36mHEAD[m[33m, [m[1;31morigin/copilot/fix-f9dea378-98c3-4a08-b37a-a88f1038fd1c[m[33m)[m Initial plan
+* [33md038e94[m docs: update copilot-instructions.md (canonicalization provenance, batch 1 context)
+* [33m0e3266f[m consolidate: finalize Batch 1 imports (tools, examples, .vscode, infra, scripts)
+* [33m3033869[m consolidate: import tools, examples, .vscode, novel diagnostics, infra, scripts (Batch 1)
+* [33m1310496[m chore(ci): add workflow_dispatch trigger for manual runs

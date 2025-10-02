@@ -1,0 +1,15 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+  "outDir": "dist",
+  "rootDir": ".",
+    "declaration": true,
+    "declarationMap": true,
+    "baseUrl": ".",
+    "paths": {
+      "@odavl/policy": ["../../packages/policy/dist/index.js", "../../packages/policy/dist/index.d.ts"]
+    }
+  },
+  "include": ["src/**/*", "__tests__/**/*"],
+  "exclude": ["dist", "node_modules"]
+}

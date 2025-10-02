@@ -1,18 +1,26 @@
 {
-  "name": "odavl-studio",
+  "name": "odavl",
   "displayName": "ODAVL Studio",
-  "description": "Automated development governance with code healing and CI management",
-  "version": "0.4.0",
   "publisher": "odavl",
+  "version": "0.1.0",
+  "description": "Secure, Self-Healing Code Governance inside VS Code",
+  "icon": "media/odavl.png",
   "categories": [
     "Other",
-    "Linters"
+    "Testing"
+  ],
+  "keywords": [
+    "odavl",
+    "security",
+    "self-healing",
+    "ci",
+    "governance",
+    "doctor"
   ],
   "galleryBanner": {
     "color": "#1e3a8a",
     "theme": "dark"
   },
-  "icon": "assets/icon.png",
   "engines": {
     "vscode": "^1.85.0"
   },
@@ -48,6 +56,16 @@
       ]
     },
     "commands": [
+      {
+        "command": "odavl.undoLast",
+        "title": "ODAVL: Undo Last Change",
+        "category": "ODAVL"
+      },
+      {
+        "command": "odavl.redoLast",
+        "title": "ODAVL: Redo Last Change",
+        "category": "ODAVL"
+      },
       {
         "command": "odavlStudio.openPanel",
         "title": "ODAVL Studio: Open Panel"

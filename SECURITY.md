@@ -1,43 +1,48 @@
+# Security Policy
+
 ## Governance & Operations
 
 ODAVL Studio enforces strict development governance and risk budgets to ensure safety, privacy, and compliance.
 
 ### Governance Rules
+
 - **Risk Budgets:**
-	- Max 40 lines per patch
-	- Max 10 files per commit
-	- Max 3 patches per run
-	- Max 8 tokens per day
+- Max 40 lines per patch
+- Max 10 files per commit
+- Max 3 patches per run
+- Max 8 tokens per day
 - **Protected Paths:**
-	- `**/security/**`, `**/*.spec.*`, `**/public-api/**`
+- `**/security/**`, `**/*.spec.*`, `**/public-api/**`
 - **LLM Safe Mode:**
-	- Bans public API changes and contract breaks
-	- Redacts AWS, GitHub, and Slack secrets
+- Bans public API changes and contract breaks
+- Redacts AWS, GitHub, and Slack secrets
 - **CI Gates:**
-	- All type errors, lint errors, and policy violations block merges
-	- Bundle size and build time are capped
+- All type errors, lint errors, and policy violations block merges
+- Bundle size and build time are capped
 
 ### RBAC Roles
+
 - **Viewer:** Read-only access to reports and dashboards
 - **Runner:** Can trigger scans, heals, and CI jobs
 - **Reviewer:** Can approve/merge PRs, review governance status
 - **Admin:** Full access, can update policy, manage kill-switch
 
 ### Kill-Switch Procedure
+
 1. Admin sets `studio.autonomy: 0` in `.odavl.policy.yml`
 2. Push change to main branch
 3. All automation halts until autonomy is restored
 
 ### Privacy Settings
+
 - **Telemetry:**
-	- `off`: No data sent
-	- `on`: Full usage analytics
-	- `anonymized`: Only aggregate, non-identifiable data (default)
+- `off`: No data sent
+- `on`: Full usage analytics
+- `anonymized`: Only aggregate, non-identifiable data (default)
 - **Redaction:**
-	- All secrets and tokens are redacted in logs and reports
+- All secrets and tokens are redacted in logs and reports
 
 For more, see `docs/governance.md` and `.odavl.policy.yml`.
-# Security Policy
 
 ## Supported Versions
 

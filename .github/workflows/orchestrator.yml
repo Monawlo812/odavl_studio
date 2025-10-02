@@ -6,6 +6,7 @@ on:
     branches: [ main ]
 jobs:
   orch:
+    continue-on-error: false
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

@@ -1,3 +1,4 @@
+/* global require, console */
 // Prometheus metrics for ODAVL CLI
 import client from 'prom-client';
 
@@ -14,7 +15,7 @@ export const ciMinutesUsed = new client.Gauge({ name: 'ci_minutes_used', help: '
 export function serveMetrics() {
   const express = require('express');
   const app = express();
-  app.get('/metrics', async (_req, res) => {
+  app.get('/metrics', async (_req: import('express').Request, res: import('express').Response) => {
     res.set('Content-Type', client.register.contentType);
     res.end(await client.register.metrics());
   });

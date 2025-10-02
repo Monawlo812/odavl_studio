@@ -1,0 +1,21 @@
+GIT STATUS (FAILED):
+fatal: not a git repository: C:/Users/sabou/odavl_studio/.git/worktrees/odavl__add-dispatch-20250924
+
+NODE VERSION:
+v22.19.0
+
+PNPM VERSION:
+10.17.0
+
+OS:
+Microsoft Windows 11 Home
+10.0.26100
+64-Bit
+
+WORKSPACE FILES (first 100 lines):
+[truncated]
+
+PROTECTED PATHS:
+- security/: exists, files: osv.md, secrets.md
+- *.spec.*: 16 files found (see search results)
+- public-api/: not found

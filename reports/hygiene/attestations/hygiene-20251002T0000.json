@@ -1,0 +1,16 @@
+{
+  "repo": "Monawlo812/odavl_studio",
+  "commit": "EXAMPLE_SHA",
+  "timestamp": "20251002T0000",
+  "status": "CLEAN",
+  "counts": {
+    "final_reports": 4,
+    "archived_reports": 20
+  },
+  "evidence": [
+    { "path": "reports/INDEX.md", "sha256": "EXAMPLE_DIGEST1" },
+    { "path": "reports/hygiene/final-hygiene-summary.md", "sha256": "EXAMPLE_DIGEST2" },
+    { "path": "reports/hygiene/auto-repair-log.md", "sha256": "EXAMPLE_DIGEST3" },
+    { "path": "reports/hygiene/auto-repair-summary.md", "sha256": "EXAMPLE_DIGEST4" }
+  ]
+}

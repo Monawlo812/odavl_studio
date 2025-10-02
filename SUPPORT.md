@@ -84,4 +84,4 @@ For critical production issues affecting design partners:
 
 ---
 
-_Support documentation updated as of September 2025_
+### Support documentation updated as of September 2025

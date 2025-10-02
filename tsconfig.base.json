@@ -4,7 +4,7 @@
     "module": "ESNext",
     "moduleResolution": "Node",
     "lib": ["ES2015", "DOM"],
-    "types": ["node"],
+    "types": ["node", "jest"],
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,

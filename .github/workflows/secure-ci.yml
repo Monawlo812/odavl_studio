@@ -1,0 +1,42 @@
+name: Secure CI
+on:
+  workflow_dispatch:
+  pull_request:
+  push:
+    branches: [main]
+jobs:
+  semgrep:
+    continue-on-error: false
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: pipx install semgrep
+      - run: semgrep ci --config p/ci --error --timeout 600
+  gitleaks:
+    continue-on-error: false
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: |
+          curl -sSL https://raw.githubusercontent.com/gitleaks/gitleaks/master/install.sh | bash
+          ./gitleaks detect -v --redact --exit-code 1
+  osv_scanner:
+    continue-on-error: false
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: npm install -g osv-scanner gitleaks
+      - run: osv-scanner --skip-git
+      - run: gitleaks detect --no-banner
+      - run: |
+          curl -sSL https://raw.githubusercontent.com/google/osv-scanner/main/scripts/install.sh | sh -s -- -b /usr/local/bin
+          mkdir -p reports/security
+          osv-scanner -r . --format json > reports/security/osv.json || true
+          jq -e '[.vulnerabilities[]?|select(.severity|inside(["HIGH","CRITICAL"]))] | length==0' reports/security/osv.json
+  sbom:
+    continue-on-error: false
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: |
+          if [ -f package.json ]; then npm run sbom || echo "no sbom script"; else echo "no package.json"; fi

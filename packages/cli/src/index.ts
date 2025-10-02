@@ -1,3 +1,4 @@
+/* global process */
 // Main CLI entrypoint for ODAVL
 import { showPricing } from './commands/pricing';
 import { runOrgPolicyValidate } from './commands/policy-org';

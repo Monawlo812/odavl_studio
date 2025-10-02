@@ -1,3 +1,4 @@
+/* global console, process */
 // CLI: odavl metrics serve
 import { serveMetrics } from '../lib/metrics';
 

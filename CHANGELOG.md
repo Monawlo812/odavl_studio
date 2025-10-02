@@ -3,25 +3,20 @@
 Initial public MVP release.
 
 **Major deliverables:**
-- CLI (`@odavl/cli`): scan, heal, pr, shadow, undo, governor
-- VS Code extension: Control Center, status bar, telemetry
-- Golden repo: baseline, lint/build/test pass, golden-snapshot
-- Shadow CI: Node 18/20 matrix, risk-budgeted automation
+CLI (`@odavl/cli`): scan, heal, pr, shadow, undo, governor
+VS Code extension: Control Center, status bar, telemetry
+Golden repo: baseline, lint/build/test pass, golden-snapshot
+Shadow CI: Node 18/20 matrix, risk-budgeted automation
 
----
-# ## [0.4.0] – 2025-09-22
+## [0.4.0] – 2025-09-22
 
-# - Wave 4 (Polyglot I): Python Pack (scan/heal dry-run), codemods (axios→fetch, requests→httpx), CI matrix (Node+Python)
+- Wave 4 (Polyglot I): Python Pack (scan/heal dry-run), codemods (axios→fetch, requests→httpx), CI matrix (Node+Python)
+- Orchestrator stub + CLI `run` wiring
+- Polyglot gates + unified verify report
+- Expanded `odavl status` (polyglot) + Dual-lang E2E
+- QA report under `reports/Wave4-QA-Report.md`
 
-# - Orchestrator stub + CLI `run` wiring
-
-# - Polyglot gates + unified verify report
-
-# - Expanded `odavl status` (polyglot) + Dual-lang E2E
-
-# - QA report under `reports/Wave4-QA-Report.md`
-
-# Changelog
+## Changelog
 
 ## 0.5.0 — Wave 5 (Polyglot II & Intelligence)
 

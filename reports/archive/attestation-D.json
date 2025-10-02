@@ -1,0 +1,15 @@
+// ARCHIVED — Superseded by ../final/SECURITY_ALL_IN_ONE.md
+{
+  "stage": "D",
+  "timestamp": "2025-09-22T00:00:00Z",
+  "files": [
+    "apps/vscode-ext/package.json",
+    "package.json"
+  ],
+  "hashes": {
+    "plan": "PLACEHOLDER_HASH_PLAN_D",
+    "patch": "PLACEHOLDER_HASH_PATCH_D",
+    "policy": "PLACEHOLDER_HASH_POLICY_D"
+  },
+  "notes": "Stage D attestation: minimal VS Code panel. Hashes are placeholders."
+}

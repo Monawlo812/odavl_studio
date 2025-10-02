@@ -1,0 +1,29 @@
+{
+  "name": "@odavl/cli",
+  "version": "0.1.0",
+  "type": "module",
+  "bin": {
+    "odavl": "bin/odavl.js"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "prepublishOnly": "pnpm run build",
+    "lint": "eslint .",
+    "typecheck": "tsc -b --noEmit"
+  },
+  "dependencies": {
+    "@odavl/codemods": "workspace:*",
+    "@odavl/policy": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^20"
+  },
+  "packageManager": "pnpm@10.17.0"
+}

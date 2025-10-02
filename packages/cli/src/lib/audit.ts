@@ -1,3 +1,5 @@
+/* eslint-env node */
+/* global process */
 // Audit logger stub with redaction
 import { redact } from './redaction.js';
 export function logAudit(entry: string) {

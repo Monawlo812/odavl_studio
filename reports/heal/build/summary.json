@@ -1,0 +1,8 @@
+{
+  "ts7016Fixed": false,
+  "policyDtsPresent": true,
+  "policyExportsTypes": true,
+  "usedTemporaryShim": true,
+  "filesTouched": 2,
+  "linesChanged": 5
+}

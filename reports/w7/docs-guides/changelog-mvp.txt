@@ -1,0 +1,1 @@
+CHANGELOG.md contains an MVP entry: '# 0.1.0 — First Public Release (MVP)\nInitial public MVP release. Major deliverables: CLI, VS Code extension, golden repo, shadow CI, risk-budgeted automation.'

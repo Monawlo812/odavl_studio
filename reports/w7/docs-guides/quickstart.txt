@@ -1,0 +1,1 @@
+docs/quickstart.md exists and provides a concise quickstart guide with prerequisites, install/build, scan, heal, CI, and PR management commands.

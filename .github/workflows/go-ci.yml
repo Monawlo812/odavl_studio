@@ -1,5 +1,6 @@
 name: Go CI (W5)
 on:
+  workflow_dispatch:
   push:
     branches: ["odavl/**"]
   pull_request:
@@ -7,6 +8,7 @@ on:
 
 jobs:
   go:
+    continue-on-error: false
     runs-on: ubuntu-latest
     strategy:
       matrix:

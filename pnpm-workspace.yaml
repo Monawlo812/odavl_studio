@@ -1,4 +1,8 @@
 packages:
+  - "apps/launcher"
+  - "apps/orchestrator"
+  - "apps/vscode-ext"
   - "apps/*"
   - "packages/*"
   - "examples/*"
+  - "packages/codemods"

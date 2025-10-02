@@ -1,0 +1,8 @@
+{
+  "stage": "2A",
+  "root": "c:/Users/sabou/odavl_studio",
+  "branch": "odavl/safeops-202509271200",
+  "origin": "no-origin",
+  "uuid": "odavl-20250927120000",
+  "hooks": { "commit-msg": "installed", "pre-commit": "installed", "pre-push": "installed" }
+}

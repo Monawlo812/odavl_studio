@@ -1,3 +1,4 @@
+/* global process, console */
 // CLI: odavl pricing show
 import * as fs from 'fs';
 import * as path from 'path';

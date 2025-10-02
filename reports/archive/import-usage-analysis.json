@@ -1,0 +1,87 @@
+ARCHIVED — Superseded by reports/final/HYGIENE_ALL_IN_ONE.md
+[
+  {
+    "file": ".turbo/cache/",
+    "usageReferenceFound": false,
+    "status": "SAFE-REMOVE",
+    "evidence": ["Only in hygiene/undo logs"]
+  },
+  {
+    "file": ".turbo/cookies/",
+    "usageReferenceFound": false,
+    "status": "SAFE-REMOVE",
+    "evidence": ["Only in hygiene/undo logs"]
+  },
+  {
+    "file": "node_modules/.bin/",
+    "usageReferenceFound": false,
+    "status": "SAFE-REMOVE",
+    "evidence": ["Not referenced"]
+  },
+  {
+    "file": ".vscode/settings.json",
+    "usageReferenceFound": false,
+    "status": "SAFE-REMOVE",
+    "evidence": ["Not loaded by code, only in plan/workflow files"]
+  },
+  {
+    "file": "tsconfig.tsbuildinfo",
+    "usageReferenceFound": false,
+    "status": "SAFE-REMOVE",
+    "evidence": ["Not loaded by code, only in logs/reports"]
+  },
+  {
+    "file": "$OUT/",
+    "usageReferenceFound": false,
+    "status": "SAFE-REMOVE",
+    "evidence": ["Only in documentation"]
+  },
+  {
+    "file": "antibodies/",
+    "usageReferenceFound": false,
+    "status": "SAFE-REMOVE",
+    "evidence": ["Only in documentation"]
+  },
+  {
+    "file": "coverage/",
+    "usageReferenceFound": false,
+    "status": "SAFE-REMOVE",
+    "evidence": ["Only in test/coverage logs"]
+  },
+  {
+    "file": "clover.xml",
+    "usageReferenceFound": false,
+    "status": "SAFE-REMOVE",
+    "evidence": ["Only in test/coverage logs"]
+  },
+  {
+    "file": "lcov.info",
+    "usageReferenceFound": false,
+    "status": "SAFE-REMOVE",
+    "evidence": ["Only in test/coverage logs"]
+  },
+  {
+    "file": "build.log",
+    "usageReferenceFound": false,
+    "status": "SAFE-REMOVE",
+    "evidence": ["Only in logs, not loaded by code"]
+  },
+  {
+    "file": "lint.log",
+    "usageReferenceFound": false,
+    "status": "SAFE-REMOVE",
+    "evidence": ["Only in logs, not loaded by code"]
+  },
+  {
+    "file": "test.log",
+    "usageReferenceFound": false,
+    "status": "SAFE-REMOVE",
+    "evidence": ["Only in logs, not loaded by code"]
+  },
+  {
+    "file": "typecheck.log",
+    "usageReferenceFound": false,
+    "status": "SAFE-REMOVE",
+    "evidence": ["Only in logs, not loaded by code"]
+  }
+]

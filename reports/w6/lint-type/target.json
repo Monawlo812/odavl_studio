@@ -1,0 +1,4 @@
+{
+  "packagePath": "apps/orchestrator",
+  "targetFile": "apps/orchestrator/src/index.ts"
+}

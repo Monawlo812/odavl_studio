@@ -1,0 +1,31 @@
+{
+  "lint": {
+    "status": "fail",
+    "errors": [
+      "@odavl/launcher:lint: all files matching '.' are ignored; check ESLint config and ignore patterns.",
+      "ELIFECYCLE: Command failed with exit code 2."
+    ]
+  },
+  "typecheck": {
+    "status": "pass"
+  },
+  "build": {
+    "status": "noop",
+    "note": "No packages matched filters; check build matrix config."
+  },
+  "test": {
+    "status": "noop",
+    "note": "No tests found."
+  },
+  "sbom": {
+    "status": "fail",
+    "reason": "npm errors: missing/invalid deps, ELSPROBLEMS. See sbom.log."
+  },
+  "perf": {
+    "build_ms": 2864.1,
+    "bundle_files": 0
+  },
+  "ci": {
+    "matrix": "see ci-matrix.json"
+  }
+}

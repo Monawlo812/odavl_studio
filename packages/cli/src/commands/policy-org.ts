@@ -1,3 +1,5 @@
+/* eslint-env node */
+/* global process, console */
 // CLI: odavl policy validate --org
 import { validateOrgPolicy } from '@odavl/policy/src/org-policy.js';
 export function runOrgPolicyValidate(repoPolicies: any[]) {

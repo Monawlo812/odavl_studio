@@ -1,20 +1,25 @@
-## ODAVL Immune Escalation
+# ODAVL Immune Escalation
+
 **Why:** One or more verify steps failed or triage suggests escalation.
 
-### Summary
+## Summary
+
 - Classification: <!-- filled by bot -->
 - Failed steps: <!-- filled by bot -->
 - Risk Tokens: <!-- filled by bot -->
 
-### Evidence
+## Evidence
+
 - health-snapshot.json
 - triage-report.json
 - verify-*.json (latest)
 
-### Options
+## Options
+
 - [ ] Apply suggested healer
 - [ ] Adjust policy/gates
 - [ ] Defer (open issue)
+
 Title:
 
 What:
@@ -30,4 +35,3 @@ Metrics:
 Attestation:
 
 Notes:
-

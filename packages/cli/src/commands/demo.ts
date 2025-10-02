@@ -1,6 +1,8 @@
+/* eslint-env node */
+/* global process, console */
 // CLI: odavl demo
 import { execSync } from 'child_process';
-import { enforceRbac } from '../../../../packages/policy/src/rbac.js';
+import { enforceRbac } from '@odavl/policy/src/rbac.js';
 import type { RbacRole } from '../../../../packages/policy/src/rbac.schema.js';
 const USER_ROLE = (process.env.ODAVL_ROLE || 'admin') as RbacRole;
 

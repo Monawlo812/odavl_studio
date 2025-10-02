@@ -1,0 +1,14 @@
+// ARCHIVED — Superseded by ../final/SECURITY_ALL_IN_ONE.md
+{
+  "stage": "B",
+  "timestamp": "2025-09-22T00:00:00Z",
+  "files": [
+    ".github/workflows/shadow.yml"
+  ],
+  "hashes": {
+    "plan": "PLACEHOLDER_HASH_PLAN_B",
+    "patch": "PLACEHOLDER_HASH_PATCH_B",
+    "policy": "PLACEHOLDER_HASH_POLICY_B"
+  },
+  "notes": "Stage B attestation: shadow CI workflow. Hashes are placeholders."
+}

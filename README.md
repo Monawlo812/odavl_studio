@@ -1,12 +1,12 @@
 
+# ODAVL Studio
+
 [![CI](https://github.com/Monawlo812/odavl_studio/actions/workflows/ci.yml/badge.svg)](https://github.com/Monawlo812/odavl_studio/actions/workflows/ci.yml)
 [![Docs](https://img.shields.io/badge/docs-GitHub%20Pages-blue)](https://monawlo812.github.io/odavl_studio/)
 [![Docker](https://img.shields.io/badge/docker-ghcr.io-blue)](https://github.com/Monawlo812/odavl_studio/pkgs/container/odavl-studio)
 [![Version](https://img.shields.io/badge/version-0.1.0-green)](https://github.com/Monawlo812/odavl_studio/releases)
 [![npm](https://img.shields.io/npm/v/@odavl/cli)](https://www.npmjs.com/package/@odavl/cli)
 [![License](https://img.shields.io/github/license/Monawlo812/odavl_studio)](LICENSE)
-
-# ODAVL Studio
 
 **Automated Development Governance Platform** - Enterprise-grade code healing with policy-driven safety guardrails.
 
@@ -83,7 +83,6 @@ Enterprise automation with safety guardrails:
 
 ---
 
-
 ## Quickstart
 
 ```bash
@@ -104,7 +103,6 @@ pnpm odavl pr open
 ```
 
 **VS Code**: Install extension ([Marketplace](https://marketplace.visualstudio.com/items?itemName=odavl.odavl-studio)) and use `ODAVL Studio: Open Panel` command.
-
 
 📖 **Documentation**: [Overview](docs/overview.md) | [Quickstart](docs/quickstart.md) | [FAQ](docs/faq.md) | [MVP Launch Guide](docs/mvp-launch-guide.md) | [📖 Docs Site](https://monawlo812.github.io/odavl_studio/)
 📊 **Reports**: Check `reports/` for analysis artifacts and logs

@@ -59,7 +59,8 @@ If the automated workflow fails or manual intervention is needed:
    ```
 
 4. **Verify release:**
-   ```bash
+
+```bash
    gh release view v0.3.0
    ```
 

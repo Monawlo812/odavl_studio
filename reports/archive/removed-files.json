@@ -1,0 +1,87 @@
+ARCHIVED — Superseded by ../final/HYGIENE_ALL_IN_ONE.md
+[
+  {
+    "file": ".turbo/cache/",
+    "action": "delete",
+    "result": "not_found",
+    "notes": "Already absent"
+  },
+  {
+    "file": ".turbo/cookies/",
+    "action": "delete",
+    "result": "not_found",
+    "notes": "Already absent"
+  },
+  {
+    "file": "node_modules/.bin/",
+    "action": "delete",
+    "result": "not_found",
+    "notes": "Already absent"
+  },
+  {
+    "file": ".vscode/settings.json",
+    "action": "delete",
+    "result": "not_found",
+    "notes": "Already absent"
+  },
+  {
+    "file": "tsconfig.tsbuildinfo",
+    "action": "delete",
+    "result": "not_found",
+    "notes": "Already absent"
+  },
+  {
+    "file": "$OUT/",
+    "action": "delete",
+    "result": "not_found",
+    "notes": "Already absent"
+  },
+  {
+    "file": "antibodies/",
+    "action": "delete",
+    "result": "not_found",
+    "notes": "Already absent"
+  },
+  {
+    "file": "coverage/",
+    "action": "delete",
+    "result": "not_found",
+    "notes": "Already absent"
+  },
+  {
+    "file": "clover.xml",
+    "action": "delete",
+    "result": "not_found",
+    "notes": "Already absent"
+  },
+  {
+    "file": "lcov.info",
+    "action": "delete",
+    "result": "not_found",
+    "notes": "Already absent"
+  },
+  {
+    "file": "build.log",
+    "action": "delete",
+    "result": "not_found",
+    "notes": "Already absent"
+  },
+  {
+    "file": "lint.log",
+    "action": "delete",
+    "result": "not_found",
+    "notes": "Already absent"
+  },
+  {
+    "file": "test.log",
+    "action": "delete",
+    "result": "not_found",
+    "notes": "Already absent"
+  },
+  {
+    "file": "typecheck.log",
+    "action": "delete",
+    "result": "not_found",
+    "notes": "Already absent"
+  }
+]

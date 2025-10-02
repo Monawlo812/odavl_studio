@@ -1,0 +1,10 @@
+{
+  "stage": "P4",
+  "commands": ["odavl.undoLast","odavl.redoLast"],
+  "files": [
+    "apps/vscode-ext/src/commands/undoRedo.ts",
+    "apps/vscode-ext/src/extension.ts",
+    "apps/vscode-ext/package.json"
+  ],
+  "result": "wired + built"
+}
