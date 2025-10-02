@@ -6,17 +6,26 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "exports": {
-    ".": { "types": "./dist/index.d.ts", "import": "./dist/index.js" }
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
   },
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "lint": "eslint . --ignore-pattern dist --ignore-pattern __tests__",
+<<<<<<< HEAD
     "typecheck": "tsc -b --noEmit"
+=======
+    "typecheck": "tsc -b --noEmit",
+    "test": "vitest run --coverage --reporter=default --outputFile=../../reports/phase2/test.log"
+>>>>>>> 79b66b0 (fix: remove broken submodule reference for CI security jobs)
   },
   "devDependencies": {
     "@types/js-yaml": "^4.0.9",
     "@types/node": "^20.0.0",
-    "typescript": "^5.0.0"
+    "typescript": "^5.0.0",
+    "vitest": "^3.2.4"
   },
   "packageManager": "pnpm@10.17.0"
 }

@@ -1,14 +1,18 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
+<<<<<<< HEAD
   "outDir": "dist",
   "rootDir": ".",
+=======
+    
+    "outDir": "dist",
+    "rootDir": "src",
+>>>>>>> 79b66b0 (fix: remove broken submodule reference for CI security jobs)
     "declaration": true,
     "declarationMap": true,
     "baseUrl": ".",
-    "paths": {
-      "@odavl/policy": ["../../packages/policy/dist/index.js", "../../packages/policy/dist/index.d.ts"]
-    }
+    
   },
   "include": ["src/**/*", "__tests__/**/*"],
   "exclude": ["dist", "node_modules"]

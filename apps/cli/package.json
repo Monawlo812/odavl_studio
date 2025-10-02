@@ -13,14 +13,20 @@
     "node": ">=18"
   },
   "scripts": {
-    "build": "tsc -p tsconfig.json",
-    "prepublishOnly": "pnpm run build"
+  "build": "tsc -p tsconfig.json",
+  "prepublishOnly": "pnpm run build",
+  "prepack": "pnpm run build",
+  "lint": "eslint .",
+  "typecheck": "tsc -b --noEmit",
+  "test": "vitest run --coverage --reporter=default --outputFile=../../reports/phase2/test.log"
   },
   "dependencies": {
     "@odavl/codemods": "workspace:*",
     "@odavl/policy": "workspace:*"
   },
   "devDependencies": {
-    "@types/node": "^20"
-  }
+    "@types/node": "^20",
+    "vitest": "^3.2.4"
+  },
+  "packageManager": "pnpm@10.17.0"
 }

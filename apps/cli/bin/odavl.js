@@ -1,8 +1,9 @@
 #!/usr/bin/env node
-try {
-  require('../dist/index.js');
-} catch (e) {
-  console.error(e);
-  console.error(e);
-  process.exit(1);
-}
+(async () => {
+  try {
+    await import('../../../packages/cli/dist/index.js');
+  } catch (e) {
+    console.error(e);
+    process.exit(1);
+  }
+})();

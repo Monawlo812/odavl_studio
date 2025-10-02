@@ -1,11 +1,16 @@
 {
   "compilerOptions": {
-    "target": "ES2020",
-    "module": "ESNext",
-    "moduleResolution": "Bundler",
-    "strict": true,
-    "skipLibCheck": true,
     "outDir": "dist",
-    "types": ["node"]
-  }
+    "types": ["node"],
+    "resolveJsonModule": true,
+    "baseUrl": "./",
+    "paths": {
+      "@odavl/codemods/*": ["../../packages/codemods/src/*"],
+      "@odavl/policy": ["../../packages/policy/dist/index.d.ts"],
+      "@odavl/policy/*": ["../../packages/policy/dist/index.d.ts"]
+    },
+    "allowImportingTsExtensions": true,
+    "noEmit": true
+  },
+  "include": ["src", "commands", "lib", "policy-bridge"]
 }
