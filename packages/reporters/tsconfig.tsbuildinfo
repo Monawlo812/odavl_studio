@@ -1,1 +1,1 @@
-{"root":["./src/telemetry.ts"],"version":"5.9.2"}
+{"root":["./__tests__/redacting-writer.spec.ts","./src/redacting-writer.ts","./src/telemetry.ts"],"version":"5.9.2"}

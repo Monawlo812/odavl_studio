@@ -1,0 +1,285 @@
+ M .github/CODEOWNERS
+ M .github/copilot-instructions.md
+ M .github/workflows/ci.yml
+ M .github/workflows/freeze.yml
+ M README.md
+ M apps/cli/package.json
+ M apps/cli/src/index.ts
+ M apps/cli/tsconfig.json
+ M apps/launcher/tsconfig.tsbuildinfo
+ M apps/orchestrator/src/index.ts
+ M apps/orchestrator/tsconfig.tsbuildinfo
+ M apps/vscode-ext/package.json
+ M apps/vscode-ext/tsconfig.json
+ M eslint.config.mjs
+ M examples/golden-repo/test/trivial.test.ts
+ M package.json
+ M packages/cli/__tests__/redaction.spec.ts
+ M packages/cli/src/commands/demo.ts
+ M packages/codemods/index.ts
+ M packages/codemods/src/index.ts
+ M packages/core/package.json
+ M packages/core/planner/sort.js
+ M packages/core/planner/sort.ts
+ M packages/core/planner/tokens.js
+ M packages/core/planner/tokens.ts
+ M packages/core/tsconfig.tsbuildinfo
+ M packages/org-orchestrator/__tests__/scheduler.spec.ts
+ M packages/policy/__tests__/org-policy.spec.ts
+ M packages/policy/__tests__/rbac.spec.ts
+ M packages/policy/package.json
+ M packages/policy/src/rbac.js
+ M packages/policy/tsconfig.tsbuildinfo
+ M packages/recipes-go/__tests__/gofmt-wrapper.spec.ts
+ M packages/recipes-java/__tests__/remove-unused-imports.spec.ts
+ M packages/recipes-python/__tests__/remove-unused-imports.spec.ts
+ M packages/recipes-security/__tests__/cve-fixer.spec.ts
+ M packages/reporters/src/redacting-writer.ts
+ M packages/reporters/tsconfig.tsbuildinfo
+ M reports/phase3/security/osv.log
+?? .github/workflows/auto-rollback.yml
+?? .github/workflows/canary.yml
+?? .turbo/cache/0020e9ba97bfb06e-meta.json
+?? .turbo/cache/0020e9ba97bfb06e.tar.zst
+?? .turbo/cache/033b09f8265862f3-meta.json
+?? .turbo/cache/033b09f8265862f3.tar.zst
+?? .turbo/cache/049bea52ade74045-meta.json
+?? .turbo/cache/049bea52ade74045.tar.zst
+?? .turbo/cache/0728397aee6bd2ff-meta.json
+?? .turbo/cache/0728397aee6bd2ff.tar.zst
+?? .turbo/cache/0995621df101f5ae-meta.json
+?? .turbo/cache/0995621df101f5ae.tar.zst
+?? .turbo/cache/09e26b66a105b5cd-meta.json
+?? .turbo/cache/09e26b66a105b5cd.tar.zst
+?? .turbo/cache/0dc84599ac790261-meta.json
+?? .turbo/cache/0dc84599ac790261.tar.zst
+?? .turbo/cache/0e0acfbf0bfaed33-meta.json
+?? .turbo/cache/0e0acfbf0bfaed33.tar.zst
+?? .turbo/cache/10a05d5f0ce446b2-meta.json
+?? .turbo/cache/10a05d5f0ce446b2.tar.zst
+?? .turbo/cache/13daae480961318e-meta.json
+?? .turbo/cache/13daae480961318e.tar.zst
+?? .turbo/cache/147e0c02cf65ebcc-meta.json
+?? .turbo/cache/147e0c02cf65ebcc.tar.zst
+?? .turbo/cache/19a340ef792f3f75-meta.json
+?? .turbo/cache/19a340ef792f3f75.tar.zst
+?? .turbo/cache/1cbb451d93ff9b58-meta.json
+?? .turbo/cache/1cbb451d93ff9b58.tar.zst
+?? .turbo/cache/2591e36d4feeafc4-meta.json
+?? .turbo/cache/2591e36d4feeafc4.tar.zst
+?? .turbo/cache/25e68a691a950f83-meta.json
+?? .turbo/cache/25e68a691a950f83.tar.zst
+?? .turbo/cache/261fd51ca623b31a-meta.json
+?? .turbo/cache/261fd51ca623b31a.tar.zst
+?? .turbo/cache/26a7fba2e129f2ee-meta.json
+?? .turbo/cache/26a7fba2e129f2ee.tar.zst
+?? .turbo/cache/28469c355a3f4154-meta.json
+?? .turbo/cache/28469c355a3f4154.tar.zst
+?? .turbo/cache/2944d5b6bb78eef5-meta.json
+?? .turbo/cache/2944d5b6bb78eef5.tar.zst
+?? .turbo/cache/2dc8139c73a95772-meta.json
+?? .turbo/cache/2dc8139c73a95772.tar.zst
+?? .turbo/cache/30ec3bb46b13370f-meta.json
+?? .turbo/cache/30ec3bb46b13370f.tar.zst
+?? .turbo/cache/31c1d2ab0c895482-meta.json
+?? .turbo/cache/31c1d2ab0c895482.tar.zst
+?? .turbo/cache/32ac7cc0139d70f5-meta.json
+?? .turbo/cache/32ac7cc0139d70f5.tar.zst
+?? .turbo/cache/36a3f032b92f5c1c-meta.json
+?? .turbo/cache/36a3f032b92f5c1c.tar.zst
+?? .turbo/cache/370c930380445857-meta.json
+?? .turbo/cache/370c930380445857.tar.zst
+?? .turbo/cache/37b6d1d09f640770-meta.json
+?? .turbo/cache/37b6d1d09f640770.tar.zst
+?? .turbo/cache/387d9ccb9cca1bb6-meta.json
+?? .turbo/cache/387d9ccb9cca1bb6.tar.zst
+?? .turbo/cache/3dee96c9f90c2ecb-meta.json
+?? .turbo/cache/3dee96c9f90c2ecb.tar.zst
+?? .turbo/cache/4a2d172850a8538d-meta.json
+?? .turbo/cache/4a2d172850a8538d.tar.zst
+?? .turbo/cache/4e8ab19775edfa7d-meta.json
+?? .turbo/cache/4e8ab19775edfa7d.tar.zst
+?? .turbo/cache/53508be4624a857c-meta.json
+?? .turbo/cache/53508be4624a857c.tar.zst
+?? .turbo/cache/54ba8182493322c5-meta.json
+?? .turbo/cache/54ba8182493322c5.tar.zst
+?? .turbo/cache/5535cea61ec21584-meta.json
+?? .turbo/cache/5535cea61ec21584.tar.zst
+?? .turbo/cache/59eda4d007672c19-meta.json
+?? .turbo/cache/59eda4d007672c19.tar.zst
+?? .turbo/cache/5ad9dbecff6dd5be-meta.json
+?? .turbo/cache/5ad9dbecff6dd5be.tar.zst
+?? .turbo/cache/633f626f6f94a538-meta.json
+?? .turbo/cache/633f626f6f94a538.tar.zst
+?? .turbo/cache/67c7f1c711efeecb-meta.json
+?? .turbo/cache/67c7f1c711efeecb.tar.zst
+?? .turbo/cache/68ef389be7d2b9b2-meta.json
+?? .turbo/cache/68ef389be7d2b9b2.tar.zst
+?? .turbo/cache/6d5f491dc6566d08-meta.json
+?? .turbo/cache/6d5f491dc6566d08.tar.zst
+?? .turbo/cache/6dbf74323130c5a3-meta.json
+?? .turbo/cache/6dbf74323130c5a3.tar.zst
+?? .turbo/cache/6fbca2e92628c8a0-meta.json
+?? .turbo/cache/6fbca2e92628c8a0.tar.zst
+?? .turbo/cache/77eb1595921057f3-meta.json
+?? .turbo/cache/77eb1595921057f3.tar.zst
+?? .turbo/cache/7a025468145a1f70-meta.json
+?? .turbo/cache/7a025468145a1f70.tar.zst
+?? .turbo/cache/7e17e42281dcd9d2-meta.json
+?? .turbo/cache/7e17e42281dcd9d2.tar.zst
+?? .turbo/cache/8607fd6442d2234b-meta.json
+?? .turbo/cache/8607fd6442d2234b.tar.zst
+?? .turbo/cache/88d2cf50e8a9c3bd-meta.json
+?? .turbo/cache/88d2cf50e8a9c3bd.tar.zst
+?? .turbo/cache/89628082e12f149b-meta.json
+?? .turbo/cache/89628082e12f149b.tar.zst
+?? .turbo/cache/8b66bdcda02b86c8-meta.json
+?? .turbo/cache/8b66bdcda02b86c8.tar.zst
+?? .turbo/cache/909e5c09ae5b6164-meta.json
+?? .turbo/cache/909e5c09ae5b6164.tar.zst
+?? .turbo/cache/99db9619c59715b3-meta.json
+?? .turbo/cache/99db9619c59715b3.tar.zst
+?? .turbo/cache/9b9a0c23cfec081e-meta.json
+?? .turbo/cache/9b9a0c23cfec081e.tar.zst
+?? .turbo/cache/9dc46e337c0636dd-meta.json
+?? .turbo/cache/9dc46e337c0636dd.tar.zst
+?? .turbo/cache/9f461fc42e49ce06-meta.json
+?? .turbo/cache/9f461fc42e49ce06.tar.zst
+?? .turbo/cache/9fd634d7c69eb8e0-meta.json
+?? .turbo/cache/9fd634d7c69eb8e0.tar.zst
+?? .turbo/cache/a31a09f507de73e3-meta.json
+?? .turbo/cache/a31a09f507de73e3.tar.zst
+?? .turbo/cache/a45b17649bee88f1-meta.json
+?? .turbo/cache/a45b17649bee88f1.tar.zst
+?? .turbo/cache/a755136a506013ac-meta.json
+?? .turbo/cache/a755136a506013ac.tar.zst
+?? .turbo/cache/a8791593649b06af-meta.json
+?? .turbo/cache/a8791593649b06af.tar.zst
+?? .turbo/cache/a8e1487bb63af75c-meta.json
+?? .turbo/cache/a8e1487bb63af75c.tar.zst
+?? .turbo/cache/af385078d8b90cd3-meta.json
+?? .turbo/cache/af385078d8b90cd3.tar.zst
+?? .turbo/cache/b68dcbf190f6f87b-meta.json
+?? .turbo/cache/b68dcbf190f6f87b.tar.zst
+?? .turbo/cache/ba0e149076ce81d0-meta.json
+?? .turbo/cache/ba0e149076ce81d0.tar.zst
+?? .turbo/cache/bb645f788b6181e4-meta.json
+?? .turbo/cache/bb645f788b6181e4.tar.zst
+?? .turbo/cache/bf377fd8af4bdf9b-meta.json
+?? .turbo/cache/bf377fd8af4bdf9b.tar.zst
+?? .turbo/cache/c0a6ae55f9f3a1ea-meta.json
+?? .turbo/cache/c0a6ae55f9f3a1ea.tar.zst
+?? .turbo/cache/c47807081dd648ca-meta.json
+?? .turbo/cache/c47807081dd648ca.tar.zst
+?? .turbo/cache/c7e94c3600b91b44-meta.json
+?? .turbo/cache/c7e94c3600b91b44.tar.zst
+?? .turbo/cache/caf3902087c18415-meta.json
+?? .turbo/cache/caf3902087c18415.tar.zst
+?? .turbo/cache/cfdff1103189ad9b-meta.json
+?? .turbo/cache/cfdff1103189ad9b.tar.zst
+?? .turbo/cache/d0d6fa4393042c6d-meta.json
+?? .turbo/cache/d0d6fa4393042c6d.tar.zst
+?? .turbo/cache/d6e6a3688972cd33-meta.json
+?? .turbo/cache/d6e6a3688972cd33.tar.zst
+?? .turbo/cache/d6f06600fb692e5e-meta.json
+?? .turbo/cache/d6f06600fb692e5e.tar.zst
+?? .turbo/cache/da17986f29c9ca91-meta.json
+?? .turbo/cache/da17986f29c9ca91.tar.zst
+?? .turbo/cache/dbbd6c26db0846e2-meta.json
+?? .turbo/cache/dbbd6c26db0846e2.tar.zst
+?? .turbo/cache/dc2501444c5864dd-meta.json
+?? .turbo/cache/dc2501444c5864dd.tar.zst
+?? .turbo/cache/dca20ba1c943c256-meta.json
+?? .turbo/cache/dca20ba1c943c256.tar.zst
+?? .turbo/cache/de7cbd843e88fcde-meta.json
+?? .turbo/cache/de7cbd843e88fcde.tar.zst
+?? .turbo/cache/dfa01ce015f9fc42-meta.json
+?? .turbo/cache/dfa01ce015f9fc42.tar.zst
+?? .turbo/cache/e4fff62711302bc6-meta.json
+?? .turbo/cache/e4fff62711302bc6.tar.zst
+?? .turbo/cache/e67b182a5ad45ba7-meta.json
+?? .turbo/cache/e67b182a5ad45ba7.tar.zst
+?? .turbo/cache/f0845c505fb40f9a-meta.json
+?? .turbo/cache/f0845c505fb40f9a.tar.zst
+?? .turbo/cache/f0a08805e2f47e1d-meta.json
+?? .turbo/cache/f0a08805e2f47e1d.tar.zst
+?? .turbo/cache/f0b3e3c490d37964-meta.json
+?? .turbo/cache/f0b3e3c490d37964.tar.zst
+?? .turbo/cache/f63e1072502892e8-meta.json
+?? .turbo/cache/f63e1072502892e8.tar.zst
+?? .turbo/cache/f6613b2430bce157-meta.json
+?? .turbo/cache/f6613b2430bce157.tar.zst
+?? .turbo/cache/f6929e8be9bcd19c-meta.json
+?? .turbo/cache/f6929e8be9bcd19c.tar.zst
+?? .turbo/cache/f7ed8bf6c3ca6ae0-meta.json
+?? .turbo/cache/f7ed8bf6c3ca6ae0.tar.zst
+?? .turbo/cache/ff5e9a95559854f0-meta.json
+?? .turbo/cache/ff5e9a95559854f0.tar.zst
+?? .turbo/cache/fffffdc371fa6015-meta.json
+?? .turbo/cache/fffffdc371fa6015.tar.zst
+?? .turbo/cookies/1.cookie
+?? .turbo/cookies/12.cookie
+?? .turbo/cookies/13.cookie
+?? .turbo/cookies/14.cookie
+?? .turbo/cookies/15.cookie
+?? .turbo/daemon/c417780f67f1b347-turbo.log.2025-09-30
+?? .turbo/daemon/c417780f67f1b347-turbo.log.2025-10-01
+?? FULLSCAN_ALL_IN_ONE.md
+?? FULLSCAN_ALL_IN_ONE_FINAL.md
+?? LICENSE
+?? apps/cli/__tests__/
+?? apps/cli/smoke.test.ts
+?? apps/cli/vitest.config.ts
+?? apps/launcher/__tests__/
+?? apps/launcher/eslint.config.js
+?? apps/odavl_studio.clean/
+?? apps/orchestrator/__tests__/
+?? apps/orchestrator/src/scheduler.ts
+?? apps/vscode-ext/__tests__/
+?? apps/vscode-ext/smoke.test.ts
+?? apps/vscode-ext/vitest.config.ts
+?? cyclonedx.exe
+?? docs/API_REFERENCE.md
+?? docs/COMPLIANCE_GUIDE.md
+?? docs/DEVELOPER_GUIDE.md
+?? docs/SECURITY_GUIDE.md
+?? gitleaks
+?? gitleaks.tar.gz
+?? gitleaks_8.18.2_windows_x64.exe
+?? osv-scanner-windows-amd64.exe
+?? osv-scanner.exe
+?? osv-scanner_1.7.4_windows_386.exe
+?? packages/cli/@types/
+?? packages/cli/src/@types/
+?? packages/cli/src/policy-bridge.ts
+?? packages/cli/tsconfig.tsbuildinfo
+?? packages/codemods/__tests__/
+?? packages/core/__tests__/
+?? packages/core/eslint.config.js
+?? packages/core/index.js
+?? packages/core/index.ts
+?? packages/core/vitest.config.js
+?? packages/core/vitest.config.ts
+?? packages/policy/__tests__/baseline.spec.ts
+?? packages/policy/eslint.config.js
+?? packages/policy/index.d.ts
+?? packages/policy/odavl.rbac.yml
+?? packages/policy/smoke.test.ts
+?? packages/policy/vitest.config.ts
+?? packages/reporters/__tests__/
+?? packages/reporters/eslint.config.js
+?? packages/reporters/src/redacting-writer.js
+?? renovate.json
+?? reports/evaluations/2025-10-01/
+?? reports/full_recovery/
+?? reports/hygiene/
+?? reports/immune/problems.json
+?? reports/phase1/
+?? reports/phase2/
+?? reports/phase3/security/ci-artifacts/
+?? reports/phase5/
+?? reports/phase6/
+?? scripts/compliance-check.js
+?? scripts/doctor.js
+?? scripts/prometheus-metrics.js
+?? tools/

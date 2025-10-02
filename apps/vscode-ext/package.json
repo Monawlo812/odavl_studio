@@ -159,7 +159,8 @@
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "lint": "eslint .",
-    "typecheck": "tsc -b --noEmit"
+    "typecheck": "tsc -b --noEmit",
+    "test": "vitest run --coverage --reporter=default --outputFile=../../coverage/vscode-ext-test.log"
   },
   "devDependencies": {
     "vitest": "^3.2.4",

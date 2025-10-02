@@ -5,12 +5,18 @@
     "resolveJsonModule": true,
     "baseUrl": "./",
     "paths": {
-      "@odavl/codemods/*": ["../../packages/codemods/src/*"],
+      "@odavl/codemods/*": ["../../packages/codemods/dist/*"],
+      "@odavl/codemods": ["../../packages/codemods/dist/index.js"],
       "@odavl/policy": ["../../packages/policy/dist/index.d.ts"],
       "@odavl/policy/*": ["../../packages/policy/dist/index.d.ts"]
     },
+<<<<<<< HEAD
     "allowImportingTsExtensions": true,
     "noEmit": true
+=======
+  
+  "noEmit": false
+>>>>>>> 86b1346 (H3: Safe delete (quarantine) of LEGACY and NOISE files with full evidence. See reports/hygiene/2025-10-01/run-1/ for audit trail.)
   },
   "include": ["src", "commands", "lib", "policy-bridge"]
 }

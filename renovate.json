@@ -1,0 +1,28 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:base"],
+  "dependencyDashboard": true,
+  "labels": ["dependencies"],
+  "packageRules": [
+    {
+      "groupName": "devDependencies",
+      "depTypeList": ["devDependencies"],
+      "automerge": false
+    },
+    {
+      "groupName": "runtime dependencies",
+      "depTypeList": ["dependencies"],
+      "automerge": false
+    },
+    {
+      "groupName": "security patches",
+      "matchUpdateTypes": ["minor", "patch"],
+      "matchDepTypes": ["dependencies", "devDependencies"],
+      "labels": ["security"],
+      "automerge": false,
+      "prPriority": 1
+    }
+  ],
+  "requireStatusChecks": true,
+  "prConcurrentLimit": 3
+}

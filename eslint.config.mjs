@@ -49,7 +49,19 @@ const orchestratorTestOverride = {
   }
 };
 const globalIgnores = {
+<<<<<<< HEAD
   ignores: ["**/node_modules/**", "**/dist/**", "**/coverage/**", "reports/**"]
+=======
+  ignores: [
+    "**/node_modules/**",
+    "**/dist/**",
+    "**/coverage/**",
+    "reports/**",
+    // Migrated from .eslintignore in golden-repo
+    "examples/golden-repo/jest.config.js",
+    "examples/golden-repo/jest.config.cjs"
+  ]
+>>>>>>> 86b1346 (H3: Safe delete (quarantine) of LEGACY and NOISE files with full evidence. See reports/hygiene/2025-10-01/run-1/ for audit trail.)
 };
 // --- END orchestrator ESLint scope ---
 

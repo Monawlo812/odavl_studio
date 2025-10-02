@@ -6,11 +6,11 @@
     "strict": true,
     "skipLibCheck": true,
     "outDir": "dist",
-    "rootDir": "src",
+  // "rootDir": "src",
     "esModuleInterop": true,
     "lib": ["ES2020"],
-    "types": ["node", "vscode"],
+  "types": ["node", "vscode", "vitest/globals"],
     "jsx": "react-jsx"
   },
-  "include": ["src"]
+  "include": ["src", "__tests__"]
 }

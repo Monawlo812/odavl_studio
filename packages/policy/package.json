@@ -12,10 +12,17 @@
     }
   },
   "scripts": {
+<<<<<<< HEAD
   "build": "tsc -p tsconfig.json",
   "lint": "eslint . --ignore-pattern dist --ignore-pattern __tests__",
   "typecheck": "tsc -b --noEmit",
   "test": "vitest run --coverage --reporter=default --outputFile=../../reports/phase2/test.log"
+=======
+    "build": "tsc -p tsconfig.json",
+    "lint": "eslint . --ignore-pattern dist --ignore-pattern __tests__",
+    "typecheck": "tsc -b --noEmit",
+    "test": "vitest run --coverage --reporter=default --outputFile=../../coverage/policy-test.log"
+>>>>>>> 86b1346 (H3: Safe delete (quarantine) of LEGACY and NOISE files with full evidence. See reports/hygiene/2025-10-01/run-1/ for audit trail.)
   },
   "devDependencies": {
     "@types/js-yaml": "^4.0.9",

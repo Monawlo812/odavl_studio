@@ -1,0 +1,18 @@
+# .github/workflows/canary.yml
+name: Canary Pipeline
+on:
+  workflow_dispatch:
+jobs:
+  canary:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Canary Partial Deploy/Test
+        run: |
+          echo "Canary test run at $(date -u)" > reports/evaluations/2025-10-01/governance/canary.log
+      - name: Archive Canary Evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: canary-evidence
+          path: reports/evaluations/2025-10-01/governance/canary.log

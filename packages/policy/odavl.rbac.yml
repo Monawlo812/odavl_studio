@@ -1,0 +1,6 @@
+# Minimal RBAC config for tests
+roles:
+  admin:
+    - '*'
+  runner:
+    # No permissions for runner (should deny all)
