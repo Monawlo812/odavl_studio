@@ -16,11 +16,7 @@ export const ciMinutesUsed = new client.Gauge({ name: 'ci_minutes_used', help: '
 
 export function serveMetrics() {
   const app = express();
-<<<<<<< HEAD
   app.get('/metrics', async (_req: import('express').Request, res: import('express').Response) => {
-=======
-  app.get('/metrics', async function(req, res) {
->>>>>>> 79b66b0 (fix: remove broken submodule reference for CI security jobs)
     res.set('Content-Type', client.register.contentType);
     res.end(await client.register.metrics());
   });

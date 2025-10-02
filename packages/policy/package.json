@@ -12,14 +12,10 @@
     }
   },
   "scripts": {
-    "build": "tsc -p tsconfig.json",
-    "lint": "eslint . --ignore-pattern dist --ignore-pattern __tests__",
-<<<<<<< HEAD
-    "typecheck": "tsc -b --noEmit"
-=======
-    "typecheck": "tsc -b --noEmit",
-    "test": "vitest run --coverage --reporter=default --outputFile=../../reports/phase2/test.log"
->>>>>>> 79b66b0 (fix: remove broken submodule reference for CI security jobs)
+  "build": "tsc -p tsconfig.json",
+  "lint": "eslint . --ignore-pattern dist --ignore-pattern __tests__",
+  "typecheck": "tsc -b --noEmit",
+  "test": "vitest run --coverage --reporter=default --outputFile=../../reports/phase2/test.log"
   },
   "devDependencies": {
     "@types/js-yaml": "^4.0.9",
