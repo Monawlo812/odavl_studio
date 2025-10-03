@@ -1,50 +1,31 @@
 {
-<<<<<<< HEAD
-  "name": "odavl",
-  "displayName": "ODAVL Studio",
-  "publisher": "odavl",
-  "version": "0.1.0",
-  "description": "Secure, Self-Healing Code Governance inside VS Code",
-  "icon": "media/odavl.png",
-  "categories": [
-    "Other",
-    "Testing"
-  ],
-  "keywords": [
-    "odavl",
-    "security",
-    "self-healing",
-    "ci",
-    "governance",
-    "doctor"
-=======
   "name": "odavl-studio",
   "displayName": "ODAVL Studio",
-  "description": "Automated development governance with code healing and CI management",
+  "description": "Automated development governance with code healing, CI/CD management, and Shadow CI verification.",
   "version": "0.4.0",
   "publisher": "odavl",
   "categories": [
     "Other",
-    "Linters"
->>>>>>> 9fe4bd7 (chore: bootstrap ODAVL Studio repository)
+    "Linters",
+    "Testing",
+    "Visualization"
   ],
   "galleryBanner": {
     "color": "#1e3a8a",
     "theme": "dark"
   },
-<<<<<<< HEAD
-=======
-  "icon": "assets/icon.png",
->>>>>>> 9fe4bd7 (chore: bootstrap ODAVL Studio repository)
+  "icon": "media/odavl-icon-light.svg",
   "engines": {
     "vscode": "^1.85.0"
   },
   "activationEvents": [
-<<<<<<< HEAD
-=======
     "onCommand:odavl.undoLast",
-    "onCommand:odavl.redoLast"
->>>>>>> 9fe4bd7 (chore: bootstrap ODAVL Studio repository)
+    "onCommand:odavl.redoLast",
+    "onCommand:odavlStudio.openPanel",
+    "onCommand:odavl.controlCenter.open",
+    "onCommand:odavl.magic.run",
+    "onCommand:odavl.debug.showIconStatus",
+    "onCommand:odavl.scanHeal"
   ],
   "main": "dist/extension.js",
   "repository": {
@@ -88,24 +69,29 @@
       },
       {
         "command": "odavlStudio.openPanel",
-        "title": "ODAVL Studio: Open Panel"
+        "title": "ODAVL Studio: Open Panel",
+        "category": "ODAVL"
       },
       {
         "command": "odavl.controlCenter.open",
-        "title": "ODAVL: Open Control Center"
+        "title": "ODAVL: Open Control Center",
+        "category": "ODAVL"
       },
       {
         "command": "odavl.magic.run",
         "title": "ODAVL: Magic (One-Click)",
-        "icon": "$(rocket)"
+        "icon": "$(rocket)",
+        "category": "ODAVL"
       },
       {
         "command": "odavl.debug.showIconStatus",
-        "title": "ODAVL: Debug — Show Icon Status"
+        "title": "ODAVL: Debug — Show Icon Status",
+        "category": "ODAVL"
       },
       {
         "command": "odavl.scanHeal",
-        "title": "ODAVL: Scan/Heal Panel"
+        "title": "ODAVL: Scan/Heal Panel",
+        "category": "ODAVL"
       }
     ],
     "menus": {
@@ -127,6 +113,10 @@
         },
         {
           "command": "odavl.debug.showIconStatus",
+          "when": "true"
+        },
+        {
+          "command": "odavl.scanHeal",
           "when": "true"
         }
       ]
@@ -179,36 +169,19 @@
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "lint": "eslint .",
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 86b1346 (H3: Safe delete (quarantine) of LEGACY and NOISE files with full evidence. See reports/hygiene/2025-10-01/run-1/ for audit trail.)
     "typecheck": "tsc -b --noEmit",
     "test": "vitest run --coverage --reporter=default --outputFile=../../coverage/vscode-ext-test.log"
   },
   "devDependencies": {
-    "vitest": "^3.2.4",
-=======
-    "typecheck": "tsc -b --noEmit"
-  },
-  "devDependencies": {
-<<<<<<< HEAD
->>>>>>> 9fe4bd7 (chore: bootstrap ODAVL Studio repository)
-=======
-    "vitest": "^3.2.4",
->>>>>>> 79b66b0 (fix: remove broken submodule reference for CI security jobs)
-    "@types/vscode": "^1.85.0",
     "@types/node": "^20",
     "@types/react": "^18.2.47",
-    "@types/react-dom": "^18.2.17"
+    "@types/react-dom": "^18.2.17",
+    "@types/vscode": "^1.85.0",
+    "vitest": "^3.2.4"
   },
   "dependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
-<<<<<<< HEAD
-  }
-=======
   },
   "packageManager": "pnpm@10.17.0"
->>>>>>> 9fe4bd7 (chore: bootstrap ODAVL Studio repository)
 }

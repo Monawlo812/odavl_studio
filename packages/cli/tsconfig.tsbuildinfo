@@ -1,1 +1,0 @@
-{"root":["./src/index.ts","./src/policy-bridge.ts","./src/@types/odavl__policy.d.ts","./src/commands/demo.ts","./src/commands/metrics.ts","./src/commands/policy-org.ts","./src/commands/pricing.ts","./src/lib/audit.ts","./src/lib/cosign.ts","./src/lib/logging.ts","./src/lib/metrics.ts","./src/lib/rbac.ts","./src/lib/redaction.ts"],"version":"5.9.2"}

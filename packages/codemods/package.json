@@ -1,31 +1,53 @@
 {
   "name": "@odavl/codemods",
-<<<<<<< HEAD
   "version": "0.4.0",
   "private": true,
+  "description": "ODAVL codemods package – safe automated code transformations with TypeScript support.",
   "type": "module",
   "main": "./dist/index.js",
+  "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
-=======
-  "version": "0.1.0",
-  "type": "module",
-  "main": "./dist/index.js",
->>>>>>> 9fe4bd7 (chore: bootstrap ODAVL Studio repository)
   "exports": {
-    ".": "./dist/index.js"
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs",
+      "types": "./dist/index.d.ts"
+    }
   },
-  "files": ["dist"],
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
   "scripts": {
-<<<<<<< HEAD
-    "build": "tsc -p tsconfig.json",
-    "dev": "tsc -p tsconfig.json --watch"
-=======
-    "build": "tsc -p tsconfig.json"
->>>>>>> 9fe4bd7 (chore: bootstrap ODAVL Studio repository)
+  "build": "tsc -p tsconfig.json",
+    "clean": "rimraf dist",
+    "dev": "tsc -p tsconfig.json --watch",
+    "lint": "eslint 'src/**/*.{ts,js}' --max-warnings=0",
+    "format": "prettier --write 'src/**/*.{ts,js,json,md}'",
+    "test": "vitest run",
+    "test:watch": "vitest watch",
+  "prepare": "pnpm run build"
   },
+  "keywords": [
+    "odavl",
+    "codemods",
+    "typescript",
+    "automation",
+    "safe-refactor"
+  ],
+  "author": "ODAVL Team",
+  "license": "MIT",
   "devDependencies": {
-    "@types/node": "^20.0.0",
-    "typescript": "^5.0.0"
+    "@types/node": "^20.11.30",
+    "typescript": "^5.4.0",
+    "eslint": "^9.0.0",
+    "prettier": "^3.2.5",
+    "rimraf": "^5.0.5",
+    "vitest": "^1.6.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
   },
   "packageManager": "pnpm@10.17.0"
 }

@@ -54,7 +54,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: |
-          if [ -f package.json ]; then npm run sbom || echo "no sbom script"; else echo "no package.json"; fi
+      - name: Install CycloneDX toolchain
+        run: npm install -g @cyclonedx/cyclonedx-npm
+      - name: Generate SBOM (CycloneDX)
+        run: cyclonedx-npm --output-format json --output-file sbom.json
+      - name: Upload SBOM artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: sbom
+          path: sbom.json
 =======
 >>>>>>> 9fe4bd7 (chore: bootstrap ODAVL Studio repository)

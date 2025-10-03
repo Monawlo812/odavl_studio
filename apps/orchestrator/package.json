@@ -3,16 +3,7 @@
   "version": "0.4.0",
   "private": true,
   "scripts": {
-<<<<<<< HEAD
     "build": "echo build stub",
     "clean": "echo clean stub"
   }
-=======
-  "build": "echo build stub",
-  "clean": "echo clean stub",
-  "lint": "eslint \"src/**/*.{ts,tsx,js,jsx}\"",
-  "typecheck": "tsc -b --noEmit"
-  },
-  "packageManager": "pnpm@10.17.0"
->>>>>>> 9fe4bd7 (chore: bootstrap ODAVL Studio repository)
 }

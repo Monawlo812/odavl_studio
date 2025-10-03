@@ -1,36 +1,24 @@
 {
   "compilerOptions": {
-<<<<<<< HEAD
-    "outDir": "dist",
-    "types": ["node"],
-    "resolveJsonModule": true,
-    "baseUrl": "./",
-    "paths": {
-      "@odavl/codemods/*": ["../../packages/codemods/dist/*"],
-      "@odavl/codemods": ["../../packages/codemods/dist/index.js"],
-      "@odavl/policy": ["../../packages/policy/dist/index.d.ts"],
-      "@odavl/policy/*": ["../../packages/policy/dist/index.d.ts"]
-    },
-<<<<<<< HEAD
-    "allowImportingTsExtensions": true,
-    "noEmit": true
-=======
-  
-  "noEmit": false
->>>>>>> 86b1346 (H3: Safe delete (quarantine) of LEGACY and NOISE files with full evidence. See reports/hygiene/2025-10-01/run-1/ for audit trail.)
-  },
-  "include": ["src", "commands", "lib", "policy-bridge"]
-=======
+    /* Target modern Node.js runtime */
     "target": "ES2022",
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
-  "rootDir": "../../",
+
+    /* Project structure */
+    "rootDir": "../../",
     "outDir": "dist",
+
+    /* Type generation */
     "declaration": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
+
+    /* Extras */
     "resolveJsonModule": true,
     "types": ["node"],
+
+    /* Path aliases */
     "baseUrl": "./",
     "paths": {
       "@odavl/codemods/*": ["../../packages/codemods/dist/*"],
@@ -38,13 +26,22 @@
       "@odavl/policy": ["../../packages/policy/dist/index.d.ts"],
       "@odavl/policy/*": ["../../packages/policy/dist/index.d.ts"]
     },
-  
-  "noEmit": false
+
+    /* Emit settings */
+    "noEmit": false
   },
-<<<<<<< HEAD
-  "include": ["src"]
->>>>>>> 9fe4bd7 (chore: bootstrap ODAVL Studio repository)
-=======
-  "include": ["src", "commands", "lib", "policy-bridge"]
->>>>>>> 79b66b0 (fix: remove broken submodule reference for CI security jobs)
+
+  "include": [
+    "src",
+    "commands",
+    "lib",
+    "policy-bridge"
+  ],
+
+  "exclude": [
+    "node_modules",
+    "dist",
+    "**/*.spec.ts",
+    "**/__tests__/**"
+  ]
 }

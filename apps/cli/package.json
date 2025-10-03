@@ -1,6 +1,7 @@
 {
   "name": "@odavl/cli",
   "version": "0.1.0",
+  "private": true,
   "type": "module",
   "bin": {
     "odavl": "bin/odavl.js"
@@ -9,46 +10,23 @@
     "dist",
     "README.md"
   ],
-  "engines": {
-    "node": ">=18"
-  },
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "prepublishOnly": "pnpm run build",
     "prepack": "pnpm run build",
-    "lint": "eslint .",
-<<<<<<< HEAD
-<<<<<<< HEAD
+    "lint": "eslint . --ext .ts,.tsx",
     "typecheck": "tsc -b --noEmit",
-    "test": "vitest run --coverage --reporter=default --outputFile=../../coverage/cli-test.log"
-=======
-    "typecheck": "tsc -b --noEmit"
->>>>>>> 9fe4bd7 (chore: bootstrap ODAVL Studio repository)
-=======
-    "typecheck": "tsc -b --noEmit",
-<<<<<<< HEAD
-    "test": "vitest run --coverage --reporter=default --outputFile=../../reports/phase2/test.log"
->>>>>>> 79b66b0 (fix: remove broken submodule reference for CI security jobs)
-=======
-    "test": "vitest run --coverage --reporter=default --outputFile=../../coverage/cli-test.log"
->>>>>>> 86b1346 (H3: Safe delete (quarantine) of LEGACY and NOISE files with full evidence. See reports/hygiene/2025-10-01/run-1/ for audit trail.)
+    "test": "vitest run --coverage --reporter=default --outputFile=../../reports/phase2/cli-test.log"
   },
   "dependencies": {
     "@odavl/codemods": "workspace:*",
     "@odavl/policy": "workspace:*"
   },
   "devDependencies": {
-<<<<<<< HEAD
-<<<<<<< HEAD
     "@types/node": "^20",
+    "typescript": "^5.9.2",
+    "eslint": "^9.36.0",
     "vitest": "^3.2.4"
-=======
-    "@types/node": "^20"
->>>>>>> 9fe4bd7 (chore: bootstrap ODAVL Studio repository)
-=======
-    "@types/node": "^20",
-    "vitest": "^3.2.4"
->>>>>>> 79b66b0 (fix: remove broken submodule reference for CI security jobs)
   },
   "packageManager": "pnpm@10.17.0"
 }
