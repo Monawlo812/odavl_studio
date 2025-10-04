@@ -1,0 +1,55 @@
+name: security-rescan
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'package.json'
+      - 'pnpm-lock.yaml'
+      - '.github/workflows/security-rescan.yml'
+
+jobs:
+  rescan:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write   # مهم للدفع
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: true
+          ref: ${{ github.ref }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install pnpm
+        run: npm i -g pnpm
+
+      - name: Install dependencies (materialize overrides)
+        run: pnpm install
+
+      - name: pnpm audit (JSON)
+        run: pnpm audit --json > audit.json || true
+
+      - name: Summarize audit
+        run: |
+          node -e "const fs=require('fs');let c=0,h=0,m=0,l=0;try{const j=JSON.parse(fs.readFileSync('audit.json','utf8'));(j.vulnerabilities?Object.values(j.vulnerabilities):[]).forEach(v=>{if(v.severity==='critical')c++;else if(v.severity==='high')h++;else if(v.severity==='moderate')m++;else if(v.severity==='low')l++;});}catch(e){};fs.writeFileSync('summary.txt',`CRITICAL=${c}\nHIGH=${h}\nMODERATE=${m}\nLOW=${l}\n`);"
+
+      # اكتب النتائج داخل المستودع (فرع نتائج منفصل + PR تلقائي إذا الفرع الرئيسي محمي)
+      - name: Prepare write-back
+        run: |
+          mkdir -p reports/ultra-20251004/ci/security-rescan-20251004
+          mv audit.json summary.txt reports/ultra-20251004/ci/security-rescan-20251004/ || true
+
+      - name: Create results PR
+        uses: peter-evans/create-pull-request@v6
+        with:
+          branch: odavl/ci-security-rescan-results
+          commit-message: "[CI] security-rescan results (auto)"
+          title: "CI: security-rescan results"
+          body: "Adds audit.json + summary.txt under reports/ultra-20251004/ci/security-rescan-20251004/"
+          add-paths: |
+            reports/ultra-20251004/ci/security-rescan-20251004/audit.json
+            reports/ultra-20251004/ci/security-rescan-20251004/summary.txt
