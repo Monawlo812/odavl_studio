@@ -1,0 +1,1 @@
+W16B3 GAP: security-rescan CI run completed but did not commit summary.txt or audit.json. No update to security metrics. Please check Actions logs for errors.
