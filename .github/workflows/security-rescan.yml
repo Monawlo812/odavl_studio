@@ -11,7 +11,7 @@ jobs:
   rescan:
     runs-on: ubuntu-latest
     permissions:
-      contents: write   # مهم للدفع
+      contents: write
       pull-requests: write
     steps:
       - uses: actions/checkout@v4
@@ -46,10 +46,12 @@ jobs:
       - name: Create results PR
         uses: peter-evans/create-pull-request@v6
         with:
-          branch: odavl/ci-security-rescan-results
-          commit-message: "[CI] security-rescan results (auto)"
-          title: "CI: security-rescan results"
+          token: ${{ secrets.GITHUB_TOKEN }}
+          base: odavl/bootstrap-20250919
+          branch: odavl/ci-security-rescan-results-20251004
+          title: "CI: security-rescan results (20251004)"
           body: "Adds audit.json + summary.txt under reports/ultra-20251004/ci/security-rescan-20251004/"
           add-paths: |
             reports/ultra-20251004/ci/security-rescan-20251004/audit.json
             reports/ultra-20251004/ci/security-rescan-20251004/summary.txt
+          commit-message: "[CI] security-rescan results (auto)"
